@@ -263,6 +263,11 @@ export const wilborUserCredits = mysqlTable("wilborUserCredits", {
   plan: mysqlEnum("plan", ["free", "premium", "manual"]).default("free").notNull(),
   monthlyLimit: int("monthlyLimit").default(5).notNull(),
   messagesUsed: int("messagesUsed").default(0).notNull(),
+  ragMessagesUsed: int("ragMessagesUsed").default(0).notNull(),
+  cacheHits: int("cacheHits").default(0).notNull(),
+  totalSaved: int("totalSaved").default(0).notNull(),
+  periodStart: timestamp("periodStart").defaultNow().notNull(),
+  periodEnd: timestamp("periodEnd").notNull(),
   stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
   stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -271,3 +276,42 @@ export const wilborUserCredits = mysqlTable("wilborUserCredits", {
 
 export type WilborUserCredit = typeof wilborUserCredits.$inferSelect;
 export type InsertWilborUserCredit = typeof wilborUserCredits.$inferInsert;
+
+// ==========================================
+// CHAT ANALYTICS (Métricas de Custo)
+// ==========================================
+export const wilborChatAnalytics = mysqlTable("wilborChatAnalytics", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  conversationId: int("conversationId"),
+  routeType: mysqlEnum("routeType", ["cache", "rag", "llm_full", "safety_filter"]).notNull(),
+  category: varchar("analyticsCategory", { length: 50 }),
+  tokensEstimated: int("tokensEstimated").default(0).notNull(),
+  responseTimeMs: int("responseTimeMs"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WilborChatAnalytic = typeof wilborChatAnalytics.$inferSelect;
+export type InsertWilborChatAnalytic = typeof wilborChatAnalytics.$inferInsert;
+
+// ==========================================
+// CONVERSION TRACKING (Métricas de Conversão Free→Premium)
+// ==========================================
+export const wilborConversionEvents = mysqlTable("wilborConversionEvents", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  eventType: mysqlEnum("eventType", [
+    "hit_limit",
+    "paywall_shown",
+    "upgrade_clicked",
+    "plans_clicked",
+    "checkout_started",
+    "payment_success",
+    "payment_failed",
+  ]).notNull(),
+  metadata: text("metadata"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WilborConversionEvent = typeof wilborConversionEvents.$inferSelect;
+export type InsertWilborConversionEvent = typeof wilborConversionEvents.$inferInsert;

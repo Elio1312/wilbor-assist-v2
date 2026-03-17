@@ -1,9 +1,11 @@
-import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb, upsertUser, getUserByOpenId } from "./db";
+import { wilborUserCredits, wilborConversionEvents } from "../drizzle/schema";
+import { eq } from "drizzle-orm";
+import { COOKIE_NAME } from "@shared/const";
 
 export const appRouter = router({
   system: systemRouter,
@@ -20,8 +22,104 @@ export const appRouter = router({
   }),
 
   wilbor: router({
-    // Placeholder for Wilbor-Assist routes
-    // Chat, Bebês, Receitas, Trilha, etc
+    // Get user credits status
+    getCredits: protectedProcedure.query(async ({ ctx }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+
+      const credits = await db
+        .select()
+        .from(wilborUserCredits)
+        .where(eq(wilborUserCredits.userId, ctx.user.id))
+        .limit(1);
+
+      if (credits.length === 0) {
+        // Create default free plan
+        const periodStart = new Date();
+        const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
+        
+        await db.insert(wilborUserCredits).values({
+          userId: ctx.user.id,
+          plan: "free",
+          monthlyLimit: 5,
+          messagesUsed: 0,
+          ragMessagesUsed: 0,
+          cacheHits: 0,
+          totalSaved: 0,
+          periodStart,
+          periodEnd,
+        });
+        
+        return {
+          plan: "free",
+          messagesUsed: 0,
+          monthlyLimit: 5,
+          remaining: 5,
+          isOverLimit: false,
+        };
+      }
+
+      const credit = credits[0];
+      const remaining = Math.max(0, credit.monthlyLimit - credit.messagesUsed);
+      const isOverLimit = remaining === 0;
+
+      return {
+        plan: credit.plan,
+        messagesUsed: credit.messagesUsed,
+        monthlyLimit: credit.monthlyLimit,
+        remaining,
+        isOverLimit,
+      };
+    }),
+
+    // Update user plan
+    updatePlan: protectedProcedure
+      .input(z.object({ plan: z.enum(["free", "premium", "manual"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        const newLimit = input.plan === "free" ? 5 : 500;
+        const periodStart = new Date();
+        const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+        await db
+          .update(wilborUserCredits)
+          .set({
+            plan: input.plan,
+            monthlyLimit: newLimit,
+            messagesUsed: 0,
+            periodStart,
+            periodEnd,
+          })
+          .where(eq(wilborUserCredits.userId, ctx.user.id));
+
+        // Track conversion event
+        await db.insert(wilborConversionEvents).values({
+          userId: ctx.user.id,
+          eventType: "payment_success",
+        });
+
+        return { success: true, plan: input.plan };
+      }),
+
+    // Track conversion events
+    trackEvent: protectedProcedure
+      .input(z.object({
+        eventType: z.enum(["hit_limit", "paywall_shown", "upgrade_clicked", "plans_clicked", "checkout_started", "payment_success", "payment_failed"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        await db.insert(wilborConversionEvents).values({
+          userId: ctx.user.id,
+          eventType: input.eventType,
+        });
+
+        return { success: true };
+      }),
+
     getStatus: publicProcedure.query(async () => {
       return {
         status: "Wilbor-Assist v2 is ready!",

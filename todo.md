@@ -60,6 +60,39 @@
 - ✅ TypeScript: Sem erros
 - ✅ PRONTO PARA PUBLICAÇÃO
 
+## 🔴 FASE 1: PAYWALL (CRÍTICO)
+- [x] Copiar wilborRAG.ts do projeto antigo
+- [x] Adicionar tabelas: wilborUserCredits, wilborChatAnalytics, wilborConversionEvents
+- [x] Implementar rota getCredits (Free: 5 msgs/dia, Premium: 500 msgs/dia)
+- [x] Implementar rota updatePlan
+- [x] Implementar rota trackEvent (conversion tracking)
+- [ ] Implementar bloqueio de chat após 2 consultas (frontend)
+- [ ] Tela de limite atingido com opção de upgrade (frontend)
+- [x] Testes para paywall (6/6 testes passando)
+
+## 🟡 FASE 2: DASHBOARD DE FEEDBACK
+- [ ] Botão "Isso foi útil?" após cada resposta
+- [ ] Salvar feedback no banco
+- [ ] Dashboard para revisar respostas
+- [ ] Testes para feedback
+
+## 🟡 FASE 3: RELATÓRIO AUTOMÁTICO
+- [ ] Relatório de Domingo 9 AM via WhatsApp
+- [ ] Resumo de chats da semana
+- [ ] Taxa de precisão
+- [ ] Respostas que precisam revisão
+- [ ] Enviar para: 12 99799-9902
+
+## 🟢 FASE 4: TESTES A/B
+- [ ] Capacidade de testar Variante A vs B
+- [ ] Coleta de preferência da mãe
+- [ ] Dashboard de resultados A/B
+
+## 💄 FASE 5: RETOQUES NA LANDING
+- [ ] Ajustes finos de design
+- [ ] Otimização de conversão
+- [ ] Validação final
+
 ## Próximos Passos (Usuário)
 1. Clicar em "Publish" no Management UI (após checkpoint)
 2. Reivindicar domínio wilborassist.com nas configurações de domínio
