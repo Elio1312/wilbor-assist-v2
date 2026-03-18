@@ -102,8 +102,24 @@
 - [ ] Otimização de conversão
 - [ ] Validação final
 
+## 🟢 FASE 7: EXPANDIR BASE DE CONHECIMENTO
+- [ ] Obter 384 perguntas do Manus antigo
+- [ ] Integrar ao banco de dados
+- [ ] Testar qualidade das respostas
+- [ ] Fazer checkpoint
+
 ## Próximos Passos (Usuário)
 1. Clicar em "Publish" no Management UI (após checkpoint)
 2. Reivindicar domínio wilborassist.com nas configurações de domínio
 3. Configurar chaves Stripe para ativar pagamentos
 4. Configurar ManyChat para WhatsApp
+5. Enviar 384 perguntas do Manus antigo para expandir base de conhecimento
+
+## 💄 FASE 8: REFAZER LANDING PAGE PARA CONVERSÃO
+- [x] Hero section com problema emocional positivo + mockup do chat
+- [x] Seção Before/After (transformação positiva)
+- [x] Reorganizar features com diferenciação (memória, receitas, meu corpo)
+- [x] Social proof e credibilidade (números, badges)
+- [x] CTAs e preços com contexto positivo
+- [x] Testar responsividade
+- [ ] Fazer checkpoint final

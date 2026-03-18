@@ -353,3 +353,4 @@ export const blogComments = mysqlTable("blogComments", {
 
 export type BlogComment = typeof blogComments.$inferSelect;
 export type InsertBlogComment = typeof blogComments.$inferInsert;
+
