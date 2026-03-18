@@ -217,3 +217,30 @@ export function detectEmergency(userMessage: string, language: "pt" | "en" | "es
 
   return keywords.some(keyword => lowerMessage.includes(keyword));
 }
+
+
+/**
+ * Simple chat endpoint for Dashboard
+ * Processes message and returns response
+ */
+export async function simpleChatWithWilbor(
+  userId: string,
+  messages: Array<{ role: "system" | "user" | "assistant"; content: string }>
+): Promise<string> {
+  try {
+    // Call LLM with messages
+    const response = await invokeLLM({
+      messages: messages as any,
+    });
+
+    const assistantMessage =
+      typeof response.choices[0]?.message?.content === "string"
+        ? response.choices[0].message.content
+        : "Desculpe, não consegui processar sua mensagem.";
+
+    return assistantMessage;
+  } catch (error) {
+    console.error("Chat error:", error);
+    throw error;
+  }
+}

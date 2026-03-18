@@ -5,6 +5,7 @@ import Home from "@/pages/Home";
 import { Blog } from "@/pages/Blog";
 import { BlogArticle } from "@/pages/BlogArticle";
 import { FeedbackDashboard } from "@/pages/FeedbackDashboard";
+import Dashboard from "@/pages/Dashboard";
 
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -13,12 +14,13 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/blog"} component={Blog} />
-      <Route path={"/blog/:slug"} component={BlogArticle} />
-      <Route path={"/feedback"} component={FeedbackDashboard} />
+      <Route path="/" component={Home} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogArticle} />
+      <Route path="/feedback" component={FeedbackDashboard} />
 
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>

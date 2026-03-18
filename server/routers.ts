@@ -7,6 +7,7 @@ import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } fro
 import { eq } from "drizzle-orm";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
+import { simpleChatWithWilbor } from "./wilborChat";
 
 export const appRouter = router({
   system: systemRouter,
@@ -123,6 +124,18 @@ export const appRouter = router({
         features: ["Chat IA", "Bebês", "Receitas", "Trilha", "Meu Corpo", "Sono", "Diário"]
       };
     }),
+
+    chat: protectedProcedure
+      .input(z.object({
+        messages: z.array(z.object({
+          role: z.enum(["system", "user", "assistant"]),
+          content: z.string(),
+        })),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const response = await simpleChatWithWilbor(String(ctx.user.id), input.messages);
+        return response;
+      }),
   }),
 
   feedback: router({
