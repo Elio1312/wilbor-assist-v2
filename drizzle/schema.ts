@@ -270,12 +270,34 @@ export const wilborUserCredits = mysqlTable("wilborUserCredits", {
   periodEnd: timestamp("periodEnd").notNull(),
   stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
   stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
+  extraCreditsUsedReais: decimal("extraCreditsUsedReais", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  extraCreditsLimitReais: decimal("extraCreditsLimitReais", { precision: 10, scale: 2 }).default("10.00").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type WilborUserCredit = typeof wilborUserCredits.$inferSelect;
 export type InsertWilborUserCredit = typeof wilborUserCredits.$inferInsert;
+
+// ==========================================
+// EXTRA CREDITS TRANSACTIONS (Compras de Créditos Extras)
+// ==========================================
+export const wilborExtraCreditTransactions = mysqlTable("wilborExtraCreditTransactions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  amountReais: decimal("amountReais", { precision: 10, scale: 2 }).notNull(),
+  creditsReceived: int("creditsReceived").notNull(),
+  stripeTransactionId: varchar("stripeTransactionId", { length: 255 }).notNull().unique(),
+  status: mysqlEnum("transactionStatus", ["pending", "completed", "failed", "refunded"]).default("pending").notNull(),
+  usedCredits: int("usedCredits").default(0).notNull(),
+  periodStart: timestamp("periodStart").notNull(),
+  periodEnd: timestamp("periodEnd").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WilborExtraCreditTransaction = typeof wilborExtraCreditTransactions.$inferSelect;
+export type InsertWilborExtraCreditTransaction = typeof wilborExtraCreditTransactions.$inferInsert;
 
 // ==========================================
 // CHAT ANALYTICS (Métricas de Custo)
@@ -315,6 +337,23 @@ export const wilborConversionEvents = mysqlTable("wilborConversionEvents", {
 
 export type WilborConversionEvent = typeof wilborConversionEvents.$inferSelect;
 export type InsertWilborConversionEvent = typeof wilborConversionEvents.$inferInsert;
+
+// ==========================================
+// SOS USAGE TRACKING (Rastreamento de Uso SOS)
+// ==========================================
+export const wilborSosUsageLog = mysqlTable("wilborSosUsageLog", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  conversationId: int("conversationId"),
+  usageType: mysqlEnum("sosUsageType", ["emergency", "regular"]).default("regular").notNull(),
+  costReais: decimal("costReais", { precision: 10, scale: 2 }).notNull(),
+  injectedCredits: int("injectedCredits").default(0).notNull(),
+  stripeTransactionId: varchar("stripeTransactionId", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WilborSosUsageLog = typeof wilborSosUsageLog.$inferSelect;
+export type InsertWilborSosUsageLog = typeof wilborSosUsageLog.$inferInsert;
 // ==========================================
 // BLOG (Artigos para SEO)
 // ==========================================

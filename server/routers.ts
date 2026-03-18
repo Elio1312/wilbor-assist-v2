@@ -8,9 +8,11 @@ import { eq } from "drizzle-orm";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
 import { simpleChatWithWilbor } from "./wilborChat";
+import { stripeRouter } from "./stripeRoutes";
 
 export const appRouter = router({
   system: systemRouter,
+  stripe: stripeRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -136,6 +138,29 @@ export const appRouter = router({
         const response = await simpleChatWithWilbor(String(ctx.user.id), input.messages);
         return response;
       }),
+
+    checkExtraCredits: protectedProcedure.query(async ({ ctx }) => {
+      const { canUseExtraCredits } = await import("./db");
+      const result = await canUseExtraCredits(ctx.user.id);
+      return result;
+    }),
+
+    getUserCreditsStatus: protectedProcedure.query(async ({ ctx }) => {
+      const { getUserCreditsStatus } = await import("./db");
+      const status = await getUserCreditsStatus(ctx.user.id);
+      if (!status) {
+        return {
+          plan: "free",
+          messagesUsed: 0,
+          monthlyLimit: 5,
+          extraCreditsUsedReais: "0.00",
+          extraCreditsLimitReais: "10.00",
+          hasHitLimit: false,
+          remainingLimit: 10,
+        };
+      }
+      return status;
+    }),
   }),
 
   feedback: router({

@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AIChatBox, type Message } from "@/components/AIChatBox";
 import { FeedbackButton } from "@/components/FeedbackButton";
+import { SOSButton } from "@/components/SOSButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
@@ -157,6 +158,14 @@ export default function Dashboard() {
 
           {/* Sidebar */}
           <div className="w-80 space-y-4">
+            {/* SOS Button */}
+            <SOSButton
+              onEmergency={(message) => {
+                handleSendMessage(message);
+              }}
+              disabled={isLoading}
+            />
+
             {/* Credits Info */}
             <Card className="p-4">
               <h3 className="mb-3 font-semibold text-gray-900">Seus Créditos</h3>
