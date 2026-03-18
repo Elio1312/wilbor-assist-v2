@@ -1,15 +1,27 @@
 import Stripe from "stripe";
 import { ENV } from "./_core/env";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2026-02-25.clover",
-});
+// Lazy load Stripe para evitar erro se chave não estiver disponível
+let stripeInstance: Stripe | null = null;
+
+function getStripe(): Stripe {
+  if (!stripeInstance) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error("STRIPE_SECRET_KEY não configurada");
+    }
+    stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2026-02-25.clover",
+    });
+  }
+  return stripeInstance;
+}
 
 /**
  * Criar sessão de checkout para compra de créditos extras
  */
 export async function createExtraCreditsCheckout(userId: number, amountReais: number) {
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -47,6 +59,7 @@ export async function createExtraCreditsCheckout(userId: number, amountReais: nu
  */
 export async function getPaymentStatus(sessionId: string) {
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     return {
       status: session.payment_status,
