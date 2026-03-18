@@ -11,7 +11,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Blog -->
+  <!-- Blog Index -->
   <url>
     <loc>https://www.wilbor-assist.com/blog</loc>
     <lastmod>2026-03-18</lastmod>
@@ -19,72 +19,72 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Blog Articles -->
+  <!-- Blog Articles - 10 URLs Principais -->
   <url>
-    <loc>https://www.wilbor-assist.com/blog/sono-do-bebe</loc>
+    <loc>https://www.wilbor-assist.com/blog/bebe-nao-dorme</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/colica-infantil</loc>
+    <loc>https://www.wilbor-assist.com/blog/colica-do-bebe</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/amamentacao</loc>
+    <loc>https://www.wilbor-assist.com/blog/febre-no-bebe</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/introducao-alimentacao</loc>
+    <loc>https://www.wilbor-assist.com/blog/introducao-alimentar</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/desenvolvimento-motor</loc>
+    <loc>https://www.wilbor-assist.com/blog/depressao-pos-parto</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/vacinacao</loc>
+    <loc>https://www.wilbor-assist.com/blog/vacinas-do-bebe</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/febre-em-bebes</loc>
+    <loc>https://www.wilbor-assist.com/blog/amamentacao-pega-correta</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/saude-materna</loc>
+    <loc>https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/seguranca-do-bebe</loc>
+    <loc>https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.wilbor-assist.com/blog/receitas-bebe</loc>
+    <loc>https://www.wilbor-assist.com/blog/banho-do-recem-nascido</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -33,6 +33,33 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+  // 301 Redirects from old domain (wilborassist.com) to new domain (www.wilbor-assist.com)
+  // This preserves SEO ranking and prevents duplicate content penalties
+  const redirectMappings: Record<string, string> = {
+    '/blog/bebe-nao-dorme': '/blog/bebe-nao-dorme',
+    '/blog/colica-do-bebe': '/blog/colica-do-bebe',
+    '/blog/febre-no-bebe': '/blog/febre-no-bebe',
+    '/blog/introducao-alimentar': '/blog/introducao-alimentar',
+    '/blog/depressao-pos-parto': '/blog/depressao-pos-parto',
+    '/blog/vacinas-do-bebe': '/blog/vacinas-do-bebe',
+    '/blog/amamentacao-pega-correta': '/blog/amamentacao-pega-correta',
+    '/blog/seguranca-bebe-em-casa': '/blog/seguranca-bebe-em-casa',
+    '/blog/saltos-de-desenvolvimento': '/blog/saltos-de-desenvolvimento',
+    '/blog/banho-do-recem-nascido': '/blog/banho-do-recem-nascido',
+  };
+
+  // Middleware to handle 301 redirects
+  app.use((req, res, next) => {
+    const path = req.path;
+    if (redirectMappings[path]) {
+      const newUrl = `https://www.wilbor-assist.com${redirectMappings[path]}`;
+      res.redirect(301, newUrl);
+      return;
+    }
+    next();
+  });
+
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   // tRPC API
