@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 import { Blog } from "@/pages/Blog";
 import { BlogArticle } from "@/pages/BlogArticle";
+import { FeedbackDashboard } from "@/pages/FeedbackDashboard";
 
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -15,6 +16,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/blog"} component={Blog} />
       <Route path={"/blog/:slug"} component={BlogArticle} />
+      <Route path={"/feedback"} component={FeedbackDashboard} />
 
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

@@ -3,7 +3,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb, upsertUser, getUserByOpenId } from "./db";
-import { wilborUserCredits, wilborConversionEvents } from "../drizzle/schema";
+import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
@@ -122,6 +122,55 @@ export const appRouter = router({
         version: "2.0.0",
         features: ["Chat IA", "Bebês", "Receitas", "Trilha", "Meu Corpo", "Sono", "Diário"]
       };
+    }),
+  }),
+
+  feedback: router({
+    submit: protectedProcedure
+      .input(z.object({
+        userQuestion: z.string(),
+        aiResponse: z.string(),
+        helpfulness: z.enum(["very_helpful", "helpful", "neutral", "not_helpful", "misleading"]),
+        conversationId: z.number().optional(),
+        kbId: z.number().optional(),
+        comment: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        await db.insert(wilborResponseFeedback).values({
+          userId: ctx.user.id,
+          userQuestion: input.userQuestion,
+          aiResponse: input.aiResponse,
+          helpfulness: input.helpfulness,
+          conversationId: input.conversationId,
+          kbId: input.kbId,
+          comment: input.comment,
+          language: "pt",
+        });
+
+        return { success: true };
+      }),
+
+    getStats: protectedProcedure.query(async ({ ctx }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+
+      const feedbacks = await db
+        .select()
+        .from(wilborResponseFeedback)
+        .where(eq(wilborResponseFeedback.userId, ctx.user.id));
+
+      const stats = {
+        total: feedbacks.length,
+        helpful: feedbacks.filter(f => f.helpfulness === "helpful" || f.helpfulness === "very_helpful").length,
+        notHelpful: feedbacks.filter(f => f.helpfulness === "not_helpful" || f.helpfulness === "misleading").length,
+        neutral: feedbacks.filter(f => f.helpfulness === "neutral").length,
+        satisfactionRate: feedbacks.length > 0 ? Math.round((feedbacks.filter(f => f.helpfulness === "helpful" || f.helpfulness === "very_helpful").length / feedbacks.length) * 100) : 0,
+      };
+
+      return stats;
     }),
   }),
 
