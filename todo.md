@@ -70,11 +70,11 @@
 - [ ] Tela de limite atingido com opção de upgrade (frontend)
 - [x] Testes para paywall (6/6 testes passando)
 
-## 🟡 FASE 2: DASHBOARD DE FEEDBACK
-- [ ] Botão "Isso foi útil?" após cada resposta
-- [ ] Salvar feedback no banco
-- [ ] Dashboard para revisar respostas
-- [ ] Testes para feedback
+## 🟡 FASE 2: DASHBOARD DE FEEDBACK (CONCLUÍDO)
+- [x] Botão "Isso foi útil?" após cada resposta (FeedbackButton.tsx)
+- [x] Salvar feedback no banco (feedback router)
+- [x] Dashboard para revisar respostas (FeedbackDashboard.tsx)
+- [x] Gráficos interativos (Pizza, Barras, KPIs)
 
 ## 🟡 FASE 3: RELATÓRIO AUTOMÁTICO
 - [ ] Relatório de Domingo 9 AM via WhatsApp
@@ -128,4 +128,73 @@
 - [x] Remover "pediatra digital" (risco legal - Lei 12.842/2013)
 - [x] Substituir por "apoio inteligente digital baseado em protocolos SBP/OMS/AAP"
 - [x] Revisar landing page para conformidade legal
-- [ ] Fazer checkpoint com correções jurídicas
+- [x] Fazer checkpoint com correções jurídicas
+
+## 📊 FASE 10: IMPORTAR 71 PERGUNTAS TRILÍNGUES
+- [x] Extrair arquivo wilbor-assist-FINAL-COMPLETE.zip
+- [x] Converter SQL para formato correto (answerPt, answerEn, answerEs)
+- [x] Corrigir categorias inválidas (higiene→higiene_oral, vacinas→vacina)
+- [x] Importar 71 perguntas em lotes
+- [x] Validar importação no banco de dados
+
+## 📈 FASE 11: IMPLEMENTAR DASHBOARD DE FEEDBACK
+- [x] Criar FeedbackButton.tsx (👍👎)
+- [x] Criar FeedbackDashboard.tsx com gráficos (Pizza, Barras)
+- [x] Implementar feedback router (submit/getStats)
+- [x] Adicionar rota /feedback no App.tsx
+- [x] Fazer checkpoint final
+
+## 🔄 PRÓXIMAS FASES (AMANHÃ)
+
+### FASE 12: INTEGRAR FEEDBACK NO CHAT
+- [ ] Adicionar FeedbackButton após cada resposta do Wilbor
+- [ ] Testar coleta de feedback em tempo real
+- [ ] Validar gráficos no dashboard
+
+### FASE 13: PÁGINA DE CONFIGURAÇÕES
+- [ ] Criar página Settings.tsx
+- [ ] Gerenciar perfil do bebê
+- [ ] Preferências de idioma
+- [ ] Notificações
+
+### FASE 14: SISTEMA DE NOTIFICAÇÕES
+- [ ] Implementar notifyOwner() para feedback crítico
+- [ ] Alertas quando satisfação < 50%
+- [ ] Dashboard de alertas
+
+
+## FASE 15: IMPLEMENTAR 3 ARQUIVOS FALTANTES (CRÍTICO)
+- [ ] conversationAnalyzer.ts - Análise automática de conversas
+  - [ ] Extrair tópicos principais
+  - [ ] Identificar padrões de dúvidas
+  - [ ] Gerar insights por categoria
+- [ ] painPointExtractor.ts - Extração de dores/problemas
+  - [ ] Detectar problemas recorrentes
+  - [ ] Categorizar por severidade
+  - [ ] Sugerir melhorias de conteúdo
+- [ ] wilborDb.ts - Queries avançadas otimizadas
+  - [ ] Queries de análise
+  - [ ] Relatórios automáticos
+  - [ ] Performance otimizada
+
+## FASE 16: INSTAGRAM STRATEGY
+- [ ] Adicionar hashtags a todas as postagens
+- [ ] Criar 3 reels por semana (vs imagens estáticas)
+- [ ] Implementar CTA em todas as postagens
+- [ ] Atualizar bio com link claro
+- [ ] Meta: 29 → 500+ seguidores em 90 dias
+
+## FASE 17: DOMÍNIO CUSTOMIZADO
+- [x] Comprar domínio wilbor-assist.com na Cloudflare
+- [x] Configurar CNAME no DNS (www → cname.manus.space)
+- [ ] Aguardar propagação DNS (1-2 horas)
+- [ ] Verificar funcionamento em www.wilbor-assist.com
+- [ ] Recuperar SEO perdido nos 4 dias de downtime
+
+## FASE 18: RELATÓRIOS E DOCUMENTAÇÃO
+- [ ] Ler GUIA_MONETIZACAO_PRODUTOS.md
+- [ ] Ler WILBOR_DEPLOYMENT_GUIDE.md
+- [ ] Ler WILBOR_STRESS_TEST_REPORT.md
+- [ ] Implementar estratégia de monetização com afiliados
+- [ ] Documentar deployment final
+- [ ] Executar stress tests

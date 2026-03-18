@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /dashboard
+Allow: /chat
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+Sitemap: https://www.wilbor-assist.com/sitemap.xml
+Sitemap: https://wilbor-assist.com/sitemap.xml
+
+# Google-specific
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
