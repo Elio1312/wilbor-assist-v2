@@ -118,7 +118,7 @@ export default function Home() {
                 Você não está sozinha nessa jornada.
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Wilbor é seu pediatra digital 24h que <span className="font-semibold text-purple-600">lembra de cada detalhe do seu bebê</span> e responde com carinho, sem julgamentos.
+                Wilbor é um <span className="font-semibold text-purple-600">apoio inteligente digital baseado em protocolos SBP/OMS/AAP</span> que lembra de cada detalhe do seu bebê e responde com carinho, sem julgamentos.
               </p>
             </div>
 

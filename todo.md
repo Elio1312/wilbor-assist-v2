@@ -123,3 +123,9 @@
 - [x] CTAs e preços com contexto positivo
 - [x] Testar responsividade
 - [ ] Fazer checkpoint final
+
+## ⚖️ FASE 9: CORREÇÃO JURÍDICA
+- [x] Remover "pediatra digital" (risco legal - Lei 12.842/2013)
+- [x] Substituir por "apoio inteligente digital baseado em protocolos SBP/OMS/AAP"
+- [x] Revisar landing page para conformidade legal
+- [ ] Fazer checkpoint com correções jurídicas
