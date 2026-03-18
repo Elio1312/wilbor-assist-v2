@@ -88,7 +88,16 @@
 - [ ] Coleta de preferência da mãe
 - [ ] Dashboard de resultados A/B
 
-## 💄 FASE 5: RETOQUES NA LANDING
+## 🟢 FASE 5: BLOG COM 10 ARTIGOS PARA SEO
+- [x] Criar 10 artigos otimizados para SEO
+- [x] Rotas de blog no backend (getArticles, getArticle, getByCategory)
+- [x] Página /blog com lista de artigos
+- [x] Página /blog/[slug] com detalhe do artigo
+- [x] Schema.org para SEO estruturado
+- [x] Integração com App.tsx
+- [x] Artigos: Sono, Cólica, Febre, Alimentação, Depressão Pós-Parto, Vacinas, Amamentação, Segurança, Desenvolvimento, Higiene
+
+## 💄 FASE 6: RETOQUES NA LANDING
 - [ ] Ajustes finos de design
 - [ ] Otimização de conversão
 - [ ] Validação final

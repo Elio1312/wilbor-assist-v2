@@ -315,3 +315,41 @@ export const wilborConversionEvents = mysqlTable("wilborConversionEvents", {
 
 export type WilborConversionEvent = typeof wilborConversionEvents.$inferSelect;
 export type InsertWilborConversionEvent = typeof wilborConversionEvents.$inferInsert;
+// ==========================================
+// BLOG (Artigos para SEO)
+// ==========================================
+export const blogArticles = mysqlTable("blogArticles", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  content: text("content").notNull(),
+  category: mysqlEnum("blogCategory", ["sono", "colica", "febre", "alimentacao", "depressao_pos_parto", "vacinas", "amamentacao", "seguranca", "saltos", "higiene"]).notNull(),
+  imageUrl: text("imageUrl"),
+  author: varchar("author", { length: 100 }).default("Wilbor Assist").notNull(),
+  seoKeywords: text("seoKeywords"),
+  seoMetaDescription: text("seoMetaDescription"),
+  readTimeMinutes: int("readTimeMinutes").default(5).notNull(),
+  views: int("views").default(0).notNull(),
+  isPublished: mysqlEnum("isPublished", ["true", "false"]).default("true").notNull(),
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogArticle = typeof blogArticles.$inferSelect;
+export type InsertBlogArticle = typeof blogArticles.$inferInsert;
+
+export const blogComments = mysqlTable("blogComments", {
+  id: int("id").autoincrement().primaryKey(),
+  articleId: int("articleId").notNull(),
+  userId: int("userId"),
+  name: varchar("name", { length: 100 }).notNull(),
+  email: varchar("email", { length: 320 }),
+  content: text("content").notNull(),
+  isApproved: mysqlEnum("isApproved", ["true", "false"]).default("false").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type BlogComment = typeof blogComments.$inferSelect;
+export type InsertBlogComment = typeof blogComments.$inferInsert;
