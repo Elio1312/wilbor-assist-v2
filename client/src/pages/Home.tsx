@@ -45,22 +45,21 @@ export default function Home() {
       price: "Grátis",
       desc: "Conheça sem compromisso",
       features: [
-        "2 consultas completas com IA",
-        "Receitas e exercícios",
+        "5 consultas completas com IA",
         "Trilha de desenvolvimento",
-        "Diário do bebê",
+        "Alertas de emergência",
+        "Acesso básico ao chat",
       ],
     },
     {
       name: "Premium",
       price: "R$ 19,90",
       period: "/mês",
-      desc: "Acesso completo + IA ilimitada",
+      desc: "Acesso completo + IA com 500 créditos/mês",
       popular: true,
-      trial: "5 dias grátis para testar",
       features: [
         "Tudo do plano Manual",
-        "Chat IA ilimitado 24h",
+        "Chat IA com 500 créditos/mês",
         "Memória do bebê (histórico)",
         "Predição de sono inteligente",
         "Alertas de emergência",
@@ -400,11 +399,7 @@ export default function Home() {
                   {plan.period && <span className={plan.popular ? "text-white/80" : "text-gray-600"}>{plan.period}</span>}
                 </div>
                 <p className={`text-sm mb-6 ${plan.popular ? "text-white/90" : "text-gray-600"}`}>{plan.desc}</p>
-                {plan.trial && (
-                  <p className={`text-sm font-semibold mb-6 ${plan.popular ? "text-white" : "text-purple-600"}`}>
-                    {plan.trial}
-                  </p>
-                )}
+
                 
                 <Button 
                   size="lg"
@@ -481,7 +476,7 @@ export default function Home() {
               className="bg-white text-purple-600 hover:bg-gray-100 text-lg h-14 rounded-full font-semibold"
               onClick={() => window.location.href = getLoginUrl()}
             >
-              Testar 7 dias grátis <ArrowRight className="ml-2 w-5 h-5" />
+              Começar agora <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button 
               size="lg"
