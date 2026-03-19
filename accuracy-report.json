@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-03-19T01:18:10.700Z",
+  "totalQuestionsEvaluated": 5,
+  "averageScores": {
+    "relevance": 99,
+    "clarity": 97,
+    "accuracy": 95,
+    "overall": 97.00000000000001
+  },
+  "results": [
+    {
+      "questionId": 1,
+      "question": "Como o bebê deve dormir? Posição segura para dormir?...",
+      "category": "sono",
+      "relevance": 100,
+      "clarity": 100,
+      "accuracy": 100,
+      "avgScore": 100,
+      "feedback": "A resposta é excelente. Aborda diretamente a pergunta, é extremamente clara e concisa, e fornece informações medicamente corretas e cruciais para a segurança do bebê, incluindo a redução do risco de SMSL."
+    },
+    {
+      "questionId": 2,
+      "question": "Quantas horas o recém-nascido deve dormir? Janela de vigília...",
+      "category": "sono",
+      "relevance": 100,
+      "clarity": 95,
+      "accuracy": 90,
+      "avgScore": 95,
+      "feedback": "A resposta é altamente relevante e clara, abordando diretamente a pergunta. As informações sobre horas de sono, janela de vigília e sinais de sono são precisas. O termo 'efeito vulcão' é coloquial e pode não ser medicamente formal, mas a explicação subjacente (cortisol alto = bebê exausto) é correta. As dicas de ambiente são úteis e seguras."
+    },
+    {
+      "questionId": 3,
+      "question": "O que é cólica? Meu bebê chora muito, é cólica? Regra dos 3?...",
+      "category": "colica",
+      "relevance": 100,
+      "clarity": 95,
+      "accuracy": 95,
+      "avgScore": 96.66666666666667,
+      "feedback": "A resposta aborda diretamente todas as partes da pergunta, definindo cólica pela 'Regra dos 3' e oferecendo informações adicionais úteis e precisas sobre alívio e características da cólica. A clareza é alta, embora pudesse ser um pouco mais explícita sobre a importância de consultar um pediatra para confirmar o diagnóstico e descartar outras causas de choro excessivo."
+    },
+    {
+      "questionId": 4,
+      "question": "Como fazer massagem para cólica? Massagem I-L-U? Shantala?...",
+      "category": "colica",
+      "relevance": 95,
+      "clarity": 100,
+      "accuracy": 95,
+      "avgScore": 96.66666666666667,
+      "feedback": "A resposta é muito clara e concisa, abordando diretamente as técnicas de alívio da cólica, incluindo a massagem I-L-U. A menção de 'fora da crise' é crucial. A única pequena ressalva é que a Shantala foi perguntada e não mencionada, mas as outras técnicas são igualmente válidas."
+    },
+    {
+      "questionId": 5,
+      "question": "Como é a pega correta na amamentação? Amamentação dói?...",
+      "category": "amamentacao",
+      "relevance": 100,
+      "clarity": 95,
+      "accuracy": 95,
+      "avgScore": 96.66666666666667,
+      "feedback": "A resposta aborda diretamente a pergunta sobre pega correta e dor na amamentação. A dica de ouro é excelente e os sinais de fome são um bônus útil. Poderia detalhar um pouco mais a importância de abocanhar uma boa parte da aréola, não apenas 'mais visível acima', mas a descrição geral é muito boa e segura."
+    }
+  ]
+}

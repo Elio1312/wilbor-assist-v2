@@ -7,6 +7,7 @@ import {
   type WilborKnowledge,
 } from "../drizzle/schema";
 import { invokeLLM } from "./_core/llm";
+import { getWilborSystemPrompt } from "./wilborPrompt";
 import crypto from "crypto";
 
 // ==========================================
@@ -514,59 +515,36 @@ export async function formatRAGResponse(
   triggerValue?: string | null,
   medicalAlert?: string | null,
   imageUrl?: string | null,
-  isFirstMessage: boolean = true
+  isFirstMessage: boolean = true,
+  babyAge?: string,
+  babyWeightGrams?: number,
+  gestationalWeeks?: number,
+  syndromes?: string
 ): Promise<string> {
-  const formatInstructions: Record<string, string> = {
-    pt: `Você é Wilbor-Assist. Formate a resposta abaixo de forma acolhedora e CURTA.
-REGRA CRÍTICA: O nome da mãe é ${motherName}. Use EXATAMENTE "${motherName}" ao se referir a ela. NÃO invente, troque ou use outro nome.${babyName ? ` O bebê se chama ${babyName}. Use EXATAMENTE "${babyName}".` : ""}
-FORMATO OBRIGATÓRIO:
-- ${isFirstMessage ? 'Cumprimento: 1 frase empática curta' : 'NÃO cumprimente. NÃO diga "Olá" ou "Oi". Vá direto ao ponto.'}
-- Resposta: 2-3 frases objetivas com a orientação principal
-- Finalizar com 1 pergunta de retorno para a mãe (criar diálogo)
-- MÁXIMO 150 palavras. Não despeje tudo de uma vez.
-- Use bullet points APENAS para 3+ passos práticos. Destaque ações com negrito.
-- Quando incluir imagem, SEMPRE use formato markdown: ![descrição](url). NUNCA cole URL pura.
-- Se a pergunta da mãe for vaga ou curta (1-3 palavras), PERGUNTE mais antes de responder.`,
-    en: `You are Wilbor-Assist. Format the answer below warmly and BRIEFLY.
-CRITICAL RULE: The mother's name is ${motherName}. Use EXACTLY "${motherName}" when referring to her. Do NOT invent, change or use any other name.${babyName ? ` The baby's name is ${babyName}. Use EXACTLY "${babyName}".` : ""}
-REQUIRED FORMAT:
-- ${isFirstMessage ? 'Greeting: 1 short empathetic sentence' : 'Do NOT greet. Do NOT say "Hi" or "Hello". Go straight to the answer.'}
-- Answer: 2-3 objective sentences with the main guidance
-- End with 1 follow-up question to the mother (create dialogue)
-- MAX 150 words. Don't dump everything at once.
-- Use bullet points ONLY for 3+ practical steps. Bold key actions.
-- When including images, ALWAYS use markdown format: ![description](url). NEVER paste raw URLs.
-- If the mother's question is vague or short (1-3 words), ASK for more context before answering.`,
-    es: `Eres Wilbor-Assist. Formatea la respuesta abajo de forma cálida y BREVE.
-REGLA CRÍTICA: El nombre de la madre es ${motherName}. Usa EXACTAMENTE "${motherName}" al referirte a ella. NO inventes, cambies ni uses otro nombre.${babyName ? ` El bebé se llama ${babyName}. Usa EXACTAMENTE "${babyName}".` : ""}
-FORMATO OBLIGATORIO:
-- ${isFirstMessage ? 'Saludo: 1 frase empática corta' : 'NO saludes. NO digas "Hola". Ve directo a la respuesta.'}
-- Respuesta: 2-3 frases objetivas con la orientación principal
-- Finalizar con 1 pregunta de retorno a la madre (crear diálogo)
-- MÁXIMO 150 palabras. No vuelques todo de una vez.
-- Usa viñetas SOLO para 3+ pasos prácticos. Destaca acciones en negrita.
-- Cuando incluyas imágenes, SIEMPRE usa formato markdown: ![descripción](url). NUNCA pegues URL pura.
-- Si la pregunta de la mamá es vaga o corta (1-3 palabras), PREGUNTA más antes de responder.`,
-  };
+  // Usar o prompt completo antigo (o coração do Wilbor!)
+  const systemPrompt = getWilborSystemPrompt(
+    language,
+    motherName,
+    babyName,
+    babyAge || undefined,
+    babyWeightGrams || undefined,
+    gestationalWeeks || undefined,
+    syndromes || undefined,
+    isFirstMessage
+  );
 
   let fullKnowledge = knowledgeText;
   if (triggerValue) fullKnowledge += `\n\nDado importante: ${triggerValue}`;
   if (medicalAlert) fullKnowledge += `\n\n⚠️ Alerta: ${medicalAlert}`;
 
-  const sourceLabel: Record<string, string> = {
-    pt: "\n\n📋 *Baseado nas diretrizes da Sociedade Brasileira de Pediatria (SBP)*",
-    en: "\n\n📋 *Based on American Academy of Pediatrics (AAP) guidelines*",
-    es: "\n\n📋 *Basado en las directrices de la Sociedad Española de Pediatría (AEP)*",
-  };
-
   const messages = [
     {
       role: "system" as const,
-      content: formatInstructions[language] || formatInstructions.pt,
+      content: systemPrompt,
     },
     {
       role: "user" as const,
-      content: `Pergunta da mãe: "${userMessage}"\n\nConhecimento técnico para usar na resposta:\n${fullKnowledge}\n\nIMPORTANTE: Inclua ao final: ${sourceLabel[language]}${imageUrl ? `\n\nInclua esta imagem na resposta: ${imageUrl}` : ""}`,
+      content: `${userMessage}\n\n[KNOWLEDGE_CONTEXT]:\n${fullKnowledge}${imageUrl ? `\n\n[IMAGE_TO_INCLUDE]: ${imageUrl}` : ""}`,
     },
   ];
 
@@ -574,11 +552,20 @@ FORMATO OBLIGATORIO:
   const reply = response.choices?.[0]?.message?.content;
 
   if (!reply) throw new Error("No response from LLM");
-  if (typeof reply === "string") return reply;
+  
+  // Handle string response
+  if (typeof reply === "string") {
+    return reply;
+  }
+  
+  // Handle array response (content blocks)
   if (Array.isArray(reply)) {
     const textContent = reply.find((part: any) => part.type === "text");
-    if (textContent && "text" in textContent) return (textContent as any).text;
+    if (textContent && "text" in textContent) {
+      return (textContent as any).text;
+    }
   }
+  
   throw new Error("Unexpected response format from LLM");
 }
 

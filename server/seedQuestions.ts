@@ -1,5 +1,6 @@
 import { getDb } from "./db";
-import { wilborQuestions } from "./wilborQuestions";
+import fs from "fs";
+import path from "path";
 import { wilborKnowledgeBase } from "../drizzle/schema";
 
 /**
@@ -13,6 +14,19 @@ export async function seedQuestions() {
     if (!db) {
       console.error("❌ Falha ao conectar ao banco de dados");
       return;
+    }
+
+    // Carregar perguntas do arquivo JSON
+    const questionsFile = path.join(process.cwd(), 'server/wilborQuestionsAll.json');
+    let wilborQuestions = [];
+    
+    if (fs.existsSync(questionsFile)) {
+      const fileContent = fs.readFileSync(questionsFile, 'utf-8');
+      wilborQuestions = JSON.parse(fileContent);
+      console.log(`✅ Carregadas ${wilborQuestions.length} perguntas do arquivo JSON`);
+    } else {
+      console.error(`❌ Arquivo não encontrado: ${questionsFile}`);
+      return { success: false, error: 'Arquivo de perguntas não encontrado' };
     }
 
     console.log("🌱 Iniciando população de perguntas...");

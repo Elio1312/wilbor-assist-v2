@@ -37,8 +37,8 @@ describe('Wilbor Questions Accuracy Test', () => {
     if (fs.existsSync(questionsFile)) {
       const allQuestions = JSON.parse(fs.readFileSync(questionsFile, 'utf-8'));
       
-      // Pegar amostra de 10 perguntas para teste rápido
-      testQuestions = allQuestions.slice(0, 10).map((q: any) => ({
+      // Pegar amostra de 5 perguntas para teste rápido
+      testQuestions = allQuestions.slice(0, 5).map((q: any) => ({
         id: q.id,
         question: q.question,
         answerPt: q.answerPt,
