@@ -36,13 +36,13 @@ export function WhatsAppButton({
     );
   }
 
-  // Variant: fixed button
+  // Variant: fixed button - texto e ícone verde, fundo branco com borda
   return (
     <a
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 bg-white border-2 border-green-500 text-green-500 font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-green-50 ${className}`}
       aria-label="Fale conosco no WhatsApp"
     >
       <MessageCircle className="w-5 h-5" />
