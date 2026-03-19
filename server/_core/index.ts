@@ -40,9 +40,13 @@ async function startServer() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-  // 301 Redirects from old domain (wilborassist.com) to new domain (www.wilbor-assist.com)
+  // 301 Redirects from old domain (wilborassist-ljucsyxh.manus.space) to new domain (www.wilbor-assist.com)
   // This preserves SEO ranking and prevents duplicate content penalties
   const redirectMappings: Record<string, string> = {
+    '/': '/',
+    '/blog': '/blog',
+    '/dashboard': '/dashboard',
+    '/buy-credits': '/buy-credits',
     '/blog/bebe-nao-dorme': '/blog/bebe-nao-dorme',
     '/blog/colica-do-bebe': '/blog/colica-do-bebe',
     '/blog/febre-no-bebe': '/blog/febre-no-bebe',
