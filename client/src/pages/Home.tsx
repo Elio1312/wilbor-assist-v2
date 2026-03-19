@@ -13,7 +13,8 @@ export default function Home() {
 
   const faqItems = [
     { q: "O Wilbor substitui o pediatra?", a: "Não. O Wilbor é um apoio neonatal digital. Em caso de emergência, procure atendimento presencial." },
-    { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 2 consultas grátis. Sem cartão para o plano Visita Livre." },
+    { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos:\n\n🆓 VISITA LIVRE (Grátis): 5 consultas com IA/mês, Trilha de desenvolvimento, Alertas de emergência. Sem cartão.\n\n💜 PREMIUM (R$ 19,90/mês): 500 créditos IA/mês, Acesso completo, Memória do bebê. Se precisar de mais: compre extensão por R$ 9,90. Limite de segurança: máx R$ 10,00/mês em créditos extras.\n\n📚 MANUAL (R$ 29,90): Conteúdo completo sem IA, 55+ receitas, Exercícios pós-parto, Manuais SBP.\n\n💡 Dica: Premium é ideal para mães que querem IA inteligente com segurança financeira!" },
+    { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 5 consultas grátis no plano Visita Livre. Sem cartão necessário." },
     { q: "Para qual idade é indicado?", a: "O Wilbor é indicado para bebês de 0 a 12 meses." },
     { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
     { q: "Quando devo procurar atendimento médico imediatamente?", a: "Em caso de febre acima de 38°C, convulsões, sangramento ou dificuldade respiratória." },
