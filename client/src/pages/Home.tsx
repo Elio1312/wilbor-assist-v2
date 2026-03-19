@@ -4,6 +4,7 @@ import { Heart, Brain, Shield, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile
 import { useState } from "react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export default function Home() {
   const { data: user } = trpc.auth.me.useQuery();
@@ -83,6 +84,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* WhatsApp Floating Button */}
+      <WhatsAppButton 
+        phoneNumber="+55 12 997999971"
+        message="Olá! Gostaria de conhecer o Wilbor"
+        variant="floating"
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -131,13 +139,12 @@ export default function Home() {
               >
                 Testar grátis agora <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-2 border-gray-300 text-gray-900 text-lg h-14 rounded-full hover:bg-gray-50"
-              >
-                💬 Fale no WhatsApp
-              </Button>
+              <WhatsAppButton 
+                phoneNumber="+55 12 997999971"
+                message="Olá! Gostaria de conhecer o Wilbor"
+                variant="fixed"
+                className="text-base h-14"
+              />
             </div>
 
             {/* Trust badges */}
@@ -213,8 +220,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== CTA SECTION - ANTES DO RODAPÉ ===== */}
+      <section className="py-20 px-4 bg-white border-t border-gray-200">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Pronta para começar?</h2>
+          <p className="text-lg text-gray-600 mb-8">Junte-se a milhares de mães que já confiam no Wilbor</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg h-14 rounded-full"
+              onClick={() => window.location.href = getLoginUrl()}
+            >
+              Testar grátis agora <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+            <WhatsAppButton 
+              phoneNumber="+55 12 997999971"
+              message="Olá! Gostaria de conhecer o Wilbor"
+              variant="fixed"
+              className="text-base h-14"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ===== BEFORE/AFTER SECTION ===== */}
-      <section className="py-20 px-4 bg-gray-50">
+      <section className="py-20 px-4 bg-gray-50" id="features">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">A diferença que Wilbor faz</h2>
