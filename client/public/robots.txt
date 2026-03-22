@@ -1,21 +1,36 @@
+# Wilbor-Assist SEO Configuration
+# Controls how search engines crawl and index the site
+# Updated: 2026-03-22
+
+# Allow all bots to crawl the site
 User-agent: *
 Allow: /
+Allow: /blog
 Allow: /blog/
 Allow: /dashboard
-Allow: /chat
+Allow: /buy-credits
+
+# Disallow private pages
 Disallow: /api/
 Disallow: /admin/
 Disallow: /*.json$
 Disallow: /*?*sort=
 Disallow: /*?*filter=
 
-Sitemap: https://www.wilbor-assist.com/sitemap.xml
-Sitemap: https://wilbor-assist.com/sitemap.xml
-
-# Google-specific
+# Specific rules for Google
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
-# Bing
+# Specific rules for Bing
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
+
+# Crawl delay for other bots (in seconds)
+Crawl-delay: 1
+Request-rate: 30/60
+
+# Sitemap locations (multilingual support)
+Sitemap: https://www.wilbor-assist.com/sitemap.xml
+Sitemap: https://www.wilbor-assist.com/sitemap-index.xml

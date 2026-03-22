@@ -1,0 +1,55 @@
+{
+  "query": "-- Create blog_articles table if it doesn't exist\nCREATE TABLE IF NOT EXISTS blog_articles (\n  id VARCHAR(255) PRIMARY KEY,\n  slug VARCHAR(255) NOT NULL UNIQUE,\n  title VARCHAR(500) NOT NULL,\n  meta_description TEXT,\n  keywords JSON,\n  reading_time INT DEFAULT 5,\n  category VARCHAR(100),\n  icon VARCHAR(50),\n  priority VARCHAR(50) DEFAULT 'tier1',\n  language VARCHAR(10) NOT NULL,\n  content LONGTEXT,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX idx_language (language),\n  INDEX idx_slug (slug),\n  INDEX idx_priority (priority),\n  INDEX idx_category (category)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n\n-- Verify table creation\nSHOW TABLES LIKE 'blog_articles';\nDESCRIBE blog_articles;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c1VSXzZW6SU7fm.root --database LJucsyXHjSVaXkbocW4u2f --execute -- Create blog_articles table if it doesn't exist\nCREATE TABLE IF NOT EXISTS blog_articles (\n  id VARCHAR(255) PRIMARY KEY,\n  slug VARCHAR(255) NOT NULL UNIQUE,\n  title VARCHAR(500) NOT NULL,\n  meta_description TEXT,\n  keywords JSON,\n  reading_time INT DEFAULT 5,\n  category VARCHAR(100),\n  icon VARCHAR(50),\n  priority VARCHAR(50) DEFAULT 'tier1',\n  language VARCHAR(10) NOT NULL,\n  content LONGTEXT,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX idx_language (language),\n  INDEX idx_slug (slug),\n  INDEX idx_priority (priority),\n  INDEX idx_category (category)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n\n-- Verify table creation\nSHOW TABLES LIKE 'blog_articles';\nDESCRIBE blog_articles;",
+  "rows": [
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "blog_articles"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "Field\tType\tNull\tKey\tDefault\tExtra"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "id\tvarchar(255)\tNO\tPRI\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "slug\tvarchar(255)\tNO\tUNI\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "title\tvarchar(500)\tNO\t\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "meta_description\ttext\tYES\t\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "keywords\tjson\tYES\t\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "reading_time\tint\tYES\t\t5\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "category\tvarchar(100)\tYES\tMUL\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "icon\tvarchar(50)\tYES\t\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "priority\tvarchar(50)\tYES\tMUL\ttier1\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "language\tvarchar(10)\tNO\tMUL\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "content\tlongtext\tYES\t\tNULL\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "created_at\ttimestamp\tYES\t\tCURRENT_TIMESTAMP\t"
+    },
+    {
+      "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)": "updated_at\ttimestamp\tYES\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_LJucsyXHjSVaXkbocW4u2f (blog_articles)\nblog_articles\nField\tType\tNull\tKey\tDefault\tExtra\nid\tvarchar(255)\tNO\tPRI\tNULL\t\nslug\tvarchar(255)\tNO\tUNI\tNULL\t\ntitle\tvarchar(500)\tNO\t\tNULL\t\nmeta_description\ttext\tYES\t\tNULL\t\nkeywords\tjson\tYES\t\tNULL\t\nreading_time\tint\tYES\t\t5\t\ncategory\tvarchar(100)\tYES\tMUL\tNULL\t\nicon\tvarchar(50)\tYES\t\tNULL\t\npriority\tvarchar(50)\tYES\tMUL\ttier1\t\nlanguage\tvarchar(10)\tNO\tMUL\tNULL\t\ncontent\tlongtext\tYES\t\tNULL\t\ncreated_at\ttimestamp\tYES\t\tCURRENT_TIMESTAMP\t\nupdated_at\ttimestamp\tYES\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\n",
+  "stderr": "",
+  "execution_time_ms": 353
+}

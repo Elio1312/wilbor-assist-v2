@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { registerStripeRoutes } from "../stripeWebhook";
+import sitemapRouter from "../routes/sitemap";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -72,6 +73,10 @@ async function startServer() {
 
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  
+  // Sitemap routes
+  app.use(sitemapRouter);
+  
   // tRPC API
   app.use(
     "/api/trpc",
