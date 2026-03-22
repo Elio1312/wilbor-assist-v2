@@ -937,7 +937,7 @@ O banho de ofurô simula o ambiente do útero e pode acalmar bebês agitados:
 // ==========================================
 // BLOG LIST PAGE
 // ==========================================
-export function Blog() {
+export function BlogList() {
   const [, navigate] = useLocation();
 
   useEffect(() => {
