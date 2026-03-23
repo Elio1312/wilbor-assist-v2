@@ -198,3 +198,11 @@
 - [ ] Implementar estratégia de monetização com afiliados
 - [ ] Documentar deployment final
 - [ ] Executar stress tests
+
+## FASE 19: SEO FIX + GOOGLE INDEXAÇÃO (URGENTE)
+- [x] Sitemap enviado ao Google Search Console
+- [x] Adicionar conteúdo HTML estático (noscript) para crawlers
+- [x] Corrigir título do site publicado (mostrando "Wilbor-Assist v2" em vez do título SEO)
+- [x] Salvar checkpoint e republicar site
+- [ ] Verificar indexação no Google Search Console
+- [ ] Usar URL Inspection nas 10 páginas principais

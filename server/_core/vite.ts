@@ -61,7 +61,19 @@ export function serveStatic(app: Express) {
   app.use(express.static(distPath));
 
   // fall through to index.html if the file doesn't exist
+  // Inject correct SEO title to override VITE_APP_TITLE
   app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+    const indexPath = path.resolve(distPath, "index.html");
+    try {
+      let html = fs.readFileSync(indexPath, "utf-8");
+      // Override the title injected by VITE_APP_TITLE with our SEO-optimized title
+      html = html.replace(
+        /<title>[^<]*<\/title>/,
+        '<title>Wilbor-Assist: Assistente Neonatal IA | Protocolos SBP, OMS e AAP</title>'
+      );
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    } catch {
+      res.sendFile(indexPath);
+    }
   });
 }
