@@ -9,10 +9,16 @@ import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
 import { simpleChatWithWilbor } from "./wilborChat";
 import { stripeRouter } from "./stripeRoutes";
+import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
+import { whatsappRouter } from "./whatsappIntegration";
+import { instagramRouter } from "./instagramIntegration";
 
 export const appRouter = router({
   system: systemRouter,
   stripe: stripeRouter,
+  currency: stripeMultiCurrencyRouter,
+  whatsapp: whatsappRouter,
+  instagram: instagramRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -161,6 +167,89 @@ export const appRouter = router({
       }
       return status;
     }),
+
+    // ==========================================
+    // SLEEP TRACKING
+    // ==========================================
+    startSleep: publicProcedure
+      .input(z.object({ userId: z.number(), babyId: z.number() }))
+      .mutation(async ({ input }) => {
+        return { id: 1, sleepStart: new Date().toISOString() };
+      }),
+
+    endSleep: publicProcedure
+      .input(z.object({ sleepLogId: z.number() }))
+      .mutation(async ({ input }) => {
+        return { success: true, durationMinutes: 45 };
+      }),
+
+    updateSleepQuality: publicProcedure
+      .input(z.object({
+        sleepLogId: z.number(),
+        quality: z.enum(["good", "restless", "bad"]),
+        notes: z.string().optional()
+      }))
+      .mutation(async ({ input }) => {
+        return { success: true };
+      }),
+
+    getActiveSleep: publicProcedure
+      .input(z.object({ userId: z.number(), babyId: z.number() }))
+      .query(async ({ input }) => {
+        return null;
+      }),
+
+    getSleepLogs: publicProcedure
+      .input(z.object({ userId: z.number(), babyId: z.number(), limit: z.number().optional() }))
+      .query(async ({ input }) => {
+        return [];
+      }),
+
+    predictNap: publicProcedure
+      .input(z.object({ userId: z.number(), babyId: z.number() }))
+      .query(async ({ input }) => {
+        return { suggestedTime: null, confidence: "none" };
+      }),
+
+    // ==========================================
+    // DIARY
+    // ==========================================
+    createDiaryEntry: publicProcedure
+      .input(z.object({
+        userId: z.number(),
+        babyId: z.number(),
+        entryDate: z.string(),
+        category: z.enum(["feeding", "sleep", "diaper", "milestone", "health", "mood", "general"]).optional(),
+        title: z.string().optional(),
+        content: z.string().optional(),
+        mood: z.enum(["happy", "calm", "fussy", "crying", "sick"]).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return { id: 1, success: true };
+      }),
+
+    getDiaryEntries: publicProcedure
+      .input(z.object({ userId: z.number(), babyId: z.number(), limit: z.number().optional() }))
+      .query(async ({ input }) => {
+        return [];
+      }),
+
+    updateDiaryEntry: publicProcedure
+      .input(z.object({
+        entryId: z.number(),
+        title: z.string().optional(),
+        content: z.string().optional(),
+        mood: z.enum(["happy", "calm", "fussy", "crying", "sick"]).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return { success: true };
+      }),
+
+    deleteDiaryEntry: publicProcedure
+      .input(z.object({ entryId: z.number() }))
+      .mutation(async ({ input }) => {
+        return { success: true };
+      }),
   }),
 
   feedback: router({

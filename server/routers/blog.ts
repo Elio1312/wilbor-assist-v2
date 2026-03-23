@@ -2,6 +2,7 @@ import { router, publicProcedure } from "../_core/trpc";
 import { z } from "zod";
 import { getDb } from "../db";
 import { sql } from "drizzle-orm";
+import { INTELLIGENT_BLOGS, getBlogBySlug, getRelatedBlogs, searchBlogs, getBlogsByCategory } from "../intelligentBlogs";
 
 export const blogRouter = router({
   // Get all articles for a specific language
@@ -272,5 +273,47 @@ export const blogRouter = router({
         console.error("[Blog] Error fetching categories:", error);
         return [];
       }
+    }),
+
+  // ==========================================
+  // INTELLIGENT BLOGS ENDPOINTS
+  // ==========================================
+
+  // Get all intelligent blogs
+  getAllIntelligentBlogs: publicProcedure
+    .input(z.object({ category: z.string().optional() }))
+    .query(({ input }) => {
+      if (input.category) {
+        return getBlogsByCategory(input.category);
+      }
+      return INTELLIGENT_BLOGS;
+    }),
+
+  // Get intelligent blog by slug
+  getIntelligentBlog: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(({ input }) => {
+      return getBlogBySlug(input.slug) || null;
+    }),
+
+  // Get related intelligent blogs
+  getRelatedIntelligentBlogs: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(({ input }) => {
+      return getRelatedBlogs(input.slug);
+    }),
+
+  // Search intelligent blogs
+  searchIntelligentBlogs: publicProcedure
+    .input(z.object({ query: z.string() }))
+    .query(({ input }) => {
+      return searchBlogs(input.query);
+    }),
+
+  // Get intelligent blogs by category
+  getIntelligentBlogsByCategory: publicProcedure
+    .input(z.object({ category: z.string() }))
+    .query(({ input }) => {
+      return getBlogsByCategory(input.category);
     }),
 });

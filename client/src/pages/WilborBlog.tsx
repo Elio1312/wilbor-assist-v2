@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "wouter";
+import { useLocation, useRoute, Link } from "wouter";
 import { Heart, ArrowRight, ArrowLeft, Share2, Clock, BookOpen, Moon, Waves, Thermometer, UtensilsCrossed, HeartPulse, CheckCircle2, Shield, Sparkles, Syringe, Baby, ShieldCheck, TrendingUp, Bath } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -1375,4 +1375,13 @@ export function BlogArticle({ slug }: { slug: string }) {
       </footer>
     </div>
   );
+}
+
+// Default export para roteamento
+export default function WilborBlogPage() {
+  const [matched, params] = useRoute("/blog/:slug");
+  if (matched && params?.slug) {
+    return <BlogArticle slug={params.slug} />;
+  }
+  return <BlogList />;
 }
