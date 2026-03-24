@@ -7,6 +7,7 @@ import { BlogArticle } from "@/pages/BlogArticle";
 import { FeedbackDashboard } from "@/pages/FeedbackDashboard";
 import Dashboard from "@/pages/Dashboard";
 import BuyCredits from "@/pages/BuyCredits";
+import Checkout from "@/pages/Checkout";
 
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/feedback" component={FeedbackDashboard} />
+      <Route path="/checkout" component={Checkout} />
 
       {/* EN routes */}
       <Route path="/en" component={Home} />
@@ -29,6 +31,7 @@ function Router() {
       <Route path="/en/buy-credits" component={BuyCredits} />
       <Route path="/en/blog" component={Blog} />
       <Route path="/en/blog/:slug" component={BlogArticle} />
+      <Route path="/en/checkout" component={Checkout} />
 
       {/* ES routes */}
       <Route path="/es" component={Home} />
@@ -36,6 +39,7 @@ function Router() {
       <Route path="/es/buy-credits" component={BuyCredits} />
       <Route path="/es/blog" component={Blog} />
       <Route path="/es/blog/:slug" component={BlogArticle} />
+      <Route path="/es/checkout" component={Checkout} />
 
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

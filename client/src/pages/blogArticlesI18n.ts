@@ -720,6 +720,148 @@ The **WHO and AAP** recommend waiting at least **24 hours** after birth for the 
 ---
 **Source:** WHO, American Academy of Pediatrics (AAP).`,
   },
+  {
+    slug: "when-do-babies-start-sleeping-through-the-night",
+    title: "When Do Babies Start Sleeping Through the Night?",
+    excerpt: "Most babies begin sleeping longer stretches between 3-6 months. Learn about sleep milestones, regressions, and AAP-backed tips.",
+    readTime: "5 min read",
+    metaTitle: "When Do Babies Sleep Through the Night? | Wilbor Assist",
+    metaDescription: "Wondering when your baby will sleep through the night? Learn about sleep milestones, regressions, and AAP-backed tips to help your newborn sleep better.",
+    keywords: ["baby sleep", "sleeping through the night", "newborn sleep schedule", "infant sleep regression"],
+    content: `For many new parents, a full night's sleep feels like a distant dream. According to the **American Academy of Pediatrics (AAP)**, "sleeping through the night" for a baby means sleeping a continuous stretch of 6 to 8 hours.
+
+Most babies begin to sleep for longer stretches between **3 and 6 months** of age. By 6 months, about two-thirds of babies are able to sleep through the night regularly. However, every baby is unique — feeding methods, growth spurts, and individual temperament all play significant roles.
+
+## Tips to Encourage Better Sleep
+
+- Establish a **consistent bedtime routine**: warm bath, gentle massage, or reading a book
+- Put your baby to bed **drowsy but awake** to help them learn to self-soothe
+- Keep the room **dark and cool** (18–20°C)
+- Use **white noise** to mask household sounds
+
+For personalized, AAP-based guidance tailored to your baby's age, Wilbor Assist is here 24/7.
+
+---
+**Source:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "baby-growth-spurts-signs-and-what-to-do",
+    title: "Baby Growth Spurts: Signs and What to Do",
+    excerpt: "Recognize the signs of baby growth spurts and learn how to respond to your baby's changing needs with patience.",
+    readTime: "4 min read",
+    metaTitle: "Baby Growth Spurts: Signs, Symptoms & Tips | Wilbor Assist",
+    metaDescription: "Discover the common signs of baby growth spurts, when they happen, and how to soothe your fussy baby during these crucial developmental leaps.",
+    keywords: ["baby growth spurts", "fussy baby", "infant development", "baby feeding schedule"],
+    content: `Growth spurts are periods of rapid physical development that every baby experiences during their first year. These phases can disrupt established routines, but recognizing the signs helps you respond with patience.
+
+## Common Signs of a Growth Spurt
+
+- **Increased hunger** — feeding more frequently than usual
+- **Sleep disruptions** — waking more often at night
+- **Extra fussiness** — crying more than normal
+- **Clinginess** — wanting to be held constantly
+
+## When Do Growth Spurts Happen?
+
+Typically at: **7–10 days**, **2–3 weeks**, **4–6 weeks**, **3 months**, **6 months**, and **9 months**.
+
+## What to Do
+
+Follow your baby's lead. Offer extra feedings when they show hunger cues, and provide plenty of comfort and cuddles. Growth spurts usually last **2–3 days**. For more personalized advice, consult Wilbor Assist anytime.
+
+---
+**Source:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "newborn-jaundice-causes-and-treatment",
+    title: "Newborn Jaundice: Causes and Treatment",
+    excerpt: "Learn about newborn jaundice, its causes, symptoms, and when to seek medical treatment based on AAP guidelines.",
+    readTime: "5 min read",
+    metaTitle: "Newborn Jaundice: Causes, Symptoms & Treatment | Wilbor Assist",
+    metaDescription: "Learn about newborn jaundice, its causes, symptoms, and when to seek medical treatment. Get AAP-backed information on managing infant jaundice.",
+    keywords: ["newborn jaundice", "infant jaundice treatment", "bilirubin levels", "yellow skin baby"],
+    content: `Newborn jaundice is a **common condition** characterized by a yellowing of a baby's skin and the whites of their eyes. It occurs when there is an excess of **bilirubin** in the baby's blood.
+
+## Why Does It Happen?
+
+Because a newborn's liver is still developing, it may not process bilirubin quickly enough. Most cases are **mild and resolve on their own** within 1–2 weeks as the baby's liver matures.
+
+## When to See a Doctor
+
+Seek medical attention if:
+- Jaundice **spreads or deepens** in color
+- Baby becomes **unusually lethargic** or difficult to wake
+- Jaundice appears in the **first 24 hours** of life
+
+## Treatment
+
+In cases where bilirubin levels are high, doctors may recommend **phototherapy** — placing the baby under special blue lights that help break down bilirubin. Severe cases are rare.
+
+**Frequent feeding** (breast milk or formula) helps the baby pass bilirubin through their stool.
+
+---
+**Source:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "baby-teething-symptoms-and-relief",
+    title: "Baby Teething: Symptoms and Relief",
+    excerpt: "Is your baby teething? Learn the common symptoms and discover safe, effective ways to provide relief for sore gums.",
+    readTime: "4 min read",
+    metaTitle: "Baby Teething: Symptoms & Safe Relief Methods | Wilbor Assist",
+    metaDescription: "Is your baby teething? Learn the common symptoms of teething and discover safe, effective ways to provide relief for your little one's sore gums.",
+    keywords: ["baby teething", "teething symptoms", "teething relief", "sore gums baby"],
+    content: `Teething is a major milestone in a baby's first year. Most babies get their **first tooth around 6 months**, though timing varies widely.
+
+## Common Signs of Teething
+
+- **Excessive drooling**
+- **Chewing on solid objects**
+- **Irritability** and fussiness
+- **Swollen, tender gums**
+- Slight increase in body temperature (not a true fever)
+
+> A true fever (over **38°C / 100.4°F**) is NOT caused by teething and should be evaluated by a doctor.
+
+## Safe Relief Methods
+
+- **Chilled teething ring** (not frozen) to chew on
+- **Cold, wet washcloth** for gum massage
+- **Gentle finger massage** on the gums
+- Consult your pediatrician about **acetaminophen** if needed
+
+⚠️ **Avoid** teething gels containing **benzocaine** — they can pose serious health risks.
+
+---
+**Source:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "postpartum-anxiety-vs-depression-key-differences",
+    title: "Postpartum Anxiety vs Depression: Key Differences",
+    excerpt: "Learn the key differences between postpartum anxiety and postpartum depression, and when to seek professional help.",
+    readTime: "6 min read",
+    metaTitle: "Postpartum Anxiety vs Depression: Understanding the Differences",
+    metaDescription: "Learn the key differences between postpartum anxiety and postpartum depression. Discover symptoms, coping strategies, and when to seek professional help.",
+    keywords: ["postpartum anxiety", "postpartum depression", "PPA vs PPD", "maternal mental health"],
+    content: `The postpartum period is a time of immense physical and emotional change. While many are familiar with the "baby blues," more severe mood disorders like **Postpartum Depression (PPD)** and **Postpartum Anxiety (PPA)** are common but often misunderstood.
+
+## Key Differences
+
+| | Postpartum Depression (PPD) | Postpartum Anxiety (PPA) |
+|---|---|---|
+| **Main feeling** | Persistent sadness, hopelessness | Excessive worry, fear |
+| **Thoughts** | Negative, empty | Racing, catastrophic |
+| **Physical symptoms** | Fatigue, appetite changes | Rapid heartbeat, dizziness |
+| **Bonding** | Difficulty bonding with baby | Overprotective of baby |
+
+## Important: Both Are Treatable
+
+PPD and PPA can often co-occur. Both conditions are **highly treatable** with professional help — therapy, medication, or support groups.
+
+Experiencing these feelings does **not** make you a bad parent. It is a medical condition that requires care. If you or someone you know is struggling, reaching out to a healthcare provider is the first step.
+
+---
+**Source:** American Academy of Pediatrics (AAP), WHO.`,
+  },
 ];
 
 export const blogArticlesES: BlogArticleTranslation[] = [
@@ -1255,5 +1397,136 @@ La **OMS y la AAP** recomiendan esperar al menos **24 horas** después del nacim
 
 ---
 **Fuente:** OMS y American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "cuando-empiezan-los-bebes-a-dormir-toda-la-noche",
+    title: "\u00bfCu\u00e1ndo Empiezan los Beb\u00e9s a Dormir Toda la Noche?",
+    excerpt: "La mayor\u00eda de los beb\u00e9s comienza a dormir tramos m\u00e1s largos entre los 3 y 6 meses. Conoce los hitos del sue\u00f1o y consejos basados en la AAP.",
+    readTime: "5 min de lectura",
+    metaTitle: "\u00bfCu\u00e1ndo Duermen los Beb\u00e9s Toda la Noche? | Wilbor Assist",
+    metaDescription: "Descubre cu\u00e1ndo tu beb\u00e9 empezar\u00e1 a dormir toda la noche. Conoce los hitos del sue\u00f1o, las regresiones y consejos basados en la AAP.",
+    keywords: ["sue\u00f1o del beb\u00e9", "dormir toda la noche", "horario de sue\u00f1o del reci\u00e9n nacido", "regresi\u00f3n del sue\u00f1o"],
+    content: `Para muchos padres primerizos, una noche completa de sue\u00f1o parece un sue\u00f1o lejano. Seg\u00fan la **AAP**, \"dormir toda la noche\" para un beb\u00e9 significa dormir un tramo continuo de 6 a 8 horas.
+
+La mayor\u00eda de los beb\u00e9s comienza a dormir por per\u00edodos m\u00e1s largos entre los **3 y 6 meses** de edad. A los 6 meses, aproximadamente dos tercios de los beb\u00e9s pueden dormir toda la noche regularmente.
+
+## Consejos para Fomentar Mejores H\u00e1bitos de Sue\u00f1o
+
+- Establece una **rutina constante** a la hora de acostarse: ba\u00f1o tibio, masaje suave o leer un libro
+- Acuesta a tu beb\u00e9 **somnoliento pero despierto** para que aprenda a calmarse solo
+- Mant\u00e9n la habitaci\u00f3n **oscura y fresca** (18\u201320\u00b0C)
+- Usa **ruido blanco** para enmascarar los sonidos del hogar
+
+Si tienes dificultades, Wilbor Assist est\u00e1 aqu\u00ed 24/7 para brindarte orientaci\u00f3n personalizada.
+
+---
+**Fuente:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "denticion-del-bebe-sintomas-y-alivio",
+    title: "Dentici\u00f3n del Beb\u00e9: S\u00edntomas y Alivio",
+    excerpt: "\u00bfA tu beb\u00e9 le est\u00e1n saliendo los dientes? Conoce los s\u00edntomas y descubre formas seguras de aliviar sus enc\u00edas doloridas.",
+    readTime: "4 min de lectura",
+    metaTitle: "Dentici\u00f3n del Beb\u00e9: S\u00edntomas y M\u00e9todos Seguros de Alivio | Wilbor Assist",
+    metaDescription: "\u00bfA tu beb\u00e9 le est\u00e1n saliendo los dientes? Conoce los s\u00edntomas comunes de la dentici\u00f3n y descubre formas seguras y efectivas de aliviar sus enc\u00edas doloridas.",
+    keywords: ["dentici\u00f3n del beb\u00e9", "s\u00edntomas de dentici\u00f3n", "alivio de dentici\u00f3n", "enc\u00edas doloridas beb\u00e9"],
+    content: `La dentici\u00f3n es un hito importante en el primer a\u00f1o de un beb\u00e9. A la mayor\u00eda les sale su **primer diente alrededor de los 6 meses**, aunque el momento puede variar.
+
+## Signos Comunes de Dentici\u00f3n
+
+- **Babeo excesivo**
+- **Masticar objetos s\u00f3lidos**
+- **Irritabilidad** y mal humor
+- **Enc\u00edas hinchadas y sensibles**
+
+> Una fiebre real (m\u00e1s de **38\u00b0C**) NO es causada por la dentici\u00f3n y debe ser evaluada por un m\u00e9dico.
+
+## M\u00e9todos Seguros de Alivio
+
+- **Mordedor fr\u00edo** (no congelado) para masticar
+- **Toallita h\u00fameda y fr\u00eda** para masaje de enc\u00edas
+- **Masaje suave con el dedo** en las enc\u00edas
+
+\u26a0\ufe0f **Evita** los geles para la dentici\u00f3n que contengan **benzoca\u00edna**.
+
+---
+**Fuente:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ictericia-neonatal-causas-y-tratamiento",
+    title: "Ictericia Neonatal: Causas y Tratamiento",
+    excerpt: "Aprende sobre la ictericia neonatal, sus causas, s\u00edntomas y cu\u00e1ndo buscar tratamiento m\u00e9dico seg\u00fan la AAP.",
+    readTime: "5 min de lectura",
+    metaTitle: "Ictericia Neonatal: Causas, S\u00edntomas y Tratamiento | Wilbor Assist",
+    metaDescription: "Aprende sobre la ictericia neonatal, sus causas, s\u00edntomas y cu\u00e1ndo buscar tratamiento m\u00e9dico. Obtén informaci\u00f3n respaldada por la AAP.",
+    keywords: ["ictericia neonatal", "tratamiento ictericia infantil", "niveles de bilirrubina", "beb\u00e9 piel amarilla"],
+    content: `La ictericia neonatal es una **afección com\u00fan** caracterizada por el color amarillento de la piel y los ojos del beb\u00e9. Ocurre cuando hay un exceso de **bilirrubina** en la sangre.
+
+## \u00bfPor Qu\u00e9 Ocurre?
+
+Debido a que el h\u00edgado del reci\u00e9n nacido a\u00fan se est\u00e1 desarrollando, puede no procesar la bilirrubina lo suficientemente r\u00e1pido. La mayor\u00eda de los casos son **leves y se resuelven solos** en 1\u20132 semanas.
+
+## Cu\u00e1ndo Consultar al M\u00e9dico
+
+- La ictericia **se extiende o se oscurece**
+- El beb\u00e9 se vuelve **inusualmente let\u00e1rgico**
+- La ictericia aparece en las **primeras 24 horas** de vida
+
+## Tratamiento
+
+En casos con niveles altos de bilirrubina, los m\u00e9dicos pueden recomendar **fototerapia**. La **alimentaci\u00f3n frecuente** ayuda al beb\u00e9 a eliminar la bilirrubina.
+
+---
+**Fuente:** American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ansiedad-posparto-sintomas-y-diferencias-con-depresion",
+    title: "Ansiedad Posparto vs Depresi\u00f3n: Diferencias Clave",
+    excerpt: "Conoce las diferencias clave entre la ansiedad posparto y la depresi\u00f3n posparto, y cu\u00e1ndo buscar ayuda profesional.",
+    readTime: "6 min de lectura",
+    metaTitle: "Ansiedad Posparto vs Depresi\u00f3n: Entendiendo las Diferencias",
+    metaDescription: "Conoce las diferencias clave entre la ansiedad posparto y la depresi\u00f3n posparto. Descubre los s\u00edntomas y cu\u00e1ndo buscar ayuda profesional.",
+    keywords: ["ansiedad posparto", "depresi\u00f3n posparto", "APP vs DPP", "salud mental materna"],
+    content: `El per\u00edodo posparto es un momento de inmensos cambios f\u00edsicos y emocionales. La **Depresi\u00f3n Posparto (DPP)** y la **Ansiedad Posparto (APP)** son comunes pero a menudo incomprendidas.
+
+## Diferencias Clave
+
+| | Depresi\u00f3n Posparto (DPP) | Ansiedad Posparto (APP) |
+|---|---|---|
+| **Sentimiento principal** | Tristeza persistente, desesperanza | Preocupaci\u00f3n excesiva, miedo |
+| **Pensamientos** | Negativos, vac\u00edos | Acelerados, catastr\u00f3ficos |
+| **S\u00edntomas f\u00edsicos** | Fatiga, cambios de apetito | Latidos r\u00e1pidos, mareos |
+
+## Importante: Ambas Son Tratables
+
+La DPP y la APP pueden coexistir. Ambas son **altamente tratables** con ayuda profesional \u2014 terapia, medicaci\u00f3n o grupos de apoyo.
+
+Experimentar estos sentimientos **no** te convierte en mala madre. Es una condici\u00f3n m\u00e9dica que requiere atenci\u00f3n.
+
+---
+**Fuente:** American Academy of Pediatrics (AAP), OMS.`,
+  },
+  {
+    slug: "crecimiento-del-bebe-tablas-de-peso-y-talla-oms",
+    title: "Crecimiento del Beb\u00e9: Tablas de Peso y Talla de la OMS",
+    excerpt: "Entiende c\u00f3mo usar las tablas de crecimiento de la OMS para monitorear el peso y la talla de tu beb\u00e9.",
+    readTime: "4 min de lectura",
+    metaTitle: "Crecimiento del Beb\u00e9: Tablas de Peso y Talla de la OMS | Wilbor Assist",
+    metaDescription: "Entiende c\u00f3mo usar las tablas de crecimiento de la OMS para monitorear el peso y la talla de tu beb\u00e9. Conoce qu\u00e9 significan los percentiles.",
+    keywords: ["crecimiento del beb\u00e9", "tablas de peso beb\u00e9", "percentiles OMS", "desarrollo infantil"],
+    content: `Monitorear el crecimiento de tu beb\u00e9 es fundamental en las visitas de control. Los pediatras utilizan las **tablas de crecimiento de la OMS** para hacer seguimiento del peso, longitud y circunferencia de la cabeza desde el nacimiento hasta los 2 a\u00f1os.
+
+## \u00bfQu\u00e9 Son los Percentiles?
+
+Cuando el m\u00e9dico mide a tu beb\u00e9, traza los n\u00fameros en la tabla para determinar su **percentil**. Estar en un percentil alto o bajo **no indica necesariamente un problema** \u2014 lo importante es un **patr\u00f3n de crecimiento constante** a lo largo del tiempo.
+
+## Cu\u00e1ndo Preocuparse
+
+Si la curva de crecimiento de tu beb\u00e9 **cae dr\u00e1sticamente** o cruza varios percentiles, tu pediatra puede investigar m\u00e1s a fondo.
+
+Si tienes preguntas sobre las medidas de tu beb\u00e9, Wilbor Assist est\u00e1 disponible para ofrecerte orientaci\u00f3n basada en la OMS y la AAP.
+
+---
+**Fuente:** Organizaci\u00f3n Mundial de la Salud (OMS), American Academy of Pediatrics (AAP).`,
   },
 ];

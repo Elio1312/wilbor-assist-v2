@@ -244,3 +244,12 @@
 - [ ] 5 novos artigos EN (a fazer na conta antiga)
 - [ ] 5 novos artigos ES (a fazer na conta antiga)
 - [ ] Google Ads textos EN/ES/PT (a fazer na conta antiga)
+
+## FASE 24: ENTREGA MANUS 2 — NOVOS ARTIGOS + STRIPE
+- [ ] Adicionar 5 novos artigos EN no blogArticlesI18n.ts
+- [ ] Adicionar 5 novos artigos ES no blogArticlesI18n.ts
+- [ ] Criar server/routers/stripe.ts (createCheckout, getPaymentStatus)
+- [ ] Criar client/src/pages/Checkout.tsx (seletor plano/moeda + Stripe)
+- [ ] Registrar stripeRouter no routers.ts principal
+- [ ] Adicionar rota /checkout no App.tsx
+- [ ] Build, checkpoint e publicar
