@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { useI18n } from "@/contexts/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 // CDN Image URLs
 const IMAGES = {
@@ -22,10 +24,11 @@ export default function Home() {
   const isAuthenticated = !!user;
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const loginUrl = getLoginUrl();
+  const { t, locale, localePath } = useI18n();
 
-  const faqItems = [
+  const faqItemsPt = [
     { q: "O Wilbor substitui o pediatra?", a: "Não. O Wilbor é um apoio neonatal digital. Em caso de emergência, procure atendimento presencial." },
-    { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos:\n\n🆓 VISITA LIVRE (Grátis): 5 consultas com IA/mês, Trilha de desenvolvimento, Alertas de emergência. Sem cartão.\n\n💜 PREMIUM (R$ 19,90/mês): 500 créditos IA/mês, Acesso completo, Memória do bebê. Se precisar de mais: compre extensão por R$ 9,90. Limite de segurança: máx R$ 10,00/mês em créditos extras.\n\n📚 MANUAL (R$ 29,90): Conteúdo completo sem IA, 55+ receitas, Exercícios pós-parto, Manuais SBP.\n\n💡 Dica: Premium é ideal para mães que querem IA inteligente com segurança financeira!" },
+    { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos: VISITA LIVRE (Grátis): 5 consultas com IA/mês. PREMIUM (R$ 19,90/mês): 500 créditos IA/mês. MANUAL (R$ 29,90): Conteúdo completo sem IA." },
     { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 5 consultas grátis no plano Visita Livre. Sem cartão necessário." },
     { q: "Para qual idade é indicado?", a: "O Wilbor é indicado para bebês de 0 a 12 meses." },
     { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
@@ -33,62 +36,83 @@ export default function Home() {
     { q: "Posso usar em mais de um bebê?", a: "Sim! O Wilbor suporta gêmeos, trigêmeos e múltiplos bebês com perfis individuais." },
     { q: "Funciona em outros idiomas?", a: "Sim! O Wilbor está disponível em Português, Inglês e Espanhol." },
   ];
+  const faqItemsEn = [
+    { q: "Does Wilbor replace a pediatrician?", a: "No. Wilbor is digital neonatal support. In case of emergency, seek in-person care." },
+    { q: "How do Wilbor plans work?", a: "We have 3 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($9.90/mo): 500 AI credits/month. MANUAL ($14.90): Full content without AI." },
+    { q: "Is it free? Do I need a credit card?", a: "Yes, start with 5 free consultations on the Free Visit plan. No credit card required." },
+    { q: "What age range is it for?", a: "Wilbor is designed for babies from 0 to 12 months." },
+    { q: "Is it based on reliable protocols?", a: "Yes, all guidance follows official recommendations from AAP, WHO, and SBP." },
+    { q: "When should I seek immediate medical attention?", a: "In case of fever above 100.4°F (38°C), seizures, bleeding, or difficulty breathing." },
+    { q: "Can I use it for more than one baby?", a: "Yes! Wilbor supports twins, triplets, and multiple babies with individual profiles." },
+    { q: "Does it work in other languages?", a: "Yes! Wilbor is available in Portuguese, English, and Spanish." },
+  ];
+  const faqItemsEs = [
+    { q: "¿Wilbor reemplaza al pediatra?", a: "No. Wilbor es apoyo neonatal digital. En caso de emergencia, busque atención presencial." },
+    { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 3 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($9.90/mes): 500 créditos IA/mes. MANUAL ($14.90): Contenido completo sin IA." },
+    { q: "¿Es gratis? ¿Necesito tarjeta?", a: "Sí, empieza con 5 consultas gratis en el plan Visita Libre. Sin tarjeta necesaria." },
+    { q: "¿Para qué edad está indicado?", a: "Wilbor está diseñado para bebés de 0 a 12 meses." },
+    { q: "¿Está basado en protocolos confiables?", a: "Sí, todas las orientaciones siguen las recomendaciones oficiales de AAP, OMS y SBP." },
+    { q: "¿Cuándo debo buscar atención médica inmediata?", a: "En caso de fiebre superior a 38°C, convulsiones, sangrado o dificultad respiratoria." },
+    { q: "¿Puedo usarlo para más de un bebé?", a: "¡Sí! Wilbor soporta gemelos, trillizos y múltiples bebés con perfiles individuales." },
+    { q: "¿Funciona en otros idiomas?", a: "¡Sí! Wilbor está disponible en Portugués, Inglés y Español." },
+  ];
+  const faqItems = locale === "en" ? faqItemsEn : locale === "es" ? faqItemsEs : faqItemsPt;
 
   const features = [
-    { icon: Brain, title: "Chat 24h", desc: "Tire dúvidas em segundos" },
-    { icon: Bell, title: "Alertas de Emergência", desc: "Detecta sinais de alerta" },
-    { icon: Utensils, title: "Receitas por Idade", desc: "55 receitas com fotos" },
-    { icon: TrendingUp, title: "Trilha de Desenvolvimento", desc: "Marcos semana a semana" },
-    { icon: Moon, title: "Predição de Sono", desc: "Próxima soneca sugerida" },
-    { icon: BookOpen, title: "Diário do Bebê", desc: "Registre momentos especiais" },
-    { icon: Smile, title: "Perfil do Bebê", desc: "Respostas personalizadas" },
-    { icon: Wind, title: "Técnicas de Cólica", desc: "Shantala, swaddle, I-L-U" },
+    { icon: Brain, title: t("features.chat"), desc: t("features.chat_desc") },
+    { icon: Bell, title: t("features.emergency"), desc: t("features.emergency_desc") },
+    { icon: Utensils, title: t("features.recipes"), desc: t("features.recipes_desc") },
+    { icon: TrendingUp, title: t("features.milestones"), desc: t("features.milestones_desc") },
+    { icon: Moon, title: t("features.sleep"), desc: t("features.sleep_desc") },
+    { icon: BookOpen, title: t("features.diary"), desc: t("features.diary_desc") },
+    { icon: Smile, title: t("features.profile"), desc: t("features.profile_desc") },
+    { icon: Wind, title: t("features.colic"), desc: t("features.colic_desc") },
   ];
 
   const motherFeatures = [
-    { icon: Droplets, title: "Controle de Peso", desc: "Gráfico de evolução + IMC ideal" },
-    { icon: Heart, title: "Exercícios em Casa", desc: "Rotinas por fase pós-parto" },
-    { icon: Apple, title: "Alimentação", desc: "Emagrecer amamentando" },
-    { icon: Shield, title: "Cuidados & Produtos", desc: "Estrias, cabelo, pele" },
+    { icon: Droplets, title: t("mother.weight"), desc: t("mother.weight_desc") },
+    { icon: Heart, title: t("mother.exercise"), desc: t("mother.exercise_desc") },
+    { icon: Apple, title: t("mother.food"), desc: t("mother.food_desc") },
+    { icon: Shield, title: t("mother.care"), desc: t("mother.care_desc") },
   ];
 
   const plans = [
     {
-      name: "Visita Livre",
-      price: "Grátis",
-      desc: "Conheça sem compromisso",
+      name: t("pricing.free_name"),
+      price: t("pricing.free_price"),
+      desc: t("pricing.free_desc"),
       features: [
-        "5 consultas completas com IA",
-        "Trilha de desenvolvimento",
-        "Alertas de emergência",
-        "Acesso básico ao chat",
+        t("pricing.free_f1"),
+        t("pricing.free_f2"),
+        t("pricing.free_f3"),
+        t("pricing.free_f4"),
       ],
     },
     {
-      name: "Premium",
-      price: "R$ 19,90",
-      period: "/mês",
-      desc: "Acesso completo + IA com 500 créditos/mês",
+      name: t("pricing.premium_name"),
+      price: t("pricing.premium_price"),
+      period: t("pricing.premium_period"),
+      desc: t("pricing.premium_desc"),
       popular: true,
       features: [
-        "Tudo do plano Manual",
-        "Chat IA com 500 créditos/mês",
-        "Memória do bebê (histórico)",
-        "Predição de sono inteligente",
-        "Alertas de emergência",
-        "Suporte prioritário",
+        t("pricing.premium_f1"),
+        t("pricing.premium_f2"),
+        t("pricing.premium_f3"),
+        t("pricing.premium_f4"),
+        t("pricing.premium_f5"),
+        t("pricing.premium_f6"),
       ],
     },
     {
-      name: "Manual",
-      price: "R$ 29,90",
-      desc: "Conteúdo completo, sem IA",
+      name: t("pricing.manual_name"),
+      price: t("pricing.manual_price"),
+      desc: t("pricing.manual_desc"),
       features: [
-        "55+ receitas com fotos",
-        "Exercícios pós-parto",
-        "Manuais SBP completos",
-        "Trilha de desenvolvimento",
-        "Diário do bebê",
+        t("pricing.manual_f1"),
+        t("pricing.manual_f2"),
+        t("pricing.manual_f3"),
+        t("pricing.manual_f4"),
+        t("pricing.manual_f5"),
       ],
     },
   ];
@@ -110,14 +134,15 @@ export default function Home() {
             <span className="text-xl font-bold text-gray-900">Wilbor</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/blog">
-              <a className="text-gray-600 hover:text-gray-900 font-medium">Blog</a>
+            <LanguageSwitcher />
+            <Link href={localePath("/blog")}>
+              <a className="text-gray-600 hover:text-gray-900 font-medium">{t("nav.blog")}</a>
             </Link>
             {isAuthenticated ? (
-              <Button className="bg-purple-600 hover:bg-purple-700">Dashboard</Button>
+              <Button className="bg-purple-600 hover:bg-purple-700">{t("nav.dashboard")}</Button>
             ) : (
               <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => window.location.href = getLoginUrl()}>
-                Entrar
+                {t("nav.enter")}
               </Button>
             )}
           </div>
@@ -131,13 +156,13 @@ export default function Home() {
           <div className="space-y-8">
             <div className="space-y-4">
               <div className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">
-                ✨ Seu companheiro de maternidade
+                {t("hero.badge")}
               </div>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-                Você não está sozinha nessa jornada.
+                {t("hero.h1")}
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Wilbor é um <span className="font-semibold text-purple-600">apoio inteligente digital baseado em protocolos SBP/OMS/AAP</span> que lembra de cada detalhe do seu bebê e responde com carinho, sem julgamentos.
+                {t("hero.desc")}
               </p>
             </div>
 
@@ -148,7 +173,7 @@ export default function Home() {
                 className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg h-14 rounded-full"
                 onClick={() => window.location.href = getLoginUrl()}
               >
-                Testar grátis agora <ArrowRight className="ml-2 w-5 h-5" />
+                {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <WhatsAppButton 
                 phoneNumber="+55 12 997999971"
@@ -162,15 +187,15 @@ export default function Home() {
             <div className="flex flex-wrap gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-600" />
-                Sem cadastro obrigatório
+                {t("hero.trust_1")}
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-600" />
-                Resposta em segundos
+                {t("hero.trust_2")}
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-600" />
-                Baseado em SBP/OMS/AAP
+                {t("hero.trust_3")}
               </div>
             </div>
           </div>
@@ -195,8 +220,8 @@ export default function Home() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Acompanhe cada fase do seu bebê</h2>
-            <p className="text-xl text-gray-600">Alertas inteligentes e monitoramento em tempo real</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("trackers.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("trackers.subtitle")}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -262,38 +287,38 @@ export default function Home() {
       <section className="py-20 px-4 bg-white" id="features">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">A diferença que Wilbor faz</h2>
-            <p className="text-xl text-gray-600">Veja como a vida muda com o apoio certo</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("compare.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("compare.subtitle")}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Before */}
             <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-red-700 mb-6 flex items-center gap-2">
-                <span>❌</span> Antes do Wilbor
+                <span>❌</span> {t("compare.before")}
               </h3>
               <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Pânico às 3 da manhã procurando no Google</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>47 abas abertas sobre introdução alimentar</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Esquecendo datas importantes de vacinas</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Se sentindo julgada em grupos de mães</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Gastando R$200+ em consultas desnecessárias</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Noites sem dormir de preocupação</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_1")}</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_2")}</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_3")}</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_4")}</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_5")}</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_6")}</span></li>
               </ul>
             </div>
 
             {/* After */}
             <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-green-700 mb-6 flex items-center gap-2">
-                <span>✅</span> Com Wilbor
+                <span>✅</span> {t("compare.after")}
               </h3>
               <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Chat que responde em segundos, 24h</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Guia completo em um único lugar</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Alertas automáticos de vacinas</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>IA que não julga, apenas apoia</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Economiza R$200+ em consultas</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Dorme tranquila com respostas confiáveis</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_1")}</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_2")}</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_3")}</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_4")}</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_5")}</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_6")}</span></li>
               </ul>
             </div>
           </div>
@@ -304,8 +329,8 @@ export default function Home() {
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Para o seu bebê</h2>
-            <p className="text-xl text-gray-600">Funcionalidades pensadas em cada fase do desenvolvimento</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("features.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("features.subtitle")}</p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
@@ -325,10 +350,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              ✨ Novo
+              {t("mother.badge")}
             </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">E você, mamãe?</h2>
-            <p className="text-xl text-gray-600">Também merecia cuidado. Recupere seu corpo, cuide da sua saúde</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("mother.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("mother.subtitle")}</p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
@@ -347,7 +372,7 @@ export default function Home() {
               className="bg-green-600 hover:bg-green-700 text-white text-lg h-14 rounded-full"
               onClick={() => window.location.href = getLoginUrl()}
             >
-              Acessar "Meu Corpo" <ArrowRight className="ml-2 w-5 h-5" />
+              {t("mother.cta")} <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>
         </div>
@@ -357,8 +382,8 @@ export default function Home() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">O que as mães dizem</h2>
-            <p className="text-xl text-gray-600">Resultados reais de quem usa o Wilbor</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("testimonials.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("testimonials.subtitle")}</p>
           </div>
           <div className="rounded-2xl overflow-hidden shadow-xl">
             <img 
@@ -377,24 +402,24 @@ export default function Home() {
       <section className="py-20 px-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
         <div className="max-w-6xl mx-auto text-white text-center">
           <div className="inline-block bg-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            ✓ Conteúdo validado
+            {t("credibility.badge")}
           </div>
-          <h2 className="text-4xl font-bold mb-6">Baseado nas diretrizes da SBP, OMS e AAP</h2>
+          <h2 className="text-4xl font-bold mb-6">{t("credibility.h2")}</h2>
           <p className="text-xl text-white/90 max-w-2xl mx-auto mb-8">
-            Todas as orientações seguem as recomendações oficiais da Sociedade Brasileira de Pediatria, Organização Mundial da Saúde e Academia Americana de Pediatria.
+            {t("credibility.desc")}
           </p>
           <div className="flex justify-center gap-8 flex-wrap">
             <div className="bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="text-3xl font-bold">384+</div>
-              <div className="text-sm text-white/80">Perguntas trilíngues</div>
+              <div className="text-3xl font-bold">{t("credibility.stat_1")}</div>
+              <div className="text-sm text-white/80">{t("credibility.stat_1_label")}</div>
             </div>
             <div className="bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="text-3xl font-bold">55+</div>
-              <div className="text-sm text-white/80">Receitas com fotos</div>
+              <div className="text-3xl font-bold">{t("credibility.stat_2")}</div>
+              <div className="text-sm text-white/80">{t("credibility.stat_2_label")}</div>
             </div>
             <div className="bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="text-3xl font-bold">100%</div>
-              <div className="text-sm text-white/80">Baseado em evidências</div>
+              <div className="text-3xl font-bold">{t("credibility.stat_3")}</div>
+              <div className="text-sm text-white/80">{t("credibility.stat_3_label")}</div>
             </div>
           </div>
         </div>
@@ -404,8 +429,8 @@ export default function Home() {
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Planos simples e transparentes</h2>
-            <p className="text-xl text-gray-600">Escolha o que funciona melhor para você</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("pricing.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("pricing.subtitle")}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -420,7 +445,7 @@ export default function Home() {
               >
                 {plan.popular && (
                   <div className="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
-                    Mais popular
+                    {t("pricing.premium_popular")}
                   </div>
                 )}
                 <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
@@ -439,7 +464,7 @@ export default function Home() {
                   }`}
                   onClick={() => window.location.href = getLoginUrl()}
                 >
-                  Começar agora
+                  {t("pricing.cta")}
                 </Button>
 
                 <div className="space-y-3">
@@ -456,7 +481,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <p className="text-gray-600">
-              Todos os planos incluem: Sem cartão obrigatório · Cancele quando quiser · Suporte por email
+              {t("pricing.footer")}
             </p>
           </div>
         </div>
@@ -466,7 +491,7 @@ export default function Home() {
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Dúvidas frequentes</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("faq.h2")}</h2>
           </div>
 
           <div className="space-y-4">
@@ -496,9 +521,9 @@ export default function Home() {
       <section className="relative py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-600 overflow-hidden">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="text-white">
-            <h2 className="text-4xl font-bold mb-6">Pronta para essa jornada?</h2>
+            <h2 className="text-4xl font-bold mb-6">{t("final_cta.h2")}</h2>
             <p className="text-xl text-white/90 mb-8">
-              Milhares de mães já confiam no Wilbor. Você também pode começar hoje, sem compromisso.
+              {t("final_cta.desc")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -506,7 +531,7 @@ export default function Home() {
                 className="bg-white text-purple-600 hover:bg-gray-100 text-lg h-14 rounded-full font-semibold"
                 onClick={() => window.location.href = getLoginUrl()}
               >
-                Começar agora <ArrowRight className="ml-2 w-5 h-5" />
+                {t("pricing.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <WhatsAppButton 
                 phoneNumber="+55 12 997999971"
@@ -538,26 +563,26 @@ export default function Home() {
                 <Heart className="w-6 h-6 text-purple-400 fill-purple-400" />
                 <span className="font-bold text-white">Wilbor</span>
               </div>
-              <p className="text-sm">Apoio inteligente digital 24h, baseado em SBP/OMS/AAP</p>
+              <p className="text-sm">{t("footer.tagline")}</p>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">Produto</h4>
+              <h4 className="font-semibold text-white mb-4">{t("footer.product")}</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/blog"><a className="hover:text-white">Blog</a></Link></li>
-                <li><a href="#" className="hover:text-white">Preços</a></li>
-                <li><a href="#" className="hover:text-white">FAQ</a></li>
+                <li><Link href={localePath("/blog")}><a className="hover:text-white">{t("footer.blog")}</a></Link></li>
+                <li><a href="#" className="hover:text-white">{t("footer.pricing")}</a></li>
+                <li><a href="#" className="hover:text-white">{t("footer.faq")}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
+              <h4 className="font-semibold text-white mb-4">{t("footer.legal")}</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Privacidade</a></li>
-                <li><a href="#" className="hover:text-white">Termos</a></li>
-                <li><a href="#" className="hover:text-white">Contato</a></li>
+                <li><a href="#" className="hover:text-white">{t("footer.privacy")}</a></li>
+                <li><a href="#" className="hover:text-white">{t("footer.terms")}</a></li>
+                <li><a href="#" className="hover:text-white">{t("footer.contact")}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">Redes</h4>
+              <h4 className="font-semibold text-white mb-4">{t("footer.social")}</h4>
               <ul className="space-y-2 text-sm">
                 <li><a href="https://www.instagram.com/wilbor.assist" target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a></li>
                 <li><a href="https://wa.me/5512997999971" target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a></li>
@@ -566,7 +591,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>&copy; 2026 Wilbor. Todos os direitos reservados.</p>
+            <p>{t("footer.copyright")}</p>
           </div>
         </div>
       </footer>

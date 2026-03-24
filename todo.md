@@ -226,3 +226,11 @@
 - [x] Adicionar alt text SEO em todas as imagens
 - [x] Configurar Open Graph images para compartilhamento
 - [x] Build, checkpoint e publicar
+
+## FASE 22: INTERNACIONALIZAÇÃO GLOBAL (i18n)
+- [x] Implementar sistema i18n no site (PT/EN/ES)
+- [x] Criar rotas /en/ e /es/ com conteúdo traduzido
+- [x] Configurar hreflang e sitemap multilíngue
+- [x] Preparar textos PT-BR para tradução na conta antiga
+- [ ] Preparar estrutura para planos internacionais USD/EUR
+- [ ] Preparar estrutura para Google Ads landing pages

@@ -15,12 +15,27 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 function Router() {
   return (
     <Switch>
+      {/* PT-BR (default) */}
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/buy-credits" component={BuyCredits} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/feedback" component={FeedbackDashboard} />
+
+      {/* EN routes */}
+      <Route path="/en" component={Home} />
+      <Route path="/en/dashboard" component={Dashboard} />
+      <Route path="/en/buy-credits" component={BuyCredits} />
+      <Route path="/en/blog" component={Blog} />
+      <Route path="/en/blog/:slug" component={BlogArticle} />
+
+      {/* ES routes */}
+      <Route path="/es" component={Home} />
+      <Route path="/es/dashboard" component={Dashboard} />
+      <Route path="/es/buy-credits" component={BuyCredits} />
+      <Route path="/es/blog" component={Blog} />
+      <Route path="/es/blog/:slug" component={BlogArticle} />
 
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
