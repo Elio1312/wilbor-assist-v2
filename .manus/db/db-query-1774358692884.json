@@ -1,0 +1,80 @@
+{
+  "query": "SELECT id, slug, title, language, category FROM blog_articles LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c1VSXzZW6SU7fm.root --database LJucsyXHjSVaXkbocW4u2f --execute SELECT id, slug, title, language, category FROM blog_articles LIMIT 10;",
+  "rows": [
+    {
+      "id": "amamentacao-en-US",
+      "slug": "breastfeeding",
+      "title": "Breastfeeding",
+      "language": "en-US",
+      "category": "Amamentação"
+    },
+    {
+      "id": "amamentacao-es-ES",
+      "slug": "lactancia-materna",
+      "title": "Lactancia Materna",
+      "language": "es-ES",
+      "category": "Amamentação"
+    },
+    {
+      "id": "amamentacao-pt-BR",
+      "slug": "amamentacao",
+      "title": "Amamentação",
+      "language": "pt-BR",
+      "category": "Amamentação"
+    },
+    {
+      "id": "banho-recem-nascido-en-US",
+      "slug": "bathing-your-newborn",
+      "title": "Bathing Your Newborn",
+      "language": "en-US",
+      "category": "Higiene"
+    },
+    {
+      "id": "banho-recem-nascido-es-ES",
+      "slug": "bano-recien-nacido",
+      "title": "Baño del Recién Nacido",
+      "language": "es-ES",
+      "category": "Higiene"
+    },
+    {
+      "id": "banho-recem-nascido-pt-BR",
+      "slug": "banho-recem-nascido",
+      "title": "Banho do recém-nascido",
+      "language": "pt-BR",
+      "category": "Higiene"
+    },
+    {
+      "id": "bebe-dorme-cuna-en-US",
+      "slug": "how-to-get-baby-to-sleep-in-crib",
+      "title": "How to Get Baby to Sleep in Crib",
+      "language": "en-US",
+      "category": "Sono"
+    },
+    {
+      "id": "bebe-dorme-cuna-es-ES",
+      "slug": "como-bebe-duerma-en-cuna",
+      "title": "Cómo Hacer que el Bebé Duerma en la Cuna",
+      "language": "es-ES",
+      "category": "Sono"
+    },
+    {
+      "id": "bebe-dorme-cuna-pt-BR",
+      "slug": "bebe-dorme-cuna",
+      "title": "Como fazer bebê dormir no berço",
+      "language": "pt-BR",
+      "category": "Sono"
+    },
+    {
+      "id": "bebe-nao-dorme-en-US",
+      "slug": "baby-wont-sleep",
+      "title": "Baby Won't Sleep",
+      "language": "en-US",
+      "category": "Sono"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tslug\ttitle\tlanguage\tcategory\namamentacao-en-US\tbreastfeeding\tBreastfeeding\ten-US\tAmamentação\namamentacao-es-ES\tlactancia-materna\tLactancia Materna\tes-ES\tAmamentação\namamentacao-pt-BR\tamamentacao\tAmamentação\tpt-BR\tAmamentação\nbanho-recem-nascido-en-US\tbathing-your-newborn\tBathing Your Newborn\ten-US\tHigiene\nbanho-recem-nascido-es-ES\tbano-recien-nacido\tBaño del Recién Nacido\tes-ES\tHigiene\nbanho-recem-nascido-pt-BR\tbanho-recem-nascido\tBanho do recém-nascido\tpt-BR\tHigiene\nbebe-dorme-cuna-en-US\thow-to-get-baby-to-sleep-in-crib\tHow to Get Baby to Sleep in Crib\ten-US\tSono\nbebe-dorme-cuna-es-ES\tcomo-bebe-duerma-en-cuna\tCómo Hacer que el Bebé Duerma en la Cuna\tes-ES\tSono\nbebe-dorme-cuna-pt-BR\tbebe-dorme-cuna\tComo fazer bebê dormir no berço\tpt-BR\tSono\nbebe-nao-dorme-en-US\tbaby-wont-sleep\tBaby Won't Sleep\ten-US\tSono\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

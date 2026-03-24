@@ -22,11 +22,15 @@ export interface BlogArticle {
   content: string;
   keywords: string[];
   schemaFAQ: { question: string; answer: string }[];
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "bebe-nao-dorme",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-08-baby-sleep_470d2f21.png",
+    imageAlt: "Bebê dormindo com Sleep Tracker Wilbor monitorando sono seguro",
     title: "Bebê não dorme: guia completo por idade (0 a 12 meses)",
     metaTitle: "Bebê não dorme: guia completo por idade | Wilbor-Assist",
     metaDescription: "Seu bebê não dorme? Guia completo com janelas de sono, rotinas e técnicas por idade (0-12 meses). Baseado nos protocolos da SBP e AAP.",
@@ -99,6 +103,8 @@ Por volta dos 4 meses, muitos bebês passam por uma **regressão do sono**. Isso
   },
   {
     slug: "colica-do-bebe",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-10-baby-colic_63dd395d.png",
+    imageAlt: "Cólica do bebê - Panic Button Wilbor com técnicas de alívio",
     title: "Cólica do bebê: o que fazer para aliviar (guia prático)",
     metaTitle: "Cólica do bebê: o que fazer para aliviar | Wilbor-Assist",
     metaDescription: "Bebê com cólica? Aprenda técnicas comprovadas para aliviar: massagem Shantala, posição aviãozinho, swaddle e mais. Baseado na SBP.",
@@ -171,6 +177,8 @@ Com o bebê deitado de barriga para cima, faça movimentos de bicicleta com as p
   },
   {
     slug: "febre-no-bebe",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-13-baby-safety_36166d14.png",
+    imageAlt: "Segurança do bebê - Wilbor checklist de emergência e febre",
     title: "Febre no bebê: quando ir ao hospital (guia por idade)",
     metaTitle: "Febre no bebê: quando ir ao hospital | Wilbor-Assist",
     metaDescription: "Bebê com febre? Saiba quando é emergência, como medir corretamente e o que fazer em cada faixa etária. Guia baseado na SBP.",
@@ -249,6 +257,8 @@ Qualquer febre em bebê com menos de 3 meses requer **avaliação médica imedia
   },
   {
     slug: "introducao-alimentar",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-09-breastfeeding_feb8ea79.png",
+    imageAlt: "Amamentação e introdução alimentar com Feeding Tracker Wilbor",
     title: "Introdução alimentar: guia completo para começar (BLW e tradicional)",
     metaTitle: "Introdução alimentar: guia completo para começar | Wilbor-Assist",
     metaDescription: "Como começar a introdução alimentar do bebê aos 6 meses? Guia com BLW, método tradicional, alimentos por idade e alergênicos. Baseado na SBP.",
@@ -335,6 +345,8 @@ A SBP recomenda **introduzir alergênicos cedo** (a partir dos 6 meses), pois is
   },
   {
     slug: "depressao-pos-parto",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-15-postpartum-depression_fa95faf4.png",
+    imageAlt: "Depressão pós-parto - Suporte Wilbor 24h com WhatsApp",
     title: "Depressão pós-parto: sinais, quando buscar ajuda e o que fazer",
     metaTitle: "Depressão pós-parto: sinais e quando buscar ajuda | Wilbor-Assist",
     metaDescription: "Depressão pós-parto afeta 1 em cada 4 mães brasileiras. Conheça os sinais, diferença do baby blues e quando buscar ajuda profissional.",
@@ -432,6 +444,8 @@ O tratamento pode incluir:
   },
   {
     slug: "vacinas-do-bebe",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-11-baby-development_2eb907bc.png",
+    imageAlt: "Desenvolvimento do bebê - Marcos e calendário de vacinas Wilbor",
     title: "Vacinas do bebê: calendário completo e reações esperadas",
     metaTitle: "Vacinas do bebê: calendário completo e reações | Wilbor-Assist",
     metaDescription: "Calendário de vacinação do bebê de 0 a 12 meses com todas as doses. Saiba quais reações são normais e quando procurar o pediatra. Baseado na SBP.",
@@ -517,6 +531,8 @@ O ideal é seguir o calendário, mas vacinas atrasadas podem ser aplicadas a qua
   },
   {
     slug: "amamentacao-pega-correta",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-09-breastfeeding_feb8ea79.png",
+    imageAlt: "Amamentação pega correta - Feeding Tracker Wilbor",
     title: "Amamentação: pega correta, posições e dificuldades comuns",
     metaTitle: "Amamentação: pega correta e posições | Wilbor-Assist",
     metaDescription: "Guia completo de amamentação: como fazer a pega correta, melhores posições, o que fazer quando dói e como aumentar a produção de leite. Baseado na SBP.",
@@ -620,6 +636,8 @@ Bebê sentado no colo da mãe, de frente para o peito. Para bebês maiores (a pa
   },
   {
     slug: "seguranca-bebe-em-casa",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-13-baby-safety_36166d14.png",
+    imageAlt: "Segurança do bebê em casa - Checklist Wilbor de ambiente seguro",
     title: "Segurança do bebê em casa: prevenção de acidentes por idade",
     metaTitle: "Segurança do bebê em casa: prevenção de acidentes | Wilbor-Assist",
     metaDescription: "Como proteger seu bebê de acidentes em casa: quedas, engasgos, queimaduras e afogamentos. Guia de prevenção por idade baseado na SBP.",
@@ -716,6 +734,8 @@ Tenha em casa:
   },
   {
     slug: "saltos-de-desenvolvimento",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-11-baby-development_2eb907bc.png",
+    imageAlt: "Saltos de desenvolvimento do bebê - Growth Crises Wilbor",
     title: "Saltos de desenvolvimento do bebê: o que esperar mês a mês",
     metaTitle: "Saltos de desenvolvimento do bebê mês a mês | Wilbor-Assist",
     metaDescription: "Entenda os saltos de desenvolvimento do bebê de 0 a 12 meses: quando acontecem, sinais, como lidar com a irritabilidade e marcos esperados. Baseado na SBP.",
@@ -827,6 +847,8 @@ Procure o pediatra se o bebê:
   },
   {
     slug: "banho-do-recem-nascido",
+    imageUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-12-baby-hygiene_98c07e7d.png",
+    imageAlt: "Banho do recém-nascido - Guia de higiene segura Wilbor",
     title: "Banho do recém-nascido: passo a passo seguro e completo",
     metaTitle: "Banho do recém-nascido: passo a passo seguro | Wilbor-Assist",
     metaDescription: "Como dar banho no recém-nascido com segurança: temperatura da água, frequência, cuidados com o umbigo e produtos recomendados. Guia baseado na SBP.",
@@ -987,7 +1009,20 @@ export function Blog() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {BLOG_ARTICLES.map((article) => (
               <Link key={article.slug} href={`/blog/${article.slug}`}>
-                <Card className="p-6 bg-white border-slate-100 hover:shadow-lg transition-all hover:scale-[1.02] rounded-2xl cursor-pointer h-full flex flex-col">
+                <Card className="bg-white border-slate-100 hover:shadow-lg transition-all hover:scale-[1.02] rounded-2xl cursor-pointer h-full flex flex-col overflow-hidden">
+                  {article.imageUrl && (
+                    <div className="w-full h-48 overflow-hidden">
+                      <img 
+                        src={article.imageUrl} 
+                        alt={article.imageAlt || article.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        width="1200"
+                        height="800"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6 flex flex-col flex-1">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${article.iconBg}`}>
                     <article.icon className={`w-6 h-6 ${article.iconColor}`} />
                   </div>
@@ -999,6 +1034,7 @@ export function Blog() {
                   <p className="text-sm text-slate-500 flex-1">{article.excerpt}</p>
                   <div className="mt-4 flex items-center gap-1 text-fuchsia-600 text-sm font-semibold">
                     Ler artigo <ArrowRight className="w-4 h-4" />
+                  </div>
                   </div>
                 </Card>
               </Link>
@@ -1076,13 +1112,14 @@ export function BlogArticle({ slug }: { slug: string }) {
         "@type": "Article",
         "headline": article.title,
         "description": article.metaDescription,
+        ...(article.imageUrl ? { "image": article.imageUrl } : {}),
         "author": { "@type": "Organization", "name": "Wilbor-Assist" },
         "publisher": {
           "@type": "Organization",
           "name": "Wilbor-Assist",
-          "url": "https://wilborassist.com"
+          "url": "https://www.wilbor-assist.com"
         },
-        "mainEntityOfPage": `https://wilborassist.com/blog/${article.slug}`,
+        "mainEntityOfPage": `https://www.wilbor-assist.com/blog/${article.slug}`,
         "keywords": article.keywords.join(", "),
       };
 
@@ -1284,6 +1321,20 @@ export function BlogArticle({ slug }: { slug: string }) {
               </div>
             </div>
           </div>
+
+          {/* Article Featured Image */}
+          {article.imageUrl && (
+            <div className="mb-8 rounded-2xl overflow-hidden shadow-md">
+              <img 
+                src={article.imageUrl} 
+                alt={article.imageAlt || article.title}
+                className="w-full"
+                loading="eager"
+                width="1200"
+                height="800"
+              />
+            </div>
+          )}
 
           {/* Content */}
           <div className="prose-custom">

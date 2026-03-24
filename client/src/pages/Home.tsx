@@ -6,6 +6,17 @@ import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
+// CDN Image URLs
+const IMAGES = {
+  hero: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  growth: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-02-growth-crises_133ac9d8.png",
+  sleep: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-03-sleep-tracker_26c55d8b.png",
+  feeding: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-04-feeding-tracker_0aced0af.png",
+  exercises: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-05-postpartum-exercises_3d66de4d.png",
+  testimonials: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-06-testimonials_530a6347.png",
+  cta: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-07-cta-final_c90bd4b9.png",
+};
+
 export default function Home() {
   const { data: user } = trpc.auth.me.useQuery();
   const isAuthenticated = !!user;
@@ -113,8 +124,8 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ===== HERO SECTION - ENERGIA POSITIVA ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-white py-20 px-4">
+      {/* ===== HERO SECTION - COM IMAGEM ===== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-white py-16 md:py-20 px-4">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           {/* Texto + CTA */}
           <div className="space-y-8">
@@ -164,87 +175,91 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mockup do Chat */}
+          {/* Hero Image */}
           <div className="relative">
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
-              <div className="bg-gray-100 rounded-2xl overflow-hidden">
-                {/* Chat Header */}
-                <div className="bg-purple-600 text-white p-4 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-purple-600 fill-purple-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">Wilbor</div>
-                    <div className="text-xs text-purple-100">online</div>
-                  </div>
-                </div>
-
-                {/* Chat Messages */}
-                <div className="p-4 space-y-4 bg-white h-96 overflow-y-auto">
-                  {/* User message */}
-                  <div className="flex justify-end">
-                    <div className="bg-purple-100 text-gray-900 rounded-2xl rounded-tr-none px-4 py-3 max-w-xs">
-                      <p className="text-sm">Meu bebê de 3 meses acordou chorando à noite. É normal? 😰</p>
-                    </div>
-                  </div>
-
-                  {/* Bot response */}
-                  <div className="flex justify-start">
-                    <div className="bg-gray-100 text-gray-900 rounded-2xl rounded-tl-none px-4 py-3 max-w-xs space-y-2">
-                      <p className="text-sm font-semibold text-purple-600">Sim, é totalmente normal! 💜</p>
-                      <p className="text-sm">Aos 3 meses, os bebês ainda têm ciclos de sono curtos (45-60 min). Isso é fisiológico.</p>
-                      <p className="text-sm"><strong>O que fazer:</strong></p>
-                      <ul className="text-sm space-y-1 ml-4">
-                        <li>✓ Verifique fralda e temperatura</li>
-                        <li>✓ Ofereça peito/mamadeira</li>
-                        <li>✓ Embale suavemente</li>
-                      </ul>
-                      <p className="text-xs text-gray-500 mt-2">Fonte: SBP - Protocolo de Sono Neonatal</p>
-                    </div>
-                  </div>
-
-                  {/* Feedback */}
-                  <div className="flex justify-start">
-                    <div className="text-xs text-gray-500 space-y-2">
-                      <p>Isso foi útil? 👍 👎</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative elements */}
+            <img 
+              src={IMAGES.hero} 
+              alt="Wilbor - Assistente Neonatal IA com Sleep Tracker, Feeding Tracker e Panic Button" 
+              className="rounded-3xl shadow-2xl w-full"
+              loading="eager"
+              width="1920"
+              height="1080"
+            />
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-purple-200 rounded-full opacity-20 blur-2xl"></div>
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-pink-200 rounded-full opacity-20 blur-2xl"></div>
           </div>
         </div>
       </section>
 
-      {/* ===== CTA SECTION - ANTES DO RODAPÉ ===== */}
-      <section className="py-20 px-4 bg-white border-t border-gray-200">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Pronta para começar?</h2>
-          <p className="text-lg text-gray-600 mb-8">Junte-se a milhares de mães que já confiam no Wilbor</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg h-14 rounded-full"
-              onClick={() => window.location.href = getLoginUrl()}
-            >
-              Testar grátis agora <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <WhatsAppButton 
-              phoneNumber="+55 12 997999971"
-              message="Olá! Gostaria de conhecer o Wilbor"
-              variant="fixed"
-              className="text-base h-14"
-            />
+      {/* ===== GROWTH CRISES + SLEEP TRACKER SECTION ===== */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Acompanhe cada fase do seu bebê</h2>
+            <p className="text-xl text-gray-600">Alertas inteligentes e monitoramento em tempo real</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Growth Crises */}
+            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <img 
+                src={IMAGES.growth} 
+                alt="Infográfico Crises de Crescimento do Bebê - 1, 3, 6 e 12 meses com alertas Wilbor" 
+                className="w-full"
+                loading="lazy"
+                width="1200"
+                height="800"
+              />
+            </div>
+
+            {/* Sleep Tracker */}
+            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <img 
+                src={IMAGES.sleep} 
+                alt="Wilbor Sleep Tracker - Monitoramento de sono do bebê com previsão de próxima soneca" 
+                className="w-full"
+                loading="lazy"
+                width="1200"
+                height="800"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FEEDING TRACKER + EXERCISES SECTION ===== */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Feeding Tracker */}
+            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <img 
+                src={IMAGES.feeding} 
+                alt="Wilbor Feeding Tracker - Controle de mamadas com timer e histórico diário" 
+                className="w-full"
+                loading="lazy"
+                width="1200"
+                height="800"
+              />
+            </div>
+
+            {/* Postpartum Exercises */}
+            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <img 
+                src={IMAGES.exercises} 
+                alt="Exercícios pós-parto com Wilbor - Recuperação e vínculo mãe-bebê" 
+                className="w-full"
+                loading="lazy"
+                width="1200"
+                height="800"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ===== BEFORE/AFTER SECTION ===== */}
-      <section className="py-20 px-4 bg-gray-50" id="features">
+      <section className="py-20 px-4 bg-white" id="features">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">A diferença que Wilbor faz</h2>
@@ -258,30 +273,12 @@ export default function Home() {
                 <span>❌</span> Antes do Wilbor
               </h3>
               <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3">
-                  <span className="text-red-500 font-bold">•</span>
-                  <span>Pânico às 3 da manhã procurando no Google</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-red-500 font-bold">•</span>
-                  <span>47 abas abertas sobre introdução alimentar</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-red-500 font-bold">•</span>
-                  <span>Esquecendo datas importantes de vacinas</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-red-500 font-bold">•</span>
-                  <span>Se sentindo julgada em grupos de mães</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-red-500 font-bold">•</span>
-                  <span>Gastando R$200+ em consultas desnecessárias</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-red-500 font-bold">•</span>
-                  <span>Noites sem dormir de preocupação</span>
-                </li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Pânico às 3 da manhã procurando no Google</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>47 abas abertas sobre introdução alimentar</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Esquecendo datas importantes de vacinas</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Se sentindo julgada em grupos de mães</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Gastando R$200+ em consultas desnecessárias</span></li>
+                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>Noites sem dormir de preocupação</span></li>
               </ul>
             </div>
 
@@ -291,30 +288,12 @@ export default function Home() {
                 <span>✅</span> Com Wilbor
               </h3>
               <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3">
-                  <span className="text-green-500 font-bold">•</span>
-                  <span>Chat que responde em segundos, 24h</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-green-500 font-bold">•</span>
-                  <span>Guia completo em um único lugar</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-green-500 font-bold">•</span>
-                  <span>Alertas automáticos de vacinas</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-green-500 font-bold">•</span>
-                  <span>IA que não julga, apenas apoia</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-green-500 font-bold">•</span>
-                  <span>Economiza R$200+ em consultas</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-green-500 font-bold">•</span>
-                  <span>Dorme tranquila com respostas confiáveis</span>
-                </li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Chat que responde em segundos, 24h</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Guia completo em um único lugar</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Alertas automáticos de vacinas</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>IA que não julga, apenas apoia</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Economiza R$200+ em consultas</span></li>
+                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>Dorme tranquila com respostas confiáveis</span></li>
               </ul>
             </div>
           </div>
@@ -322,7 +301,7 @@ export default function Home() {
       </section>
 
       {/* ===== FEATURES SECTION ===== */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Para o seu bebê</h2>
@@ -370,6 +349,26 @@ export default function Home() {
             >
               Acessar "Meu Corpo" <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== TESTIMONIALS SECTION ===== */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">O que as mães dizem</h2>
+            <p className="text-xl text-gray-600">Resultados reais de quem usa o Wilbor</p>
+          </div>
+          <div className="rounded-2xl overflow-hidden shadow-xl">
+            <img 
+              src={IMAGES.testimonials} 
+              alt="Depoimentos de mães que usam Wilbor - Growth Crises, Sleep Tracker e Panic Button" 
+              className="w-full"
+              loading="lazy"
+              width="1200"
+              height="600"
+            />
           </div>
         </div>
       </section>
@@ -431,7 +430,6 @@ export default function Home() {
                 </div>
                 <p className={`text-sm mb-6 ${plan.popular ? "text-white/90" : "text-gray-600"}`}>{plan.desc}</p>
 
-                
                 <Button 
                   size="lg"
                   className={`w-full mb-8 h-12 rounded-full font-semibold ${
@@ -484,7 +482,7 @@ export default function Home() {
                   />
                 </button>
                 {expandedFaq === i && (
-                  <div className="px-6 pb-6 text-gray-600 border-t border-gray-200">
+                  <div className="px-6 pb-6 text-gray-600 border-t border-gray-200 whitespace-pre-line">
                     {item.a}
                   </div>
                 )}
@@ -494,28 +492,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== FINAL CTA ===== */}
-      <section className="py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-600">
-        <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="text-4xl font-bold mb-6">Pronta para essa jornada?</h2>
-          <p className="text-xl text-white/90 mb-8">
-            Milhares de mães já confiam no Wilbor. Você também pode começar hoje, sem compromisso.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg"
-              className="bg-white text-purple-600 hover:bg-gray-100 text-lg h-14 rounded-full font-semibold"
-              onClick={() => window.location.href = getLoginUrl()}
-            >
-              Começar agora <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button 
-              size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white/10 text-lg h-14 rounded-full font-semibold"
-            >
-              💬 Conversar no WhatsApp
-            </Button>
+      {/* ===== FINAL CTA WITH IMAGE ===== */}
+      <section className="relative py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-600 overflow-hidden">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="text-white">
+            <h2 className="text-4xl font-bold mb-6">Pronta para essa jornada?</h2>
+            <p className="text-xl text-white/90 mb-8">
+              Milhares de mães já confiam no Wilbor. Você também pode começar hoje, sem compromisso.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                size="lg"
+                className="bg-white text-purple-600 hover:bg-gray-100 text-lg h-14 rounded-full font-semibold"
+                onClick={() => window.location.href = getLoginUrl()}
+              >
+                Começar agora <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <WhatsAppButton 
+                phoneNumber="+55 12 997999971"
+                message="Olá! Gostaria de conhecer o Wilbor"
+                variant="fixed"
+                className="text-base h-14 border-2 border-white text-white hover:bg-white/10"
+              />
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <img 
+              src={IMAGES.cta} 
+              alt="Comece sua jornada com Wilbor - Sleep Tracker, Feeding Tracker, Panic Button e WhatsApp" 
+              className="rounded-2xl shadow-2xl w-full opacity-90"
+              loading="lazy"
+              width="1200"
+              height="600"
+            />
           </div>
         </div>
       </section>
@@ -529,7 +538,7 @@ export default function Home() {
                 <Heart className="w-6 h-6 text-purple-400 fill-purple-400" />
                 <span className="font-bold text-white">Wilbor</span>
               </div>
-              <p className="text-sm">Seu pediatra digital 24h, baseado em SBP/OMS/AAP</p>
+              <p className="text-sm">Apoio inteligente digital 24h, baseado em SBP/OMS/AAP</p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-4">Produto</h4>
@@ -550,8 +559,8 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-white mb-4">Redes</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Instagram</a></li>
-                <li><a href="#" className="hover:text-white">WhatsApp</a></li>
+                <li><a href="https://www.instagram.com/wilbor.assist" target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a></li>
+                <li><a href="https://wa.me/5512997999971" target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a></li>
                 <li><a href="#" className="hover:text-white">Email</a></li>
               </ul>
             </div>

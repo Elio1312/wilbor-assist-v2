@@ -213,8 +213,16 @@
 - [x] Adicionar script de override do título (sobrescreve VITE_APP_TITLE do Manus runtime)
 - [x] Adicionar links internos no HTML estático para crawlers
 - [x] Build compilado com sucesso (0 erros)
-- [ ] Salvar checkpoint e republicar
+- [x] Salvar checkpoint e republicar
 - [ ] Verificar título correto em produção
 - [ ] Solicitar reindexação no Google Search Console
 - [ ] Validar redirect 301 (wilborassist.com → wilbor-assist.com)
 - [ ] Retentar "Change of Address" no Google Search Console
+
+## FASE 21: INTEGRAR 20 IMAGENS WILBOR 2.0
+- [x] Upload 20 imagens para CDN (manus-upload-file --webdev)
+- [x] Integrar 7 imagens na landing page (Hero, Growth, Sleep, Feeding, Exercises, Testimonials, CTA)
+- [x] Integrar 10 imagens nos artigos do blog (Sono, Amamentação, Cólica, Desenvolvimento, Higiene, Segurança, Pós-Parto, Depressão, Nutrição, Exercícios)
+- [x] Adicionar alt text SEO em todas as imagens
+- [x] Configurar Open Graph images para compartilhamento
+- [x] Build, checkpoint e publicar
