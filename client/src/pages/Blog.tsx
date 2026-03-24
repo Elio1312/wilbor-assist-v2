@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
+import { useI18n } from "@/contexts/i18n";
+import { blogArticlesEN, blogArticlesES } from "./blogArticlesI18n";
 import { Heart, ArrowRight, ArrowLeft, Share2, Clock, BookOpen, Moon, Waves, Thermometer, UtensilsCrossed, HeartPulse, CheckCircle2, Shield, Sparkles, Syringe, Baby, ShieldCheck, TrendingUp, Bath } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -1093,7 +1095,27 @@ export function Blog() {
 // ==========================================
 export function BlogArticle({ slug }: { slug: string }) {
   const [, navigate] = useLocation();
-  const article = BLOG_ARTICLES.find(a => a.slug === slug);
+  const { locale } = useI18n();
+
+  // Resolve article: EN/ES from i18n data, PT from BLOG_ARTICLES
+  const i18nArticle = locale === 'en'
+    ? blogArticlesEN.find(a => a.slug === slug)
+    : locale === 'es'
+    ? blogArticlesES.find(a => a.slug === slug)
+    : null;
+
+  // Map i18n article to BlogArticle shape (merging with PT base for icon/schemaFAQ)
+  const ptBase = BLOG_ARTICLES.find(a =>
+    locale === 'en'
+      ? blogArticlesEN.find(e => e.slug === slug)?.slug === slug || a.slug === slug
+      : locale === 'es'
+      ? blogArticlesES.find(e => e.slug === slug)?.slug === slug || a.slug === slug
+      : a.slug === slug
+  );
+
+  const article = i18nArticle
+    ? { ...ptBase, ...i18nArticle, icon: ptBase?.icon, iconColor: ptBase?.iconColor, iconBg: ptBase?.iconBg, schemaFAQ: ptBase?.schemaFAQ || [], imageUrl: ptBase?.imageUrl, imageAlt: ptBase?.imageAlt }
+    : BLOG_ARTICLES.find(a => a.slug === slug);
 
   useEffect(() => {
     // Scroll to top when article opens

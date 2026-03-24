@@ -234,3 +234,13 @@
 - [x] Preparar textos PT-BR para tradução na conta antiga
 - [ ] Preparar estrutura para planos internacionais USD/EUR
 - [ ] Preparar estrutura para Google Ads landing pages
+
+## FASE 23: ARTIGOS EN/ES INTEGRADOS + HANDOFF
+- [x] Criar blogArticlesI18n.ts com 10 artigos EN e 10 artigos ES completos
+- [x] Integrar artigos EN/ES no Blog.tsx via useI18n locale detection
+- [x] Preparar HANDOFF-MANUS-ANTIGO.md para conta antiga continuar
+- [ ] Stripe USD/EUR (a fazer na conta antiga + integrar aqui)
+- [ ] ManyChat EN/ES (a fazer na conta antiga)
+- [ ] 5 novos artigos EN (a fazer na conta antiga)
+- [ ] 5 novos artigos ES (a fazer na conta antiga)
+- [ ] Google Ads textos EN/ES/PT (a fazer na conta antiga)
