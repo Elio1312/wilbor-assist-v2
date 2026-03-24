@@ -63,27 +63,47 @@
   </head>
 
   <body>
-    <!-- SEO Static Content - Visible to search engine crawlers -->
-    <noscript>
-      <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-        <h1>Wilbor-Assist: Assistente Neonatal com Inteligência Artificial</h1>
-        <p>O Wilbor-Assist é o assistente neonatal inteligente que ajuda pais e mães a cuidar do bebê com segurança e confiança. Baseado em protocolos científicos da SBP, OMS e AAP.</p>
-        <h2>Funcionalidades</h2>
-        <ul>
-          <li>Chat IA 24/7 com respostas baseadas em protocolos científicos</li>
-          <li>Monitoramento de sono do bebê</li>
-          <li>Controle de alimentação e amamentação</li>
-          <li>Trilha de desenvolvimento infantil</li>
-          <li>Diário do bebê com registro de humor</li>
-          <li>Botão de pânico para emergências</li>
-          <li>Alertas de crises de crescimento com 48h de antecedência</li>
-        </ul>
-        <h2>Planos</h2>
-        <p>Disponível em planos gratuito e premium. Suporte em Português, Inglês e Espanhol.</p>
-        <p><a href="https://www.wilbor-assist.com/">Acessar o Wilbor-Assist</a></p>
-      </div>
-    </noscript>
+    <!-- SEO Title Override - Forces correct title even after Manus runtime -->
+    <script>document.title="Wilbor-Assist: Assistente Neonatal IA | Protocolos SBP, OMS e AAP";</script>
+    
+    <!-- SEO Static Content - Visible to ALL crawlers (not inside noscript) -->
+    <div id="seo-content" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;">
+      <h1>Wilbor-Assist: Assistente Neonatal com Inteligência Artificial</h1>
+      <p>O Wilbor-Assist é o assistente neonatal inteligente que ajuda pais e mães a cuidar do bebê com segurança e confiança. Baseado em protocolos científicos da SBP, OMS e AAP.</p>
+      <h2>Funcionalidades Principais</h2>
+      <ul>
+        <li>Chat IA 24/7 com respostas baseadas em protocolos científicos da SBP, OMS e AAP</li>
+        <li>Monitoramento inteligente de sono do bebê com alertas personalizados</li>
+        <li>Controle de alimentação, amamentação e introdução alimentar</li>
+        <li>Trilha de desenvolvimento infantil mês a mês</li>
+        <li>Diário do bebê com registro de humor e marcos</li>
+        <li>Botão de pânico para emergências com orientações imediatas</li>
+        <li>Alertas de crises de crescimento com 48h de antecedência</li>
+        <li>Receitas nutritivas para cada fase do bebê</li>
+      </ul>
+      <h2>Planos e Preços</h2>
+      <p>Disponível em planos gratuito e premium. Suporte em Português, Inglês e Espanhol. Assistente neonatal digital para pais e mães de primeira viagem.</p>
+      <h2>Blog sobre Saúde Neonatal</h2>
+      <p>Artigos especializados sobre sono do bebê, alimentação infantil, desenvolvimento neonatal, cólicas, amamentação, vacinas e muito mais.</p>
+      <nav>
+        <a href="https://www.wilbor-assist.com/">Página Inicial</a>
+        <a href="https://www.wilbor-assist.com/blog">Blog</a>
+        <a href="https://www.wilbor-assist.com/planos">Planos</a>
+        <a href="https://www.wilbor-assist.com/blog/sono">Sono do Bebê</a>
+        <a href="https://www.wilbor-assist.com/blog/alimentacao">Alimentação Infantil</a>
+        <a href="https://www.wilbor-assist.com/blog/desenvolvimento">Desenvolvimento</a>
+        <a href="https://www.wilbor-assist.com/blog/colica">Cólica</a>
+        <a href="https://www.wilbor-assist.com/blog/amamentacao">Amamentação</a>
+        <a href="https://www.wilbor-assist.com/blog/vacinas">Vacinas</a>
+        <a href="https://www.wilbor-assist.com/blog/febre">Febre</a>
+      </nav>
+      <p>© 2026 Wilbor-Assist. Todos os direitos reservados.</p>
+    </div>
+    
     <div id="root"></div>
+    
+    <!-- Remove SEO content after React renders -->
+    <script>window.addEventListener('load',function(){var e=document.getElementById('seo-content');if(e)e.remove();});</script>
     <script type="module" src="/src/main.tsx"></script>
     <script
       defer

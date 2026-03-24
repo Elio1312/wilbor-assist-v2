@@ -206,3 +206,15 @@
 - [x] Salvar checkpoint e republicar site
 - [ ] Verificar indexação no Google Search Console
 - [ ] Usar URL Inspection nas 10 páginas principais
+
+## FASE 20: SEO CRITICAL FIX - SOFT 404 + REPUBLICATION
+- [x] Despublicar site antigo da conta Manus antiga
+- [x] Mover conteúdo SEO de <noscript> para HTML visível (crawlers veem)
+- [x] Adicionar script de override do título (sobrescreve VITE_APP_TITLE do Manus runtime)
+- [x] Adicionar links internos no HTML estático para crawlers
+- [x] Build compilado com sucesso (0 erros)
+- [ ] Salvar checkpoint e republicar
+- [ ] Verificar título correto em produção
+- [ ] Solicitar reindexação no Google Search Console
+- [ ] Validar redirect 301 (wilborassist.com → wilbor-assist.com)
+- [ ] Retentar "Change of Address" no Google Search Console
