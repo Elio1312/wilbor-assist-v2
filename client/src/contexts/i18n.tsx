@@ -199,61 +199,61 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.start_free": "Start free now",
 
     // Hero
-    "hero.badge": "Your maternity companion",
-    "hero.h1": "You are not alone in this journey.",
-    "hero.desc": "Wilbor is a smart digital support based on AAP/WHO/SBP protocols that remembers every detail about your baby and responds with care, without judgment.",
-    "hero.cta": "Start free now",
+    "hero.badge": "Your Maternity Companion",
+    "hero.h1": "You Are Not Alone on This Journey.",
+    "hero.desc": "Wilbor is an intelligent digital support based on SBP/WHO/AAP protocols that remembers every detail about your baby and responds with care, without judgment.",
+    "hero.cta": "Try It Free Now",
     "hero.whatsapp": "Chat on WhatsApp",
-    "hero.trust_1": "No signup required",
-    "hero.trust_2": "Answers in seconds",
-    "hero.trust_3": "Based on AAP/WHO/SBP",
+    "hero.trust_1": "No Mandatory Registration",
+    "hero.trust_2": "Answers in Seconds",
+    "hero.trust_3": "Based on SBP/WHO/AAP",
 
     // Features
-    "features.h2": "For your baby",
+    "features.h2": "For Your Baby",
     "features.subtitle": "Features designed for every stage of development",
-    "features.chat": "24h Chat",
-    "features.chat_desc": "Get answers in seconds",
+    "features.chat": "24/7 Chat Support",
+    "features.chat_desc": "Get your questions answered in seconds",
     "features.emergency": "Emergency Alerts",
-    "features.emergency_desc": "Detects warning signs",
-    "features.recipes": "Recipes by Age",
+    "features.emergency_desc": "Detects warning signs promptly",
+    "features.recipes": "Age-Appropriate Recipes",
     "features.recipes_desc": "55 recipes with photos",
-    "features.milestones": "Development Track",
+    "features.milestones": "Developmental Milestones",
     "features.milestones_desc": "Week-by-week milestones",
     "features.sleep": "Sleep Prediction",
     "features.sleep_desc": "Next nap suggested",
-    "features.diary": "Baby Diary",
+    "features.diary": "Baby Journal",
     "features.diary_desc": "Record special moments",
     "features.profile": "Baby Profile",
-    "features.profile_desc": "Personalized answers",
-    "features.colic": "Colic Techniques",
+    "features.profile_desc": "Personalized responses",
+    "features.colic": "Colic Relief Techniques",
     "features.colic_desc": "Shantala, swaddle, I-L-U",
 
     // Trackers
-    "trackers.h2": "Track every stage of your baby",
-    "trackers.subtitle": "Smart alerts and real-time monitoring",
+    "trackers.h2": "Track Every Stage of Your Baby's Growth",
+    "trackers.subtitle": "Smart Alerts and Real-Time Monitoring",
 
     // Before/After
-    "compare.h2": "The difference Wilbor makes",
-    "compare.subtitle": "See how life changes with the right support",
+    "compare.h2": "The Difference Wilbor Makes",
+    "compare.subtitle": "See How Life Changes with the Right Support",
     "compare.before": "Before Wilbor",
     "compare.after": "With Wilbor",
-    "compare.before_1": "Panic at 3am searching Google",
-    "compare.before_2": "47 tabs open about baby food",
-    "compare.before_3": "Forgetting important vaccine dates",
+    "compare.before_1": "3 AM panic searching on Google",
+    "compare.before_2": "47 tabs open about complementary feeding",
+    "compare.before_3": "Forgetting important vaccination dates",
     "compare.before_4": "Feeling judged in mom groups",
-    "compare.before_5": "Spending $200+ on unnecessary visits",
+    "compare.before_5": "Spending $40+ on unnecessary consultations",
     "compare.before_6": "Sleepless nights of worry",
     "compare.after_1": "Chat that answers in seconds, 24/7",
     "compare.after_2": "Complete guide in one place",
     "compare.after_3": "Automatic vaccine alerts",
     "compare.after_4": "AI that doesn't judge, just supports",
-    "compare.after_5": "Save $200+ on consultations",
+    "compare.after_5": "Save $40+ on consultations",
     "compare.after_6": "Sleep peacefully with reliable answers",
 
     // Mother
     "mother.badge": "New",
     "mother.h2": "And you, mom?",
-    "mother.subtitle": "You deserve care too. Recover your body, take care of your health",
+    "mother.subtitle": "You deserve care too. Restore your body, take care of your health",
     "mother.weight": "Weight Control",
     "mother.weight_desc": "Progress chart + ideal BMI",
     "mother.exercise": "Home Exercises",
@@ -265,8 +265,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "mother.cta": "Access My Body",
 
     // Testimonials
-    "testimonials.h2": "What moms say",
-    "testimonials.subtitle": "Real results from Wilbor users",
+    "testimonials.h2": "What Mothers Are Saying",
+    "testimonials.subtitle": "Real results from those using Wilbor",
 
     // Credibility
     "credibility.badge": "Validated content",
@@ -316,10 +316,10 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Final CTA
     "final_cta.h2": "Ready for this journey?",
-    "final_cta.desc": "Thousands of moms already trust Wilbor. You can start today, no commitment.",
+    "final_cta.desc": "Thousands of mothers already trust Wilbor. You can start today, with no commitment.",
 
     // Footer
-    "footer.tagline": "Smart digital support 24h, based on AAP/WHO/SBP",
+    "footer.tagline": "24/7 smart digital support, based on AAP/WHO/SBP",
     "footer.product": "Product",
     "footer.legal": "Legal",
     "footer.social": "Social",
@@ -361,7 +361,7 @@ const translations: Record<Locale, Record<string, string>> = {
     // Nav
     "nav.blog": "Blog",
     "nav.enter": "Iniciar sesión",
-    "nav.dashboard": "Panel",
+    "nav.dashboard": "Panel de control",
     "nav.pricing": "Precios",
     "nav.try_free": "Probar gratis",
     "nav.start_free": "Empezar gratis ahora",
@@ -409,13 +409,13 @@ const translations: Record<Locale, Record<string, string>> = {
     "compare.before_2": "47 pestañas abiertas sobre alimentación",
     "compare.before_3": "Olvidando fechas importantes de vacunas",
     "compare.before_4": "Sintiéndote juzgada en grupos de mamás",
-    "compare.before_5": "Gastando $200+ en consultas innecesarias",
+    "compare.before_5": "Gastando $40+ en consultas innecesarias",
     "compare.before_6": "Noches sin dormir de preocupación",
     "compare.after_1": "Chat que responde en segundos, 24/7",
     "compare.after_2": "Guía completa en un solo lugar",
     "compare.after_3": "Alertas automáticas de vacunas",
     "compare.after_4": "IA que no juzga, solo apoya",
-    "compare.after_5": "Ahorra $200+ en consultas",
+    "compare.after_5": "Ahorra $40+ en consultas",
     "compare.after_6": "Duerme tranquila con respuestas confiables",
 
     // Mother
@@ -430,10 +430,10 @@ const translations: Record<Locale, Record<string, string>> = {
     "mother.food_desc": "Adelgazar amamantando",
     "mother.care": "Cuidados & Productos",
     "mother.care_desc": "Estrías, cabello, piel",
-    "mother.cta": "Acceder Mi Cuerpo",
+    "mother.cta": "Acceder a Mi Cuerpo",
 
     // Testimonials
-    "testimonials.h2": "Lo que dicen las mamás",
+    "testimonials.h2": "Lo que dicen las madres",
     "testimonials.subtitle": "Resultados reales de quienes usan Wilbor",
 
     // Credibility
@@ -483,11 +483,11 @@ const translations: Record<Locale, Record<string, string>> = {
     "faq.h2": "Preguntas frecuentes",
 
     // Final CTA
-    "final_cta.h2": "¿Lista para este camino?",
-    "final_cta.desc": "Miles de mamás ya confían en Wilbor. Tú también puedes empezar hoy, sin compromiso.",
+    "final_cta.h2": "¿Lista para este viaje?",
+    "final_cta.desc": "Miles de madres ya confían en Wilbor. Tú también puedes comenzar hoy, sin compromiso.",
 
     // Footer
-    "footer.tagline": "Apoyo digital inteligente 24h, basado en AAP/OMS/SBP",
+    "footer.tagline": "Soporte digital inteligente 24/7, basado en OMS/AAP/SBP",
     "footer.product": "Producto",
     "footer.legal": "Legal",
     "footer.social": "Redes",
