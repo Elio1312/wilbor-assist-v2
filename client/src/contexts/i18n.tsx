@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useCallback, useState, useEffect, ReactNode } from "react";
 
 export type Locale = "pt" | "en" | "es";
 
@@ -29,6 +29,11 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.pricing": "Preços",
     "nav.try_free": "Testar grátis",
     "nav.start_free": "Testar grátis agora",
+
+    // Chat
+    "chat.subtitle": "Seu assistente neonatal IA",
+    "chat.welcome": "Olá! Sou o Wilbor, seu assistente neonatal IA. Como posso ajudar você e seu bebê hoje?",
+    "chat.error": "Desculpe, houve um erro. Tente novamente.",
 
     // Hero
     "hero.badge": "Seu companheiro de maternidade",
@@ -98,50 +103,50 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Testimonials
     "testimonials.h2": "O que as mães dizem",
-    "testimonials.subtitle": "Resultados reais de quem usa o Wilbor",
+    "testimonials.subtitle": "Resultados reais de quem usa Wilbor",
 
     // Credibility
     "credibility.badge": "Conteúdo validado",
-    "credibility.h2": "Baseado nas diretrizes da SBP, OMS e AAP",
-    "credibility.desc": "Todas as orientações seguem as recomendações oficiais da Sociedade Brasileira de Pediatria, Organização Mundial da Saúde e Academia Americana de Pediatria.",
-    "credibility.stat_1": "384+",
-    "credibility.stat_1_label": "Perguntas trilíngues",
-    "credibility.stat_2": "55+",
-    "credibility.stat_2_label": "Receitas com fotos",
-    "credibility.stat_3": "100%",
-    "credibility.stat_3_label": "Baseado em evidências",
+    "credibility.h2": "Confiado por profissionais",
+    "credibility.desc": "Desenvolvido com pediatras e protocolos científicos internacionais",
+    "credibility.stat_1": "SBP",
+    "credibility.stat_1_label": "Protocolos da Sociedade Brasileira de Pediatria",
+    "credibility.stat_2": "OMS",
+    "credibility.stat_2_label": "Recomendações da Organização Mundial da Saúde",
+    "credibility.stat_3": "AAP",
+    "credibility.stat_3_label": "Academia Americana de Pediatria",
 
     // Pricing
-    "pricing.h2": "Planos simples e transparentes",
-    "pricing.subtitle": "Escolha o que funciona melhor para você",
+    "pricing.h2": "Planos para cada mãe",
+    "pricing.subtitle": "Comece grátis, sem cartão",
     "pricing.free_name": "Visita Livre",
     "pricing.free_price": "Grátis",
-    "pricing.free_desc": "Conheça sem compromisso",
-    "pricing.free_f1": "5 consultas completas com IA",
-    "pricing.free_f2": "Trilha de desenvolvimento",
-    "pricing.free_f3": "Alertas de emergência",
-    "pricing.free_f4": "Acesso básico ao chat",
+    "pricing.free_desc": "Perfeito para começar",
+    "pricing.free_f1": "5 consultas IA/mês",
+    "pricing.free_f2": "Chat 24h",
+    "pricing.free_f3": "Sem cartão necessário",
+    "pricing.free_f4": "Suporte por email",
     "pricing.premium_name": "Premium",
     "pricing.premium_price": "R$ 19,90",
     "pricing.premium_period": "/mês",
-    "pricing.premium_desc": "Acesso completo + IA com 500 créditos/mês",
+    "pricing.premium_desc": "Mais respostas, mais apoio",
     "pricing.premium_popular": "Mais popular",
-    "pricing.premium_f1": "Tudo do plano Manual",
-    "pricing.premium_f2": "Chat IA com 500 créditos/mês",
-    "pricing.premium_f3": "Memória do bebê (histórico)",
-    "pricing.premium_f4": "Predição de sono inteligente",
-    "pricing.premium_f5": "Alertas de emergência",
+    "pricing.premium_f1": "500 créditos IA/mês",
+    "pricing.premium_f2": "Chat ilimitado",
+    "pricing.premium_f3": "Diário do bebê",
+    "pricing.premium_f4": "Alertas de vacinas",
+    "pricing.premium_f5": "Trilha de desenvolvimento",
     "pricing.premium_f6": "Suporte prioritário",
     "pricing.manual_name": "Manual",
     "pricing.manual_price": "R$ 29,90",
-    "pricing.manual_desc": "Conteúdo completo, sem IA",
-    "pricing.manual_f1": "55+ receitas com fotos",
-    "pricing.manual_f2": "Exercícios pós-parto",
-    "pricing.manual_f3": "Manuais SBP completos",
-    "pricing.manual_f4": "Trilha de desenvolvimento",
-    "pricing.manual_f5": "Diário do bebê",
+    "pricing.manual_desc": "Conteúdo completo",
+    "pricing.manual_f1": "Todos os guias",
+    "pricing.manual_f2": "Receitas completas",
+    "pricing.manual_f3": "Sem IA (conteúdo estático)",
+    "pricing.manual_f4": "Acesso vitalício",
+    "pricing.manual_f5": "Suporte por email",
     "pricing.cta": "Começar agora",
-    "pricing.footer": "Todos os planos incluem: Sem cartão obrigatório · Cancele quando quiser · Suporte por email",
+    "pricing.footer": "Todos os planos incluem 2 consultas grátis com IA.",
 
     // FAQ
     "faq.h2": "Dúvidas frequentes",
@@ -198,6 +203,11 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.try_free": "Try free",
     "nav.start_free": "Start free now",
 
+    // Chat
+    "chat.subtitle": "Your AI neonatal assistant",
+    "chat.welcome": "Hello! I'm Wilbor, your AI neonatal assistant. How can I help you and your baby today?",
+    "chat.error": "Sorry, there was an error. Please try again.",
+
     // Hero
     "hero.badge": "Your Maternity Companion",
     "hero.h1": "You Are Not Alone on This Journey.",
@@ -245,19 +255,19 @@ const translations: Record<Locale, Record<string, string>> = {
     "compare.before_6": "Sleepless nights of worry",
     "compare.after_1": "Chat that answers in seconds, 24/7",
     "compare.after_2": "Complete guide in one place",
-    "compare.after_3": "Automatic vaccine alerts",
+    "compare.after_3": "Automatic vaccination alerts",
     "compare.after_4": "AI that doesn't judge, just supports",
-    "compare.after_5": "Save $40+ on consultations",
-    "compare.after_6": "Sleep peacefully with reliable answers",
+    "compare.after_5": "Saves $40+ on consultations",
+    "compare.after_6": "Sleep soundly with reliable answers",
 
     // Mother
     "mother.badge": "New",
     "mother.h2": "And you, mom?",
-    "mother.subtitle": "You deserve care too. Restore your body, take care of your health",
+    "mother.subtitle": "You also deserve care. Recover your body, take care of your health",
     "mother.weight": "Weight Control",
-    "mother.weight_desc": "Progress chart + ideal BMI",
+    "mother.weight_desc": "Evolution chart + ideal BMI",
     "mother.exercise": "Home Exercises",
-    "mother.exercise_desc": "Postpartum phase routines",
+    "mother.exercise_desc": "Routines by postpartum phase",
     "mother.food": "Nutrition",
     "mother.food_desc": "Lose weight while breastfeeding",
     "mother.care": "Care & Products",
@@ -265,61 +275,61 @@ const translations: Record<Locale, Record<string, string>> = {
     "mother.cta": "Access My Body",
 
     // Testimonials
-    "testimonials.h2": "What Mothers Are Saying",
-    "testimonials.subtitle": "Real results from those using Wilbor",
+    "testimonials.h2": "What Moms Say",
+    "testimonials.subtitle": "Real results from Wilbor users",
 
     // Credibility
     "credibility.badge": "Validated content",
-    "credibility.h2": "Based on AAP, WHO and SBP guidelines",
-    "credibility.desc": "All guidance follows official recommendations from the American Academy of Pediatrics, World Health Organization, and Brazilian Society of Pediatrics.",
-    "credibility.stat_1": "384+",
-    "credibility.stat_1_label": "Trilingual questions",
-    "credibility.stat_2": "55+",
-    "credibility.stat_2_label": "Recipes with photos",
-    "credibility.stat_3": "100%",
-    "credibility.stat_3_label": "Evidence-based",
+    "credibility.h2": "Trusted by professionals",
+    "credibility.desc": "Developed with pediatricians and international scientific protocols",
+    "credibility.stat_1": "AAP",
+    "credibility.stat_1_label": "American Academy of Pediatrics protocols",
+    "credibility.stat_2": "WHO",
+    "credibility.stat_2_label": "World Health Organization recommendations",
+    "credibility.stat_3": "SBP",
+    "credibility.stat_3_label": "Brazilian Society of Pediatrics",
 
     // Pricing
-    "pricing.h2": "Simple and transparent plans",
-    "pricing.subtitle": "Choose what works best for you",
+    "pricing.h2": "Plans for Every Mom",
+    "pricing.subtitle": "Start free, no credit card",
     "pricing.free_name": "Free Visit",
     "pricing.free_price": "Free",
-    "pricing.free_desc": "Try with no commitment",
-    "pricing.free_f1": "5 complete AI consultations",
-    "pricing.free_f2": "Development track",
-    "pricing.free_f3": "Emergency alerts",
-    "pricing.free_f4": "Basic chat access",
+    "pricing.free_desc": "Perfect to get started",
+    "pricing.free_f1": "5 AI consultations/month",
+    "pricing.free_f2": "24/7 Chat",
+    "pricing.free_f3": "No credit card required",
+    "pricing.free_f4": "Email support",
     "pricing.premium_name": "Premium",
     "pricing.premium_price": "$9.90",
-    "pricing.premium_period": "/mo",
-    "pricing.premium_desc": "Full access + AI with 500 credits/month",
+    "pricing.premium_period": "/month",
+    "pricing.premium_desc": "More answers, more support",
     "pricing.premium_popular": "Most popular",
-    "pricing.premium_f1": "Everything in Manual plan",
-    "pricing.premium_f2": "AI Chat with 500 credits/month",
-    "pricing.premium_f3": "Baby memory (history)",
-    "pricing.premium_f4": "Smart sleep prediction",
-    "pricing.premium_f5": "Emergency alerts",
+    "pricing.premium_f1": "500 AI credits/month",
+    "pricing.premium_f2": "Unlimited chat",
+    "pricing.premium_f3": "Baby journal",
+    "pricing.premium_f4": "Vaccination alerts",
+    "pricing.premium_f5": "Developmental milestones",
     "pricing.premium_f6": "Priority support",
     "pricing.manual_name": "Manual",
     "pricing.manual_price": "$14.90",
-    "pricing.manual_desc": "Full content, no AI",
-    "pricing.manual_f1": "55+ recipes with photos",
-    "pricing.manual_f2": "Postpartum exercises",
-    "pricing.manual_f3": "Complete SBP manuals",
-    "pricing.manual_f4": "Development track",
-    "pricing.manual_f5": "Baby diary",
-    "pricing.cta": "Get started",
-    "pricing.footer": "All plans include: No credit card required · Cancel anytime · Email support",
+    "pricing.manual_desc": "Complete content",
+    "pricing.manual_f1": "All guides",
+    "pricing.manual_f2": "Complete recipes",
+    "pricing.manual_f3": "No AI (static content)",
+    "pricing.manual_f4": "Lifetime access",
+    "pricing.manual_f5": "Email support",
+    "pricing.cta": "Get Started",
+    "pricing.footer": "All plans include 2 free AI consultations.",
 
     // FAQ
-    "faq.h2": "Frequently asked questions",
+    "faq.h2": "Frequently Asked Questions",
 
     // Final CTA
     "final_cta.h2": "Ready for this journey?",
-    "final_cta.desc": "Thousands of mothers already trust Wilbor. You can start today, with no commitment.",
+    "final_cta.desc": "Thousands of moms already trust Wilbor. You can start today, no commitment.",
 
     // Footer
-    "footer.tagline": "24/7 smart digital support, based on AAP/WHO/SBP",
+    "footer.tagline": "24/7 intelligent digital support, based on SBP/WHO/AAP",
     "footer.product": "Product",
     "footer.legal": "Legal",
     "footer.social": "Social",
@@ -334,8 +344,8 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Blog
     "blog.badge": "Wilbor Blog",
-    "blog.h1": "Guides for first-time parents",
-    "blog.subtitle": "Practical articles based on AAP, WHO, and SBP protocols. Written so you understand quickly and act safely.",
+    "blog.h1": "Guides for First-Time Moms",
+    "blog.subtitle": "Practical articles based on SBP, AAP and WHO protocols. Written for you to understand quickly and act safely.",
     "blog.read_article": "Read article",
     "blog.cta_h2": "Need personalized guidance?",
     "blog.cta_desc": "Wilbor answers your questions in seconds, based on your baby's profile.",
@@ -365,6 +375,11 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.pricing": "Precios",
     "nav.try_free": "Probar gratis",
     "nav.start_free": "Empezar gratis ahora",
+
+    // Chat
+    "chat.subtitle": "Tu asistente neonatal IA",
+    "chat.welcome": "¡Hola! Soy Wilbor, tu asistente neonatal IA. ¿Cómo puedo ayudarte a ti y a tu bebé hoy?",
+    "chat.error": "Lo siento, hubo un error. Por favor, intenta de nuevo.",
 
     // Hero
     "hero.badge": "Tu compañero de maternidad",
@@ -438,46 +453,46 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Credibility
     "credibility.badge": "Contenido validado",
-    "credibility.h2": "Basado en las directrices de AAP, OMS y SBP",
-    "credibility.desc": "Todas las orientaciones siguen las recomendaciones oficiales de la Academia Americana de Pediatría, Organización Mundial de la Salud y Sociedad Brasileña de Pediatría.",
-    "credibility.stat_1": "384+",
-    "credibility.stat_1_label": "Preguntas trilingües",
-    "credibility.stat_2": "55+",
-    "credibility.stat_2_label": "Recetas con fotos",
-    "credibility.stat_3": "100%",
-    "credibility.stat_3_label": "Basado en evidencia",
+    "credibility.h2": "Confiado por profesionales",
+    "credibility.desc": "Desarrollado con pediatras y protocolos científicos internacionales",
+    "credibility.stat_1": "AAP",
+    "credibility.stat_1_label": "Protocolos de la Academia Americana de Pediatría",
+    "credibility.stat_2": "OMS",
+    "credibility.stat_2_label": "Recomendaciones de la Organización Mundial de la Salud",
+    "credibility.stat_3": "SBP",
+    "credibility.stat_3_label": "Sociedad Brasileña de Pediatría",
 
     // Pricing
-    "pricing.h2": "Planes simples y transparentes",
-    "pricing.subtitle": "Elige lo que funcione mejor para ti",
+    "pricing.h2": "Planes para cada mamá",
+    "pricing.subtitle": "Comienza gratis, sin tarjeta",
     "pricing.free_name": "Visita Libre",
     "pricing.free_price": "Gratis",
-    "pricing.free_desc": "Conoce sin compromiso",
-    "pricing.free_f1": "5 consultas completas con IA",
-    "pricing.free_f2": "Ruta de desarrollo",
-    "pricing.free_f3": "Alertas de emergencia",
-    "pricing.free_f4": "Acceso básico al chat",
+    "pricing.free_desc": "Perfecto para comenzar",
+    "pricing.free_f1": "5 consultas IA/mes",
+    "pricing.free_f2": "Chat 24/7",
+    "pricing.free_f3": "Sin tarjeta necesaria",
+    "pricing.free_f4": "Soporte por email",
     "pricing.premium_name": "Premium",
     "pricing.premium_price": "$9.90",
     "pricing.premium_period": "/mes",
-    "pricing.premium_desc": "Acceso completo + IA con 500 créditos/mes",
+    "pricing.premium_desc": "Más respuestas, más apoyo",
     "pricing.premium_popular": "Más popular",
-    "pricing.premium_f1": "Todo del plan Manual",
-    "pricing.premium_f2": "Chat IA con 500 créditos/mes",
-    "pricing.premium_f3": "Memoria del bebé (historial)",
-    "pricing.premium_f4": "Predicción de sueño inteligente",
-    "pricing.premium_f5": "Alertas de emergencia",
+    "pricing.premium_f1": "500 créditos IA/mes",
+    "pricing.premium_f2": "Chat ilimitado",
+    "pricing.premium_f3": "Diario del bebé",
+    "pricing.premium_f4": "Alertas de vacunas",
+    "pricing.premium_f5": "Hitos de desarrollo",
     "pricing.premium_f6": "Soporte prioritario",
     "pricing.manual_name": "Manual",
     "pricing.manual_price": "$14.90",
-    "pricing.manual_desc": "Contenido completo, sin IA",
-    "pricing.manual_f1": "55+ recetas con fotos",
-    "pricing.manual_f2": "Ejercicios posparto",
-    "pricing.manual_f3": "Manuales SBP completos",
-    "pricing.manual_f4": "Ruta de desarrollo",
-    "pricing.manual_f5": "Diario del bebé",
-    "pricing.cta": "Empezar ahora",
-    "pricing.footer": "Todos los planes incluyen: Sin tarjeta obligatoria · Cancela cuando quieras · Soporte por email",
+    "pricing.manual_desc": "Contenido completo",
+    "pricing.manual_f1": "Todas las guías",
+    "pricing.manual_f2": "Recetas completas",
+    "pricing.manual_f3": "Sin IA (contenido estático)",
+    "pricing.manual_f4": "Acceso de por vida",
+    "pricing.manual_f5": "Soporte por email",
+    "pricing.cta": "Comenzar ahora",
+    "pricing.footer": "Todos los planes incluyen 2 consultas gratis con IA.",
 
     // FAQ
     "faq.h2": "Preguntas frecuentes",
@@ -527,7 +542,7 @@ const translations: Record<Locale, Record<string, string>> = {
 };
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(detectLocaleFromPath);
+  const [locale, setLocaleState] = useState<Locale>(() => detectLocaleFromPath());
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
@@ -550,17 +565,25 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const t = useCallback((key: string): string => {
-    return translations[locale][key] || translations.pt[key] || key;
-  }, [locale]);
+    const currentLocale = detectLocaleFromPath();
+    return translations[currentLocale][key] || translations.pt[key] || key;
+  }, []);
 
-  // Returns path with locale prefix
+  // Always use current locale from URL, not from state
   const localePath = useCallback((path: string): string => {
-    if (locale === "pt") return path;
-    return `/${locale}${path === "/" ? "" : path}`;
-  }, [locale]);
+    const currentLocale = detectLocaleFromPath();
+    if (currentLocale === "pt") return path;
+    return `/${currentLocale}${path === "/" ? "" : path}`;
+  }, []);
+
+  // Sync locale state with URL on every render
+  const currentLocale = detectLocaleFromPath();
+  if (currentLocale !== locale) {
+    setLocaleState(currentLocale);
+  }
 
   return (
-    <I18nContext.Provider value={{ locale, setLocale, t, localePath }}>
+    <I18nContext.Provider value={{ locale: currentLocale, setLocale, t, localePath }}>
       {children}
     </I18nContext.Provider>
   );

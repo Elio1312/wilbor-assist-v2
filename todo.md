@@ -253,3 +253,12 @@
 - [ ] Registrar stripeRouter no routers.ts principal
 - [ ] Adicionar rota /checkout no App.tsx
 - [ ] Build, checkpoint e publicar
+
+## FASE 25: CORREÇÃO DE ROTEAMENTO DE IDIOMAS (CRÍTICO)
+- [x] Identificar bug: localePath() não detectava mudanças de URL
+- [x] Refatorar i18n.tsx para usar detectLocaleFromPath() em tempo real
+- [x] Adicionar chat translations (PT/EN/ES) ao contexto i18n
+- [x] Criar 25 testes de i18n para validar lógica de roteamento
+- [x] Todos os testes passando (25/25)
+- [x] Verificar que /chat redireciona para /chat (PT) e /en/chat (EN)
+- [ ] Publicar fix em produção
