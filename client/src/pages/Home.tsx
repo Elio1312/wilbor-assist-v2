@@ -139,9 +139,9 @@ export default function Home() {
               <a className="text-gray-600 hover:text-gray-900 font-medium">{t("nav.blog")}</a>
             </Link>
             {isAuthenticated ? (
-              <Button className="bg-purple-600 hover:bg-purple-700">{t("nav.dashboard")}</Button>
+              <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => window.location.href = localePath('/dashboard')}>{t("nav.dashboard")}</Button>
             ) : (
-              <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => window.location.href = getLoginUrl()}>
+              <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => window.location.href = localePath('/chat')}>
                 {t("nav.enter")}
               </Button>
             )}
@@ -171,7 +171,7 @@ export default function Home() {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg h-14 rounded-full"
-                onClick={() => window.location.href = getLoginUrl()}
+                onClick={() => window.location.href = localePath('/chat')}
               >
                 {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -370,7 +370,7 @@ export default function Home() {
             <Button 
               size="lg"
               className="bg-green-600 hover:bg-green-700 text-white text-lg h-14 rounded-full"
-              onClick={() => window.location.href = getLoginUrl()}
+              onClick={() => window.location.href = localePath('/checkout')}
             >
               {t("mother.cta")} <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
@@ -462,7 +462,7 @@ export default function Home() {
                       ? "bg-white text-purple-600 hover:bg-gray-100" 
                       : "bg-purple-600 text-white hover:bg-purple-700"
                   }`}
-                  onClick={() => window.location.href = getLoginUrl()}
+                  onClick={() => window.location.href = localePath('/checkout')}
                 >
                   {t("pricing.cta")}
                 </Button>
@@ -529,7 +529,7 @@ export default function Home() {
               <Button 
                 size="lg"
                 className="bg-white text-purple-600 hover:bg-gray-100 text-lg h-14 rounded-full font-semibold"
-                onClick={() => window.location.href = getLoginUrl()}
+                onClick={() => window.location.href = localePath('/checkout')}
               >
                 {t("pricing.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
