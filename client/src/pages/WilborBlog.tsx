@@ -1324,7 +1324,7 @@ export function BlogArticle({ slug }: { slug: string }) {
               <Sparkles className="w-5 h-5" />
               Testar grátis agora
             </Button>
-            <p className="text-xs text-slate-400 mt-3">Sem cadastro · Resposta imediata · 2 consultas grátis</p>
+            <p className="text-xs text-slate-400 mt-3">Sem cadastro · Resposta imediata · 5 consultas grátis</p>
           </div>
 
           {/* FAQ */}

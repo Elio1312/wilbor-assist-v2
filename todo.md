@@ -272,3 +272,7 @@
 - [x] Arquivos sincronizados: App.tsx, Blog.tsx, BlogArticle.tsx, BuyCredits.tsx, Checkout.tsx, Dashboard.tsx, Home.tsx, NotFound.tsx, Chat.tsx, FeedbackDashboard.tsx, blogArticlesI18n.ts, PanicButton.tsx, WhatsAppButton.tsx, LanguageSwitcher.tsx, FeedbackButton.tsx, SOSButton.tsx, ManusDialog.tsx, i18n.tsx
 - [x] Novos idiomas: FR (Francês) e DE (Alemão) adicionados
 - [ ] Publicar em produção
+
+## FASE 27: CORREÇÃO LIMITE CONSULTAS GRÁTIS
+- [x] Corrigir de 2 para 5 consultas grátis em todo o código (WilborBlog.tsx corrigido)
+- [x] Auditar código vs. documento estratégico do outro Manus (WILBOR_INTELIGENCIA_CHAT_AUDITORIA.md)
