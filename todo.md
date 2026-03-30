@@ -292,3 +292,9 @@
 - [x] Investigar rota /blog/:slug retornando Soft 404 para o Google
 - [x] Verificar se BlogArticle.tsx renderiza conteúdo sem login
 - [x] Corrigir sitemap.ts para usar slugs reais do BlogArticle.tsx (elimina Soft 404)
+
+## FASE 31: AUDITORIA SOFT 404 COMPLETA
+- [x] Auditar todas as rotas: Home, Blog, BlogArticle, Chat, Dashboard, Checkout, BuyCredits
+- [x] Corrigir páginas que redirecionam ou mostram vazio para usuários não autenticados
+- [x] Garantir que páginas públicas (Home, Blog, BlogArticle) renderizam conteúdo sem login
+- [x] Atualizar sitemap apenas com URLs públicas (removido /dashboard, /checkout, /buy-credits)

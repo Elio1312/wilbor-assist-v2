@@ -124,6 +124,15 @@ export default function Checkout() {
 
   const labels = LABELS[locale as keyof typeof LABELS] || LABELS.pt;
 
+  // Prevent Google from indexing private/auth-required pages
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+    return () => { document.head.removeChild(meta); };
+  }, []);
+
   // Sync currency when locale changes
   useEffect(() => {
     setCurrency(CURRENCY_BY_LOCALE[locale] || "BRL");

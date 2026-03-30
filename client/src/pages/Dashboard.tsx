@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AIChatBox, type Message } from "@/components/AIChatBox";
 import { FeedbackButton } from "@/components/FeedbackButton";
 import { SOSButton } from "@/components/SOSButton";
@@ -11,6 +11,14 @@ import { useRouter } from "wouter";
 import { useI18n } from "@/contexts/i18n";
 
 export default function Dashboard() {
+  // Prevent Google from indexing private/auth-required pages
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+    return () => { document.head.removeChild(meta); };
+  }, []);
   const router = useRouter();
   const { user, logout } = useAuth();
   const { locale } = useI18n();

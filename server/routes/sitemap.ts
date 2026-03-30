@@ -11,13 +11,12 @@ const LANGS = [
   { prefix: "/de", hreflang: "de"    },
 ];
 
-// Static pages — all 5 languages
+// Static pages — PUBLIC only (no auth required)
+// DO NOT add /dashboard, /checkout, /buy-credits — they redirect unauthenticated users (Soft 404)
 const STATIC_PAGES = [
-  { path: "",           priority: "1.0", changefreq: "weekly"  },
-  { path: "/blog",      priority: "0.9", changefreq: "daily"   },
-  { path: "/chat",      priority: "0.8", changefreq: "weekly"  },
-  { path: "/dashboard", priority: "0.7", changefreq: "weekly"  },
-  { path: "/checkout",  priority: "0.6", changefreq: "monthly" },
+  { path: "",      priority: "1.0", changefreq: "weekly" },
+  { path: "/blog", priority: "0.9", changefreq: "daily"  },
+  { path: "/chat", priority: "0.8", changefreq: "weekly" },
 ];
 
 // Real slugs from BlogArticle.tsx BLOG_ARTICLES array (the actual rendered pages)
