@@ -320,3 +320,11 @@
   - ansiedade-pos-parto-vs-depressao-diferencas
 - [x] Build: 0 erros TypeScript
 - [x] Testes: 60/60 passando
+
+## FASE 34: SITEMAP MULTILÍNGUE CORRIGIDO (16 SLUGS POR IDIOMA)
+- [x] Verificar slugs DE: 16 artigos confirmados (sem duplicata)
+- [x] Verificar slugs FR: 16 artigos confirmados
+- [x] Refatorar sitemap.ts: arrays separados por idioma (PT 16, EN 15, ES 15, FR 16, DE 16)
+- [x] Cada idioma agora tem seus próprios slugs corretos no sitemap
+- [x] Build: 0 erros TypeScript
+- [x] Testes: 60/60 passando

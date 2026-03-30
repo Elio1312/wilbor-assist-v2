@@ -19,8 +19,8 @@ const STATIC_PAGES = [
   { path: "/chat", priority: "0.8", changefreq: "weekly" },
 ];
 
-// Real slugs from BlogArticle.tsx BLOG_ARTICLES array (the actual rendered pages)
-const BLOG_SLUGS = [
+// Blog slugs per language (each language has its own set of articles)
+const BLOG_SLUGS_PT = [
   "bebe-nao-dorme",
   "colica-do-bebe",
   "febre-no-bebe",
@@ -33,7 +33,94 @@ const BLOG_SLUGS = [
   "banho-do-recem-nascido",
   "algoritmo-predicao-sono-bebe",
   "ia-que-le-entrelinhas-mae",
+  "surtos-de-crescimento-do-bebe",
+  "ictericia-neonatal-causas-e-tratamento",
+  "dentição-do-bebe-sintomas-e-alivio",
+  "ansiedade-pos-parto-vs-depressao-diferencas",
 ];
+
+const BLOG_SLUGS_EN = [
+  "baby-wont-sleep",
+  "baby-colic-relief",
+  "baby-fever-guide",
+  "baby-food-introduction",
+  "postpartum-depression",
+  "baby-vaccination-schedule",
+  "breastfeeding-latch-guide",
+  "baby-safety-home",
+  "baby-developmental-leaps",
+  "newborn-bath-guide",
+  "when-do-babies-start-sleeping-through-the-night",
+  "baby-growth-spurts-signs-and-what-to-do",
+  "newborn-jaundice-causes-and-treatment",
+  "baby-teething-symptoms-and-relief",
+  "postpartum-anxiety-vs-depression-key-differences",
+];
+
+const BLOG_SLUGS_ES = [
+  "bebe-no-duerme",
+  "colico-del-bebe",
+  "fiebre-en-bebe",
+  "introduccion-alimentaria",
+  "depresion-posparto",
+  "vacunas-del-bebe",
+  "lactancia-agarre-correcto",
+  "seguridad-bebe-hogar",
+  "saltos-desarrollo-bebe",
+  "bano-recien-nacido",
+  "cuando-empiezan-los-bebes-a-dormir-toda-la-noche",
+  "denticion-del-bebe-sintomas-y-alivio",
+  "ictericia-neonatal-causas-y-tratamiento",
+  "ansiedad-posparto-sintomas-y-diferencias-con-depresion",
+  "crecimiento-del-bebe-tablas-de-peso-y-talla-oms",
+];
+
+const BLOG_SLUGS_FR = [
+  "bebe-ne-dort-pas",
+  "coliques-bebe",
+  "fievre-bebe",
+  "diversification-alimentaire",
+  "vaccins-bebe",
+  "allaitement-guide-complet",
+  "developpement-moteur-bebe",
+  "securite-bebe-maison",
+  "pics-developpement-bebe",
+  "bain-nouveau-ne",
+  "algorithme-predit-sommeil-bebe",
+  "ia-lit-entre-les-lignes",
+  "poussees-de-croissance-du-bebe",
+  "ictere-neonatal-causes-et-traitement",
+  "dentition-du-bebe-symptomes-et-soulagement",
+  "anxiete-post-partum-vs-depression-differences",
+];
+
+const BLOG_SLUGS_DE = [
+  "baby-schlaeft-nicht",
+  "bauchkoliken-baby",
+  "fieber-baby",
+  "beikosteinfuehrung",
+  "impfkalender-baby",
+  "stillen-leitfaden",
+  "motorische-entwicklung-baby",
+  "babysicherheit-zuhause",
+  "entwicklungsspruenge-baby",
+  "neugeborenes-baden",
+  "algorithmus-schlafvorhersage-baby",
+  "ki-liest-zwischen-den-zeilen",
+  "wachstumsschube-beim-baby",
+  "neugeborenengelbsucht-ursachen-und-behandlung",
+  "zahnen-beim-baby-symptome-und-linderung",
+  "wochenbettangst-vs-wochenbettdepression-unterschiede",
+];
+
+// Map language prefix to its slug array
+const LANG_SLUGS: Record<string, string[]> = {
+  "": BLOG_SLUGS_PT,
+  "/en": BLOG_SLUGS_EN,
+  "/es": BLOG_SLUGS_ES,
+  "/fr": BLOG_SLUGS_FR,
+  "/de": BLOG_SLUGS_DE,
+};
 
 router.get("/sitemap.xml", (req, res) => {
   const baseUrl = "https://www.wilbor-assist.com";
@@ -56,14 +143,13 @@ router.get("/sitemap.xml", (req, res) => {
     }
   }
 
-  // Blog articles — each slug in all 5 languages
-  for (const slug of BLOG_SLUGS) {
-    for (const lang of LANGS) {
+  // Blog articles — each language has its own set of slugs
+  for (const lang of LANGS) {
+    const slugs = LANG_SLUGS[lang.prefix] ?? BLOG_SLUGS_PT;
+    for (const slug of slugs) {
       const loc = `${baseUrl}${lang.prefix}/blog/${slug}`;
       sitemap += `\n  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>`;
-      for (const alt of LANGS) {
-        sitemap += `\n    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${baseUrl}${alt.prefix}/blog/${slug}" />`;
-      }
+      sitemap += `\n    <xhtml:link rel="alternate" hreflang="${lang.hreflang}" href="${loc}" />`;
       sitemap += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/en/blog/${slug}" />\n  </url>`;
     }
   }
