@@ -287,3 +287,8 @@
 - [x] Atualizar index.html com meta tags multilíngues e Open Graph
 - [x] Atualizar robots.txt com referência ao sitemap atualizado (já estava correto)
 - [x] Verificar arquivo de verificação Google Search Console (google425b6e216988935d.html existente)
+
+## FASE 30: CORREÇÃO SOFT 404 BLOG
+- [x] Investigar rota /blog/:slug retornando Soft 404 para o Google
+- [x] Verificar se BlogArticle.tsx renderiza conteúdo sem login
+- [x] Corrigir sitemap.ts para usar slugs reais do BlogArticle.tsx (elimina Soft 404)

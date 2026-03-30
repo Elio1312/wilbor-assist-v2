@@ -1,0 +1,55 @@
+{
+  "query": "SELECT DISTINCT slug FROM blog_articles WHERE language='pt-BR' ORDER BY slug;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c1VSXzZW6SU7fm.root --database LJucsyXHjSVaXkbocW4u2f --execute SELECT DISTINCT slug FROM blog_articles WHERE language='pt-BR' ORDER BY slug;",
+  "rows": [
+    {
+      "slug": "amamentacao"
+    },
+    {
+      "slug": "banho-recem-nascido"
+    },
+    {
+      "slug": "bebe-dorme-cuna"
+    },
+    {
+      "slug": "bebe-nao-dorme"
+    },
+    {
+      "slug": "colicas-bebe"
+    },
+    {
+      "slug": "colicas-vs-gases"
+    },
+    {
+      "slug": "depressao-posparto"
+    },
+    {
+      "slug": "febre-apos-vacina"
+    },
+    {
+      "slug": "febre-bebe"
+    },
+    {
+      "slug": "introducao-alimentos"
+    },
+    {
+      "slug": "marcos-desenvolvimento"
+    },
+    {
+      "slug": "regressao-sono-4-meses"
+    },
+    {
+      "slug": "seguranca-bebe"
+    },
+    {
+      "slug": "tabela-janelas-sono"
+    },
+    {
+      "slug": "vacinas-bebe"
+    }
+  ],
+  "messages": [],
+  "stdout": "slug\namamentacao\nbanho-recem-nascido\nbebe-dorme-cuna\nbebe-nao-dorme\ncolicas-bebe\ncolicas-vs-gases\ndepressao-posparto\nfebre-apos-vacina\nfebre-bebe\nintroducao-alimentos\nmarcos-desenvolvimento\nregressao-sono-4-meses\nseguranca-bebe\ntabela-janelas-sono\nvacinas-bebe\n",
+  "stderr": "",
+  "execution_time_ms": 2515
+}
