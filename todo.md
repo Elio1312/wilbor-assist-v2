@@ -66,8 +66,8 @@
 - [x] Implementar rota getCredits (Free: 5 msgs/dia, Premium: 500 msgs/dia)
 - [x] Implementar rota updatePlan
 - [x] Implementar rota trackEvent (conversion tracking)
-- [ ] Implementar bloqueio de chat após 2 consultas (frontend)
-- [ ] Tela de limite atingido com opção de upgrade (frontend)
+- [x] Implementar bloqueio de chat após 5 consultas (frontend)
+- [x] Tela de limite atingido com opção de upgrade (PaywallModal.tsx)
 - [x] Testes para paywall (6/6 testes passando)
 
 ## 🟡 FASE 2: DASHBOARD DE FEEDBACK (CONCLUÍDO)
@@ -328,3 +328,12 @@
 - [x] Cada idioma agora tem seus próprios slugs corretos no sitemap
 - [x] Build: 0 erros TypeScript
 - [x] Testes: 60/60 passando
+
+## FASE 35: PAYWALL DE CRÉDITOS (BLOQUEIO CHAT APÓS 5 CONSULTAS)
+- [x] Adicionar verificação de créditos no backend (chat mutation bloqueia se isOverLimit)
+- [x] Criar componente PaywallModal.tsx com contador de consultas + botão upgrade
+- [x] Integrar PaywallModal no Chat.tsx (mostrar antes de enviar quando remaining === 0)
+- [x] Adicionar chaves i18n para paywall em PT/EN/ES/FR/DE (dentro do PaywallModal.tsx)
+- [x] Mostrar contador "X de 5 consultas usadas" no header do chat
+- [x] Testes: 60/60 passando (paywall integrado ao backend)
+- [x] Checkpoint e publicar

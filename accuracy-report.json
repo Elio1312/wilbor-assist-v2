@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-03-30T16:21:18.415Z",
+  "timestamp": "2026-03-30T16:34:53.271Z",
   "totalQuestionsEvaluated": 5,
   "averageScores": {
-    "relevance": 100,
-    "clarity": 96,
+    "relevance": 98,
+    "clarity": 95,
     "accuracy": 95,
-    "overall": 97.00000000000001
+    "overall": 96
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "clarity": 100,
       "accuracy": 100,
       "avgScore": 100,
-      "feedback": "A resposta é excelente. Aborda diretamente a pergunta, é clara, concisa e medicamente correta, enfatizando a importância da posição supina e a segurança do ambiente de sono para prevenir a SMSL."
+      "feedback": "A resposta é excelente. Aborda diretamente a pergunta, é clara, concisa e medicamente precisa, cobrindo os pontos essenciais para um sono seguro do bebê e o risco de SMSL."
     },
     {
       "questionId": 2,
@@ -26,7 +26,7 @@
       "clarity": 95,
       "accuracy": 90,
       "avgScore": 95,
-      "feedback": "A resposta é muito relevante e clara, abordando diretamente as horas de sono e a janela de vigília para recém-nascidos. A informação sobre o 'efeito vulcão' e os sinais de sono são úteis. A acurácia é alta, embora o termo 'efeito vulcão' seja uma analogia popular e não um termo médico formal, a explicação por trás (cortisol alto = bebê exausto que não consegue dormir) é medicamente plausível. As recomendações para o ambiente de sono são boas."
+      "feedback": "A resposta é muito relevante e aborda diretamente a pergunta. A clareza é boa, mas o termo 'efeito vulcão' pode não ser universalmente reconhecido na literatura médica, embora a descrição do cortisol alto e bebê exausto seja conceitualmente correta. As horas de sono e janela de vigília estão dentro do esperado, assim como os sinais de sono e o ambiente ideal."
     },
     {
       "questionId": 3,
@@ -36,27 +36,27 @@
       "clarity": 95,
       "accuracy": 95,
       "avgScore": 96.66666666666667,
-      "feedback": "A resposta aborda todas as partes da pergunta de forma concisa e medicamente correta. A clareza é excelente, mas poderia ser ainda mais explícita ao dizer que o choro do bebê 'pode ser' cólica se seguir a regra dos 3, em vez de uma afirmação direta."
+      "feedback": "A resposta aborda diretamente todas as partes da pergunta, definindo cólica pela 'Regra dos 3' e oferecendo informações adicionais relevantes e precisas sobre o tema. A clareza é boa, mas a formatação poderia ser ligeiramente melhor para facilitar a leitura (ex: bullet points para as técnicas). A acurácia médica é alta, com conselhos seguros e baseados em evidências."
     },
     {
       "questionId": 4,
       "question": "Como fazer massagem para cólica? Massagem I-L-U? Shantala?...",
       "category": "colica",
-      "relevance": 100,
+      "relevance": 95,
       "clarity": 95,
       "accuracy": 95,
-      "avgScore": 96.66666666666667,
-      "feedback": "A resposta aborda diretamente a pergunta sobre massagem para cólica e outras técnicas de alívio, sendo relevante e clara. As informações são medicamente corretas, mas a menção de 'Shantala' na pergunta não foi detalhada na resposta, embora outras técnicas eficazes tenham sido apresentadas. A ressalva sobre fazer massagens fora da crise é crucial e bem colocada."
+      "avgScore": 95,
+      "feedback": "A resposta aborda a pergunta de forma clara e concisa, listando técnicas eficazes para alívio da cólica, incluindo a massagem I-L-U. A menção de fazer as massagens fora da crise é um ponto de segurança importante. A única pequena lacuna é não mencionar a Shantala, que foi perguntada, mas as outras técnicas são bem explicadas."
     },
     {
       "questionId": 5,
       "question": "Como é a pega correta na amamentação? Amamentação dói?...",
       "category": "amamentacao",
-      "relevance": 100,
-      "clarity": 95,
+      "relevance": 95,
+      "clarity": 90,
       "accuracy": 95,
-      "avgScore": 96.66666666666667,
-      "feedback": "A resposta aborda diretamente a pergunta sobre a pega correta e a dor na amamentação, com dicas práticas e precisas. A inclusão de 'livre demanda' e 'sinais de fome' são informações adicionais úteis, embora não diretamente solicitadas, agregam valor. A clareza é excelente, mas poderia ser ainda mais concisa se focasse apenas na pega e dor."
+      "avgScore": 93.33333333333333,
+      "feedback": "A resposta aborda bem as duas perguntas principais, oferecendo dicas práticas e clinicamente corretas. A menção à livre demanda, embora correta, não responde diretamente às perguntas sobre pega e dor, mas é um bom complemento. Os sinais de fome são relevantes para o contexto geral da amamentação."
     }
   ]
 }

@@ -141,6 +141,49 @@ export const appRouter = router({
         })),
       }))
       .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        // --- PAYWALL: check credit limit ---
+        const credits = await db
+          .select()
+          .from(wilborUserCredits)
+          .where(eq(wilborUserCredits.userId, ctx.user.id))
+          .limit(1);
+
+        if (credits.length === 0) {
+          // First time: create free record
+          const periodStart = new Date();
+          const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
+          await db.insert(wilborUserCredits).values({
+            userId: ctx.user.id,
+            plan: "free",
+            monthlyLimit: 5,
+            messagesUsed: 0,
+            ragMessagesUsed: 0,
+            cacheHits: 0,
+            totalSaved: 0,
+            periodStart,
+            periodEnd,
+          });
+        } else {
+          const credit = credits[0];
+          if (credit.messagesUsed >= credit.monthlyLimit) {
+            // Track the hit_limit event
+            await db.insert(wilborConversionEvents).values({
+              userId: ctx.user.id,
+              eventType: "hit_limit",
+            }).catch(() => {}); // non-blocking
+            throw new Error("CREDIT_LIMIT_REACHED");
+          }
+          // Deduct one credit
+          await db
+            .update(wilborUserCredits)
+            .set({ messagesUsed: credit.messagesUsed + 1 })
+            .where(eq(wilborUserCredits.userId, ctx.user.id));
+        }
+        // --- END PAYWALL ---
+
         const response = await simpleChatWithWilbor(String(ctx.user.id), input.messages);
         return response;
       }),
