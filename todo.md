@@ -276,3 +276,14 @@
 ## FASE 27: CORREÇÃO LIMITE CONSULTAS GRÁTIS
 - [x] Corrigir de 2 para 5 consultas grátis em todo o código (WilborBlog.tsx corrigido)
 - [x] Auditar código vs. documento estratégico do outro Manus (WILBOR_INTELIGENCIA_CHAT_AUDITORIA.md)
+
+## FASE 28: GOOGLE SEARCH CONSOLE
+- [ ] Verificar sitemap existente e rotas do site
+- [ ] Gerar arquivo de verificação HTML para Google Search Console
+- [ ] Garantir sitemap completo com todas as páginas e blogs (PT/EN/ES/FR/DE)
+
+## FASE 29: SEO COMPLETO 5 IDIOMAS
+- [x] Atualizar sitemap.ts com rotas /fr e /de + hreflang PT/EN/ES/FR/DE
+- [x] Atualizar index.html com meta tags multilíngues e Open Graph
+- [x] Atualizar robots.txt com referência ao sitemap atualizado (já estava correto)
+- [x] Verificar arquivo de verificação Google Search Console (google425b6e216988935d.html existente)

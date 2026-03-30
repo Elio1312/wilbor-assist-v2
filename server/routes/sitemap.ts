@@ -4,146 +4,94 @@ import { sql } from "drizzle-orm";
 
 const router = Router();
 
-/**
- * Dynamic sitemap.xml endpoint
- * Includes all 45 blog articles + main pages
- * Supports language variants for SEO
- */
+// 5 language variants
+const LANGS = [
+  { prefix: "",    hreflang: "pt-BR" },
+  { prefix: "/en", hreflang: "en"    },
+  { prefix: "/es", hreflang: "es"    },
+  { prefix: "/fr", hreflang: "fr"    },
+  { prefix: "/de", hreflang: "de"    },
+];
+
+const STATIC_PAGES = [
+  { path: "",           priority: "1.0", changefreq: "weekly"  },
+  { path: "/blog",      priority: "0.9", changefreq: "daily"   },
+  { path: "/chat",      priority: "0.8", changefreq: "weekly"  },
+  { path: "/dashboard", priority: "0.7", changefreq: "weekly"  },
+  { path: "/checkout",  priority: "0.6", changefreq: "monthly" },
+];
+
 router.get("/sitemap.xml", async (req, res) => {
   try {
     const db = await getDb();
-    if (!db) {
-      res.status(500).send("Database not available");
-      return;
-    }
+    if (!db) { res.status(500).send("Database not available"); return; }
 
-    // Fetch all blog articles
-    const articlesQuery = sql`
+    const [articles] = await db.execute(sql`
       SELECT slug, language, created_at, updated_at
-      FROM blog_articles
-      WHERE priority = 'tier1'
-      ORDER BY language, slug
-    `;
-
-    const [articles] = await db.execute(articlesQuery);
+      FROM blog_articles WHERE priority = 'tier1' ORDER BY language, slug
+    `);
     const articlesList = Array.isArray(articles) ? articles : [];
 
-    // Build sitemap XML
     const baseUrl = "https://www.wilbor-assist.com";
     const today = new Date().toISOString().split("T")[0];
 
     let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-
-  <!-- Homepage with language variants -->
-  <url>
-    <loc>${baseUrl}/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="${baseUrl}/" />
-    <xhtml:link rel="alternate" hreflang="en-US" href="${baseUrl}/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="${baseUrl}/?lang=es" />
-  </url>
-
-  <!-- Blog listing page -->
-  <url>
-    <loc>${baseUrl}/blog</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="${baseUrl}/blog" />
-    <xhtml:link rel="alternate" hreflang="en-US" href="${baseUrl}/blog?lang=en" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="${baseUrl}/blog?lang=es" />
-  </url>
-
-  <!-- Dashboard -->
-  <url>
-    <loc>${baseUrl}/dashboard</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Blog articles with language variants -->
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 `;
 
-    // Group articles by slug to create hreflang links
-    const articlesBySlug = new Map<string, any[]>();
-    for (const article of articlesList) {
-      const slug = (article as any).slug;
-      if (!articlesBySlug.has(slug)) {
-        articlesBySlug.set(slug, []);
-      }
-      articlesBySlug.get(slug)!.push(article);
-    }
-
-    // Add each article with language variants
-    const sitemapEntries = Array.from(articlesBySlug.entries());
-      for (const [slug, variants] of sitemapEntries) {
-        const mainArticle = variants[0] as any;
-      const lastmod = mainArticle.updated_at
-        ? new Date(mainArticle.updated_at).toISOString().split("T")[0]
-        : today;
-
-      sitemap += `
-  <url>
-    <loc>${baseUrl}/blog/${slug}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>`;
-
-      // Add hreflang for each language variant
-      const langMap: Record<string, string> = {
-        "pt-BR": "pt-BR",
-        "en-US": "en-US",
-        "es-ES": "es-ES",
-      };
-
-      for (const [lang, hreflang] of Object.entries(langMap)) {
-        const hasVariant = variants.some((v: any) => v.language === lang);
-        if (hasVariant) {
-          sitemap += `
-    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${baseUrl}/blog/${slug}?lang=${lang.split("-")[0]}" />`;
+    // Static pages — 5 languages each
+    for (const page of STATIC_PAGES) {
+      for (const lang of LANGS) {
+        const loc = `${baseUrl}${lang.prefix}${page.path}`;
+        sitemap += `\n  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${page.changefreq}</changefreq>\n    <priority>${page.priority}</priority>`;
+        for (const alt of LANGS) {
+          sitemap += `\n    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${baseUrl}${alt.prefix}${page.path}" />`;
         }
+        sitemap += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/en${page.path}" />\n  </url>`;
       }
-
-      sitemap += `
-  </url>`;
     }
 
-    sitemap += `
-</urlset>`;
+    // Blog articles grouped by slug
+    const langPrefixMap: Record<string, string> = { "pt-BR": "", "en-US": "/en", "es-ES": "/es", "fr-FR": "/fr", "de-DE": "/de" };
+    const hreflangMap: Record<string, string>   = { "pt-BR": "pt-BR", "en-US": "en", "es-ES": "es", "fr-FR": "fr", "de-DE": "de" };
 
+    const bySlug = new Map<string, any[]>();
+    for (const a of articlesList) {
+      const slug = (a as any).slug;
+      if (!bySlug.has(slug)) bySlug.set(slug, []);
+      bySlug.get(slug)!.push(a);
+    }
+
+    for (const [slug, variants] of Array.from(bySlug.entries())) {
+      const main = variants[0] as any;
+      const lastmod = main.updated_at ? new Date(main.updated_at).toISOString().split("T")[0] : today;
+      const canonical = variants.find((v: any) => v.language === "pt-BR") || main;
+      const canonPrefix = langPrefixMap[(canonical as any).language] ?? "";
+
+      sitemap += `\n  <url>\n    <loc>${baseUrl}${canonPrefix}/blog/${slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>`;
+      for (const v of variants) {
+        const lang = (v as any).language as string;
+        sitemap += `\n    <xhtml:link rel="alternate" hreflang="${hreflangMap[lang] ?? lang}" href="${baseUrl}${langPrefixMap[lang] ?? ""}/blog/${slug}" />`;
+      }
+      const enV = variants.find((v: any) => v.language === "en-US");
+      sitemap += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}${enV ? "/en" : canonPrefix}/blog/${slug}" />\n  </url>`;
+    }
+
+    sitemap += `\n\n</urlset>`;
     res.type("application/xml");
     res.send(sitemap);
   } catch (error) {
-    console.error("[Sitemap] Error generating sitemap:", error);
+    console.error("[Sitemap] Error:", error);
     res.status(500).send("Error generating sitemap");
   }
 });
 
-/**
- * Sitemap index for large sites (future use)
- * Can split into multiple sitemaps if needed
- */
 router.get("/sitemap-index.xml", async (req, res) => {
   const baseUrl = "https://www.wilbor-assist.com";
   const today = new Date().toISOString().split("T")[0];
-
-  const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${baseUrl}/sitemap.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>
-</sitemapindex>`;
-
   res.type("application/xml");
-  res.send(sitemapIndex);
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${baseUrl}/sitemap.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n</sitemapindex>`);
 });
 
 export default router;
