@@ -298,3 +298,7 @@
 - [x] Corrigir páginas que redirecionam ou mostram vazio para usuários não autenticados
 - [x] Garantir que páginas públicas (Home, Blog, BlogArticle) renderizam conteúdo sem login
 - [x] Atualizar sitemap apenas com URLs públicas (removido /dashboard, /checkout, /buy-credits)
+
+## FASE 32: LIMPEZA DUPLICATAS FR/DE
+- [x] Verificar se FR_new e DE_new existem em blogArticlesI18n.ts
+- [x] Remover arrays duplicados sem impacto nos artigos principais (3659 → 3395 linhas, 264 linhas removidas)
