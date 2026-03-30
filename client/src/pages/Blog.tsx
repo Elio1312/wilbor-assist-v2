@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
 import { useI18n } from "@/contexts/i18n";
-import { blogArticlesEN, blogArticlesES } from "./blogArticlesI18n";
+import { blogArticlesEN, blogArticlesES, blogArticlesFR, blogArticlesDE } from "./blogArticlesI18n";
 import { Heart, ArrowRight, ArrowLeft, Share2, Clock, BookOpen, Moon, Waves, Thermometer, UtensilsCrossed, HeartPulse, CheckCircle2, Shield, Sparkles, Syringe, Baby, ShieldCheck, TrendingUp, Bath } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,6 +26,7 @@ export interface BlogArticle {
   schemaFAQ: { question: string; answer: string }[];
   imageUrl?: string;
   imageAlt?: string;
+  date?: string;
 }
 
 export const BLOG_ARTICLES: BlogArticle[] = [
@@ -956,6 +957,278 @@ O banho de ofurô simula o ambiente do útero e pode acalmar bebês agitados:
 
 **Fonte:** Sociedade Brasileira de Pediatria (SBP) e Caderno de Atenção Básica nº 23 (Ministério da Saúde).`,
   },
+  {
+    slug: "algoritmo-predicao-sono-bebe",
+    title: "O Algoritmo que Prevê Quando Seu Bebê Vai Dormir (e Por Que Isso Muda Tudo)",
+    metaTitle: "Algoritmo de Previsão de Sono do Bebê | Wilbor-Assist",
+    metaDescription: "Descubra como o Wilbor usa IA para prever a próxima soneca do seu bebê com 60% dados reais + 40% protocolo médico AAP. Tecnologia exclusiva.",
+    icon: Moon,
+    iconColor: "text-indigo-600",
+    iconBg: "bg-indigo-50",
+    excerpt: "Descubra como o Wilbor usa inteligência artificial para prever com precisão a próxima soneca do seu bebê, combinando dados reais com protocolos médicos.",
+    keywords: ["previsão sono bebê", "algoritmo sono bebê", "janela de vigília", "quando bebê vai dormir", "IA neonatal"],
+    schemaFAQ: [
+      { question: "Como o Wilbor prevê a próxima soneca?", answer: "O algoritmo cruza a tabela médica de janelas de vigília por idade com o histórico real de sono do bebê, usando média ponderada de 60% dados reais + 40% referência médica." },
+      { question: "O que é janela de vigília?", answer: "É o tempo máximo que o bebê consegue ficar acordado sem ficar irritado. Varia de 45-60 minutos no recém-nascido até 3-4 horas aos 12 meses." },
+    ],
+    date: "2026-03-26",
+    readTime: "6 min",
+    category: "Tecnologia & Sono",
+    imageUrl: "/blog-sono-algoritmo.jpg",
+    content: `
+# O Algoritmo que Prevê Quando Seu Bebê Vai Dormir
+
+Imagine saber, com precisão, que seu bebê vai precisar dormir às 14h37. Não por intuição — mas por ciência. Essa é uma das funções mais exclusivas do Wilbor: a **Previsão Inteligente de Sonecas**.
+
+## Como Funciona o Algoritmo
+
+A função predictNextNap do Wilbor cruza duas fontes de dados em tempo real:
+
+### 1. Tabela Médica de Janelas de Vigília
+Baseada na idade exata do bebê em semanas, a medicina neonatal sabe que:
+- **0–6 semanas:** bebê aguenta apenas 45–60 min acordado
+- **3–4 meses:** janela de vigília cresce para 75–90 min
+- **6 meses:** já suporta 2–2,5 horas entre sonecas
+
+### 2. Histórico Real do Seu Bebê
+O Wilbor registra cada soneca que você informa no app. Com o tempo, aprende os padrões únicos do seu filho.
+
+## A Média Ponderada 60/40
+
+O algoritmo combina as duas fontes com uma fórmula precisa:
+
+**Previsão = (60% × dados reais do bebê) + (40% × referência médica da idade)**
+
+Isso significa que, quanto mais dados você registra, mais personalizada e precisa fica a previsão.
+
+## Por Que Isso É Revolucionário
+
+Antes do Wilbor, as mães tentavam adivinhar a hora da soneca — e erravam. Com a previsão inteligente:
+- **Menos choro** — você age antes do cansaço extremo
+- **Rotina mais previsível** — você planeja seu dia com segurança
+- **Sono mais profundo** — bebê dorme na janela certa, não depois
+
+---
+**Baseado em:** Protocolo de Janelas de Vigília da AAP e dados de sono neonatal da SBP.`,
+  },
+  {
+    slug: "ia-que-le-entrelinhas-mae",
+    title: "A IA que Lê as Entrelinhas: Como o Wilbor Entende o Que Você Não Disse",
+    metaTitle: "IA que Detecta Depressão Pós-Parto e Exaustão Materna | Wilbor-Assist",
+    metaDescription: "O Wilbor analisa as mensagens das mães e identifica exaustão, ansiedade e depressão pós-parto em 10 categorias. Tecnologia de empatia artificial.",
+    icon: HeartPulse,
+    iconColor: "text-pink-600",
+    iconBg: "bg-pink-50",
+    excerpt: "O Wilbor possui um sistema de análise emocional que identifica exaustão, ansiedade e depressão pós-parto nas mensagens das mães — mesmo quando elas não pedem ajuda diretamente.",
+    keywords: ["depressão pós-parto", "IA emocional", "saúde mental materna", "exaustão materna", "pain point extractor"],
+    schemaFAQ: [
+      { question: "O Wilbor detecta depressão pós-parto?", answer: "O Wilbor não diagnostica, mas identifica sinais emocionais nas mensagens e responde com empatia calibrada. Em casos críticos, sugere buscar apoio profissional." },
+      { question: "Meus dados emocionais ficam armazenados?", answer: "A análise emocional opera de forma ética, sem armazenar dados sensíveis além do necessário para a sessão de conversa." },
+    ],
+    date: "2026-03-26",
+    readTime: "7 min",
+    category: "Inteligência Artificial & Bem-Estar",
+    imageUrl: "/blog-ia-neonatal.jpg",
+    content: `
+# A IA que Lê as Entrelinhas
+
+Uma mãe digita: "meu bebê não para de chorar e eu não sei mais o que fazer."
+
+Qualquer chatbot comum responderia sobre cólica ou sono. O Wilbor faz algo diferente: **lê as entrelinhas**.
+
+## O Pain Point Extractor
+
+O Wilbor possui uma função exclusiva — um sistema de análise emocional que opera em segundo plano, invisível para a mãe, mas presente em cada conversa.
+
+### O Que Ele Faz
+
+Enquanto o Wilbor responde sobre o bebê, o extrator analisa a mensagem e classifica a **dor real da mãe** em 10 categorias:
+
+- **Exaustão extrema** — "não durmo há 3 dias"
+- **Ansiedade de desempenho** — "será que estou fazendo certo?"
+- **Depressão pós-parto** — "não sinto que sou boa mãe"
+- **Isolamento social** — "não tenho ninguém para conversar"
+- **Conflito de relacionamento** — "meu marido não ajuda"
+- **Medo de julgamento** — "tenho vergonha de perguntar"
+- **Culpa materna** — "acho que fiz algo errado"
+- **Falta de confiança** — "não sei se meu leite é suficiente"
+
+### A Escala de Severidade
+
+Para cada dor identificada, o sistema define um nível: **Baixa**, **Média**, **Alta** ou **Crítica**.
+
+## Por Que Isso Importa
+
+A depressão pós-parto afeta **1 em cada 5 mães** no Brasil — e a maioria não pede ajuda porque não reconhece os próprios sintomas.
+
+O Wilbor não diagnostica. Mas ele **percebe** quando algo vai além do choro do bebê. E responde com empatia calibrada para aquele momento específico.
+
+---
+**Implementado no backend do Wilbor.** Esta função opera de forma ética, sem armazenar dados sensíveis além do necessário para a sessão.`,
+  },
+  {
+    slug: "surtos-de-crescimento-do-bebe",
+    title: "Surtos de Crescimento do Bebê: Sinais e Como Agir",
+    metaTitle: "Surtos de Crescimento do Bebê: Sinais e Como Agir | Wilbor-Assist",
+    metaDescription: "Reconheça os sinais de surtos de crescimento do bebê e saiba como responder com paciência às mudanças de rotina. Baseado nos protocolos da SBP e AAP.",
+    icon: TrendingUp,
+    iconColor: "text-green-600",
+    iconBg: "bg-green-50",
+    readTime: "4 min",
+    category: "Desenvolvimento",
+    excerpt: "Reconheça os sinais de surtos de crescimento do bebê e saiba como responder com paciência às mudanças de rotina.",
+    keywords: ["surto de crescimento bebê", "bebê agitado", "desenvolvimento infantil", "bebê com mais fome", "bebê chorão"],
+    schemaFAQ: [
+      { question: "O que é um surto de crescimento?", answer: "É um período de desenvolvimento físico acelerado em que o bebê fica mais faminto, agitado e com o sono alterado. Dura em média 2 a 3 dias." },
+      { question: "Quando acontecem os surtos de crescimento?", answer: "Geralmente aos 7-10 dias, 2-3 semanas, 4-6 semanas, 3 meses, 6 meses e 9 meses de vida." },
+      { question: "O que fazer durante um surto de crescimento?", answer: "Ofereça mais mamadas quando o bebê demonstrar fome, aumente o contato físico e tenha paciência. O surto passa em 2 a 3 dias." },
+    ],
+    content: `## O Que É um Surto de Crescimento?
+
+Surtos de crescimento são períodos de desenvolvimento físico acelerado que todo bebê experimenta no primeiro ano de vida. Essas fases podem desorganizar a rotina estabelecida, mas reconhecer os sinais ajuda a responder com calma e segurança.
+
+## Sinais Comuns de um Surto de Crescimento
+
+- **Mais fome** — mama com mais frequência do que o habitual
+- **Sono alterado** — acorda mais vezes durante a noite
+- **Irritabilidade** — chora mais do que o normal
+- **Apego excessivo** — quer colo o tempo todo
+
+## Quando Acontecem?
+
+Os surtos de crescimento ocorrem tipicamente aos: **7–10 dias**, **2–3 semanas**, **4–6 semanas**, **3 meses**, **6 meses** e **9 meses**.
+
+## Como Agir
+
+Siga o ritmo do seu bebê. Ofereça mais mamadas quando ele demonstrar sinais de fome e proporcione muito colo e aconchego. Os surtos de crescimento duram em média **2 a 3 dias**. Para orientação personalizada, consulte o Wilbor a qualquer momento.
+
+---
+**Fonte:** Sociedade Brasileira de Pediatria (SBP) e American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ictericia-neonatal-causas-e-tratamento",
+    title: "Icterícia Neonatal: Causas, Sintomas e Tratamento",
+    metaTitle: "Icterícia Neonatal: Causas, Sintomas e Tratamento | Wilbor-Assist",
+    metaDescription: "Entenda o que é a icterícia neonatal, por que acontece, quando procurar o médico e como é feito o tratamento. Baseado nos protocolos da SBP e AAP.",
+    icon: Baby,
+    iconColor: "text-yellow-600",
+    iconBg: "bg-yellow-50",
+    readTime: "5 min",
+    category: "Saúde do Bebê",
+    excerpt: "Entenda o que é a icterícia neonatal, por que acontece, quando procurar o médico e como é feito o tratamento.",
+    keywords: ["icterícia neonatal", "bebê amarelado", "bilirrubina bebê", "icterícia recém-nascido", "fototerapia bebê"],
+    schemaFAQ: [
+      { question: "O que é icterícia neonatal?", answer: "É o amarelamento da pele e dos olhos do recém-nascido causado pelo excesso de bilirrubina no sangue. É muito comum e, na maioria dos casos, resolve-se sozinha em 1 a 2 semanas." },
+      { question: "Quando a icterícia é perigosa?", answer: "Procure o médico se a icterícia aparecer nas primeiras 24 horas de vida, se o bebê estiver muito sonolento e difícil de acordar, ou se a coloração amarela se intensificar e se espalhar." },
+      { question: "Como é tratada a icterícia neonatal?", answer: "Nos casos moderados a graves, o médico pode indicar fototerapia — exposição do bebê a luzes especiais que ajudam a quebrar a bilirrubina. Mamar com frequência também ajuda." },
+    ],
+    content: `## O Que É a Icterícia Neonatal?
+
+A icterícia neonatal é uma condição **muito comum** caracterizada pelo amarelamento da pele e da parte branca dos olhos do recém-nascido. Acontece quando há excesso de **bilirrubina** no sangue do bebê.
+
+## Por Que Acontece?
+
+Como o fígado do recém-nascido ainda está em desenvolvimento, ele pode não processar a bilirrubina com rapidez suficiente. A maioria dos casos é **leve e se resolve sozinha** em 1 a 2 semanas, conforme o fígado amadurece.
+
+## Quando Procurar o Médico
+
+Busque atendimento médico se:
+
+- A icterícia **aparecer nas primeiras 24 horas** de vida
+- A coloração amarela **se intensificar ou se espalhar**
+- O bebê estiver **muito sonolento** ou difícil de acordar
+
+## Tratamento
+
+Nos casos em que os níveis de bilirrubina estão elevados, o médico pode indicar **fototerapia** — o bebê é colocado sob luzes azuis especiais que ajudam a quebrar a bilirrubina. Os casos graves são raros.
+
+**Mamar com frequência** (leite materno ou fórmula) ajuda o bebê a eliminar a bilirrubina pelas fezes.
+
+---
+**Fonte:** Sociedade Brasileira de Pediatria (SBP) e American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "dentição-do-bebe-sintomas-e-alivio",
+    title: "Dentição do Bebê: Sintomas e Como Aliviar o Desconforto",
+    metaTitle: "Dentição do Bebê: Sintomas e Como Aliviar | Wilbor-Assist",
+    metaDescription: "Seu bebê está dentindo? Conheça os sintomas comuns e descubra formas seguras e eficazes de aliviar o desconforto das gengivas. Baseado na SBP e AAP.",
+    icon: Sparkles,
+    iconColor: "text-orange-600",
+    iconBg: "bg-orange-50",
+    readTime: "4 min",
+    category: "Desenvolvimento",
+    excerpt: "Seu bebê está dentindo? Conheça os sintomas e descubra formas seguras de aliviar o desconforto das gengivas.",
+    keywords: ["dentição bebê", "bebê dentindo", "gengiva bebê", "primeiro dente bebê", "mordedor bebê"],
+    schemaFAQ: [
+      { question: "Quando começa a dentição do bebê?", answer: "A maioria dos bebês começa a dentir por volta dos 6 meses, mas o período pode variar bastante entre 4 e 12 meses. Cada bebê tem seu próprio ritmo." },
+      { question: "A dentição causa febre?", answer: "A dentição pode causar um leve aumento da temperatura corporal, mas febre acima de 38°C NÃO é causada pela dentição e deve ser avaliada pelo pediatra." },
+      { question: "Como aliviar a dor da dentição?", answer: "Ofereça um mordedor gelado (não congelado), faça massagem suave na gengiva com o dedo limpo ou um pano úmido frio. Evite géis com benzocaína." },
+    ],
+    content: `## Quando Começa a Dentição?
+
+A dentição é um marco importante no primeiro ano do bebê. A maioria dos bebês ganha o **primeiro dente por volta dos 6 meses**, embora o período possa variar bastante.
+
+## Sinais Comuns da Dentição
+
+- **Salivação excessiva**
+- **Morder objetos** com frequência
+- **Irritabilidade** e agitação
+- **Gengivas inchadas e sensíveis**
+- Leve aumento da temperatura corporal (não é febre)
+
+> Febre acima de **38°C** NÃO é causada pela dentição e deve ser avaliada pelo pediatra.
+
+## Formas Seguras de Aliviar o Desconforto
+
+- **Mordedor gelado** (não congelado) para mastigar
+- **Pano úmido frio** para massagear a gengiva
+- **Massagem suave com o dedo** na gengiva
+- Consulte o pediatra sobre o uso de **paracetamol** se necessário
+
+⚠️ **Evite** géis de dentição com **benzocaína** — podem representar riscos sérios à saúde do bebê.
+
+---
+**Fonte:** Sociedade Brasileira de Pediatria (SBP) e American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ansiedade-pos-parto-vs-depressao-diferencas",
+    title: "Ansiedade Pós-Parto vs Depressão Pós-Parto: Diferenças que Toda Mãe Precisa Conhecer",
+    metaTitle: "Ansiedade Pós-Parto vs Depressão Pós-Parto: Diferenças | Wilbor-Assist",
+    metaDescription: "Entenda as diferenças entre ansiedade pós-parto e depressão pós-parto, reconheça os sintomas e saiba quando buscar ajuda profissional.",
+    icon: HeartPulse,
+    iconColor: "text-rose-600",
+    iconBg: "bg-rose-50",
+    readTime: "6 min",
+    category: "Saúde Mental Materna",
+    excerpt: "Entenda as diferenças entre ansiedade pós-parto e depressão pós-parto, e saiba quando buscar ajuda profissional.",
+    keywords: ["ansiedade pós-parto", "depressão pós-parto", "saúde mental materna", "baby blues", "transtorno pós-parto"],
+    schemaFAQ: [
+      { question: "Qual a diferença entre ansiedade e depressão pós-parto?", answer: "A depressão pós-parto é marcada por tristeza persistente e dificuldade de criar vínculo com o bebê. A ansiedade pós-parto se manifesta como preocupação excessiva, medo constante e pensamentos acelerados." },
+      { question: "Ansiedade e depressão pós-parto têm tratamento?", answer: "Sim, ambas são altamente tratáveis com acompanhamento profissional — psicoterapia, medicação ou grupos de apoio. Buscar ajuda não é fraqueza, é cuidado." },
+      { question: "O baby blues é a mesma coisa que depressão pós-parto?", answer: "Não. O baby blues é passageiro (até 2 semanas após o parto) e se resolve sozinho. A depressão pós-parto é mais intensa, dura mais tempo e precisa de acompanhamento profissional." },
+    ],
+    content: `## O Período Pós-Parto e a Saúde Mental
+
+O período pós-parto é um momento de intensas transformações físicas e emocionais. Embora muitas pessoas conheçam o "baby blues", transtornos mais sérios como a **Depressão Pós-Parto (DPP)** e a **Ansiedade Pós-Parto (APP)** são comuns e frequentemente mal compreendidos.
+
+## Principais Diferenças
+
+| | Depressão Pós-Parto (DPP) | Ansiedade Pós-Parto (APP) |
+|---|---|---|
+| **Sentimento principal** | Tristeza persistente, desesperança | Preocupação excessiva, medo |
+| **Pensamentos** | Negativos, vazios | Acelerados, catastróficos |
+| **Sintomas físicos** | Cansaço, alteração do apetite | Coração acelerado, tontura |
+| **Relação com o bebê** | Dificuldade de criar vínculo | Superproteção excessiva |
+
+## Importante: Ambas Têm Tratamento
+
+DPP e APP podem ocorrer ao mesmo tempo. As duas condições são **altamente tratáveis** com acompanhamento profissional — psicoterapia, medicação ou grupos de apoio.
+
+Experimentar esses sentimentos **não faz de você uma mãe ruim**. É uma condição de saúde que merece cuidado. Se você ou alguém que você conhece está passando por isso, buscar um profissional de saúde é o primeiro passo.
+
+---
+**Fonte:** Sociedade Brasileira de Pediatria (SBP) e Organização Mundial da Saúde (OMS).`,
+  },
 ];
 
 // ==========================================
@@ -963,13 +1236,14 @@ O banho de ofurô simula o ambiente do útero e pode acalmar bebês agitados:
 // ==========================================
 export function Blog() {
   const [, navigate] = useLocation();
+  const { locale, t, localePath } = useI18n();
 
   useEffect(() => {
     // Set meta tags for blog listing
-    document.title = "Blog Wilbor-Assist | Guias sobre cuidados com bebê";
+    document.title = t("blog.h1") + " | Wilbor";
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute("content", "Artigos sobre sono, cólica, febre, alimentação e saúde materna. Guias práticos baseados nos protocolos da SBP para mães de bebês de 0 a 12 meses.");
-  }, []);
+    if (metaDesc) metaDesc.setAttribute("content", t("blog.subtitle"));
+  }, [locale]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FFF8F0' }}>
@@ -984,8 +1258,8 @@ export function Blog() {
               <span className="font-bold text-lg text-slate-800" style={{ fontFamily: "'Nunito', sans-serif" }}>Wilbor</span>
             </div>
           </Link>
-          <Button size="sm" className="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-600 hover:to-purple-700 text-white rounded-full px-5" onClick={() => navigate('/wilbor/dashboard')}>
-            Testar grátis
+          <Button size="sm" className="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-600 hover:to-purple-700 text-white rounded-full px-5" onClick={() => navigate(localePath('/dashboard'))}>
+            {t("nav.try_free")}
           </Button>
         </div>
       </nav>
@@ -994,13 +1268,13 @@ export function Blog() {
       <section className="py-12" style={{ background: 'linear-gradient(160deg, #E8F5E9 0%, #F3E5F5 40%, #E1F5FE 100%)' }}>
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fuchsia-50 text-fuchsia-600 text-sm font-semibold mb-4">
-            <BookOpen className="w-4 h-4" /> Blog Wilbor
+            <BookOpen className="w-4 h-4" /> {t("blog.badge")}
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-3" style={{ fontFamily: "'Nunito', sans-serif" }}>
-            Guias para mães de primeira viagem
+            {t("blog.h1")}
           </h1>
           <p className="text-slate-600 max-w-lg mx-auto">
-            Artigos práticos baseados nos protocolos da SBP, AAP e OMS. Escritos para você entender rápido e agir com segurança.
+            {t("blog.subtitle")}
           </p>
         </div>
       </section>
@@ -1016,7 +1290,7 @@ export function Blog() {
                     <div className="w-full h-48 overflow-hidden">
                       <img 
                         src={article.imageUrl} 
-                        alt={article.imageAlt || article.title}
+                        alt={IMAGE_ALT_MAP[article.slug]?.[locale] || article.imageAlt || article.title}
                         className="w-full h-full object-cover"
                         loading="lazy"
                         width="1200"
@@ -1049,18 +1323,18 @@ export function Blog() {
       <section className="py-12" style={{ backgroundColor: '#FDF2F8' }}>
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold text-slate-900 mb-3" style={{ fontFamily: "'Nunito', sans-serif" }}>
-            Precisa de orientação personalizada?
+            {t("blog.cta_h2")}
           </h2>
           <p className="text-slate-600 mb-6 max-w-md mx-auto">
-            O Wilbor responde suas dúvidas em segundos, com base no perfil do seu bebê.
+            {t("blog.cta_desc")}
           </p>
           <Button
             size="lg"
             className="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-600 hover:to-purple-700 text-white gap-2 rounded-full px-8"
-            onClick={() => navigate('/wilbor/dashboard')}
+            onClick={() => navigate(localePath('/dashboard'))}
           >
             <Sparkles className="w-5 h-5" />
-            Testar grátis agora
+            {t("nav.start_free")}
           </Button>
         </div>
       </section>
@@ -1075,14 +1349,14 @@ export function Blog() {
             <span className="font-semibold text-white">Wilbor-Assist</span>
           </div>
           <p className="text-xs text-slate-500">
-            O Wilbor é apoio neonatal e não substitui avaliação médica. Em caso de emergência, procure atendimento presencial.
+            {t("footer.disclaimer")}
           </p>
           <div className="flex items-center justify-center gap-4 mt-3 text-xs">
-            <Link href="/privacidade"><span className="hover:text-pink-400 cursor-pointer">Privacidade</span></Link>
+            <Link href={localePath("/privacidade")}><span className="hover:text-pink-400 cursor-pointer">{t("footer.privacy")}</span></Link>
             <span className="text-slate-700">|</span>
-            <Link href="/termos"><span className="hover:text-pink-400 cursor-pointer">Termos</span></Link>
+            <Link href={localePath("/termos")}><span className="hover:text-pink-400 cursor-pointer">{t("footer.terms")}</span></Link>
             <span className="text-slate-700">|</span>
-            <Link href="/blog"><span className="hover:text-pink-400 cursor-pointer">Blog</span></Link>
+            <Link href={localePath("/blog")}><span className="hover:text-pink-400 cursor-pointer">{t("blog.breadcrumb_blog")}</span></Link>
           </div>
         </div>
       </footer>
@@ -1091,17 +1365,97 @@ export function Blog() {
 }
 
 // ==========================================
+// IMAGE ALT TEXT MAP (i18n por idioma)
+// ==========================================
+const IMAGE_ALT_MAP: Record<string, Record<string, string>> = {
+  "bebe-nao-dorme": {
+    pt: "Bebê dormindo com Sleep Tracker Wilbor monitorando sono seguro",
+    en: "Baby sleeping with Wilbor Sleep Tracker monitoring safe sleep",
+    es: "Bebé durmiendo con Wilbor Sleep Tracker monitoreando sueño seguro",
+    fr: "Bébé endormi avec Wilbor Sleep Tracker surveillant le sommeil sûr",
+    de: "Schlafendes Baby mit Wilbor Sleep Tracker überwacht sicheren Schlaf",
+  },
+  "colica-do-bebe": {
+    pt: "Cólica do bebê - Panic Button Wilbor com técnicas de alívio",
+    en: "Baby colic - Wilbor Panic Button with relief techniques",
+    es: "Cólico del bebé - Wilbor Panic Button con técnicas de alivio",
+    fr: "Coliques du bébé - Wilbor Panic Button avec techniques de soulagement",
+    de: "Babykoliken - Wilbor Panic Button mit Linderungstechniken",
+  },
+  "febre-no-bebe": {
+    pt: "Segurança do bebê - Wilbor checklist de emergência e febre",
+    en: "Baby safety - Wilbor emergency checklist and fever guide",
+    es: "Seguridad del bebé - Wilbor lista de emergencia y fiebre",
+    fr: "Sécurité du bébé - Wilbor liste de contrôle d'urgence et fièvre",
+    de: "Babysicherheit - Wilbor Notfall-Checkliste und Fieber",
+  },
+  "introducao-alimentar": {
+    pt: "Amamentação e introdução alimentar com Feeding Tracker Wilbor",
+    en: "Breastfeeding and solid food introduction with Wilbor Feeding Tracker",
+    es: "Lactancia e introducción alimentaria con Wilbor Feeding Tracker",
+    fr: "Allaitement et introduction alimentaire avec Wilbor Feeding Tracker",
+    de: "Stillen und Beikosteinstieg mit Wilbor Feeding Tracker",
+  },
+  "depressao-pos-parto": {
+    pt: "Depressão pós-parto - Suporte Wilbor 24h com WhatsApp",
+    en: "Postpartum depression - Wilbor 24h support via WhatsApp",
+    es: "Depresión postparto - Soporte Wilbor 24h por WhatsApp",
+    fr: "Dépression post-partum - Soutien Wilbor 24h via WhatsApp",
+    de: "Wochenbettdepression - Wilbor 24h-Unterstützung über WhatsApp",
+  },
+  "vacinas-do-bebe": {
+    pt: "Desenvolvimento do bebê - Marcos e calendário de vacinas Wilbor",
+    en: "Baby development - Milestones and Wilbor vaccine schedule",
+    es: "Desarrollo del bebé - Hitos y calendario de vacunas Wilbor",
+    fr: "Développement du bébé - Étapes et calendrier vaccinal Wilbor",
+    de: "Babyentwicklung - Meilensteine und Wilbor-Impfplan",
+  },
+  "amamentacao-pega-correta": {
+    pt: "Amamentação pega correta - Feeding Tracker Wilbor",
+    en: "Correct breastfeeding latch - Wilbor Feeding Tracker",
+    es: "Agarre correcto de lactancia - Wilbor Feeding Tracker",
+    fr: "Bonne prise du sein - Wilbor Feeding Tracker",
+    de: "Richtiges Anlegen beim Stillen - Wilbor Feeding Tracker",
+  },
+  "seguranca-bebe-em-casa": {
+    pt: "Segurança do bebê em casa - Checklist Wilbor de ambiente seguro",
+    en: "Baby safety at home - Wilbor safe environment checklist",
+    es: "Seguridad del bebé en casa - Checklist Wilbor de entorno seguro",
+    fr: "Sécurité du bébé à la maison - Checklist Wilbor d'environnement sûr",
+    de: "Babysicherheit zu Hause - Wilbor Checkliste für sichere Umgebung",
+  },
+  "saltos-de-desenvolvimento": {
+    pt: "Saltos de desenvolvimento do bebê - Growth Crises Wilbor",
+    en: "Baby developmental leaps - Wilbor Growth Crises",
+    es: "Saltos de desarrollo del bebé - Wilbor Growth Crises",
+    fr: "Bonds de développement du bébé - Wilbor Growth Crises",
+    de: "Entwicklungsschübe des Babys - Wilbor Growth Crises",
+  },
+  "banho-do-recem-nascido": {
+    pt: "Banho do recém-nascido - Guia de higiene segura Wilbor",
+    en: "Newborn bath - Wilbor safe hygiene guide",
+    es: "Baño del recién nacido - Guía de higiene segura Wilbor",
+    fr: "Bain du nouveau-né - Guide d'hygiène sécurisée Wilbor",
+    de: "Neugeborenen-Bad - Wilbor sicherer Hygieneleitfaden",
+  },
+};
+
+// ==========================================
 // BLOG ARTICLE PAGE
 // ==========================================
 export function BlogArticle({ slug }: { slug: string }) {
   const [, navigate] = useLocation();
-  const { locale } = useI18n();
+  const { locale, t, localePath } = useI18n();
 
   // Resolve article: EN/ES from i18n data, PT from BLOG_ARTICLES
   const i18nArticle = locale === 'en'
     ? blogArticlesEN.find(a => a.slug === slug)
     : locale === 'es'
     ? blogArticlesES.find(a => a.slug === slug)
+    : locale === 'fr'
+    ? blogArticlesFR.find(a => a.slug === slug)
+    : locale === 'de'
+    ? blogArticlesDE.find(a => a.slug === slug)
     : null;
 
   // Map i18n article to BlogArticle shape (merging with PT base for icon/schemaFAQ)
@@ -1110,11 +1464,18 @@ export function BlogArticle({ slug }: { slug: string }) {
       ? blogArticlesEN.find(e => e.slug === slug)?.slug === slug || a.slug === slug
       : locale === 'es'
       ? blogArticlesES.find(e => e.slug === slug)?.slug === slug || a.slug === slug
+      : locale === 'fr'
+      ? blogArticlesFR.find(e => e.slug === slug)?.slug === slug || a.slug === slug
+      : locale === 'de'
+      ? blogArticlesDE.find(e => e.slug === slug)?.slug === slug || a.slug === slug
       : a.slug === slug
   );
 
+  // Resolve imageAlt por idioma usando o mapa de traduções
+  const localizedImageAlt = IMAGE_ALT_MAP[slug]?.[locale] || IMAGE_ALT_MAP[slug]?.pt;
+
   const article = i18nArticle
-    ? { ...ptBase, ...i18nArticle, icon: ptBase?.icon, iconColor: ptBase?.iconColor, iconBg: ptBase?.iconBg, schemaFAQ: ptBase?.schemaFAQ || [], imageUrl: ptBase?.imageUrl, imageAlt: ptBase?.imageAlt }
+    ? { ...ptBase, ...i18nArticle, icon: ptBase?.icon, iconColor: ptBase?.iconColor, iconBg: ptBase?.iconBg, schemaFAQ: ptBase?.schemaFAQ || [], imageUrl: ptBase?.imageUrl, imageAlt: localizedImageAlt || ptBase?.imageAlt }
     : BLOG_ARTICLES.find(a => a.slug === slug);
 
   useEffect(() => {
@@ -1309,8 +1670,8 @@ export function BlogArticle({ slug }: { slug: string }) {
               <span className="font-bold text-lg text-slate-800" style={{ fontFamily: "'Nunito', sans-serif" }}>Wilbor</span>
             </div>
           </Link>
-          <Button size="sm" className="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-600 hover:to-purple-700 text-white rounded-full px-5" onClick={() => navigate('/wilbor/dashboard')}>
-            Testar grátis
+          <Button size="sm" className="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-600 hover:to-purple-700 text-white rounded-full px-5" onClick={() => navigate(localePath('/dashboard'))}>
+            {t("nav.try_free")}
           </Button>
         </div>
       </nav>
@@ -1320,9 +1681,9 @@ export function BlogArticle({ slug }: { slug: string }) {
         <div className="container mx-auto px-4 max-w-3xl">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-slate-400 mb-6">
-            <Link href="/"><span className="hover:text-fuchsia-600 cursor-pointer">Início</span></Link>
+            <Link href={localePath("/")}><span className="hover:text-fuchsia-600 cursor-pointer">{t("blog.breadcrumb_home")}</span></Link>
             <span>/</span>
-            <Link href="/blog"><span className="hover:text-fuchsia-600 cursor-pointer">Blog</span></Link>
+            <Link href={localePath("/blog")}><span className="hover:text-fuchsia-600 cursor-pointer">{t("blog.breadcrumb_blog")}</span></Link>
             <span>/</span>
             <span className="text-slate-600">{article.category}</span>
           </div>
@@ -1339,7 +1700,7 @@ export function BlogArticle({ slug }: { slug: string }) {
             <div className="flex items-center gap-2 text-sm text-slate-500">
               <div className="flex items-center gap-1.5">
                 <Shield className="w-4 h-4 text-emerald-500" />
-                <span>Baseado nos protocolos da SBP</span>
+                <span>{t("blog.based_on")}</span>
               </div>
             </div>
           </div>
@@ -1349,7 +1710,7 @@ export function BlogArticle({ slug }: { slug: string }) {
             <div className="mb-8 rounded-2xl overflow-hidden shadow-md">
               <img 
                 src={article.imageUrl} 
-                alt={article.imageAlt || article.title}
+                alt={localizedImageAlt || article.imageAlt || article.title}
                 className="w-full"
                 loading="eager"
                 width="1200"
@@ -1365,11 +1726,11 @@ export function BlogArticle({ slug }: { slug: string }) {
 
           {/* Share */}
           <div className="mt-8 p-5 rounded-2xl bg-white border border-slate-100 shadow-sm">
-            <p className="text-sm font-semibold text-slate-800 mb-3">Compartilhe com outra mãe:</p>
+            <p className="text-sm font-semibold text-slate-800 mb-3">{t("blog.share_label")}</p>
             <button
               onClick={() => {
                 const text = encodeURIComponent(
-                  `Li esse artigo sobre "${article.title}" e achei muito útil! Baseado na SBP:\nhttps://wilborassist.com/blog/${article.slug}`
+                  `${article.title}\nhttps://wilborassist.com/blog/${article.slug}`
                 );
                 window.open(`https://wa.me/?text=${text}`, "_blank");
               }}
@@ -1377,33 +1738,33 @@ export function BlogArticle({ slug }: { slug: string }) {
               style={{ backgroundColor: '#25D366', color: 'white', boxShadow: '0 2px 12px rgba(37,211,102,0.3)' }}
             >
               <Share2 className="w-4 h-4" />
-              Compartilhar no WhatsApp
+              {t("blog.share_whatsapp")}
             </button>
           </div>
 
           {/* CTA */}
           <div className="mt-8 p-8 rounded-2xl text-center" style={{ background: 'linear-gradient(135deg, #D946EF15, #7C3AED15)' }}>
             <h3 className="text-xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Nunito', sans-serif" }}>
-              Tire suas dúvidas com o Wilbor
+              {t("blog.article_cta_h3")}
             </h3>
             <p className="text-slate-600 mb-5">
-              O Wilbor responde em segundos, personalizado para o seu bebê. Baseado na SBP.
+              {t("blog.article_cta_desc")}
             </p>
             <Button
               size="lg"
               className="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-600 hover:to-purple-700 text-white gap-2 rounded-full px-8"
-              onClick={() => navigate('/wilbor/dashboard')}
+              onClick={() => navigate(localePath('/dashboard'))}
             >
               <Sparkles className="w-5 h-5" />
-              Testar grátis agora
+              {t("nav.start_free")}
             </Button>
-            <p className="text-xs text-slate-400 mt-3">Sem cadastro · Resposta imediata · 2 consultas grátis</p>
+            <p className="text-xs text-slate-400 mt-3">{t("blog.article_cta_note")}</p>
           </div>
 
           {/* FAQ */}
           {article.schemaFAQ.length > 0 && (
             <div className="mt-10">
-              <h2 className="text-xl font-bold text-slate-900 mb-4" style={{ fontFamily: "'Nunito', sans-serif" }}>Perguntas frequentes</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4" style={{ fontFamily: "'Nunito', sans-serif" }}>{t("blog.faq_title")}</h2>
               <div className="space-y-4">
                 {article.schemaFAQ.map((faq, i) => (
                   <div key={i} className="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
@@ -1417,9 +1778,9 @@ export function BlogArticle({ slug }: { slug: string }) {
 
           {/* Back to blog */}
           <div className="mt-10 text-center">
-            <Button variant="outline" onClick={() => navigate('/blog')} className="rounded-full gap-2">
+            <Button variant="outline" onClick={() => navigate(localePath('/blog'))} className="rounded-full gap-2">
               <ArrowLeft className="w-4 h-4" />
-              Ver todos os artigos
+              {t("blog.back_to_blog")}
             </Button>
           </div>
         </div>
@@ -1435,14 +1796,14 @@ export function BlogArticle({ slug }: { slug: string }) {
             <span className="font-semibold text-white">Wilbor-Assist</span>
           </div>
           <p className="text-xs text-slate-500">
-            O Wilbor é apoio neonatal e não substitui avaliação médica.
+            {t("footer.disclaimer")}
           </p>
           <div className="flex items-center justify-center gap-4 mt-3 text-xs">
-            <Link href="/privacidade"><span className="hover:text-pink-400 cursor-pointer">Privacidade</span></Link>
+            <Link href={localePath("/privacidade")}><span className="hover:text-pink-400 cursor-pointer">{t("footer.privacy")}</span></Link>
             <span className="text-slate-700">|</span>
-            <Link href="/termos"><span className="hover:text-pink-400 cursor-pointer">Termos</span></Link>
+            <Link href={localePath("/termos")}><span className="hover:text-pink-400 cursor-pointer">{t("footer.terms")}</span></Link>
             <span className="text-slate-700">|</span>
-            <Link href="/blog"><span className="hover:text-pink-400 cursor-pointer">Blog</span></Link>
+            <Link href={localePath("/blog")}><span className="hover:text-pink-400 cursor-pointer">{t("blog.breadcrumb_blog")}</span></Link>
           </div>
         </div>
       </footer>

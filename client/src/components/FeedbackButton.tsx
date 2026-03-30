@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { useI18n } from "@/contexts/i18n";
 
 interface FeedbackButtonProps {
   userQuestion: string;
@@ -18,6 +19,14 @@ export function FeedbackButton({
 }: FeedbackButtonProps) {
   const [submitted, setSubmitted] = useState(false);
   const [selectedFeedback, setSelectedFeedback] = useState<string | null>(null);
+  const { locale } = useI18n();
+
+  const txt = {
+    thanks: locale === "en" ? "✓ Thank you for your feedback!" : locale === "es" ? "✓ ¡Gracias por tu opinión!" : locale === "fr" ? "✓ Merci pour votre retour !" : locale === "de" ? "✓ Danke für Ihr Feedback!" : "✓ Obrigada pelo feedback!",
+    helpful: locale === "en" ? "Was this helpful?" : locale === "es" ? "¿Fue útil?" : locale === "fr" ? "Cela vous a-t-il aidé ?" : locale === "de" ? "War das hilfreich?" : "Isso foi útil?",
+    yes: locale === "en" ? "Yes" : locale === "es" ? "Sí" : locale === "fr" ? "Oui" : locale === "de" ? "Ja" : "Sim",
+    no: locale === "en" ? "No" : locale === "es" ? "No" : locale === "fr" ? "Non" : locale === "de" ? "Nein" : "Não",
+  };
 
   const submitFeedback = trpc.feedback.submit.useMutation({
     onSuccess: () => {
@@ -40,14 +49,14 @@ export function FeedbackButton({
   if (submitted) {
     return (
       <div className="text-sm text-green-600 flex items-center gap-2">
-        ✓ Obrigada pelo feedback!
+        {txt.thanks}
       </div>
     );
   }
 
   return (
     <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-200">
-      <span className="text-sm text-gray-600">Isso foi útil?</span>
+      <span className="text-sm text-gray-600">{txt.helpful}</span>
       <Button
         variant="ghost"
         size="sm"
@@ -60,7 +69,7 @@ export function FeedbackButton({
         }`}
       >
         <ThumbsUp size={16} />
-        Sim
+        {txt.yes}
       </Button>
       <Button
         variant="ghost"
@@ -74,7 +83,7 @@ export function FeedbackButton({
         }`}
       >
         <ThumbsDown size={16} />
-        Não
+        {txt.no}
       </Button>
     </div>
   );

@@ -45,6 +45,24 @@ function Router() {
       <Route path="/es/blog/:slug" component={BlogArticle} />
       <Route path="/es/checkout" component={Checkout} />
 
+      {/* FR routes */}
+      <Route path="/fr" component={Home} />
+      <Route path="/fr/dashboard" component={Dashboard} />
+      <Route path="/fr/buy-credits" component={BuyCredits} />
+      <Route path="/fr/chat" component={Chat} />
+      <Route path="/fr/blog" component={Blog} />
+      <Route path="/fr/blog/:slug" component={BlogArticle} />
+      <Route path="/fr/checkout" component={Checkout} />
+
+      {/* DE routes */}
+      <Route path="/de" component={Home} />
+      <Route path="/de/dashboard" component={Dashboard} />
+      <Route path="/de/buy-credits" component={BuyCredits} />
+      <Route path="/de/chat" component={Chat} />
+      <Route path="/de/blog" component={Blog} />
+      <Route path="/de/blog/:slug" component={BlogArticle} />
+      <Route path="/de/checkout" component={Checkout} />
+
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

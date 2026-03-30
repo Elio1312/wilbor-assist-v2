@@ -932,6 +932,128 @@ O banho de ofurô simula o ambiente do útero e pode acalmar bebês agitados:
 
 **Fonte:** Sociedade Brasileira de Pediatria (SBP) e Caderno de Atenção Básica nº 23 (Ministério da Saúde).`,
   },
+  {
+    slug: "algoritmo-predicao-sono-bebe",
+    title: "O Algoritmo que Prevê Quando Seu Bebê Vai Dormir (e Por Que Isso Muda Tudo)",
+    metaTitle: "Algoritmo de Previsão de Sono do Bebê | Wilbor-Assist",
+    metaDescription: "Saiba exatamente quando seu bebê precisa dormir — antes do choro começar. O Wilbor aprende o padrão do seu filho e te dá mais controle sobre a rotina.",
+    icon: Moon,
+    iconColor: "text-indigo-600",
+    iconBg: "bg-indigo-50",
+    readTime: "6 min",
+    category: "Tecnologia & Sono",
+    excerpt: "Imagine saber antes do choro começar que seu bebê precisa dormir. O Wilbor aprende o padrão único do seu filho e te avisa na hora certa.",
+    keywords: ["previsão de sono bebê", "algoritmo sono", "janela de vigília", "soneca bebê", "wilbor sono"],
+    schemaFAQ: [
+      { question: "Como o Wilbor prevê a próxima soneca?", answer: "O algoritmo cruza a tabela médica de janelas de vigília por idade com o histórico real de sono do bebê, usando média ponderada de 60% dados reais + 40% referência médica." },
+      { question: "O que é janela de vigília?", answer: "É o tempo máximo que o bebê consegue ficar acordado sem ficar irritado. Varia de 45-60 minutos no recém-nascido até 3-4 horas aos 12 meses." },
+    ],
+    content: `# Quando Seu Bebê Vai Dormir? O Wilbor Sabe.
+
+Imagine saber, com antecedência, que seu bebê vai precisar dormir em breve — antes mesmo do choro começar. Não por intuição, mas por um padrão real que o Wilbor aprende sobre o seu filho.
+
+## O Que é a Janela de Vigília?
+
+A medicina neonatal sabe que cada bebê tem um tempo máximo que consegue ficar acordado antes de ficar irritado e com dificuldade para dormir. Esse tempo se chama **janela de vigília** e muda conforme a idade:
+
+- **0–6 semanas:** bebê aguenta apenas 45–60 minutos acordado
+- **3–4 meses:** já suporta 75–90 minutos entre sonecas
+- **6 meses:** consegue ficar até 2,5 horas acordado
+
+Quando a mãe coloca o bebê para dormir depois dessa janela, ele já está cansado demais — e é mais difícil adormecer.
+
+## Como o Wilbor Aprende o Padrão do Seu Bebê
+
+O Wilbor combina duas informações para prever a próxima soneca:
+
+1. **A tabela médica** da AAP e SBP com as janelas de vigília por idade
+2. **O histórico real** das sonecas do seu bebê, que você registra no app
+
+Com o tempo, quanto mais você registra, mais personalizada fica a previsão — porque o Wilbor aprende os ritmos únicos do seu filho.
+
+## O Que Muda na Prática
+
+- **Menos choro** — você age antes do cansaço extremo
+- **Rotina mais previsível** — você planeja seu dia com mais segurança
+- **Sono mais profundo** — bebê dorme na hora certa, não depois
+
+---
+
+**Baseado em:** Protocolo de Janelas de Vigília da AAP e dados de sono neonatal da SBP.
+
+## Precisa de ajuda agora?
+
+Nem sempre dá tempo de interpretar tudo isso sozinha — principalmente na madrugada ou quando o bebê está chorando.
+
+O Wilbor organiza essas informações para você e te orienta em tempo real, de forma personalizada para o seu bebê.
+
+→ Receba respostas claras, no momento em que você precisa
+→ Entenda o que está acontecendo sem dúvida
+→ Tenha mais segurança nas decisões do dia a dia
+
+Comece gratuitamente.`,
+  },
+  {
+    slug: "ia-que-le-entrelinhas-mae",
+    title: "A IA que Lê as Entrelinhas: Como o Wilbor Entende o Que Você Não Disse",
+    metaTitle: "IA que Detecta Depressão Pós-Parto e Exaustão Materna | Wilbor-Assist",
+    metaDescription: "O Wilbor percebe quando você precisa de mais do que uma resposta sobre o bebê — e responde com empatia, sem julgamentos, no momento certo.",
+    icon: HeartPulse,
+    iconColor: "text-pink-600",
+    iconBg: "bg-pink-50",
+    readTime: "7 min",
+    category: "Inteligência Artificial & Bem-Estar",
+    excerpt: "O Wilbor percebe quando você precisa de mais do que uma resposta sobre o bebê — e responde com empatia, sem julgamentos, no momento certo.",
+    keywords: ["depressão pós-parto", "IA emocional", "saúde mental materna", "exaustão materna", "pain point extractor"],
+    schemaFAQ: [
+      { question: "O Wilbor detecta depressão pós-parto?", answer: "O Wilbor não diagnostica, mas identifica sinais emocionais nas mensagens e responde com empatia calibrada. Em casos críticos, sugere buscar apoio profissional." },
+      { question: "Meus dados emocionais ficam armazenados?", answer: "A análise emocional opera de forma ética, sem armazenar dados sensíveis além do necessário para a sessão de conversa." },
+    ],
+    content: `# O Wilbor Entende o Que Você Não Disse
+
+Uma mãe digita: "meu bebê não para de chorar e eu não sei mais o que fazer."
+
+Qualquer assistente comum responderia sobre cólica ou sono. O Wilbor faz algo diferente: **percebe o que está por trás da mensagem**.
+
+## Como o Wilbor Lê o Contexto Emocional
+
+O Wilbor possui um sistema de leitura de contexto emocional que opera em segundo plano, invisível para você, mas presente em cada conversa.
+
+Enquanto responde sobre o bebê, ele também identifica o que a mãe está sentindo — mesmo quando ela não pede ajuda diretamente:
+
+- **Exaustão** — "não durmo há 3 dias"
+- **Ansiedade** — "será que estou fazendo certo?"
+- **Culpa** — "acho que fiz algo errado"
+- **Isolamento** — "não tenho ninguém para conversar"
+- **Falta de confiança** — "não sei se meu leite é suficiente"
+- **Medo de julgamento** — "tenho vergonha de perguntar"
+
+Para cada sinal identificado, o Wilbor ajusta o tom da resposta — com mais acolhimento, mais segurança, mais presença.
+
+## Por Que Isso Importa
+
+A depressão pós-parto afeta **1 em cada 5 mães** — e a maioria não pede ajuda porque não reconhece os próprios sintomas.
+
+O Wilbor não diagnostica. Mas ele **percebe** quando algo vai além do choro do bebê. E responde com empatia para aquele momento específico.
+
+Em situações mais delicadas, o Wilbor também sugere buscar apoio profissional — com cuidado, sem alarme.
+
+---
+
+**Privacidade garantida.** O Wilbor não armazena dados emocionais sensíveis além do necessário para a conversa.
+
+## Precisa de ajuda agora?
+
+Nem sempre dá tempo de interpretar tudo isso sozinha — principalmente na madrugada ou quando o bebê está chorando.
+
+O Wilbor organiza essas informações para você e te orienta em tempo real, de forma personalizada para o seu bebê.
+
+→ Receba respostas claras, no momento em que você precisa
+→ Entenda o que está acontecendo sem dúvida
+→ Tenha mais segurança nas decisões do dia a dia
+
+Comece gratuitamente.`,
+  },
 ];
 
 // ==========================================
@@ -1327,7 +1449,7 @@ export function BlogArticle({ params }: RouteComponentProps<{ slug: string }>) {
               <Sparkles className="w-5 h-5" />
               Testar grátis agora
             </Button>
-            <p className="text-xs text-slate-400 mt-3">Sem cadastro · Resposta imediata · 2 consultas grátis</p>
+            <p className="text-xs text-slate-400 mt-3">Sem cadastro · Resposta imediata · 5 consultas grátis</p>
           </div>
 
           {/* FAQ */}

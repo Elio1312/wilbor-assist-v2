@@ -1,0 +1,15 @@
+{
+  "query": "SELECT LENGTH(content) as content_len, keywords, CHAR_LENGTH(meta_description) as meta_desc_len FROM blog_articles WHERE priority = 'tier1' AND language = 'pt-BR' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c1VSXzZW6SU7fm.root --database LJucsyXHjSVaXkbocW4u2f --execute SELECT LENGTH(content) as content_len, keywords, CHAR_LENGTH(meta_description) as meta_desc_len FROM blog_articles WHERE priority = 'tier1' AND language = 'pt-BR' LIMIT 1;",
+  "rows": [
+    {
+      "content_len": "92",
+      "keywords": "[\"amamentação\", \"agarre correto\", \"como aumentar produção de leite\"]",
+      "meta_desc_len": "93"
+    }
+  ],
+  "messages": [],
+  "stdout": "content_len\tkeywords\tmeta_desc_len\n92\t[\"amamentação\", \"agarre correto\", \"como aumentar produção de leite\"]\t93\n",
+  "stderr": "",
+  "execution_time_ms": 64
+}

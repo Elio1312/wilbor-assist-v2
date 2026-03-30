@@ -1530,3 +1530,2131 @@ Si tienes preguntas sobre las medidas de tu beb\u00e9, Wilbor Assist est\u00e1 d
 **Fuente:** Organizaci\u00f3n Mundial de la Salud (OMS), American Academy of Pediatrics (AAP).`,
   },
 ];
+
+// ============================================
+// FRENCH (FR) ARTICLES
+// ============================================
+export const blogArticlesFR: BlogArticleTranslation[] = [
+  {
+    slug: "bebe-ne-dort-pas",
+    title: "Bébé ne dort pas : guide complet par âge (0 à 12 mois)",
+    excerpt: "Comprenez les fenêtres de sommeil de votre bébé selon son âge et apprenez des techniques éprouvées pour améliorer les nuits.",
+    readTime: "8 min de lecture",
+    metaTitle: "Bébé ne dort pas : guide complet par âge (0 à 12 mois) | Wilbor",
+    metaDescription: "Comprenez les fenêtres de sommeil de votre bébé selon son âge et apprenez des techniques éprouvées pour améliorer les nuits.",
+    keywords: ["bébé ne dort pas", "sommeil bébé", "fenêtre de sommeil", "routine sommeil bébé"],
+    content: `## Pourquoi mon bébé ne dort-il pas ?
+
+Le sommeil du bébé est l’une des plus grandes préoccupations des mères. Selon la **Société Brésilienne de Pédiatrie (SBP)**, les rythmes de sommeil varient considérablement selon l’âge, et comprendre ces phases est la première étape vers des nuits plus sereines.
+
+## Fenêtres de sommeil selon l’âge
+
+La **fenêtre de sommeil** est le temps maximal pendant lequel votre bébé peut rester éveillé avant de devenir irritable et d’avoir du mal à s’endormir. Respecter cette fenêtre est essentiel.
+
+| Âge | Fenêtre de sommeil | Sommeil total/jour | Siestes |
+|-------|---------------|-------------------|---------|
+| 0-1 mois | 45-60 min | 16-18h | 4-6 |
+| 1-2 mois | 60-90 min | 15-17h | 4-5 |
+| 3-4 mois | 75-120 min | 14-16h | 3-4 |
+| 5-6 mois | 2-2,5h | 14-15h | 2-3 |
+| 7-9 mois | 2,5-3h | 13-14h | 2 |
+| 10-12 mois | 3-4h | 12-14h | 1-2 |
+
+## Signes de sommeil
+
+Soyez attentive aux signes qui indiquent que votre bébé est prêt à dormir :
+
+- **Signes précoces :** se frotter les yeux, bâiller, regard fixe, tirer sur l’oreille
+- **Signes tardifs :** pleurs, irritabilité, mouvements brusques, cambrure du dos
+
+**Conseil important :** Lorsque vous remarquez les signes tardifs, le bébé a déjà dépassé le moment idéal. Essayez de le coucher dès les premiers signes.
+
+## Techniques pour améliorer le sommeil
+
+### Environnement idéal
+- **Température :** entre 22°C et 24°C
+- **Obscurité :** utilisez des rideaux occultants
+- **Bruit blanc :** ventilateur, application de bruit blanc ou “shhhh” continu
+- **Position :** toujours sur le dos (recommandation SBP/AAP)
+
+### Routine du sommeil (à partir de 2-3 mois)
+1. Bain tiède (pas chaud)
+2. Massage doux avec des mouvements lents
+3. Tétée dans un environnement calme et sombre
+4. Berceuse ou bruit blanc
+5. Mettre au lit somnolent, mais éveillé
+
+### Régression du sommeil (4 mois)
+Vers 4 mois, de nombreux bébés traversent une **régression du sommeil**. Cela se produit parce que leur rythme de sommeil est en train de mûrir. C’est temporaire (1 à 3 semaines) et cela fait partie du développement normal.
+
+## Quand consulter le pédiatre
+
+- Le bébé ronfle ou fait des pauses respiratoires pendant le sommeil
+- Il ne dort pas plus de 30 minutes d’affilée après 4 mois
+- Irritabilité extrême qui ne s’améliore avec aucune technique
+- Perte de poids ou refus de s’alimenter associé
+
+---
+
+**Source :** Protocoles de la Société Brésilienne de Pédiatrie (SBP) et de l’American Academy of Pediatrics (AAP).
+
+---`,
+  },
+  {
+    slug: "coliques-bebe",
+    title: "Coliques du bébé : que faire pour les soulager (guide pratique)",
+    excerpt: "Techniques éprouvées pour soulager les coliques : massage Shantala, position avion, emmaillotage et plus encore.",
+    readTime: "6 min de lecture",
+    metaTitle: "Coliques du bébé : que faire pour les soulager (guide pratique) | Wilbor",
+    metaDescription: "Techniques éprouvées pour soulager les coliques : massage Shantala, position avion, emmaillotage et plus encore.",
+    keywords: ["coliques bébé", "massage Shantala", "soulager coliques", "bébé qui pleure"],
+    content: `## Qu’est-ce que la colique du bébé ?
+
+La colique est définie par la **règle des 3** : pleurs intenses pendant plus de **3 heures par jour**, plus de **3 jours par semaine**, pendant plus de **3 semaines**. Elle touche environ 20 à 25 % des bébés et commence généralement entre 2 et 3 semaines de vie.
+
+## Quand cela survient
+
+- **Début :** 2-3 semaines de vie
+- **Pic :** 6-8 semaines
+- **Fin :** généralement à 3-4 mois
+- **Horaire le plus fréquent :** fin d’après-midi et début de soirée (17h-23h)
+
+## Techniques de soulagement éprouvées
+
+### 1. Massage Shantala (I-L-U)
+La technique I-L-U est un massage abdominal qui suit le trajet de l’intestin :
+
+1. **I** — Faites glisser la main du côté gauche du bébé, de haut en bas
+2. **L** — Faites glisser de la droite vers la gauche puis vers le bas (en formant un L inversé)
+3. **U** — Faites glisser de bas en haut sur le côté droit, passez au-dessus puis redescendez sur le côté gauche (en formant un U inversé)
+
+**Quand le faire :** lorsque le bébé est calme, avant la crise. Utilisez une huile végétale sur les mains.
+
+### 2. Position avion
+Placez le bébé à plat ventre sur votre avant-bras, la tête soutenue dans votre main. La pression douce sur l’abdomen aide à soulager les gaz.
+
+### 3. Swaddle (emmaillotage)
+Enveloppez fermement le bébé dans un linge ou une couverture légère, les bras le long du corps. Cela simule l’environnement utérin et réduit le réflexe de Moro.
+
+**Attention :** cessez d’utiliser l’emmaillotage lorsque le bébé commence à se retourner (vers 2-3 mois).
+
+### 4. Bruit blanc + bercement
+Le “shhhh” continu près de l’oreille du bébé, associé à un bercement doux, active le réflexe d’apaisement. Le son doit être aussi fort que les pleurs du bébé.
+
+### 5. Vélo
+Avec le bébé allongé sur le dos, faites des mouvements de vélo avec ses jambes. Cela aide à éliminer les gaz coincés.
+
+## Ce qu’il NE faut PAS faire
+
+- **Ne donnez pas de tisanes ni de médicaments** sans l’avis du pédiatre
+- **Ne secouez jamais le bébé** — cela peut provoquer une grave lésion cérébrale (syndrome du bébé secoué)
+- **Ne changez pas de lait infantile** sans avis médical
+- **Ne culpabilisez pas** — les coliques ne sont pas causées par quelque chose que vous avez fait ou oublié de faire
+
+## Quand consulter le pédiatre
+
+- Fièvre au-dessus de 37,8°C
+- Vomissements fréquents ou en jet
+- Sang dans les selles
+- Refus de s’alimenter pendant plus de 8 heures
+- Bébé inconsolable pendant plus de 4 heures d’affilée
+
+---
+
+**Source :** Protocoles de la Société Brésilienne de Pédiatrie (SBP) et de l’American Academy of Pediatrics (AAP).
+
+---`,
+  },
+  {
+    slug: "fievre-bebe",
+    title: "Fièvre chez le bébé : quand aller à l’hôpital (guide par âge)",
+    excerpt: "Sachez quand la fièvre du bébé est une urgence, comment la mesurer correctement et quoi faire à chaque âge.",
+    readTime: "5 min de lecture",
+    metaTitle: "Fièvre chez le bébé : quand aller à l’hôpital (guide par âge) | Wilbor",
+    metaDescription: "Sachez quand la fièvre du bébé est une urgence, comment la mesurer correctement et quoi faire à chaque âge.",
+    keywords: ["fièvre bébé", "quand aller urgences bébé", "température bébé", "fièvre nourrisson"],
+    content: `## Quand la fièvre est-elle une urgence ?
+
+La fièvre est l’un des motifs les plus fréquents de consultation pédiatrique. Selon la **SBP**, la conduite à tenir dépend directement de **l’âge du bébé**.
+
+## Classification selon la température
+
+| Température axillaire | Classification |
+|-------------------|---------------|
+| Jusqu’à 37,2°C | Normale |
+| 37,3°C - 37,5°C | État fébrile |
+| 37,6°C - 38,9°C | Fièvre |
+| 39°C - 40°C | Forte fièvre |
+| Au-dessus de 40°C | Très forte fièvre (urgence) |
+
+## Conduite à tenir selon l’âge
+
+### 0-3 mois : TOUJOURS une urgence
+Toute fièvre chez un bébé de moins de 3 mois nécessite une **évaluation médicale immédiate**. À cet âge, le système immunitaire est immature et les infections peuvent évoluer rapidement.
+
+**Allez à l’hôpital si :** température axillaire au-dessus de 37,5°C.
+
+### 3-6 mois : vigilance renforcée
+- Fièvre au-dessus de 38,5°C → consultez le pédiatre
+- Fièvre qui dure plus de 24 heures → consultez le pédiatre
+- Bébé irritable, abattu ou refusant de téter → urgence
+
+### 6-12 mois : observez l’état général
+- Fièvre au-dessus de 39°C → consultez le pédiatre
+- Fièvre qui dure plus de 48-72 heures → consultez le pédiatre
+- Si le bébé est actif, joue et s’alimente bien, surveillez à la maison
+
+## Comment mesurer correctement
+
+1. Utilisez un thermomètre digital (jamais au mercure)
+2. Placez-le sous l’aisselle pendant 3 à 5 minutes
+3. Maintenez le bras du bébé contre son corps
+4. Mesurez lorsque le bébé est calme (pas juste après une tétée ou des pleurs)
+
+## Mesures de confort
+
+- **Hydratation :** proposez le sein ou de l’eau fréquemment
+- **Vêtements légers :** retirez l’excès de vêtements et de couvertures
+- **Environnement frais :** gardez la chambre aérée
+- **Bain tiède :** peut aider à faire baisser la température (jamais froid)
+- **Compresses tièdes :** sous les aisselles et à l’aine (jamais d’alcool)
+
+## Signes d’alerte (allez à l’hôpital)
+
+- Fièvre chez un bébé de moins de 3 mois
+- Température au-dessus de 40°C à tout âge
+- Convulsion fébrile (tremblements, yeux révulsés)
+- Taches violettes sur la peau
+- Difficulté à respirer
+- Abattement extrême (bébé “mou”, sans réaction)
+- Fontanelle bombée
+- Pleurs inconsolables pendant des heures
+
+---
+
+**Source :** Protocoles de la Société Brésilienne de Pédiatrie (SBP) et de l’American Academy of Pediatrics (AAP).
+
+---`,
+  },
+  {
+    slug: "diversification-alimentaire",
+    title: "Diversification alimentaire : guide complet pour commencer (BLW et traditionnel)",
+    excerpt: "Tout sur la diversification alimentaire : quand commencer, BLW vs traditionnel, aliments par âge et comment introduire les allergènes.",
+    readTime: "7 min de lecture",
+    metaTitle: "Diversification alimentaire : guide complet pour commencer (BLW et traditionnel) | Wilbor",
+    metaDescription: "Tout sur la diversification alimentaire : quand commencer, BLW vs traditionnel, aliments par âge et comment introduire les allergènes.",
+    keywords: ["diversification alimentaire", "BLW", "introduction alimentation bébé", "purée bébé"],
+    content: `## Quand commencer ?
+
+La **Société Brésilienne de Pédiatrie (SBP)** et l’**OMS** recommandent l’allaitement maternel exclusif jusqu’à **6 mois révolus**. La diversification alimentaire doit commencer à 6 mois, lorsque le bébé présente des signes de préparation.
+
+## Signes de préparation
+
+- Peut s’asseoir avec un soutien minimal
+- Tient sa tête fermement
+- A perdu le réflexe de protrusion de la langue (ne pousse plus la nourriture hors de la bouche)
+- Montre de l’intérêt pour la nourriture des adultes
+- Peut attraper des objets et les porter à la bouche
+
+## Méthodes : BLW vs Traditionnelle vs Mixte
+
+### BLW (Baby-Led Weaning)
+Le bébé mange seul, avec les mains, en utilisant des aliments coupés de façon appropriée.
+
+**Avantages :** autonomie, développement moteur, acceptation des textures.  
+**Précautions :** découpe sécurisée (bâtonnets de la taille d’un doigt), surveillance constante.
+
+### Traditionnelle (purée)
+Aliments écrasés à la fourchette (non mixés) proposés à la cuillère.
+
+**Avantages :** contrôle de la quantité, moins de désordre.  
+**Précautions :** faire évoluer les textures progressivement, ne pas utiliser de mixeur.
+
+### Mixte (recommandée par la SBP)
+Combine les deux méthodes selon le repas et le moment.
+
+## Aliments selon l’âge
+
+| Âge | Aliments | Texture |
+|-------|-----------|---------|
+| 6 mois | Fruits, légumes, tubercules | Écrasé ou grands bâtonnets |
+| 7 mois | + Haricots, lentilles, céréales | Écrasé avec de petits morceaux |
+| 8 mois | + Œuf entier, poisson, pois chiches | Haché finement |
+| 9 mois | + Pâtes, couscous | Morceaux plus grands |
+| 10-12 mois | Repas de la famille | Adapté (sans sel/sucre) |
+
+## Allergènes : quand et comment les introduire
+
+La SBP recommande **d’introduire les allergènes tôt** (à partir de 6 mois), car cela peut **réduire** le risque d’allergie :
+
+1. **Œuf :** commencez par le jaune cuit, puis le blanc
+2. **Arachide :** pâte diluée dans une purée (jamais entière — risque d’étouffement)
+3. **Lait de vache :** dans des préparations (pas comme boisson principale avant 1 an)
+4. **Blé :** pain, pâtes
+5. **Poisson :** commencez par des poissons blancs
+
+**Règle :** introduisez 1 nouvel allergène tous les 3 jours et observez les réactions (plaques, gonflement, vomissements).
+
+## Ce qu’il ne faut JAMAIS donner avant 1 an
+
+- **Miel** (risque de botulisme)
+- **Sel et sucre** (inutiles et nocifs)
+- **Lait de vache comme boisson** (à remplacer par le lait maternel ou une formule)
+- **Aliments ronds entiers** (raisin, tomate cerise — coupez-les en deux)
+- **Aliments durs et petits** (arachides entières, popcorn)
+
+---
+
+**Source :** Protocoles de la SBP, de l’OMS et de l’AAP.
+
+---`,
+  },
+  {
+    slug: "vaccins-bebe",
+    title: "Vaccins du bébé : calendrier complet et ce à quoi s’attendre",
+    excerpt: "Calendrier complet des vaccins de la première année, effets secondaires normaux et comment soulager l’inconfort.",
+    readTime: "5 min de lecture",
+    metaTitle: "Vaccins du bébé : calendrier complet et ce à quoi s’attendre | Wilbor",
+    metaDescription: "Calendrier complet des vaccins de la première année, effets secondaires normaux et comment soulager l’inconfort.",
+    keywords: ["vaccins bébé", "calendrier vaccinal", "vaccinations nourrisson"],
+    content: `## Pourquoi vacciner ?
+
+Les vaccins sont l’intervention de santé publique la plus efficace de l’histoire. Selon l’**OMS**, les vaccins évitent 2 à 3 millions de décès par an dans le monde. Pour les bébés, l’immunisation pendant les premiers mois est particulièrement critique, car le système immunitaire est encore immature.
+
+## Calendrier de la première année
+
+| Âge | Vaccins |
+|-------|---------|
+| À la naissance | BCG, Hépatite B |
+| 2 mois | Penta (DTP+Hib+HepB), VPI (Polio), Pneumo 10, Rotavirus |
+| 3 mois | Méningocoque C |
+| 4 mois | Penta, VPI, Pneumo 10, Rotavirus |
+| 5 mois | Méningocoque C |
+| 6 mois | Penta, VPI, Influenza |
+| 9 mois | Fièvre jaune |
+| 12 mois | ROR, Pneumo 10 (rappel), Méningocoque C (rappel) |
+
+## Effets secondaires normaux
+
+### Locaux (au site d’injection)
+- Rougeur, gonflement, induration
+- Douleur au toucher
+- Durée : 1 à 3 jours
+
+### Systémiques (généraux)
+- Fièvre légère (jusqu’à 38,5°C) — surtout après la Penta
+- Irritabilité, pleurs
+- Somnolence ou agitation
+- Durée : 24 à 48 heures
+
+### Comment soulager
+- **Antipyrétique :** paracétamol ou ibuprofène (selon l’avis du pédiatre)
+- **Compresses froides** au site d’injection
+- **Allaitement** — confort et analgésie naturelle
+- **Bras et câlins** — le bébé a besoin de sécurité
+
+## Mythes sur les vaccins
+
+**“Le vaccin cause l’autisme”** — FAUX. L’étude d’origine était frauduleuse et a été retirée. Aucune étude sérieuse ne confirme ce lien.
+
+**“Le vaccin surcharge le système immunitaire”** — FAUX. Le bébé est exposé chaque jour à des milliers d’antigènes. Les vaccins n’en représentent qu’une infime fraction.
+
+**“Il vaut mieux attraper la maladie naturellement”** — FAUX. Des maladies comme la rougeole, la coqueluche et la méningite peuvent provoquer de graves séquelles ou la mort.
+
+## Quand NE PAS vacciner (véritables contre-indications)
+
+- Forte fièvre le jour du vaccin (au-dessus de 38,5°C)
+- Réaction anaphylactique à la dose précédente
+- Immunodéficience sévère (pour les vaccins vivants)
+
+**Un léger rhume N’EST PAS une contre-indication** — la vaccination peut avoir lieu normalement.
+
+## Conseils pour le jour du vaccin
+
+1. Apportez le carnet de vaccination
+2. Allaitez avant et après (analgésie naturelle)
+3. Apportez un jouet préféré pour distraire
+4. Ne promettez pas que “ça ne fera pas mal” — soyez honnête
+5. Tenez le bébé dans vos bras pendant l’injection
+
+---
+
+**Source :** Calendrier National de Vaccination (Ministère de la Santé), SBP et OMS.
+
+---`,
+  },
+  {
+    slug: "allaitement-guide-complet",
+    title: "Allaitement : guide complet pour les premiers mois",
+    excerpt: "Bonne prise du sein, production de lait, douleurs fréquentes et comment surmonter les défis de l’allaitement.",
+    readTime: "7 min de lecture",
+    metaTitle: "Allaitement : guide complet pour les premiers mois | Wilbor",
+    metaDescription: "Bonne prise du sein, production de lait, douleurs fréquentes et comment surmonter les défis de l’allaitement.",
+    keywords: ["allaitement", "prise du sein", "allaitement maternel", "latch bébé"],
+    content: `## Pourquoi allaiter ?
+
+Le lait maternel est l’aliment le plus complet pour le bébé pendant les premiers mois de vie. L’**OMS** et la **SBP** recommandent :
+- **Allaitement exclusif** jusqu’à 6 mois
+- **Allaitement complémentaire** (avec d’autres aliments) jusqu’à 2 ans ou plus
+
+## Bienfaits du lait maternel
+
+### Pour le bébé
+- Protection contre les infections (anticorps maternels)
+- Réduction des allergies, de l’asthme et du diabète
+- Développement cérébral et visuel
+- Réduction du risque de mort subite
+- Protection contre l’obésité à l’âge adulte
+
+### Pour la mère
+- Réduction du risque de cancer du sein et de l’ovaire
+- Récupération utérine plus rapide
+- Renforcement du lien affectif
+- Économie financière
+
+## La bonne prise du sein
+
+La prise du sein est le facteur le plus important pour réussir l’allaitement.
+
+### Signes d’une bonne prise
+- Bouche bien ouverte (plus de 120°)
+- Lèvre inférieure tournée vers l’extérieur
+- Menton en contact avec le sein
+- Aréole plus visible au-dessus qu’en dessous
+- Joues arrondies (pas creusées)
+- Vous ne ressentez pas de douleur (une pression est possible, mais pas une douleur)
+
+### Positions d’allaitement
+1. **Berceau** — bébé dans les bras, ventre contre ventre
+2. **Ballon de rugby** — bébé sous le bras, idéale après une césarienne
+3. **Allongée sur le côté** — pratique la nuit
+4. **Koala** — bébé assis sur la cuisse
+
+## Production de lait : comment cela fonctionne
+
+Le lait est produit **à la demande** : plus le bébé tète, plus le lait est produit. Pendant les premiers jours, le **colostrum** (premier lait jaunâtre) est suffisant — il n’est pas nécessaire de compléter.
+
+### Signes que le lait est suffisant
+- Le bébé a au moins **6 couches mouillées** par jour
+- Il prend du poids correctement (à vérifier en consultation)
+- Il tète fréquemment (8 à 12 fois/jour au début) et semble rassasié
+
+## Douleurs et problèmes fréquents
+
+### Crevasses du mamelon
+**Cause :** mauvaise prise du sein.  
+**Solution :** corriger la prise. Appliquez du lait maternel sur le mamelon après la tétée (cicatrisant naturel).
+
+### Engorgement mammaire
+**Cause :** accumulation de lait.  
+**Solution :** compresse tiède avant la tétée, compresse froide après. Vider le sein fréquemment.
+
+### Mastite
+**Cause :** infection bactérienne.  
+**Symptômes :** fièvre, rougeur, douleur intense.  
+**Solution :** continuez à allaiter (cela n’aggrave pas l’infection), consultez le médecin pour un antibiotique.
+
+## Conseils pour augmenter la production
+
+- **Allaitez fréquemment** — 8 à 12 fois/jour au début
+- **Proposez les deux seins** à chaque tétée
+- **Reposez-vous** quand le bébé dort
+- **Évitez les compléments** inutiles (le biberon réduit la stimulation)
+- **Tirez votre lait** entre les tétées pour stimuler
+
+### Bébé qui refuse le sein
+- Essayez dans un environnement calme et sombre
+- Proposez quand le bébé est somnolent
+- Peau à peau (bébé seulement en couche dans les bras de la mère)
+- Vérifiez s’il y a un frein de langue court
+
+## Quand demander de l’aide
+
+- Douleur qui ne s’améliore pas après correction de la prise
+- Crevasses qui saignent ou ne cicatrisent pas
+- Fièvre + rougeur du sein (mastite possible)
+- Bébé ne prend pas de poids correctement
+- Bébé n’a pas au moins 6 couches mouillées par jour
+
+---
+
+**Source :** Société Brésilienne de Pédiatrie (SBP), OMS et Cahier de Soins Primaires n° 23 (Ministère de la Santé).
+
+---`,
+  },
+  {
+    slug: "developpement-moteur-bebe",
+    title: "Développement moteur du bébé : étapes clés et comment le stimuler",
+    excerpt: "Étapes du développement moteur mois par mois et activités pour stimuler chaque phase.",
+    readTime: "6 min de lecture",
+    metaTitle: "Développement moteur du bébé : étapes clés et comment le stimuler | Wilbor",
+    metaDescription: "Étapes du développement moteur mois par mois et activités pour stimuler chaque phase.",
+    keywords: ["développement moteur bébé", "étapes développement", "bébé rampe marche"],
+    content: `## Pourquoi le développement moteur est-il important ?
+
+Le développement moteur est l’un des principaux indicateurs de la santé neurologique du bébé. Selon la **SBP**, suivre les étapes motrices permet d’identifier précocement les signes de retard, qui peuvent être pris en charge avec beaucoup plus d’efficacité lorsqu’ils sont détectés tôt.
+
+## Étapes motrices mois par mois
+
+| Âge | Étape attendue | Signe d’alerte |
+|-------|---------------|-----------------|
+| 1 mois | Soulève brièvement la tête sur le ventre | Ne réagit pas aux sons |
+| 2 mois | Tient sa tête quelques secondes | Ne fixe pas le regard |
+| 3 mois | Tient sa tête fermement | Ne sourit pas |
+| 4 mois | Se retourne du ventre au dos | N’attrape pas les objets |
+| 5 mois | S’assoit avec soutien | Ne transfère pas les objets |
+| 6 mois | S’assoit sans soutien (certains) | Ne s’assoit pas avec soutien |
+| 7 mois | Rampe ou commence à se déplacer | Ne se met pas debout avec appui |
+| 8 mois | Se met debout avec appui | Ne rampe pas |
+| 9 mois | Marche avec appui | N’utilise pas la pince |
+| 10 mois | Premiers pas (certains) | Ne montre pas du doigt |
+| 11 mois | Marche avec appui stable | N’imite pas les gestes |
+| 12 mois | Marche seul (la majorité) | Ne dit aucun mot |
+
+## Activités de stimulation selon la phase
+
+### 0-3 mois : stimulation sensorielle
+- **Tummy time** (temps sur le ventre) : 3 à 5 minutes, 3 fois par jour — renforce le cou et les épaules
+- **Contraste visuel :** montrez des objets noirs et blancs (la vision est encore en développement)
+- **Mobile :** suspendu à 20-30 cm du visage
+- **Contact peau à peau :** stimule le système nerveux et le lien affectif
+
+### 4-6 mois : coordination et préhension
+- **Proposez des jouets** à attraper (hochet, anneau en caoutchouc)
+- **Miroir :** les bébés adorent se regarder
+- **Rouler :** aidez le bébé à se retourner en plaçant un jouet à côté
+- **S’asseoir avec soutien :** utilisez des coussins ou vos bras
+
+### 7-9 mois : mobilité et exploration
+- **Espace sécurisé au sol** pour ramper
+- **Obstacles doux** (coussins) à franchir
+- **Jouets qui roulent** à poursuivre
+- **Boîtes et pots** à ouvrir et fermer (coordination)
+
+### 10-12 mois : premiers pas
+- **Chariot de marche à pousser** (pas le trotteur avec siège — interdit par la SBP)
+- **Surfaces variées :** tapis, herbe, sable (stimule la proprioception)
+- **Marches basses** avec surveillance
+- **Jeux debout** appuyé au canapé
+
+## Quand consulter le pédiatre
+
+- Ne tient pas sa tête à 4 mois
+- Ne s’assoit pas sans soutien à 9 mois
+- Ne marche pas à 18 mois
+- A perdu des compétences qu’il avait déjà acquises
+- Asymétrie des mouvements (utilise davantage un côté du corps)
+- Hypertonie ou hypotonie (très raide ou très “mou”)
+
+---
+
+**Source :** Société Brésilienne de Pédiatrie (SBP) et Denver Developmental Screening Test.
+
+---`,
+  },
+  {
+    slug: "securite-bebe-maison",
+    title: "Sécurité du bébé à la maison : prévention des accidents selon l’âge",
+    excerpt: "Prévention des accidents domestiques selon l’âge : chutes, étouffements, brûlures et plus encore.",
+    readTime: "6 min de lecture",
+    metaTitle: "Sécurité du bébé à la maison : prévention des accidents selon l’âge | Wilbor",
+    metaDescription: "Prévention des accidents domestiques selon l’âge : chutes, étouffements, brûlures et plus encore.",
+    keywords: ["sécurité bébé", "accidents domestiques", "prévention chutes bébé"],
+    content: `## Accidents domestiques : la principale cause de décès évitable
+
+Selon la **SBP**, les accidents domestiques sont la **principale cause de décès chez les enfants de 1 à 14 ans**. La plupart sont **évitables** grâce à des mesures de sécurité simples.
+
+## Risques selon l’âge
+
+### 0-3 mois : chutes et suffocation
+- **Ne laissez jamais le bébé seul** sur des surfaces en hauteur (table à langer, lit, canapé)
+- **Sommeil sécurisé :** toujours sur le dos, sans oreillers, couvertures lâches ni peluches dans le lit
+- **N’utilisez pas de tours de lit** (risque de suffocation)
+- **Attention aux cordons** de rideaux, tétines et vêtements près du cou
+
+### 4-6 mois : chutes et petits objets
+- Le bébé commence à se retourner — **ne le laissez jamais seul** sur des surfaces non protégées
+- **Tout va à la bouche** — retirez les petits objets à sa portée (pièces, boutons, bouchons)
+- **Chaise haute** avec harnais de sécurité
+- **N’utilisez pas de trotteur** (interdit par la SBP — risque de chutes graves)
+
+### 7-9 mois : ramper = tout explorer
+- **Installez des barrières** en haut et en bas des escaliers
+- **Protégez les prises électriques** avec des cache-prises
+- **Verrouillez les placards** contenant des produits ménagers, des médicaments et des objets tranchants
+- **Protégez les angles** des tables et des meubles
+- **Fixez les meubles lourds** au mur (bibliothèques, commodes, téléviseurs)
+
+### 10-12 mois : premiers pas = plus de chutes
+- **Tapis antidérapants** dans la salle de bain et la cuisine
+- **Portes sécurisées** pour la cuisine et la salle de bain
+- **Poignées de casseroles** tournées vers l’intérieur sur la cuisinière
+- **Fils électriques** hors de portée
+- **Fenêtres avec filet** ou limiteur d’ouverture
+
+## Étouffement : que faire
+
+### Bébé de moins d’1 an (manœuvre de Heimlich adaptée)
+1. Placez le bébé **à plat ventre sur votre avant-bras**, la tête plus basse que le corps
+2. Donnez **5 tapes fermes** dans le dos, entre les omoplates
+3. Si cela ne fonctionne pas, **retournez-le sur le dos** et faites **5 compressions** au centre de la poitrine (2 doigts)
+4. **Répétez** jusqu’à ce que l’objet sorte ou que le bébé tousse/pleure
+5. S’il perd connaissance, **appelez les services d’urgence** et commencez la RCP
+
+### Prévention de l’étouffement
+- Coupez les aliments en petits morceaux adaptés à l’âge
+- **Aliments dangereux :** raisin entier, popcorn, arachides, saucisse en rondelles, bonbons durs
+- Surveillez **tous** les repas
+- Ne donnez pas de nourriture dans une voiture en mouvement
+
+## Brûlures : prévention
+
+- **Testez la température de l’eau** du bain (idéal : 37°C) — utilisez le coude
+- **Ne tenez pas le bébé** pendant que vous buvez des liquides chauds
+- **Cuisinez sur les brûleurs arrière** de la cuisinière
+- **Fer à repasser :** rangez-le encore chaud dans un endroit élevé et inaccessible
+- **Crème solaire :** seulement à partir de 6 mois
+
+## Noyade : vigilance maximale
+
+- **Ne laissez jamais le bébé seul** dans la baignoire, la piscine ou près d’un seau — pas même 1 seconde
+- Les bébés peuvent se noyer dans **moins de 5 cm d’eau**
+- **Videz les seaux et les bassines** après usage
+- **Piscines :** clôture d’environ 1,5 m avec portail et verrou
+
+## Kit de premiers secours
+
+Ayez à la maison :
+- Thermomètre digital
+- Sérum physiologique
+- Gaze stérile
+- Sparadrap micropore
+- Ciseaux à bouts ronds
+- Antipyrétique prescrit par le pédiatre
+- Numéro des services d’urgence et du pédiatre bien visibles
+
+---
+
+**Source :** Société Brésilienne de Pédiatrie (SBP) et Ministère de la Santé — Programme de Prévention des Accidents de l’Enfance.
+
+---`,
+  },
+  {
+    slug: "pics-developpement-bebe",
+    title: "Pics de développement du bébé : à quoi s’attendre mois par mois",
+    excerpt: "Quand surviennent les pics de développement, les signes de chaque phase et comment gérer l’irritabilité du bébé.",
+    readTime: "7 min de lecture",
+    metaTitle: "Pics de développement du bébé : à quoi s’attendre mois par mois | Wilbor",
+    metaDescription: "Quand surviennent les pics de développement, les signes de chaque phase et comment gérer l’irritabilité du bébé.",
+    keywords: ["pics de développement", "sauts développement bébé", "bébé irritable"],
+    content: `## Que sont les pics de développement ?
+
+Les **pics de développement** sont des périodes pendant lesquelles le cerveau du bébé traverse une **réorganisation neurologique intense**. Durant ces périodes, le bébé acquiert de nouvelles compétences — mais ce processus peut le rendre irritable, pleurnichard et très demandeur.
+
+## Calendrier des pics (0-12 mois)
+
+| Semaine | Âge approx. | Ce qui change | Durée |
+|--------|-------------|------------|----------|
+| Semaine 5 | 1 mois | Sensations (vue, audition plus aiguisées) | 1-2 semaines |
+| Semaine 8 | 2 mois | Schémas (reconnaît les visages, les mains) | 1-2 semaines |
+| Semaine 12 | 3 mois | Transitions douces (mouvements plus coordonnés) | 1-2 semaines |
+| Semaine 19 | 4,5 mois | Événements (comprend la cause et l’effet) | 1-5 semaines |
+| Semaine 26 | 6 mois | Relations (distance, dedans/dehors) | 1-5 semaines |
+| Semaine 37 | 8,5 mois | Catégories (regroupe les objets par ressemblance) | 3-6 semaines |
+| Semaine 46 | 10,5 mois | Séquences (comprend l’ordre des choses) | 3-6 semaines |
+| Semaine 55 | 12,5 mois | Programmes (teste des stratégies, résout des problèmes) | 3-6 semaines |
+
+## Signes que le bébé traverse un pic
+
+- **Plus de pleurs et d’irritabilité** que d’habitude
+- **Plus collant** — veut être dans les bras tout le temps
+- **Changement dans le sommeil** — se réveille plus, dort moins
+- **Changement dans l’appétit** — tète davantage ou refuse
+- **Anxiété de séparation** — pleure quand vous sortez de son champ de vision
+
+## Étapes du développement mois par mois
+
+### 1 mois
+- Fixe brièvement le regard
+- Réagit aux sons forts
+- Soulève brièvement la tête lorsqu’il est sur le ventre
+
+### 2 mois
+- Premier sourire social
+- Suit les objets des yeux
+- Émet des sons (“ahhh”, “ohhh”)
+
+### 3 mois
+- Tient sa tête
+- Rit aux éclats
+- Ouvre et ferme les mains
+- Découvre ses propres mains
+
+### 4 mois
+- Se retourne du ventre au dos (ou inversement)
+- Attrape des objets avec les deux mains
+- Reconnaît les visages familiers
+
+### 5-6 mois
+- S’assoit avec soutien
+- Passe les objets d’une main à l’autre
+- Babille des syllabes (“ba-ba”, “ma-ma”)
+- Commence à montrer une préférence pour certaines personnes
+
+### 7-8 mois
+- S’assoit sans soutien
+- Rampe (ou se traîne)
+- Anxiété de séparation (pleure avec les inconnus)
+- Tape des mains, fait au revoir
+
+### 9-10 mois
+- Se met debout avec appui
+- Pince fine (attrape les petits objets avec le pouce et l’index)
+- Comprend “non”
+- Pointe ce qu’il veut
+
+### 11-12 mois
+- Premiers pas (avec ou sans appui)
+- Premiers mots ayant un sens (“maman”, “papa”)
+- Imite les gestes et les sons
+- Joue à cache-cache
+
+## Comment aider pendant les pics
+
+1. **Plus de bras et de peau à peau** — le bébé a besoin de sécurité
+2. **Allaitez plus souvent** — confort + nutrition
+3. **Maintenez la routine** — la prévisibilité apaise
+4. **Proposez des stimulations adaptées** — nouveaux jouets, textures, sons
+5. **Soyez patiente** — le pic est temporaire (1 à 6 semaines)
+6. **Ne comparez pas** — chaque bébé a son propre rythme
+
+## Quand s’inquiéter
+
+Consultez le pédiatre si le bébé :
+- Ne tient pas sa tête à 4 mois
+- Ne s’assoit pas sans soutien à 9 mois
+- N’établit pas de contact visuel
+- Ne réagit pas aux sons
+- A perdu des compétences qu’il avait déjà acquises (régression)
+
+---
+
+**Source :** Société Brésilienne de Pédiatrie (SBP), "The Wonder Weeks" (Van de Rijt & Plooij) et AAP.
+
+---`,
+  },
+  {
+    slug: "bain-nouveau-ne",
+    title: "Bain du nouveau-né : étape par étape sûre et complète",
+    excerpt: "Guide complet, étape par étape, pour donner le bain au nouveau-né avec sécurité et confiance.",
+    readTime: "6 min de lecture",
+    metaTitle: "Bain du nouveau-né : étape par étape sûre et complète | Wilbor",
+    metaDescription: "Guide complet, étape par étape, pour donner le bain au nouveau-né avec sécurité et confiance.",
+    keywords: ["bain nouveau-né", "premier bain bébé", "soins cordon ombilical"],
+    content: `## Le premier bain : quand et comment
+
+Le premier bain du nouveau-né génère souvent beaucoup d’anxiété. La **SBP** recommande que le premier bain soit donné **après la stabilisation du bébé**, généralement au cours des premières 24 heures de vie.
+
+## Préparation : tout prêt AVANT de commencer
+
+Avant de déshabiller le bébé, laissez tout à portée de main :
+
+- **Baignoire** avec de l’eau tiède (36-37°C)
+- **Serviette** douce avec capuche
+- **Couche** propre
+- **Vêtements** propres
+- **Savon** liquide doux (spécifique pour bébé)
+- **Coton** ou gaze pour le visage
+- **Thermomètre de bain** (facultatif, mais recommandé)
+
+**Règle d’or :** ne laissez JAMAIS le bébé seul dans la baignoire, pas même 1 seconde.
+
+## Étape par étape du bain
+
+### 1. Température de l’eau
+- **Idéale :** 36°C à 37°C
+- **Comment tester :** plongez le coude — l’eau doit être tiède et confortable
+- **Niveau d’eau :** suffisant pour couvrir les épaules du bébé lorsqu’il est assis
+
+### 2. Environnement
+- **Température de la pièce :** entre 22°C et 26°C
+- **Sans courants d’air** — fermez fenêtres et portes
+- **Moment :** de préférence avant la tétée (pas juste après)
+
+### 3. Sécurité pour tenir le bébé
+- Soutenez la tête et le cou du bébé sur votre avant-bras
+- Tenez-le fermement sous l’aisselle avec votre main
+- L’autre main reste libre pour le laver
+- **Ne le lâchez jamais** — les bébés glissent quand ils sont mouillés
+
+### 4. Ordre de lavage
+1. **Visage** — avec du coton ou un linge humide (sans savon)
+2. **Tête** — avec peu de savon, massez doucement
+3. **Corps** — cou, bras, mains, tronc
+4. **Plis** — cou, aisselles, aine (où la saleté s’accumule)
+5. **Parties génitales** — en dernier (filles : toujours de l’avant vers l’arrière)
+6. **Dos** — retournez le bébé avec précaution
+
+### 5. Durée
+- **5 à 10 minutes** suffisent
+- Les bains longs refroidissent l’eau et dessèchent la peau
+
+### 6. Après le bain
+- Enveloppez-le immédiatement dans la serviette
+- Séchez bien les **plis** (cou, aisselles, aine, derrière les oreilles)
+- Séchez le **cordon ombilical** avec une gaze propre
+- Habillez-le rapidement pour qu’il ne se refroidisse pas
+
+## Soins du cordon ombilical
+
+- **Nettoyage :** séchez avec une gaze propre après le bain et à chaque changement de couche
+- **N’utilisez pas :** alcool à 70 %, mercure, pommades ou bandages
+- **Couche :** repliez-la vers le bas pour laisser le cordon à l’air libre
+- **Chute :** entre 7 et 21 jours (un peu de sang peut apparaître — c’est normal)
+- **Consultez le pédiatre si :** rougeur autour, sécrétion à forte odeur, gonflement
+
+## Produits recommandés
+
+- **Savon :** liquide, doux, sans parfum fort (pH 5,5)
+- **Shampooing :** seulement à partir de 2-3 mois (avant cela, utilisez le savon)
+- **Hydratant :** uniquement si la peau est sèche, avec l’avis du pédiatre
+- **Évitez :** talc, eau de Cologne, lingettes avec alcool
+
+## Bain ofuro (seau)
+
+Le bain ofuro reproduit l’environnement de l’utérus et peut apaiser les bébés agités :
+
+- Utilisez un seau spécifique pour bébé
+- Eau à la même température (36-37°C)
+- Le bébé reste immergé jusqu’aux épaules, en position fœtale
+- Excellent pour les bébés qui ont des coliques
+- **Toujours sous surveillance** — tenez le bébé en permanence
+
+## Conseils supplémentaires
+
+- **Le bain du soir** peut aider à instaurer la routine du sommeil
+- **Le massage après le bain** détend et renforce le lien
+- **Fréquence :** 1 fois par jour suffit (l’excès dessèche la peau)
+- **Température :** ne devinez jamais — testez toujours avec le coude
+
+---
+
+**Source :** Société Brésilienne de Pédiatrie (SBP).
+
+---`,
+  },
+  {
+    slug: "algorithme-predit-sommeil-bebe",
+    title: "L’algorithme qui prédit quand votre bébé va dormir (et pourquoi cela change tout)",
+    excerpt: "Découvrez comment Wilbor utilise l’intelligence artificielle pour prédire avec précision la prochaine sieste de votre bébé, en combinant des données réelles avec des protocoles médicaux.",
+    readTime: "5 min de lecture",
+    metaTitle: "L’algorithme qui prédit quand votre bébé va dormir (et pourquoi cela change tout) | Wilbor",
+    metaDescription: "Découvrez comment Wilbor utilise l’intelligence artificielle pour prédire avec précision la prochaine sieste de votre bébé, en combinant des données réelle",
+    keywords: ["Wilbor sommeil", "prédiction sieste bébé", "IA bébé sommeil"],
+    content: `## L’algorithme qui prédit quand votre bébé va dormir
+
+Imaginez savoir, avec précision, que votre bébé aura besoin de dormir à 14h37. Non pas par intuition — mais par la science. C’est l’une des fonctions les plus exclusives de Wilbor : la **Prévision Intelligente des Siestes**.
+
+## Comment cela fonctionne
+
+Wilbor croise deux sources de données en temps réel :
+
+### 1. Tableau médical des fenêtres d’éveil
+Basé sur l’âge exact du bébé en semaines :
+- **0–6 semaines :** le bébé ne supporte que 45 à 60 min éveillé
+- **3–4 mois :** la fenêtre d’éveil augmente à 75 à 90 min
+- **6 mois :** il supporte déjà 2 à 2,5 heures entre les siestes
+
+### 2. Historique réel de votre bébé
+Wilbor enregistre chaque sieste que vous renseignez. Avec le temps, il apprend les schémas uniques de votre enfant.
+
+## La formule
+
+Le système combine les deux sources :
+
+**Prévision = (60% × données réelles du bébé) + (40% × référence médicale selon l’âge)**
+
+Plus vous enregistrez de données, plus la prévision devient personnalisée et précise.
+
+## Pourquoi cela change tout
+
+Avant, les mères essayaient de deviner l’heure de la sieste — et se trompaient. Avec la prévision intelligente :
+- **Moins de pleurs** — vous agissez avant l’épuisement extrême
+- **Routine plus prévisible** — vous planifiez votre journée en toute sécurité
+- **Sommeil plus profond** — le bébé dort dans la bonne fenêtre, pas après
+
+---
+**Basé sur :** Protocole des fenêtres d’éveil de l’AAP et données sur le sommeil néonatal de la SBP.
+
+---`,
+  },
+  {
+    slug: "ia-lit-entre-les-lignes",
+    title: "L’IA qui lit entre les lignes : comment Wilbor comprend ce que vous n’avez pas dit",
+    excerpt: "Wilbor dispose d’un système d’analyse émotionnelle qui identifie l’épuisement, l’anxiété et les signes de surcharge dans les messages des mères — même lorsqu’elles ne demandent pas directement de l’aide.",
+    readTime: "5 min de lecture",
+    metaTitle: "L’IA qui lit entre les lignes : comment Wilbor comprend ce que vous n’avez pas dit | Wilbor",
+    metaDescription: "Wilbor dispose d’un système d’analyse émotionnelle qui identifie l’épuisement, l’anxiété et les signes de surcharge dans les messages des mères — même lors",
+    keywords: ["Wilbor IA", "épuisement maternel", "soutien émotionnel mère"],
+    content: `## L’IA qui lit entre les lignes
+
+Une mère écrit : "mon bébé n’arrête pas de pleurer et je ne sais plus quoi faire."
+
+N’importe quel assistant classique répondrait à propos des coliques ou du sommeil. Wilbor fait autre chose : **il lit entre les lignes**.
+
+## Le système de lecture du contexte émotionnel
+
+Wilbor possède une fonction exclusive — un système d’analyse qui fonctionne en arrière-plan, invisible pour la mère, mais présent dans chaque conversation.
+
+### Ce qu’il identifie
+
+Pendant que Wilbor répond à propos du bébé, le système analyse le message et identifie la **véritable souffrance de la mère** en catégories :
+
+- **Épuisement extrême** — "je n’ai pas dormi depuis 3 jours"
+- **Anxiété de performance** — "est-ce que je fais les choses correctement ?"
+- **Épuisement émotionnel** — "je n’ai pas l’impression d’être une bonne mère"
+- **Isolement social** — "je n’ai personne à qui parler"
+- **Conflit relationnel** — "mon mari ne m’aide pas"
+- **Peur du jugement** — "j’ai honte de poser la question"
+- **Culpabilité maternelle** — "je crois que j’ai fait quelque chose de mal"
+- **Manque de confiance** — "je ne sais pas si mon lait est suffisant"
+
+### Niveaux d’attention
+
+Pour chaque signal identifié, le système définit un niveau : **Faible**, **Moyen**, **Élevé** ou **Critique**.
+
+## Pourquoi cela compte
+
+L’épuisement maternel touche de nombreuses mères dans le monde — et la plupart ne demandent pas d’aide parce qu’elles ne reconnaissent pas leurs propres signes.
+
+Wilbor ne pose pas de diagnostic. Mais il **perçoit** quand quelque chose va au-delà des pleurs du bébé. Et il répond avec une empathie calibrée pour ce moment précis.
+
+---
+**Cette fonction fonctionne de manière éthique, sans stocker de données sensibles au-delà de ce qui est nécessaire pour la session.**`,
+  },
+  {
+    slug: "poussees-de-croissance-du-bebe",
+    title: "Poussées de Croissance du Bébé : Signes et Comment Réagir",
+    excerpt: "Reconnaissez les signes des poussées de croissance du bébé et apprenez à répondre avec patience aux changements de routine.",
+    readTime: "4 min",
+    metaTitle: "Poussées de Croissance du Bébé : Signes et Comment Réagir | Wilbor-Assist",
+    metaDescription: "Reconnaissez les signes des poussées de croissance du bébé et apprenez à répondre avec patience aux changements de routine. Basé sur les protocoles de la SFP et de l'AAP.",
+    keywords: ["poussée de croissance bébé", "bébé agité", "développement infantile", "bébé plus faim", "bébé pleureur"],
+    content: `## Qu'est-ce qu'une poussée de croissance ?\n\nLes poussées de croissance sont des périodes de développement physique accéléré que chaque bébé traverse durant sa première année de vie. Ces phases peuvent perturber la routine établie, mais reconnaître les signes permet de réagir avec calme et sécurité.\n\n## Signes courants d'une poussée de croissance\n\n- **Plus de faim** \u2014 tète plus fréquemment que d'habitude\n- **Sommeil perturbé** \u2014 se réveille plus souvent la nuit\n- **Irritabilité** \u2014 pleure plus que la normale\n- **Besoin de proximité** \u2014 veut être porté en permanence\n\n## Quand cela se produit-il ?\n\nLes poussées de croissance surviennent généralement \u00e0 : **7\u201310 jours**, **2\u20133 semaines**, **4\u20136 semaines**, **3 mois**, **6 mois** et **9 mois**.\n\n## Comment agir\n\nSuivez le rythme de votre bébé. Offrez plus de tétées lorsqu'il montre des signes de faim et apportez beaucoup de contact et de réconfort. Les poussées de croissance durent en moyenne **2 \u00e0 3 jours**. Pour un accompagnement personnalisé, consultez Wilbor \u00e0 tout moment.\n\n---\n**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ictere-neonatal-causes-et-traitement",
+    title: "Ictère Néonatal : Causes, Symptômes et Traitement",
+    excerpt: "Comprenez ce qu'est l'ictère néonatal, pourquoi il apparaît, quand consulter un médecin et comment il est traité.",
+    readTime: "5 min",
+    metaTitle: "Ictère Néonatal : Causes, Symptômes et Traitement | Wilbor-Assist",
+    metaDescription: "Comprenez ce qu'est l'ictère néonatal, pourquoi il apparaît, quand consulter un médecin et comment il est traité. Basé sur les protocoles de la SFP et de l'AAP.",
+    keywords: ["ictère néonatal", "bébé jaune", "bilirubine bébé", "ictère nouveau-né", "photothérapie bébé"],
+    content: `## Qu'est-ce que l'ictère néonatal ?\n\nL'ictère néonatal est une condition **très fréquente** caractérisée par un jaunissement de la peau et du blanc des yeux du nouveau-né. Elle survient lorsqu'il y a un excès de **bilirubine** dans le sang du bébé.\n\n## Pourquoi cela se produit-il ?\n\nComme le foie du nouveau-né est encore en développement, il peut ne pas traiter la bilirubine suffisamment rapidement. La majorité des cas est **légère et se résout spontanément** en 1 \u00e0 2 semaines, \u00e0 mesure que le foie mûrit.\n\n## Quand consulter un médecin\n\nConsultez un professionnel de santé si :\n\n- L'ictère **apparaît dans les premières 24 heures** de vie\n- La coloration jaune **s'intensifie ou s'étend**\n- Le bébé est **très somnolent** ou difficile \u00e0 réveiller\n\n## Traitement\n\nLorsque les niveaux de bilirubine sont élevés, le médecin peut recommander une **photothérapie** \u2014 le bébé est placé sous des lumières bleues spéciales qui aident \u00e0 décomposer la bilirubine. Les cas graves sont rares.\n\n**Des tétées fréquentes** (lait maternel ou formule) aident le bébé \u00e0 éliminer la bilirubine par les selles.\n\n---\n**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "dentition-du-bebe-symptomes-et-soulagement",
+    title: "Dentition du Bébé : Symptômes et Comment Soulager l'Inconfort",
+    excerpt: "Votre bébé fait ses dents ? Découvrez les symptômes et des moyens sûrs de soulager l'inconfort des gencives.",
+    readTime: "4 min",
+    metaTitle: "Dentition du Bébé : Symptômes et Comment Soulager | Wilbor-Assist",
+    metaDescription: "Votre bébé fait ses dents ? Découvrez les symptômes courants et les moyens sûrs et efficaces de soulager l'inconfort des gencives. Basé sur la SFP et l'AAP.",
+    keywords: ["dentition bébé", "bébé qui fait ses dents", "gencives bébé", "première dent bébé", "anneau de dentition"],
+    content: `## Quand commence la dentition ?\n\nLa dentition est une étape importante de la première année du bébé. La plupart des bébés ont leur **première dent vers 6 mois**, bien que cette période puisse varier considérablement.\n\n## Signes courants de la dentition\n\n- **Salivation excessive**\n- **Mord des objets** fréquemment\n- **Irritabilité** et agitation\n- **Gencives gonflées et sensibles**\n- Légère augmentation de la température corporelle (ce n'est pas de la fièvre)\n\n> Une fièvre supérieure \u00e0 **38\u00b0C** N'EST PAS causée par la dentition et doit être évaluée par un pédiatre.\n\n## Moyens sûrs de soulager l'inconfort\n\n- **Anneau de dentition réfrigéré** (non congelé)\n- **Linge humide froid** pour masser les gencives\n- **Massage doux avec le doigt** sur les gencives\n- Consultez le pédiatre concernant l'utilisation de **paracétamol** si nécessaire\n\n\u26a0\ufe0f **Évitez** les gels de dentition contenant de la **benzocaïne** \u2014 ils peuvent présenter des risques sérieux pour la santé du bébé.\n\n---\n**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "anxiete-post-partum-vs-depression-differences",
+    title: "Anxiété Post-Partum vs Dépression Post-Partum : Différences Essentielles",
+    excerpt: "Comprenez les différences entre l'anxiété post-partum et la dépression post-partum, et sachez quand consulter un professionnel.",
+    readTime: "6 min",
+    metaTitle: "Anxiété Post-Partum vs Dépression Post-Partum : Différences | Wilbor-Assist",
+    metaDescription: "Comprenez les différences entre l'anxiété post-partum et la dépression post-partum, reconnaissez les symptômes et sachez quand consulter un professionnel.",
+    keywords: ["anxiété post-partum", "dépression post-partum", "santé mentale maternelle", "baby blues", "trouble post-partum"],
+    content: `## La période post-partum et la santé mentale\n\nLa période post-partum est un moment de transformations physiques et émotionnelles intenses. Bien que beaucoup connaissent le \"baby blues\", des troubles plus sérieux comme la **Dépression Post-Partum (DPP)** et l'**Anxiété Post-Partum (APP)** sont fréquents et souvent mal compris.\n\n## Principales différences\n\n| | Dépression Post-Partum (DPP) | Anxiété Post-Partum (APP) |\n|---|---|---|\n| **Sentiment principal** | Tristesse persistante, désespoir | Inquiétude excessive, peur |\n| **Pensées** | Négatives, vides | Rapides, catastrophiques |\n| **Symptômes physiques** | Fatigue, changement d'appétit | C\u0153ur accéléré, étourdissements |\n| **Relation avec le bébé** | Difficulté \u00e0 créer un lien | Surprotection excessive |\n\n## Important : les deux se traitent\n\nLa DPP et l'APP peuvent survenir en même temps. Les deux conditions sont **hautement traitables** avec un accompagnement professionnel \u2014 psychothérapie, médication ou groupes de soutien.\n\nRessentir cela **ne fait pas de vous une mauvaise mère**. C'est une condition de santé qui mérite de l'attention.\n\n---\n**Source :** Société Française de Pédiatrie (SFP) et Organisation Mondiale de la Santé (OMS).`,
+  },
+];
+// ============================================
+// GERMAN (DE) ARTICLES
+// ============================================
+export const blogArticlesDE: BlogArticleTranslation[] = [
+  {
+    slug: "baby-schlaeft-nicht",
+    title: "Baby schläft nicht: vollständiger Leitfaden nach Alter (0 bis 12 Monate)",
+    excerpt: "Verstehen Sie die Schlafwachfenster Ihres Babys nach Alter und lernen Sie bewährte Techniken kennen, um die Nächte zu verbessern.",
+    readTime: "8 Min Lesezeit",
+    metaTitle: "Baby schläft nicht: vollständiger Leitfaden nach Alter (0 bis 12 Monate) | Wilbor",
+    metaDescription: "Verstehen Sie die Schlafwachfenster Ihres Babys nach Alter und lernen Sie bewährte Techniken kennen, um die Nächte zu verbessern.",
+    keywords: ["Baby schläft nicht", "Babyschlaf", "Schlafwachfenster", "Schlafroutine Baby"],
+    content: `## Warum schläft mein Baby nicht?
+
+Der Schlaf des Babys ist eine der größten Sorgen von Müttern. Laut der **Brasilianischen Gesellschaft für Pädiatrie (SBP)** variieren die Schlafmuster je nach Alter erheblich, und diese Phasen zu verstehen ist der erste Schritt zu ruhigeren Nächten.
+
+## Schlafwachfenster nach Alter
+
+Das **Schlafwachfenster** ist die maximale Zeit, die Ihr Baby wach bleiben kann, bevor es gereizt wird und Schwierigkeiten beim Einschlafen bekommt. Dieses Zeitfenster zu respektieren ist entscheidend.
+
+| Alter | Schlafwachfenster | Gesamtschlaf/Tag | Nickerchen |
+|-------|-------------------|------------------|------------|
+| 0-1 Monat | 45-60 Min | 16-18 Std | 4-6 |
+| 1-2 Monate | 60-90 Min | 15-17 Std | 4-5 |
+| 3-4 Monate | 75-120 Min | 14-16 Std | 3-4 |
+| 5-6 Monate | 2-2,5 Std | 14-15 Std | 2-3 |
+| 7-9 Monate | 2,5-3 Std | 13-14 Std | 2 |
+| 10-12 Monate | 3-4 Std | 12-14 Std | 1-2 |
+
+## Schlafsignale
+
+Achten Sie auf die Zeichen, die darauf hinweisen, dass Ihr Baby bereit zum Schlafen ist:
+
+- **Frühe Signale:** Augen reiben, gähnen, starrer Blick, am Ohr ziehen
+- **Späte Signale:** Weinen, Reizbarkeit, ruckartige Bewegungen, Überstrecken des Rückens
+
+**Wichtiger Tipp:** Wenn Sie die späten Signale bemerken, hat Ihr Baby den idealen Zeitpunkt bereits überschritten. Versuchen Sie, es bei den ersten Anzeichen schlafen zu legen.
+
+## Techniken zur Verbesserung des Schlafs
+
+### Ideale Umgebung
+- **Temperatur:** zwischen 22°C und 24°C
+- **Dunkelheit:** verwenden Sie Verdunkelungsvorhänge
+- **Weißes Rauschen:** Ventilator, App mit weißem Rauschen oder ein kontinuierliches „shhhh“
+- **Position:** immer auf dem Rücken liegend (Empfehlung von SBP/AAP)
+
+### Schlafroutine (ab 2-3 Monaten)
+1. Lauwarmes Bad (nicht heiß)
+2. Sanfte Massage mit langsamen Bewegungen
+3. Stillen/Füttern in ruhiger und dunkler Umgebung
+4. Schlaflied oder weißes Rauschen
+5. Ins Bett legen, wenn das Baby schläfrig, aber noch wach ist
+
+### Schlafregression (4 Monate)
+Mit etwa 4 Monaten durchlaufen viele Babys eine **Schlafregression**. Das passiert, weil das Schlafmuster reift. Es ist vorübergehend (1-3 Wochen) und Teil der normalen Entwicklung.
+
+## Wann Sie den Kinderarzt aufsuchen sollten
+
+- Das Baby schnarcht oder macht Atempausen im Schlaf
+- Es schläft nach dem 4. Monat nicht länger als 30 Minuten am Stück
+- Extreme Reizbarkeit, die sich mit keiner Technik bessert
+- Gewichtsverlust oder damit verbundene Nahrungsverweigerung
+
+---
+
+**Quelle:** Protokolle der Brasilianischen Gesellschaft für Pädiatrie (SBP) und der American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "bauchkoliken-baby",
+    title: "Bauchkoliken beim Baby: was Sie zur Linderung tun können (praktischer Leitfaden)",
+    excerpt: "Bewährte Techniken zur Linderung von Koliken: Shantala-Massage, Fliegergriff, Swaddle und mehr.",
+    readTime: "6 Min Lesezeit",
+    metaTitle: "Bauchkoliken beim Baby: was Sie zur Linderung tun können (praktischer Leitfaden) | Wilbor",
+    metaDescription: "Bewährte Techniken zur Linderung von Koliken: Shantala-Massage, Fliegergriff, Swaddle und mehr.",
+    keywords: ["Bauchkoliken Baby", "Shantala-Massage", "Koliken lindern", "Baby weint"],
+    content: `## Was sind Bauchkoliken beim Baby?
+
+Koliken werden durch die **3er-Regel** definiert: intensives Weinen von mehr als **3 Stunden pro Tag**, an mehr als **3 Tagen pro Woche**, über mehr als **3 Wochen**. Sie betreffen etwa 20-25 % der Babys und beginnen normalerweise zwischen der 2. und 3. Lebenswoche.
+
+## Wann sie auftreten
+
+- **Beginn:** 2.-3. Lebenswoche
+- **Höhepunkt:** 6.-8. Woche
+- **Ende:** in der Regel mit 3-4 Monaten
+- **Häufigste Zeit:** spätnachmittags und früher Abend (17-23 Uhr)
+
+## Bewährte Linderungstechniken
+
+### 1. Shantala-Massage (I-L-U)
+Die I-L-U-Technik ist eine Bauchmassage, die dem Verlauf des Darms folgt:
+
+1. **I** — Streichen Sie mit der Hand an der linken Seite des Babys von oben nach unten
+2. **L** — Streichen Sie von rechts nach links und dann nach unten (es entsteht ein umgekehrtes L)
+3. **U** — Streichen Sie an der rechten Seite von unten nach oben, überqueren Sie oben und streichen Sie an der linken Seite nach unten (es entsteht ein umgekehrtes U)
+
+**Wann anwenden:** wenn das Baby ruhig ist, vor der Krise. Verwenden Sie Pflanzenöl an den Händen.
+
+### 2. Fliegergriff
+Legen Sie das Baby bäuchlings auf Ihren Unterarm, mit dem Kopf in Ihrer Hand abgestützt. Der sanfte Druck auf den Bauch hilft, Gase zu lösen.
+
+### 3. Swaddle (Pucken)
+Wickeln Sie das Baby fest in ein Tuch oder Pucktuch, mit den Armen nah am Körper. Das simuliert die Umgebung im Mutterleib und reduziert den Moro-Reflex.
+
+**Achtung:** Hören Sie mit dem Pucken auf, sobald das Baby beginnt, sich zu drehen (etwa mit 2-3 Monaten).
+
+### 4. Weißes Rauschen + Wiegen
+Ein kontinuierliches „shhhh“ nah am Ohr des Babys, kombiniert mit sanftem Wiegen, aktiviert den Beruhigungsreflex. Das Geräusch sollte so laut sein wie das Weinen des Babys.
+
+### 5. Fahrradbewegung
+Legen Sie das Baby auf den Rücken und machen Sie mit seinen Beinchen Fahrradbewegungen. Das hilft, feststeckende Gase zu lösen.
+
+## Was Sie NICHT tun sollten
+
+- **Geben Sie keine Tees oder Medikamente** ohne Anweisung des Kinderarztes
+- **Schütteln Sie das Baby nicht** — das kann schwere Hirnverletzungen verursachen (Schütteltrauma)
+- **Ändern Sie die Säuglingsnahrung nicht** ohne ärztliche Anweisung
+- **Machen Sie sich keine Vorwürfe** — Koliken werden nicht durch etwas verursacht, das Sie getan oder unterlassen haben
+
+## Wann Sie den Kinderarzt aufsuchen sollten
+
+- Fieber über 37,8°C
+- Häufiges Erbrechen oder schwallartiges Erbrechen
+- Blut im Stuhl
+- Nahrungsverweigerung über mehr als 8 Stunden
+- Untröstliches Baby über mehr als 4 Stunden am Stück
+
+---
+
+**Quelle:** Protokolle der Brasilianischen Gesellschaft für Pädiatrie (SBP) und der American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "fieber-baby",
+    title: "Fieber beim Baby: wann ins Krankenhaus gehen (Leitfaden nach Alter)",
+    excerpt: "Erfahren Sie, wann Fieber beim Baby ein Notfall ist, wie man richtig misst und was in jedem Alter zu tun ist.",
+    readTime: "5 Min Lesezeit",
+    metaTitle: "Fieber beim Baby: wann ins Krankenhaus gehen (Leitfaden nach Alter) | Wilbor",
+    metaDescription: "Erfahren Sie, wann Fieber beim Baby ein Notfall ist, wie man richtig misst und was in jedem Alter zu tun ist.",
+    keywords: ["Fieber Baby", "Kinderarzt Fieber", "Temperatur Baby", "Fieber Säugling"],
+    content: `## Wann ist Fieber ein Notfall?
+
+Fieber ist einer der häufigsten Gründe für eine kinderärztliche Konsultation. Laut der **SBP** hängt das richtige Vorgehen direkt vom **Alter des Babys** ab.
+
+## Einteilung nach Temperatur
+
+| Axilläre Temperatur | Einteilung |
+|---------------------|-----------|
+| Bis 37,2°C | Normal |
+| 37,3°C - 37,5°C | Erhöhte Temperatur |
+| 37,6°C - 38,9°C | Fieber |
+| 39°C - 40°C | Hohes Fieber |
+| Über 40°C | Sehr hohes Fieber (Notfall) |
+
+## Vorgehen nach Alter
+
+### 0-3 Monate: IMMER ein Notfall
+Jedes Fieber bei einem Baby unter 3 Monaten erfordert eine **sofortige ärztliche Beurteilung**. In diesem Alter ist das Immunsystem unreif und Infektionen können sich schnell verschlechtern.
+
+**Gehen Sie ins Krankenhaus, wenn:** die Axillartemperatur über 37,5°C liegt.
+
+### 3-6 Monate: erhöhte Aufmerksamkeit
+- Fieber über 38,5°C → suchen Sie den Kinderarzt auf
+- Fieber, das länger als 24 Stunden anhält → suchen Sie den Kinderarzt auf
+- Reizbares, apathisches Baby oder Verweigerung des Stillens → Notfall
+
+### 6-12 Monate: Allgemeinzustand beobachten
+- Fieber über 39°C → suchen Sie den Kinderarzt auf
+- Fieber, das länger als 48-72 Stunden anhält → suchen Sie den Kinderarzt auf
+- Wenn das Baby aktiv ist, spielt und gut trinkt, beobachten Sie es zu Hause
+
+## Wie man richtig misst
+
+1. Verwenden Sie ein digitales Thermometer (niemals ein Quecksilberthermometer)
+2. Legen Sie es 3-5 Minuten in die Achselhöhle
+3. Halten Sie den Arm des Babys eng am Körper
+4. Messen Sie, wenn das Baby ruhig ist (nicht direkt nach dem Stillen oder Weinen)
+
+## Maßnahmen zur Erleichterung
+
+- **Flüssigkeitszufuhr:** bieten Sie häufig Brust oder Wasser an
+- **Leichte Kleidung:** entfernen Sie überschüssige Kleidung und Decken
+- **Kühle Umgebung:** halten Sie das Zimmer gut belüftet
+- **Lauwarmes Bad:** kann helfen, die Temperatur zu senken (niemals kalt)
+- **Lauwarme Umschläge:** in den Achselhöhlen und Leisten (niemals Alkohol)
+
+## Warnzeichen (gehen Sie ins Krankenhaus)
+
+- Fieber bei einem Baby unter 3 Monaten
+- Temperatur über 40°C in jedem Alter
+- Fieberkrampf (Zittern, verdrehte Augen)
+- Violette Flecken auf der Haut
+- Atembeschwerden
+- Extreme Apathie (Baby „schlaff“, ohne Reaktion)
+- Vorgewölbte Fontanelle
+- Untröstliches Weinen über Stunden
+
+---
+
+**Quelle:** Protokolle der Brasilianischen Gesellschaft für Pädiatrie (SBP) und der American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "beikosteinfuehrung",
+    title: "Beikosteinführung: vollständiger Leitfaden für den Start (BLW und traditionell)",
+    excerpt: "Alles über die Beikosteinführung: wann beginnen, BLW vs. traditionell, Lebensmittel nach Alter und wie Allergene eingeführt werden.",
+    readTime: "7 Min Lesezeit",
+    metaTitle: "Beikosteinführung: vollständiger Leitfaden für den Start (BLW und traditionell) | Wilbor",
+    metaDescription: "Alles über die Beikosteinführung: wann beginnen, BLW vs. traditionell, Lebensmittel nach Alter und wie Allergene eingeführt werden.",
+    keywords: ["Beikosteinführung", "BLW", "Beikost beginnen", "Babybrei"],
+    content: `## Wann beginnen?
+
+Die **Brasilianische Gesellschaft für Pädiatrie (SBP)** und die **WHO (OMS)** empfehlen ausschließliches Stillen bis zu den **vollendeten 6 Monaten**. Die Beikosteinführung sollte mit 6 Monaten beginnen, wenn das Baby Anzeichen der Bereitschaft zeigt.
+
+## Anzeichen der Bereitschaft
+
+- Kann mit minimaler Unterstützung sitzen
+- Hält den Kopf stabil
+- Hat den Zungenstoßreflex verloren (schiebt Nahrung nicht mehr heraus)
+- Zeigt Interesse am Essen der Erwachsenen
+- Kann Gegenstände greifen und zum Mund führen
+
+## Methoden: BLW vs. Traditionell vs. Gemischt
+
+### BLW (Baby-Led Weaning)
+Das Baby isst selbstständig mit den Händen und mit geeigneten Stücken von Lebensmitteln.
+
+**Vorteile:** Selbstständigkeit, motorische Entwicklung, Akzeptanz von Texturen.  
+**Worauf achten:** sichere Schnittform (Streifen in Fingergröße), ständige Aufsicht.
+
+### Traditionell (Brei)
+Mit der Gabel zerdrückte Lebensmittel (nicht püriert), die mit dem Löffel angeboten werden.
+
+**Vorteile:** bessere Mengensteuerung, weniger Unordnung.  
+**Worauf achten:** Texturen schrittweise weiterentwickeln, keinen Mixer verwenden.
+
+### Gemischt (von der SBP empfohlen)
+Kombiniert beide Methoden je nach Mahlzeit und Situation.
+
+## Lebensmittel nach Alter
+
+| Alter | Lebensmittel | Textur |
+|-------|--------------|--------|
+| 6 Monate | Obst, Gemüse, Knollen | Zerdrückt oder große Streifen |
+| 7 Monate | + Bohnen, Linsen, Getreide | Zerdrückt mit kleinen Stückchen |
+| 8 Monate | + Ganzes Ei, Fisch, Kichererbsen | Klein gehackt |
+| 9 Monate | + Nudeln, Couscous | Größere Stücke |
+| 10-12 Monate | Familienkost | Angepasst (ohne Salz/Zucker) |
+
+## Allergene: wann und wie einführen
+
+Die SBP empfiehlt, **Allergene früh einzuführen** (ab 6 Monaten), da dies das Allergierisiko **verringern** kann:
+
+1. **Ei:** beginnen Sie mit gekochtem Eigelb, dann Eiweiß
+2. **Erdnuss:** verdünnte Paste im Püree (niemals ganz — Erstickungsgefahr)
+3. **Kuhmilch:** in Zubereitungen (nicht als Hauptgetränk vor dem 1. Lebensjahr)
+4. **Weizen:** Brot, Nudeln
+5. **Fisch:** beginnen Sie mit weißen Fischen
+
+**Regel:** Führen Sie alle 3 Tage 1 neues Allergen ein und beobachten Sie Reaktionen (Flecken, Schwellungen, Erbrechen).
+
+## Was Sie vor dem 1. Lebensjahr NIEMALS geben sollten
+
+- **Honig** (Botulismusrisiko)
+- **Salz und Zucker** (unnötig und schädlich)
+- **Kuhmilch als Getränk** (durch Muttermilch oder Säuglingsnahrung ersetzen)
+- **Ganze runde Lebensmittel** (Trauben, Cherrytomaten — halbieren)
+- **Harte und kleine Lebensmittel** (ganze Erdnüsse, Popcorn)
+
+---
+
+**Quelle:** Protokolle der SBP, OMS und AAP.`,
+  },
+  {
+    slug: "impfkalender-baby",
+    title: "Impfungen für Babys: vollständiger Impfkalender und was zu erwarten ist",
+    excerpt: "Vollständiger Impfkalender des ersten Jahres, normale Nebenwirkungen und wie Beschwerden gelindert werden können.",
+    readTime: "5 Min Lesezeit",
+    metaTitle: "Impfungen für Babys: vollständiger Impfkalender und was zu erwarten ist | Wilbor",
+    metaDescription: "Vollständiger Impfkalender des ersten Jahres, normale Nebenwirkungen und wie Beschwerden gelindert werden können.",
+    keywords: ["Impfungen Baby", "Impfkalender", "Impfungen Säugling"],
+    content: `## Warum impfen?
+
+Impfungen sind die wirksamste Maßnahme der öffentlichen Gesundheit in der Geschichte. Laut der **WHO (OMS)** verhindern Impfstoffe weltweit 2-3 Millionen Todesfälle pro Jahr. Für Babys ist die Immunisierung in den ersten Monaten besonders wichtig, weil das Immunsystem noch unreif ist.
+
+## Impfkalender des ersten Jahres
+
+| Alter | Impfungen |
+|-------|-----------|
+| Bei der Geburt | BCG, Hepatitis B |
+| 2 Monate | Penta (DTP+Hib+HepB), IPV (Polio), Pneumo 10, Rotavirus |
+| 3 Monate | Meningokokken C |
+| 4 Monate | Penta, IPV, Pneumo 10, Rotavirus |
+| 5 Monate | Meningokokken C |
+| 6 Monate | Penta, IPV, Influenza |
+| 9 Monate | Gelbfieber |
+| 12 Monate | MMR, Pneumo 10 (Auffrischung), Meningokokken C (Auffrischung) |
+
+## Normale Nebenwirkungen
+
+### Lokal (an der Einstichstelle)
+- Rötung, Schwellung, Verhärtung
+- Schmerz bei Berührung
+- Dauer: 1-3 Tage
+
+### Systemisch (allgemein)
+- Leichtes Fieber (bis 38,5°C) — besonders nach der Penta-Impfung
+- Reizbarkeit, Weinen
+- Schläfrigkeit oder Unruhe
+- Dauer: 24-48 Stunden
+
+### Wie man lindern kann
+- **Fiebersenkendes Mittel:** Paracetamol oder Ibuprofen (nach Anweisung des Kinderarztes)
+- **Kalte Umschläge** an der Einstichstelle
+- **Stillen** — Trost und natürliche Schmerzlinderung
+- **Körperkontakt und Zuwendung** — das Baby braucht Sicherheit
+
+## Mythen über Impfungen
+
+**„Impfungen verursachen Autismus“** — FALSCH. Die ursprüngliche Studie war betrügerisch und wurde zurückgezogen. Keine seriöse Studie bestätigt diesen Zusammenhang.
+
+**„Impfungen überlasten das Immunsystem“** — FALSCH. Das Baby ist täglich Tausenden von Antigenen ausgesetzt. Impfstoffe machen nur einen minimalen Bruchteil davon aus.
+
+**„Es ist besser, die Krankheit natürlich durchzumachen“** — FALSCH. Krankheiten wie Masern, Keuchhusten und Meningitis können schwere Folgeschäden oder den Tod verursachen.
+
+## Wann NICHT geimpft werden sollte (echte Kontraindikationen)
+
+- Hohes Fieber am Tag der Impfung (über 38,5°C)
+- Anaphylaktische Reaktion auf eine vorherige Dosis
+- Schwere Immunschwäche (bei Lebendimpfstoffen)
+
+**Eine leichte Erkältung ist KEINE Kontraindikation** — es kann normal geimpft werden.
+
+## Tipps für den Impftag
+
+1. Nehmen Sie den Impfpass mit
+2. Stillen Sie vor und nach der Impfung (natürliche Schmerzlinderung)
+3. Nehmen Sie ein Lieblingsspielzeug zur Ablenkung mit
+4. Versprechen Sie nicht, dass „es nicht wehtun wird“ — seien Sie ehrlich
+5. Halten Sie das Baby während der Impfung im Arm
+
+---
+
+**Quelle:** Nationaler Impfkalender (Gesundheitsministerium), SBP und OMS.`,
+  },
+  {
+    slug: "stillen-leitfaden",
+    title: "Stillen: vollständiger Leitfaden für die ersten Monate",
+    excerpt: "Richtige Anlegetechnik, Milchproduktion, häufige Schmerzen und wie die Herausforderungen des Stillens gemeistert werden können.",
+    readTime: "7 Min Lesezeit",
+    metaTitle: "Stillen: vollständiger Leitfaden für die ersten Monate | Wilbor",
+    metaDescription: "Richtige Anlegetechnik, Milchproduktion, häufige Schmerzen und wie die Herausforderungen des Stillens gemeistert werden können.",
+    keywords: ["Stillen", "Anlegen Baby", "Stillen lernen", "Muttermilch"],
+    content: `## Warum stillen?
+
+Muttermilch ist in den ersten Lebensmonaten die vollständigste Nahrung für das Baby. Die **WHO (OMS)** und die **SBP** empfehlen:
+- **Ausschließliches Stillen** bis zum 6. Monat
+- **Ergänzendes Stillen** (zusammen mit anderen Lebensmitteln) bis zum Alter von 2 Jahren oder länger
+
+## Vorteile der Muttermilch
+
+### Für das Baby
+- Schutz vor Infektionen (mütterliche Antikörper)
+- Verringerung von Allergien, Asthma und Diabetes
+- Entwicklung von Gehirn und Sehvermögen
+- Verringerung des Risikos des plötzlichen Kindstods
+- Schutz vor Adipositas im Erwachsenenalter
+
+### Für die Mutter
+- Verringerung des Risikos für Brust- und Eierstockkrebs
+- Schnellere Rückbildung der Gebärmutter
+- Stärkere emotionale Bindung
+- Finanzielle Entlastung
+
+## Das richtige Anlegen
+
+Das Anlegen ist der wichtigste Faktor für erfolgreiches Stillen.
+
+### Anzeichen für richtiges Anlegen
+- Mund weit geöffnet (mehr als 120°)
+- Unterlippe nach außen gestülpt
+- Kinn berührt die Brust
+- Mehr Warzenhof oberhalb als unterhalb sichtbar
+- Runde Wangen (nicht eingefallen)
+- Sie spüren keine Schmerzen (Druck ist möglich, aber kein Schmerz)
+
+### Stillpositionen
+1. **Wiegehaltung** — Baby im Arm, Bauch an Bauch
+2. **Rückengriff (Football-Haltung)** — Baby unter dem Arm, ideal nach Kaiserschnitt
+3. **Seitliches Liegen** — gut für die Nacht
+4. **Koala** — Baby sitzt auf dem Oberschenkel
+
+## Milchproduktion: wie sie funktioniert
+
+Milch wird **nach Bedarf** produziert: Je mehr das Baby trinkt, desto mehr Milch wird gebildet. In den ersten Tagen ist das **Kolostrum** (die gelbliche Vormilch) ausreichend — es muss nicht ergänzt werden.
+
+### Anzeichen für ausreichende Milchmenge
+- Das Baby hat mindestens **6 nasse Windeln** pro Tag
+- Es nimmt angemessen zu (bei der Untersuchung überprüfen)
+- Es trinkt häufig (anfangs 8-12 Mal/Tag) und wirkt zufrieden
+
+## Häufige Schmerzen und Probleme
+
+### Brustwarzenrisse
+**Ursache:** falsches Anlegen.  
+**Lösung:** das Anlegen korrigieren. Tragen Sie nach dem Stillen Muttermilch auf die Brustwarze auf (natürliche Wundheilung).
+
+### Milchstau
+**Ursache:** angesammelte Milch.  
+**Lösung:** warme Kompresse vor dem Stillen, kalte Kompresse danach. Die Brust häufig entleeren.
+
+### Mastitis
+**Ursache:** bakterielle Infektion.  
+**Symptome:** Fieber, Rötung, starke Schmerzen.  
+**Lösung:** stillen Sie weiter (es verschlimmert die Infektion nicht), suchen Sie den Arzt für ein Antibiotikum auf.
+
+## Tipps zur Steigerung der Milchproduktion
+
+- **Stillen Sie häufig** — anfangs 8-12 Mal/Tag
+- **Bieten Sie beide Brüste** bei jeder Mahlzeit an
+- **Ruhen Sie sich aus**, wenn das Baby schläft
+- **Vermeiden Sie unnötige Zufütterung** (die Flasche reduziert die Stimulation)
+- **Pumpen oder streichen Sie Milch aus** zwischen den Mahlzeiten, um zu stimulieren
+
+### Baby verweigert die Brust
+- Versuchen Sie es in ruhiger und dunkler Umgebung
+- Bieten Sie die Brust an, wenn das Baby schläfrig ist
+- Haut an Haut (Baby nur mit Windel auf dem Schoß der Mutter)
+- Prüfen Sie, ob ein kurzes Zungenband vorliegt
+
+## Wann Sie Hilfe suchen sollten
+
+- Schmerzen, die nach Korrektur des Anlegens nicht besser werden
+- Risse, die bluten oder nicht heilen
+- Fieber + Rötung an der Brust (mögliche Mastitis)
+- Das Baby nimmt nicht angemessen zu
+- Das Baby hat nicht mindestens 6 nasse Windeln pro Tag
+
+---
+
+**Quelle:** Brasilianische Gesellschaft für Pädiatrie (SBP), OMS und Grundversorgungsheft Nr. 23 (Gesundheitsministerium).`,
+  },
+  {
+    slug: "motorische-entwicklung-baby",
+    title: "Motorische Entwicklung des Babys: Meilensteine und wie man sie fördert",
+    excerpt: "Meilensteine der motorischen Entwicklung Monat für Monat und Aktivitäten zur Förderung jeder Phase.",
+    readTime: "6 Min Lesezeit",
+    metaTitle: "Motorische Entwicklung des Babys: Meilensteine und wie man sie fördert | Wilbor",
+    metaDescription: "Meilensteine der motorischen Entwicklung Monat für Monat und Aktivitäten zur Förderung jeder Phase.",
+    keywords: ["motorische Entwicklung Baby", "Entwicklungsmeilensteine", "Baby krabbeln laufen"],
+    content: `## Warum ist die motorische Entwicklung wichtig?
+
+Die motorische Entwicklung ist einer der wichtigsten Indikatoren für die neurologische Gesundheit des Babys. Laut der **SBP** hilft die Beobachtung motorischer Meilensteine dabei, Anzeichen von Verzögerungen frühzeitig zu erkennen, die deutlich wirksamer behandelt werden können, wenn sie früh entdeckt werden.
+
+## Motorische Meilensteine Monat für Monat
+
+| Alter | Erwarteter Meilenstein | Warnzeichen |
+|-------|------------------------|-------------|
+| 1 Monat | Hebt in Bauchlage kurz den Kopf | Reagiert nicht auf Geräusche |
+| 2 Monate | Hält den Kopf einige Sekunden | Fixiert den Blick nicht |
+| 3 Monate | Hält den Kopf sicher | Lächelt nicht |
+| 4 Monate | Dreht sich vom Bauch auf den Rücken | Hält keine Gegenstände fest |
+| 5 Monate | Sitzt mit Unterstützung | Überträgt keine Gegenstände |
+| 6 Monate | Sitzt ohne Unterstützung (einige) | Sitzt nicht mit Unterstützung |
+| 7 Monate | Krabbelt oder robbt | Steht nicht mit Unterstützung |
+| 8 Monate | Steht mit Unterstützung | Krabbelt nicht |
+| 9 Monate | Geht mit Unterstützung | Nutzt keinen Pinzettengriff |
+| 10 Monate | Erste Schritte (einige) | Zeigt nicht |
+| 11 Monate | Geht sicher mit Unterstützung | Imitiert keine Gesten |
+| 12 Monate | Geht allein (die meisten) | Spricht kein einziges Wort |
+
+## Förderaktivitäten nach Phase
+
+### 0-3 Monate: sensorische Förderung
+- **Tummy time** (Bauchlagezeit): 3-5 Minuten, 3x pro Tag — stärkt Nacken und Schultern
+- **Visuelle Kontraste:** zeigen Sie schwarz-weiße Gegenstände (das Sehen entwickelt sich noch)
+- **Mobile:** in 20-30 cm Abstand vom Gesicht aufgehängt
+- **Hautkontakt:** stimuliert das Nervensystem und die Bindung
+
+### 4-6 Monate: Koordination und Greifen
+- **Bieten Sie Spielzeuge an**, die gegriffen werden können (Rassel, Gummiring)
+- **Spiegel:** Babys schauen sich gern selbst an
+- **Drehen:** helfen Sie dem Baby beim Drehen, indem Sie ein Spielzeug daneben platzieren
+- **Sitzen mit Unterstützung:** verwenden Sie Kissen oder Ihren Schoß
+
+### 7-9 Monate: Mobilität und Erkundung
+- **Sicherer Platz auf dem Boden** zum Krabbeln
+- **Sanfte Hindernisse** (Kissen) zum Überwinden
+- **Rollende Spielzeuge** zum Hinterherkrabbeln
+- **Kisten und Behälter** zum Öffnen und Schließen (Koordination)
+
+### 10-12 Monate: erste Schritte
+- **Schiebewagen** (nicht der Sitzlauflerner — von der SBP verboten)
+- **Unterschiedliche Oberflächen:** Teppich, Gras, Sand (fördert die Propriozeption)
+- **Niedrige Treppenstufen** unter Aufsicht
+- **Stehend spielen** mit Unterstützung am Sofa
+
+## Wann Sie den Kinderarzt aufsuchen sollten
+
+- Hält mit 4 Monaten den Kopf nicht
+- Sitzt mit 9 Monaten nicht ohne Unterstützung
+- Geht mit 18 Monaten nicht
+- Hat bereits erworbene Fähigkeiten verloren
+- Bewegungsasymmetrie (nutzt eine Körperseite mehr)
+- Hypertonie oder Hypotonie (sehr steif oder sehr „schlaff“)
+
+---
+
+**Quelle:** Brasilianische Gesellschaft für Pädiatrie (SBP) und Denver Developmental Screening Test.`,
+  },
+  {
+    slug: "babysicherheit-zuhause",
+    title: "Sicherheit des Babys zu Hause: Unfallprävention nach Alter",
+    excerpt: "Prävention häuslicher Unfälle nach Alter: Stürze, Verschlucken, Verbrennungen und mehr.",
+    readTime: "6 Min Lesezeit",
+    metaTitle: "Sicherheit des Babys zu Hause: Unfallprävention nach Alter | Wilbor",
+    metaDescription: "Prävention häuslicher Unfälle nach Alter: Stürze, Verschlucken, Verbrennungen und mehr.",
+    keywords: ["Babysicherheit", "Unfallprävention Baby", "Stürze Baby verhindern"],
+    content: `## Unfälle zu Hause: die wichtigste vermeidbare Todesursache
+
+Laut der **SBP** sind häusliche Unfälle die **wichtigste vermeidbare Todesursache bei Kindern von 1 bis 14 Jahren**. Die meisten sind mit einfachen Sicherheitsmaßnahmen **vermeidbar**.
+
+## Risiken nach Alter
+
+### 0-3 Monate: Stürze und Erstickung
+- **Lassen Sie das Baby niemals allein** auf hohen Flächen (Wickeltisch, Bett, Sofa)
+- **Sicherer Schlaf:** immer auf dem Rücken, ohne Kissen, lose Decken oder Kuscheltiere im Bett
+- **Verwenden Sie keine Bettumrandungen** (Erstickungsgefahr)
+- **Achten Sie auf Schnüre** von Vorhängen, Schnullern und Kleidung in Halsnähe
+
+### 4-6 Monate: Stürze und kleine Gegenstände
+- Das Baby beginnt, sich zu drehen — **lassen Sie es niemals allein** auf ungesicherten Flächen
+- **Alles wandert in den Mund** — entfernen Sie kleine Gegenstände aus der Reichweite (Münzen, Knöpfe, Deckel)
+- **Hochstuhl** mit Sicherheitsgurt
+- **Verwenden Sie keinen Lauflerner** (von der SBP verboten — Risiko schwerer Stürze)
+
+### 7-9 Monate: Krabbeln = alles erkunden
+- **Installieren Sie Schutzgitter** an Treppen (oben und unten)
+- **Sichern Sie Steckdosen** mit Schutzkappen
+- **Verriegeln Sie Schränke** mit Reinigungsmitteln, Medikamenten und scharfen Gegenständen
+- **Schützen Sie Ecken** von Tischen und Möbeln
+- **Befestigen Sie schwere Möbel** an der Wand (Regale, Kommoden, Fernseher)
+
+### 10-12 Monate: erste Schritte = mehr Stürze
+- **Rutschfeste Teppiche** in Bad und Küche
+- **Türen mit Sicherung** für Küche und Bad
+- **Topfgriffe** nach innen zum Herd drehen
+- **Stromkabel** außer Reichweite
+- **Fenster mit Schutznetz** oder Öffnungsbegrenzer
+
+## Verschlucken: was tun
+
+### Baby unter 1 Jahr (angepasstes Heimlich-Manöver)
+1. Legen Sie das Baby **bäuchlings auf Ihren Unterarm**, mit dem Kopf tiefer als dem Körper
+2. Geben Sie **5 kräftige Schläge** zwischen die Schulterblätter
+3. Wenn das nicht hilft, **drehen Sie es auf den Rücken** und machen Sie **5 Druckbewegungen** in der Mitte des Brustkorbs (2 Finger)
+4. **Wiederholen Sie**, bis der Gegenstand herauskommt oder das Baby hustet/weint
+5. Wenn es das Bewusstsein verliert, **rufen Sie den Notdienst** und beginnen Sie mit der Wiederbelebung
+
+### Vorbeugung gegen Verschlucken
+- Schneiden Sie Lebensmittel in kleine, altersgerechte Stücke
+- **Gefährliche Lebensmittel:** ganze Trauben, Popcorn, Erdnüsse, Wurstscheiben, harte Bonbons
+- Beaufsichtigen Sie **alle** Mahlzeiten
+- Geben Sie im fahrenden Auto keine Lebensmittel
+
+## Verbrennungen: Vorbeugung
+
+- **Testen Sie die Wassertemperatur** beim Baden (ideal: 37°C) — mit dem Ellenbogen
+- **Halten Sie das Baby nicht**, während Sie heiße Getränke trinken
+- **Kochen Sie auf den hinteren Herdplatten**
+- **Bügeleisen:** bewahren Sie es heiß an einem hohen, unzugänglichen Ort auf
+- **Sonnenschutzmittel:** erst ab 6 Monaten
+
+## Ertrinken: erhöhte Aufmerksamkeit
+
+- **Lassen Sie das Baby niemals allein** in der Badewanne, im Pool oder bei einem Eimer — nicht einmal für 1 Sekunde
+- Babys können in **weniger als 5 cm Wasser** ertrinken
+- **Leeren Sie Eimer und Schüsseln** nach dem Gebrauch
+- **Pools:** Zaun von etwa 1,5 m mit Tor und Verschluss
+
+## Erste-Hilfe-Set
+
+Halten Sie zu Hause bereit:
+- Digitales Thermometer
+- Kochsalzlösung
+- Sterile Gaze
+- Micropore
+- Schere mit abgerundeter Spitze
+- Vom Kinderarzt verordnetes fiebersenkendes Mittel
+- Sichtbare Nummer des Notdienstes und des Kinderarztes
+
+---
+
+**Quelle:** Brasilianische Gesellschaft für Pädiatrie (SBP) und Gesundheitsministerium — Programm zur Prävention von Unfällen im Kindesalter.`,
+  },
+  {
+    slug: "entwicklungsspruenge-baby",
+    title: "Entwicklungssprünge beim Baby: was Monat für Monat zu erwarten ist",
+    excerpt: "Wann Entwicklungssprünge auftreten, die Zeichen jeder Phase und wie man mit der Reizbarkeit des Babys umgeht.",
+    readTime: "7 Min Lesezeit",
+    metaTitle: "Entwicklungssprünge beim Baby: was Monat für Monat zu erwarten ist | Wilbor",
+    metaDescription: "Wann Entwicklungssprünge auftreten, die Zeichen jeder Phase und wie man mit der Reizbarkeit des Babys umgeht.",
+    keywords: ["Entwicklungssprünge Baby", "Wachstumsschub Baby", "Baby irritabel"],
+    content: `## Was sind Entwicklungssprünge?
+
+**Entwicklungssprünge** sind Phasen, in denen das Gehirn des Babys eine **intensive neurologische Reorganisation** durchläuft. In diesen Zeiten erwirbt das Baby neue Fähigkeiten — doch dieser Prozess kann es reizbar, weinerlich und anhänglich machen.
+
+## Kalender der Entwicklungssprünge (0-12 Monate)
+
+| Woche | Ca. Alter | Was sich verändert | Dauer |
+|-------|------------|--------------------|-------|
+| Woche 5 | 1 Monat | Empfindungen (schärferes Sehen und Hören) | 1-2 Wochen |
+| Woche 8 | 2 Monate | Muster (erkennt Gesichter, Hände) | 1-2 Wochen |
+| Woche 12 | 3 Monate | Sanfte Übergänge (koordiniertere Bewegungen) | 1-2 Wochen |
+| Woche 19 | 4,5 Monate | Ereignisse (versteht Ursache und Wirkung) | 1-5 Wochen |
+| Woche 26 | 6 Monate | Beziehungen (Entfernung, innen/außen) | 1-5 Wochen |
+| Woche 37 | 8,5 Monate | Kategorien (gruppiert Gegenstände nach Ähnlichkeit) | 3-6 Wochen |
+| Woche 46 | 10,5 Monate | Sequenzen (versteht die Reihenfolge von Dingen) | 3-6 Wochen |
+| Woche 55 | 12,5 Monate | Programme (testet Strategien, löst Probleme) | 3-6 Wochen |
+
+## Zeichen dafür, dass das Baby einen Sprung durchmacht
+
+- **Weinerlicher und reizbarer** als gewöhnlich
+- **Anhänglicher** — möchte ständig auf den Arm
+- **Veränderter Schlaf** — wacht häufiger auf, schläft weniger
+- **Veränderter Appetit** — trinkt mehr oder verweigert
+- **Trennungsangst** — weint, wenn Sie das Sichtfeld verlassen
+
+## Entwicklungsmeilensteine Monat für Monat
+
+### 1 Monat
+- Fixiert kurz den Blick
+- Reagiert auf laute Geräusche
+- Hebt in Bauchlage kurz den Kopf
+
+### 2 Monate
+- Erstes soziales Lächeln
+- Folgt Gegenständen mit den Augen
+- Macht Laute („ahhh“, „ohhh“)
+
+### 3 Monate
+- Hält den Kopf
+- Lacht laut
+- Öffnet und schließt die Hände
+- Entdeckt die eigenen Hände
+
+### 4 Monate
+- Dreht sich vom Bauch auf den Rücken (oder umgekehrt)
+- Greift Gegenstände mit beiden Händen
+- Erkennt vertraute Gesichter
+
+### 5-6 Monate
+- Sitzt mit Unterstützung
+- Übergibt Gegenstände von einer Hand in die andere
+- Lallt Silben („ba-ba“, „ma-ma“)
+- Beginnt, Vorlieben für Personen zu zeigen
+
+### 7-8 Monate
+- Sitzt ohne Unterstützung
+- Krabbelt (oder robbt)
+- Trennungsangst (weint bei Fremden)
+- Klatscht, winkt
+
+### 9-10 Monate
+- Steht mit Unterstützung
+- Pinzettengriff (greift kleine Gegenstände mit Daumen und Zeigefinger)
+- Versteht „nein“
+- Zeigt auf das, was es will
+
+### 11-12 Monate
+- Erste Schritte (mit oder ohne Unterstützung)
+- Erste bedeutungsvolle Wörter („Mama“, „Papa“)
+- Imitiert Gesten und Laute
+- Spielt Verstecken
+
+## Wie man während der Sprünge helfen kann
+
+1. **Mehr Arm und Hautkontakt** — das Baby braucht Sicherheit
+2. **Stillen Sie häufiger** — Trost + Ernährung
+3. **Halten Sie die Routine aufrecht** — Vorhersehbarkeit beruhigt
+4. **Bieten Sie geeignete Reize an** — neue Spielzeuge, Texturen, Geräusche
+5. **Haben Sie Geduld** — der Sprung ist vorübergehend (1-6 Wochen)
+6. **Vergleichen Sie nicht** — jedes Baby hat sein eigenes Tempo
+
+## Wann Sie sich Sorgen machen sollten
+
+Suchen Sie den Kinderarzt auf, wenn das Baby:
+- Mit 4 Monaten den Kopf nicht hält
+- Mit 9 Monaten nicht ohne Unterstützung sitzt
+- Keinen Blickkontakt herstellt
+- Nicht auf Geräusche reagiert
+- Fähigkeiten verloren hat, die es bereits hatte (Regression)
+
+---
+
+**Quelle:** Brasilianische Gesellschaft für Pädiatrie (SBP), "The Wonder Weeks" (Van de Rijt & Plooij) und AAP.`,
+  },
+  {
+    slug: "neugeborenes-baden",
+    title: "Baden des Neugeborenen: sichere und vollständige Schritt-für-Schritt-Anleitung",
+    excerpt: "Vollständige Schritt-für-Schritt-Anleitung, um das Neugeborene sicher und mit Vertrauen zu baden.",
+    readTime: "6 Min Lesezeit",
+    metaTitle: "Baden des Neugeborenen: sichere und vollständige Schritt-für-Schritt-Anleitung | Wilbor",
+    metaDescription: "Vollständige Schritt-für-Schritt-Anleitung, um das Neugeborene sicher und mit Vertrauen zu baden.",
+    keywords: ["Neugeborenes Baden", "erstes Bad Baby", "Nabelstumpf Pflege"],
+    content: `## Das erste Bad: wann und wie
+
+Das erste Bad des Neugeborenen löst oft viel Angst aus. Die **SBP** empfiehlt, dass das erste Bad **nach der Stabilisierung des Babys** erfolgt, in der Regel innerhalb der ersten 24 Lebensstunden.
+
+## Vorbereitung: alles VORHER bereitlegen
+
+Bevor Sie dem Baby die Kleidung ausziehen, legen Sie alles in Reichweite bereit:
+
+- **Badewanne** mit lauwarmem Wasser (36-37°C)
+- **Weiches Handtuch** mit Kapuze
+- **Saubere Windel**
+- **Saubere Kleidung**
+- **Milde Flüssigseife** (speziell für Babys)
+- **Watte** oder Gaze für das Gesicht
+- **Badethermometer** (optional, aber empfohlen)
+
+**Goldene Regel:** Lassen Sie das Baby NIEMALS allein in der Badewanne, nicht einmal für 1 Sekunde.
+
+## Schritt für Schritt beim Baden
+
+### 1. Wassertemperatur
+- **Ideal:** 36°C bis 37°C
+- **So testen Sie:** Tauchen Sie den Ellenbogen ein — es sollte lauwarm und angenehm sein
+- **Wasserstand:** ausreichend, um die Schultern des Babys zu bedecken, wenn es sitzt
+
+### 2. Umgebung
+- **Raumtemperatur:** zwischen 22°C und 26°C
+- **Keine Zugluft** — schließen Sie Fenster und Türen
+- **Zeitpunkt:** vorzugsweise vor dem Stillen/Füttern (nicht direkt danach)
+
+### 3. Sicheres Halten
+- Stützen Sie den Kopf und den Nacken des Babys auf Ihrem Unterarm
+- Halten Sie es mit der Hand sicher unter der Achsel
+- Die andere Hand bleibt zum Waschen frei
+- **Lassen Sie niemals los** — Babys sind nass sehr rutschig
+
+### 4. Reihenfolge des Waschens
+1. **Gesicht** — mit Watte oder feuchtem Tuch (ohne Seife)
+2. **Kopf** — mit wenig Seife, sanft massieren
+3. **Körper** — Hals, Arme, Hände, Rumpf
+4. **Hautfalten** — Hals, Achseln, Leiste (wo sich Schmutz ansammelt)
+5. **Genitalbereich** — zuletzt (bei Mädchen: immer von vorne nach hinten)
+6. **Rücken** — drehen Sie das Baby vorsichtig um
+
+### 5. Dauer
+- **5 bis 10 Minuten** sind ausreichend
+- Lange Bäder kühlen das Wasser ab und trocknen die Haut aus
+
+### 6. Nach dem Bad
+- Wickeln Sie das Baby sofort in das Handtuch
+- Trocknen Sie die **Hautfalten** gut ab (Hals, Achseln, Leiste, hinter den Ohren)
+- Trocknen Sie den **Nabelstumpf** mit sauberer Gaze
+- Ziehen Sie es schnell an, damit es nicht auskühlt
+
+## Pflege des Nabelstumpfs
+
+- **Reinigung:** nach dem Bad und bei jedem Windelwechsel mit sauberer Gaze trocknen
+- **Nicht verwenden:** 70% Alkohol, Quecksilber, Salben oder Verbände
+- **Windel:** nach unten umschlagen, damit der Nabelstumpf an der Luft bleibt
+- **Abfallen:** zwischen 7 und 21 Tagen (etwas Blut kann normal sein)
+- **Suchen Sie den Kinderarzt auf, wenn:** Rötung rundherum, übel riechendes Sekret, Schwellung
+
+## Empfohlene Produkte
+
+- **Seife:** flüssig, mild, ohne starken Duft (pH 5,5)
+- **Shampoo:** erst ab 2-3 Monaten (vorher die Seife verwenden)
+- **Feuchtigkeitscreme:** nur bei trockener Haut und nach Empfehlung des Kinderarztes
+- **Vermeiden Sie:** Puder, Eau de Cologne, Feuchttücher mit Alkohol
+
+## Ofurô-Bad (Eimer)
+
+Das Ofurô-Bad simuliert die Umgebung im Mutterleib und kann unruhige Babys beruhigen:
+
+- Verwenden Sie einen speziellen Babyeimer
+- Wasser mit derselben Temperatur (36-37°C)
+- Das Baby bleibt bis zu den Schultern eingetaucht, in Fötusstellung
+- Sehr gut für Babys mit Koliken
+- **Immer unter Aufsicht** — halten Sie das Baby die ganze Zeit fest
+
+## Zusätzliche Tipps
+
+- **Abendliches Baden** kann bei der Schlafroutine helfen
+- **Massage nach dem Bad** entspannt und stärkt die Bindung
+- **Häufigkeit:** 1x pro Tag ist ausreichend (zu häufig trocknet die Haut aus)
+- **Temperatur:** niemals schätzen — immer mit dem Ellenbogen testen
+
+---
+
+**Quelle:** Brasilianische Gesellschaft für Pädiatrie (SBP).`,
+  },
+  {
+    slug: "algorithmus-schlafvorhersage-baby",
+    title: "Der Algorithmus, der vorhersagt, wann Ihr Baby schlafen wird (und warum das alles verändert)",
+    excerpt: "Entdecken Sie, wie Wilbor künstliche Intelligenz nutzt, um das nächste Nickerchen Ihres Babys präzise vorherzusagen, indem reale Daten mit medizinischen Protokollen kombiniert werden.",
+    readTime: "5 Min Lesezeit",
+    metaTitle: "Der Algorithmus, der vorhersagt, wann Ihr Baby schlafen wird (und warum das alles verändert) | Wilbor",
+    metaDescription: "Entdecken Sie, wie Wilbor künstliche Intelligenz nutzt, um das nächste Nickerchen Ihres Babys präzise vorherzusagen, indem reale Daten mit medizinischen Pr",
+    keywords: ["Wilbor Schlaf", "Schlafvorhersage Baby", "KI Baby Schlaf"],
+    content: `## Der Algorithmus, der vorhersagt, wann Ihr Baby schlafen wird
+
+Stellen Sie sich vor, Sie wüssten ganz genau, dass Ihr Baby um 14:37 Uhr schlafen muss. Nicht durch Intuition — sondern durch Wissenschaft. Das ist eine der exklusivsten Funktionen von Wilbor: die **Intelligente Nickerchen-Vorhersage**.
+
+## Wie es funktioniert
+
+Wilbor kombiniert zwei Datenquellen in Echtzeit:
+
+### 1. Medizinische Tabelle der Wachfenster
+Basierend auf dem exakten Alter des Babys in Wochen:
+- **0–6 Wochen:** Das Baby hält nur 45–60 Min wach aus
+- **3–4 Monate:** Das Wachfenster wächst auf 75–90 Min
+- **6 Monate:** Es schafft bereits 2–2,5 Stunden zwischen den Nickerchen
+
+### 2. Reale Historie Ihres Babys
+Wilbor erfasst jedes Nickerchen, das Sie eintragen. Mit der Zeit lernt es die einzigartigen Muster Ihres Kindes.
+
+## Die Formel
+
+Das System kombiniert beide Quellen:
+
+**Vorhersage = (60% × reale Daten des Babys) + (40% × medizinische Altersreferenz)**
+
+Je mehr Daten Sie erfassen, desto personalisierter und genauer wird die Vorhersage.
+
+## Warum das alles verändert
+
+Früher versuchten Mütter, die Zeit des Nickerchens zu erraten — und lagen falsch. Mit der intelligenten Vorhersage:
+- **Weniger Weinen** — Sie handeln, bevor extreme Müdigkeit einsetzt
+- **Vorhersehbarere Routine** — Sie planen Ihren Tag mit Sicherheit
+- **Tieferer Schlaf** — das Baby schläft im richtigen Zeitfenster, nicht erst danach
+
+---
+**Basierend auf:** Wachfenster-Protokoll der AAP und neonatalen Schlafdaten der SBP.`,
+  },
+  {
+    slug: "ki-liest-zwischen-den-zeilen",
+    title: "Die KI, die zwischen den Zeilen liest: Wie Wilbor versteht, was Sie nicht gesagt haben",
+    excerpt: "Wilbor verfügt über ein emotionales Analysesystem, das Erschöpfung, Angst und Anzeichen von Überlastung in den Nachrichten von Müttern erkennt — selbst wenn sie nicht direkt um Hilfe bitten.",
+    readTime: "5 Min Lesezeit",
+    metaTitle: "Die KI, die zwischen den Zeilen liest: Wie Wilbor versteht, was Sie nicht gesagt haben | Wilbor",
+    metaDescription: "Wilbor verfügt über ein emotionales Analysesystem, das Erschöpfung, Angst und Anzeichen von Überlastung in den Nachrichten von Müttern erkennt — selbst wen",
+    keywords: ["Wilbor KI", "Erschöpfung Mutter", "emotionale Unterstützung Mutter"],
+    content: `## Die KI, die zwischen den Zeilen liest
+
+Eine Mutter schreibt: „mein Baby hört nicht auf zu weinen und ich weiß nicht mehr, was ich tun soll.“
+
+Jeder gewöhnliche Assistent würde über Koliken oder Schlaf sprechen. Wilbor macht etwas anderes: **es liest zwischen den Zeilen**.
+
+## Das System zum Lesen des emotionalen Kontexts
+
+Wilbor verfügt über eine exklusive Funktion — ein Analysesystem, das im Hintergrund arbeitet, für die Mutter unsichtbar, aber in jedem Gespräch präsent.
+
+### Was es erkennt
+
+Während Wilbor über das Baby antwortet, analysiert das System die Nachricht und erkennt den **wirklichen Schmerz der Mutter** in Kategorien:
+
+- **Extreme Erschöpfung** — „ich habe seit 3 Tagen nicht geschlafen“
+- **Leistungsangst** — „mache ich das wirklich richtig?“
+- **Emotionale Erschöpfung** — „ich habe nicht das Gefühl, eine gute Mutter zu sein“
+- **Soziale Isolation** — „ich habe niemanden zum Reden“
+- **Beziehungskonflikt** — „mein Mann hilft nicht“
+- **Angst vor Verurteilung** — „ich schäme mich zu fragen“
+- **Mütterliche Schuldgefühle** — „ich glaube, ich habe etwas falsch gemacht“
+- **Mangelndes Vertrauen** — „ich weiß nicht, ob meine Milch ausreicht“
+
+### Aufmerksamkeitsstufen
+
+Für jedes erkannte Signal definiert das System eine Stufe: **Niedrig**, **Mittel**, **Hoch** oder **Kritisch**.
+
+## Warum das wichtig ist
+
+Mütterliche Erschöpfung betrifft viele Mütter weltweit — und die meisten bitten nicht um Hilfe, weil sie die eigenen Anzeichen nicht erkennen.
+
+Wilbor diagnostiziert nicht. Aber es **nimmt wahr**, wenn etwas über das Weinen des Babys hinausgeht. Und es antwortet mit einer Empathie, die genau auf diesen Moment abgestimmt ist.
+
+---
+***Diese Funktion arbeitet ethisch und speichert keine sensiblen Daten über das für die Sitzung Notwendige hinaus.**`,
+  },
+  {
+    slug: "wachstumsschube-beim-baby",
+    title: "Wachstumsschübe beim Baby: Anzeichen und Wie Man Reagieren Sollte",
+    excerpt: "Erkennen Sie die Anzeichen von Wachstumsschüben beim Baby und erfahren Sie, wie Sie geduldig auf Veränderungen im Alltag reagieren können.",
+    readTime: "4 min",
+    metaTitle: "Wachstumsschübe beim Baby: Anzeichen und Wie Man Reagieren Sollte | Wilbor-Assist",
+    metaDescription: "Erkennen Sie die Anzeichen von Wachstumsschüben beim Baby und erfahren Sie, wie Sie geduldig auf Veränderungen im Alltag reagieren können. Basierend auf den Protokollen der DGKJ und der AAP.",
+    keywords: ["Wachstumsschub Baby", "Baby unruhig", "Babyentwicklung", "Baby mehr Hunger", "Baby weint viel"],
+    content: `## Was ist ein Wachstumsschub?\n\nWachstumsschübe sind Phasen beschleunigter körperlicher Entwicklung, die jedes Baby im ersten Lebensjahr erlebt. Diese Phasen können den etablierten Alltag durcheinanderbringen, aber das Erkennen der Anzeichen hilft dabei, ruhig und sicher zu reagieren.\n\n## Häufige Anzeichen eines Wachstumsschubs\n\n- **Mehr Hunger** \u2014 trinkt häufiger als gewöhnlich\n- **Veränderter Schlaf** \u2014 wacht nachts öfter auf\n- **Reizbarkeit** \u2014 weint mehr als sonst\n- **Starkes Nähebedürfnis** \u2014 möchte ständig auf den Arm\n\n## Wann treten sie auf?\n\nWachstumsschübe treten typischerweise auf mit: **7\u201310 Tagen**, **2\u20133 Wochen**, **4\u20136 Wochen**, **3 Monaten**, **6 Monaten** und **9 Monaten**.\n\n## Wie sollte man reagieren?\n\nFolgen Sie dem Rhythmus Ihres Babys. Bieten Sie mehr Mahlzeiten an, wenn es Anzeichen von Hunger zeigt, und geben Sie viel Nähe und Geborgenheit. Wachstumsschübe dauern im Durchschnitt **2 bis 3 Tage**. Für eine persönliche Orientierung können Sie Wilbor jederzeit konsultieren.\n\n---\n**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "neugeborenengelbsucht-ursachen-und-behandlung",
+    title: "Neugeborenengelbsucht: Ursachen, Symptome und Behandlung",
+    excerpt: "Verstehen Sie, was Neugeborenengelbsucht ist, warum sie auftritt, wann Sie einen Arzt aufsuchen sollten und wie die Behandlung erfolgt.",
+    readTime: "5 min",
+    metaTitle: "Neugeborenengelbsucht: Ursachen, Symptome und Behandlung | Wilbor-Assist",
+    metaDescription: "Verstehen Sie, was Neugeborenengelbsucht ist, warum sie auftritt, wann Sie einen Arzt aufsuchen sollten und wie die Behandlung erfolgt. Basierend auf den Protokollen der DGKJ und der AAP.",
+    keywords: ["Neugeborenengelbsucht", "Baby gelb", "Bilirubin Baby", "Gelbsucht Neugeborenes", "Phototherapie Baby"],
+    content: `## Was ist Neugeborenengelbsucht?\n\nNeugeborenengelbsucht ist eine **sehr häufige** Erkrankung, die durch eine Gelbfärbung der Haut und des weißen Teils der Augen des Neugeborenen gekennzeichnet ist. Sie tritt auf, wenn sich zu viel **Bilirubin** im Blut des Babys befindet.\n\n## Warum tritt sie auf?\n\nDa die Leber des Neugeborenen noch in Entwicklung ist, kann sie das Bilirubin möglicherweise nicht schnell genug verarbeiten. Die meisten Fälle sind **mild und verschwinden von selbst** innerhalb von 1 bis 2 Wochen, während die Leber weiter reift.\n\n## Wann sollte man einen Arzt aufsuchen?\n\nSuchen Sie ärztliche Hilfe auf, wenn:\n\n- die Gelbsucht **in den ersten 24 Lebensstunden** auftritt\n- sich die gelbe Färbung **verstärkt oder ausbreitet**\n- das Baby **sehr schläfrig** ist oder sich schwer wecken lässt\n\n## Behandlung\n\nWenn die Bilirubinwerte erhöht sind, kann der Arzt eine **Phototherapie** empfehlen \u2014 das Baby wird unter spezielle blaue Lichter gelegt, die helfen, das Bilirubin abzubauen. Schwere Fälle sind selten.\n\n**Häufiges Füttern** (Muttermilch oder Säuglingsnahrung) hilft dem Baby, das Bilirubin über den Stuhl auszuscheiden.\n\n---\n**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "zahnen-beim-baby-symptome-und-linderung",
+    title: "Zahnen beim Baby: Symptome und Wie Man das Unwohlsein Lindert",
+    excerpt: "Bekommt Ihr Baby Zähne? Lernen Sie die Symptome kennen und entdecken Sie sichere Wege, das Unwohlsein im Zahnfleisch zu lindern.",
+    readTime: "4 min",
+    metaTitle: "Zahnen beim Baby: Symptome und Wie Man das Unwohlsein Lindert | Wilbor-Assist",
+    metaDescription: "Bekommt Ihr Baby Zähne? Lernen Sie die häufigsten Symptome kennen und entdecken Sie sichere und wirksame Wege, das Unwohlsein im Zahnfleisch zu lindern. Basierend auf der DGKJ und der AAP.",
+    keywords: ["Zahnen Baby", "Baby zahnt", "Zahnfleisch Baby", "erster Zahn Baby", "Beißring Baby"],
+    content: `## Wann beginnt das Zahnen?\n\nDas Zahnen ist ein wichtiger Meilenstein im ersten Lebensjahr des Babys. Die meisten Babys bekommen den **ersten Zahn etwa mit 6 Monaten**, auch wenn dieser Zeitraum stark variieren kann.\n\n## Häufige Anzeichen des Zahnens\n\n- **Starker Speichelfluss**\n- **Beißt häufig auf Gegenständen** herum\n- **Reizbarkeit** und Unruhe\n- **Geschwollenes und empfindliches Zahnfleisch**\n- Leichter Anstieg der Körpertemperatur (kein Fieber)\n\n> Fieber über **38\u00b0C** wird NICHT durch das Zahnen verursacht und sollte vom Kinderarzt beurteilt werden.\n\n## Sichere Möglichkeiten zur Linderung des Unwohlseins\n\n- **Gekühlter Beißring** (nicht eingefroren) zum Kauen\n- **Kaltes feuchtes Tuch** zur Massage des Zahnfleischs\n- **Sanfte Massage mit dem Finger** am Zahnfleisch\n- Fragen Sie den Kinderarzt nach der Anwendung von **Paracetamol**, falls nötig\n\n\u26a0\ufe0f **Vermeiden Sie** Zahnungsgels mit **Benzocain** \u2014 sie können ernsthafte Risiken für die Gesundheit des Babys darstellen.\n\n---\n**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "wochenbettangst-vs-wochenbettdepression-unterschiede",
+    title: "Wochenbettangst vs. Wochenbettdepression: Unterschiede, die Jede Mutter Kennen Sollte",
+    excerpt: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
+    readTime: "6 min",
+    metaTitle: "Wochenbettangst vs. Wochenbettdepression: Unterschiede | Wilbor-Assist",
+    metaDescription: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression, erkennen Sie die Symptome und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
+    keywords: ["Wochenbettangst", "Wochenbettdepression", "psychische Gesundheit Mutter", "Baby Blues", "postpartale Störung"],
+    content: `## Die Zeit nach der Geburt und die psychische Gesundheit\n\nDie Zeit nach der Geburt ist ein Abschnitt intensiver körperlicher und emotionaler Veränderungen. Obwohl viele Menschen den \u201eBaby Blues\u201c kennen, sind ernstere Störungen wie die **Wochenbettdepression (DPP)** und die **Wochenbettangst (APP)** häufig und werden oft missverstanden.\n\n## Wichtigste Unterschiede\n\n| | Wochenbettdepression (DPP) | Wochenbettangst (APP) |\n|---|---|---|\n| **Hauptgefühl** | Anhaltende Traurigkeit, Hoffnungslosigkeit | \u00dcbermäßige Sorge, Angst |\n| **Gedanken** | Negativ, leer | Beschleunigt, katastrophisierend |\n| **Körperliche Symptome** | Müdigkeit, Appetitveränderung | Herzrasen, Schwindel |\n| **Beziehung zum Baby** | Schwierigkeit, eine Bindung aufzubauen | \u00dcbermäßiger Beschützerinstinkt |\n\n## Wichtig: Beide sind behandelbar\n\nDPP und APP können gleichzeitig auftreten. Beide Zustände sind **sehr gut behandelbar** mit professioneller Begleitung \u2014 Psychotherapie, Medikamente oder Selbsthilfegruppen.\n\nDiese Gefühle zu erleben **macht Sie nicht zu einer schlechten Mutter**. Es ist ein gesundheitlicher Zustand, der Fürsorge verdient.\n\n---\n**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und Weltgesundheitsorganisation (WHO).`,
+  },
+];
+// ==========================================
+// FRENCH ARTICLES (FR) \u2014 Articles 13-16
+// ==========================================
+export const blogArticlesFR_new: BlogArticleTranslation[] = [
+  {
+    slug: "poussees-de-croissance-du-bebe",
+    title: "Poussées de Croissance du Bébé : Signes et Comment Réagir",
+    excerpt: "Reconnaissez les signes des poussées de croissance du bébé et apprenez à répondre avec patience aux changements de routine.",
+    readTime: "4 min",
+    metaTitle: "Poussées de Croissance du Bébé : Signes et Comment Réagir | Wilbor-Assist",
+    metaDescription: "Reconnaissez les signes des poussées de croissance du bébé et apprenez à répondre avec patience aux changements de routine. Basé sur les protocoles de la SFP et de l'AAP.",
+    keywords: ["poussée de croissance bébé", "bébé agité", "développement infantile", "bébé plus faim", "bébé pleureur"],
+    content: `## Qu'est-ce qu'une poussée de croissance ?
+
+Les poussées de croissance sont des périodes de développement physique accéléré que chaque bébé traverse durant sa première année de vie. Ces phases peuvent perturber la routine établie, mais reconnaître les signes permet de réagir avec calme et sécurité.
+
+## Signes courants d'une poussée de croissance
+
+- **Plus de faim** — tète plus fréquemment que d'habitude
+- **Sommeil perturbé** — se réveille plus souvent la nuit
+- **Irritabilité** — pleure plus que la normale
+- **Besoin de proximité** — veut être porté en permanence
+
+## Quand cela se produit-il ?
+
+Les poussées de croissance surviennent généralement à : **7–10 jours**, **2–3 semaines**, **4–6 semaines**, **3 mois**, **6 mois** et **9 mois**.
+
+## Comment agir
+
+Suivez le rythme de votre bébé. Offrez plus de tétées lorsqu'il montre des signes de faim et apportez beaucoup de contact et de réconfort. Les poussées de croissance durent en moyenne **2 à 3 jours**. Pour un accompagnement personnalisé, consultez Wilbor à tout moment.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ictere-neonatal-causes-et-traitement",
+    title: "Ictère Néonatal : Causes, Symptômes et Traitement",
+    excerpt: "Comprenez ce qu'est l'ictère néonatal, pourquoi il apparaît, quand consulter un médecin et comment il est traité.",
+    readTime: "5 min",
+    metaTitle: "Ictère Néonatal : Causes, Symptômes et Traitement | Wilbor-Assist",
+    metaDescription: "Comprenez ce qu'est l'ictère néonatal, pourquoi il apparaît, quand consulter un médecin et comment il est traité. Basé sur les protocoles de la SFP et de l'AAP.",
+    keywords: ["ictère néonatal", "bébé jaune", "bilirubine bébé", "ictère nouveau-né", "photothérapie bébé"],
+    content: `## Qu'est-ce que l'ictère néonatal ?
+
+L'ictère néonatal est une condition **très fréquente** caractérisée par un jaunissement de la peau et du blanc des yeux du nouveau-né. Elle survient lorsqu'il y a un excès de **bilirubine** dans le sang du bébé.
+
+## Pourquoi cela se produit-il ?
+
+Comme le foie du nouveau-né est encore en développement, il peut ne pas traiter la bilirubine suffisamment rapidement. La majorité des cas est **légère et se résout spontanément** en 1 à 2 semaines, à mesure que le foie mûrit.
+
+## Quand consulter un médecin
+
+Consultez un professionnel de santé si :
+
+- L'ictère **apparaît dans les premières 24 heures** de vie
+- La coloration jaune **s'intensifie ou s'étend**
+- Le bébé est **très somnolent** ou difficile à réveiller
+
+## Traitement
+
+Lorsque les niveaux de bilirubine sont élevés, le médecin peut recommander une **photothérapie** — le bébé est placé sous des lumières bleues spéciales qui aident à décomposer la bilirubine. Les cas graves sont rares.
+
+**Des tétées fréquentes** (lait maternel ou formule) aident le bébé à éliminer la bilirubine par les selles.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "dentition-du-bebe-symptomes-et-soulagement",
+    title: "Dentition du Bébé : Symptômes et Comment Soulager l'Inconfort",
+    excerpt: "Votre bébé fait ses dents ? Découvrez les symptômes et des moyens sûrs de soulager l'inconfort des gencives.",
+    readTime: "4 min",
+    metaTitle: "Dentition du Bébé : Symptômes et Comment Soulager | Wilbor-Assist",
+    metaDescription: "Votre bébé fait ses dents ? Découvrez les symptômes courants et les moyens sûrs et efficaces de soulager l'inconfort des gencives. Basé sur la SFP et l'AAP.",
+    keywords: ["dentition bébé", "bébé qui fait ses dents", "gencives bébé", "première dent bébé", "anneau de dentition"],
+    content: `## Quand commence la dentition ?
+
+La dentition est une étape importante de la première année du bébé. La plupart des bébés ont leur **première dent vers 6 mois**, bien que cette période puisse varier considérablement.
+
+## Signes courants de la dentition
+
+- **Salivation excessive**
+- **Mord des objets** fréquemment
+- **Irritabilité** et agitation
+- **Gencives gonflées et sensibles**
+- Légère augmentation de la température corporelle (ce n'est pas de la fièvre)
+
+> Une fièvre supérieure à **38°C** N'EST PAS causée par la dentition et doit être évaluée par un pédiatre.
+
+## Moyens sûrs de soulager l'inconfort
+
+- **Anneau de dentition réfrigéré** (non congelé)
+- **Linge humide froid** pour masser les gencives
+- **Massage doux avec le doigt** sur les gencives
+- Consultez le pédiatre concernant l'utilisation de **paracétamol** si nécessaire
+
+⚠️ **Évitez** les gels de dentition contenant de la **benzocaïne** — ils peuvent présenter des risques sérieux pour la santé du bébé.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "anxiete-post-partum-vs-depression-differences",
+    title: "Anxiété Post-Partum vs Dépression Post-Partum : Différences Essentielles",
+    excerpt: "Comprenez les différences entre l'anxiété post-partum et la dépression post-partum, et sachez quand consulter un professionnel.",
+    readTime: "6 min",
+    metaTitle: "Anxiété Post-Partum vs Dépression Post-Partum : Différences | Wilbor-Assist",
+    metaDescription: "Comprenez les différences entre l'anxiété post-partum et la dépression post-partum, reconnaissez les symptômes et sachez quand consulter un professionnel.",
+    keywords: ["anxiété post-partum", "dépression post-partum", "santé mentale maternelle", "baby blues", "trouble post-partum"],
+    content: `## La période post-partum et la santé mentale
+
+La période post-partum est un moment de transformations physiques et émotionnelles intenses. Bien que beaucoup connaissent le "baby blues", des troubles plus sérieux comme la **Dépression Post-Partum (DPP)** et l'**Anxiété Post-Partum (APP)** sont fréquents et souvent mal compris.
+
+## Principales différences
+
+| | Dépression Post-Partum (DPP) | Anxiété Post-Partum (APP) |
+|---|---|---|
+| **Sentiment principal** | Tristesse persistante, désespoir | Inquiétude excessive, peur |
+| **Pensées** | Négatives, vides | Rapides, catastrophiques |
+| **Symptômes physiques** | Fatigue, changement d'appétit | Cœur accéléré, étourdissements |
+| **Relation avec le bébé** | Difficulté à créer un lien | Surprotection excessive |
+
+## Important : les deux se traitent
+
+La DPP et l'APP peuvent survenir en même temps. Les deux conditions sont **hautement traitables** avec un accompagnement professionnel — psychothérapie, médication ou groupes de soutien.
+
+Ressentir cela **ne fait pas de vous une mauvaise mère**. C'est une condition de santé qui mérite de l'attention. Si vous ou quelqu'un que vous connaissez traverse cela, consulter un professionnel de santé est la première étape.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et Organisation Mondiale de la Santé (OMS).`,
+  },
+];
+
+// ==========================================
+// GERMAN ARTICLES (DE) — Articles 13-16
+// ==========================================
+export const blogArticlesDE_new: BlogArticleTranslation[] = [
+  {
+    slug: "wachstumsschube-beim-baby",
+    title: "Wachstumsschübe beim Baby: Anzeichen und Wie Man Reagieren Sollte",
+    excerpt: "Erkennen Sie die Anzeichen von Wachstumsschüben beim Baby und erfahren Sie, wie Sie geduldig auf Veränderungen im Alltag reagieren können.",
+    readTime: "4 min",
+    metaTitle: "Wachstumsschübe beim Baby: Anzeichen und Wie Man Reagieren Sollte | Wilbor-Assist",
+    metaDescription: "Erkennen Sie die Anzeichen von Wachstumsschüben beim Baby und erfahren Sie, wie Sie geduldig auf Veränderungen im Alltag reagieren können. Basierend auf den Protokollen der DGKJ und der AAP.",
+    keywords: ["Wachstumsschub Baby", "Baby unruhig", "Babyentwicklung", "Baby mehr Hunger", "Baby weint viel"],
+    content: `## Was ist ein Wachstumsschub?
+
+Wachstumsschübe sind Phasen beschleunigter körperlicher Entwicklung, die jedes Baby im ersten Lebensjahr erlebt. Diese Phasen können den etablierten Alltag durcheinanderbringen, aber das Erkennen der Anzeichen hilft dabei, ruhig und sicher zu reagieren.
+
+## Häufige Anzeichen eines Wachstumsschubs
+
+- **Mehr Hunger** — trinkt häufiger als gewöhnlich
+- **Veränderter Schlaf** — wacht nachts öfter auf
+- **Reizbarkeit** — weint mehr als sonst
+- **Starkes Nähebedürfnis** — möchte ständig auf den Arm
+
+## Wann treten sie auf?
+
+Wachstumsschübe treten typischerweise auf mit: **7–10 Tagen**, **2–3 Wochen**, **4–6 Wochen**, **3 Monaten**, **6 Monaten** und **9 Monaten**.
+
+## Wie sollte man reagieren?
+
+Folgen Sie dem Rhythmus Ihres Babys. Bieten Sie mehr Mahlzeiten an, wenn es Anzeichen von Hunger zeigt, und geben Sie viel Nähe und Geborgenheit. Wachstumsschübe dauern im Durchschnitt **2 bis 3 Tage**. Für eine persönliche Orientierung können Sie Wilbor jederzeit konsultieren.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "neugeborenengelbsucht-ursachen-und-behandlung",
+    title: "Neugeborenengelbsucht: Ursachen, Symptome und Behandlung",
+    excerpt: "Verstehen Sie, was Neugeborenengelbsucht ist, warum sie auftritt, wann Sie einen Arzt aufsuchen sollten und wie die Behandlung erfolgt.",
+    readTime: "5 min",
+    metaTitle: "Neugeborenengelbsucht: Ursachen, Symptome und Behandlung | Wilbor-Assist",
+    metaDescription: "Verstehen Sie, was Neugeborenengelbsucht ist, warum sie auftritt, wann Sie einen Arzt aufsuchen sollten und wie die Behandlung erfolgt. Basierend auf den Protokollen der DGKJ und der AAP.",
+    keywords: ["Neugeborenengelbsucht", "Baby gelb", "Bilirubin Baby", "Gelbsucht Neugeborenes", "Phototherapie Baby"],
+    content: `## Was ist Neugeborenengelbsucht?
+
+Neugeborenengelbsucht ist eine **sehr häufige** Erkrankung, die durch eine Gelbfärbung der Haut und des weißen Teils der Augen des Neugeborenen gekennzeichnet ist. Sie tritt auf, wenn sich zu viel **Bilirubin** im Blut des Babys befindet.
+
+## Warum tritt sie auf?
+
+Da die Leber des Neugeborenen noch in Entwicklung ist, kann sie das Bilirubin möglicherweise nicht schnell genug verarbeiten. Die meisten Fälle sind **mild und verschwinden von selbst** innerhalb von 1 bis 2 Wochen, während die Leber weiter reift.
+
+## Wann sollte man einen Arzt aufsuchen?
+
+Suchen Sie ärztliche Hilfe auf, wenn:
+
+- die Gelbsucht **in den ersten 24 Lebensstunden** auftritt
+- sich die gelbe Färbung **verstärkt oder ausbreitet**
+- das Baby **sehr schläfrig** ist oder sich schwer wecken lässt
+
+## Behandlung
+
+Wenn die Bilirubinwerte erhöht sind, kann der Arzt eine **Phototherapie** empfehlen — das Baby wird unter spezielle blaue Lichter gelegt, die helfen, das Bilirubin abzubauen. Schwere Fälle sind selten.
+
+**Häufiges Füttern** (Muttermilch oder Säuglingsnahrung) hilft dem Baby, das Bilirubin über den Stuhl auszuscheiden.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "zahnen-beim-baby-symptome-und-linderung",
+    title: "Zahnen beim Baby: Symptome und Wie Man das Unwohlsein Lindert",
+    excerpt: "Bekommt Ihr Baby Zähne? Lernen Sie die Symptome kennen und entdecken Sie sichere Wege, das Unwohlsein im Zahnfleisch zu lindern.",
+    readTime: "4 min",
+    metaTitle: "Zahnen beim Baby: Symptome und Wie Man das Unwohlsein Lindert | Wilbor-Assist",
+    metaDescription: "Bekommt Ihr Baby Zähne? Lernen Sie die häufigsten Symptome kennen und entdecken Sie sichere und wirksame Wege, das Unwohlsein im Zahnfleisch zu lindern. Basierend auf der DGKJ und der AAP.",
+    keywords: ["Zahnen Baby", "Baby zahnt", "Zahnfleisch Baby", "erster Zahn Baby", "Beißring Baby"],
+    content: `## Wann beginnt das Zahnen?
+
+Das Zahnen ist ein wichtiger Meilenstein im ersten Lebensjahr des Babys. Die meisten Babys bekommen den **ersten Zahn etwa mit 6 Monaten**, auch wenn dieser Zeitraum stark variieren kann.
+
+## Häufige Anzeichen des Zahnens
+
+- **Starker Speichelfluss**
+- **Beißt häufig auf Gegenständen** herum
+- **Reizbarkeit** und Unruhe
+- **Geschwollenes und empfindliches Zahnfleisch**
+- Leichter Anstieg der Körpertemperatur (kein Fieber)
+
+> Fieber über **38°C** wird NICHT durch das Zahnen verursacht und sollte vom Kinderarzt beurteilt werden.
+
+## Sichere Möglichkeiten zur Linderung des Unwohlseins
+
+- **Gekühlter Beißring** (nicht eingefroren) zum Kauen
+- **Kaltes feuchtes Tuch** zur Massage des Zahnfleischs
+- **Sanfte Massage mit dem Finger** am Zahnfleisch
+- Fragen Sie den Kinderarzt nach der Anwendung von **Paracetamol**, falls nötig
+
+⚠️ **Vermeiden Sie** Zahnungsgels mit **Benzocain** — sie können ernsthafte Risiken für die Gesundheit des Babys darstellen.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "wochenbettangst-vs-wochenbettdepression-unterschiede",
+    title: "Wochenbettangst vs. Wochenbettdepression: Unterschiede, die Jede Mutter Kennen Sollte",
+    excerpt: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
+    readTime: "6 min",
+    metaTitle: "Wochenbettangst vs. Wochenbettdepression: Unterschiede | Wilbor-Assist",
+    metaDescription: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression, erkennen Sie die Symptome und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
+    keywords: ["Wochenbettangst", "Wochenbettdepression", "psychische Gesundheit Mutter", "Baby Blues", "postpartale Störung"],
+    content: `## Die Zeit nach der Geburt und die psychische Gesundheit
+
+Die Zeit nach der Geburt ist ein Abschnitt intensiver körperlicher und emotionaler Veränderungen. Obwohl viele Menschen den „Baby Blues“ kennen, sind ernstere Störungen wie die **Wochenbettdepression (DPP)** und die **Wochenbettangst (APP)** häufig und werden oft missverstanden.
+
+## Wichtigste Unterschiede
+
+| | Wochenbettdepression (DPP) | Wochenbettangst (APP) |
+|---|---|---|
+| **Hauptgefühl** | Anhaltende Traurigkeit, Hoffnungslosigkeit | Übermäßige Sorge, Angst |
+| **Gedanken** | Negativ, leer | Beschleunigt, katastrophisierend |
+| **Körperliche Symptome** | Müdigkeit, Appetitveränderung | Herzrasen, Schwindel |
+| **Beziehung zum Baby** | Schwierigkeit, eine Bindung aufzubauen | Übermäßiger Beschützerinstinkt |
+
+## Wichtig: Beide sind behandelbar
+
+DPP und APP können gleichzeitig auftreten. Beide Zustände sind **sehr gut behandelbar** mit professioneller Begleitung — Psychotherapie, Medikamente oder Selbsthilfegruppen.
+
+Diese Gefühle zu erleben **macht Sie nicht zu einer schlechten Mutter**. Es ist ein gesundheitlicher Zustand, der Fürsorge verdient. Wenn Sie oder jemand, den Sie kennen, dies durchmacht, ist die Suche nach einem Gesundheitsfachmann der erste Schritt.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und Weltgesundheitsorganisation (WHO).`,
+  },
+];

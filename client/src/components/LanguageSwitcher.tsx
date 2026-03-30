@@ -4,6 +4,8 @@ const flags: Record<Locale, string> = {
   pt: "BR",
   en: "EN",
   es: "ES",
+  fr: "FR",
+  de: "DE",
 };
 
 export function LanguageSwitcher({ className = "" }: { className?: string }) {

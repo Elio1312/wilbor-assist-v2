@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-03-26T01:52:11.736Z",
+  "timestamp": "2026-03-30T04:10:48.833Z",
   "totalQuestionsEvaluated": 5,
   "averageScores": {
-    "relevance": 99,
+    "relevance": 98,
     "clarity": 96,
     "accuracy": 95,
-    "overall": 96.66666666666667
+    "overall": 96.33333333333334
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "clarity": 100,
       "accuracy": 100,
       "avgScore": 100,
-      "feedback": "A resposta é excelente, abordando diretamente a pergunta com informações claras, concisas e medicamente corretas sobre a posição segura para dormir e outros cuidados para prevenir a SMSL."
+      "feedback": "A resposta é excelente, aborda diretamente a pergunta, é clara e as informações são medicamente corretas e seguras, focando na prevenção da SMSL."
     },
     {
       "questionId": 2,
@@ -26,7 +26,7 @@
       "clarity": 95,
       "accuracy": 90,
       "avgScore": 95,
-      "feedback": "A resposta é muito relevante e aborda diretamente a pergunta. A clareza é alta, com informações concisas e úteis. A acurácia é boa, fornecendo diretrizes gerais corretas para sono de recém-nascidos. O termo 'efeito vulcão' é uma metáfora popular entre pais e consultores de sono, mas não um termo médico formal, embora a descrição do cortisol alto e exaustão esteja alinhada com o conceito de superestimulação. As dicas de ambiente são excelentes."
+      "feedback": "A resposta é muito relevante e aborda diretamente a pergunta. A clareza é boa, com informações concisas. A acurácia é alta, fornecendo dados corretos sobre o sono do recém-nascido e a janela de vigília. O termo 'efeito vulcão' é uma analogia comum, mas não um termo médico formal, embora a explicação do cortisol alto e bebê exausto seja medicamente plausível para um bebê superestimulado. As dicas de ambiente são excelentes."
     },
     {
       "questionId": 3,
@@ -36,17 +36,17 @@
       "clarity": 95,
       "accuracy": 95,
       "avgScore": 96.66666666666667,
-      "feedback": "A resposta aborda diretamente todas as partes da pergunta, definindo cólica pela 'Regra dos 3' e oferecendo informações adicionais relevantes e precisas sobre o tema. A linguagem é clara e fácil de entender para uma mãe. Poderia haver uma pequena ressalva sobre a importância de consultar um pediatra para confirmar o diagnóstico e excluir outras causas de choro excessivo."
+      "feedback": "A resposta aborda diretamente todas as partes da pergunta, definindo cólica pela 'Regra dos 3' e oferecendo dicas de alívio. É clara e concisa. A informação sobre massagens fora da crise é importante e correta. Poderia ser ligeiramente mais explícita ao mencionar que, apesar de seguir a regra, um médico deve confirmar o diagnóstico para excluir outras causas de choro excessivo."
     },
     {
       "questionId": 4,
       "question": "Como fazer massagem para cólica? Massagem I-L-U? Shantala?...",
       "category": "colica",
-      "relevance": 100,
+      "relevance": 95,
       "clarity": 95,
       "accuracy": 95,
-      "avgScore": 96.66666666666667,
-      "feedback": "A resposta aborda diretamente a pergunta sobre massagens para cólica e adiciona outras técnicas eficazes. É clara e medicamente correta. A menção de fazer massagens fora da crise é crucial. Poderia especificar o sentido horário para a massagem I-L-U."
+      "avgScore": 95,
+      "feedback": "A resposta é muito relevante e clara, abordando as principais técnicas de massagem e outras para alívio da cólica. A acurácia é alta, com boas dicas de segurança. A única pequena observação é que a Shantala não foi detalhada, mas outras técnicas foram adicionadas, o que é positivo."
     },
     {
       "questionId": 5,
@@ -56,7 +56,7 @@
       "clarity": 95,
       "accuracy": 95,
       "avgScore": 95,
-      "feedback": "A resposta aborda bem a pega correta e a dor na amamentação. A inclusão da livre demanda é um pouco tangencial, mas útil. Os sinais de fome são relevantes para o contexto geral da amamentação."
+      "feedback": "A resposta aborda as perguntas de forma clara e concisa, fornecendo informações essenciais sobre a pega correta e a dor na amamentação. A dica de ouro é muito pertinente. A inclusão da livre demanda e sinais de fome, embora corretos, são informações adicionais que não foram diretamente solicitadas, mas são úteis."
     }
   ]
 }

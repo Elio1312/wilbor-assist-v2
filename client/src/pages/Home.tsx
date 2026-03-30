@@ -34,7 +34,7 @@ export default function Home() {
     { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
     { q: "Quando devo procurar atendimento médico imediatamente?", a: "Em caso de febre acima de 38°C, convulsões, sangramento ou dificuldade respiratória." },
     { q: "Posso usar em mais de um bebê?", a: "Sim! O Wilbor suporta gêmeos, trigêmeos e múltiplos bebês com perfis individuais." },
-    { q: "Funciona em outros idiomas?", a: "Sim! O Wilbor está disponível em Português, Inglês e Espanhol." },
+    { q: "Funciona em outros idiomas?", a: "Sim! O Wilbor está disponível em Português, Inglês, Espanhol, Francês e Alemão." },
   ];
   const faqItemsEn = [
     { q: "Does Wilbor replace a pediatrician?", a: "No. Wilbor is digital neonatal support. In case of emergency, seek in-person care." },
@@ -44,7 +44,7 @@ export default function Home() {
     { q: "Is it based on reliable protocols?", a: "Yes, all guidance follows official recommendations from AAP, WHO, and SBP." },
     { q: "When should I seek immediate medical attention?", a: "In case of fever above 100.4°F (38°C), seizures, bleeding, or difficulty breathing." },
     { q: "Can I use it for more than one baby?", a: "Yes! Wilbor supports twins, triplets, and multiple babies with individual profiles." },
-    { q: "Does it work in other languages?", a: "Yes! Wilbor is available in Portuguese, English, and Spanish." },
+    { q: "Does it work in other languages?", a: "Yes! Wilbor is available in Portuguese, English, Spanish, French and German." },
   ];
   const faqItemsEs = [
     { q: "¿Wilbor reemplaza al pediatra?", a: "No. Wilbor es apoyo neonatal digital. En caso de emergencia, busque atención presencial." },
@@ -54,9 +54,29 @@ export default function Home() {
     { q: "¿Está basado en protocolos confiables?", a: "Sí, todas las orientaciones siguen las recomendaciones oficiales de AAP, OMS y SBP." },
     { q: "¿Cuándo debo buscar atención médica inmediata?", a: "En caso de fiebre superior a 38°C, convulsiones, sangrado o dificultad respiratoria." },
     { q: "¿Puedo usarlo para más de un bebé?", a: "¡Sí! Wilbor soporta gemelos, trillizos y múltiples bebés con perfiles individuales." },
-    { q: "¿Funciona en otros idiomas?", a: "¡Sí! Wilbor está disponible en Portugués, Inglés y Español." },
+    { q: "¿Funciona en otros idiomas?", a: "¡Sí! Wilbor está disponible en Portugués, Inglés, Español, Francés y Alemán." },
   ];
-  const faqItems = locale === "en" ? faqItemsEn : locale === "es" ? faqItemsEs : faqItemsPt;
+  const faqItemsFr = [
+    { q: "Wilbor remplace-t-il le pédiatre ?", a: "Non. Wilbor est un soutien néonatal numérique. En cas d'urgence, consultez un médecin en personne." },
+    { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 3 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (9,90€/mois) : 500 réponses IA/mois. MANUEL (14,90€) : Contenu complet sans IA." },
+    { q: "Est-ce gratuit ? Ai-je besoin d'une carte bancaire ?", a: "Oui, commencez avec 5 consultations gratuites. Aucune carte bancaire requise." },
+    { q: "Pour quelle tranche d'âge est-il indiqué ?", a: "Wilbor est conçu pour les bébés de 0 à 12 mois." },
+    { q: "Est-il basé sur des protocoles fiables ?", a: "Oui, toutes les recommandations suivent les directives officielles de l'AAP, de l'OMS et de la SFP." },
+    { q: "Quand dois-je consulter un médecin immédiatement ?", a: "En cas de fièvre supérieure à 38°C, convulsions, saignements ou difficultés respiratoires." },
+    { q: "Puis-je l'utiliser pour plusieurs bébés ?", a: "Oui ! Wilbor supporte les jumeaux, triplettes et plusieurs bébés avec des profils individuels." },
+    { q: "Fonctionne-t-il dans d'autres langues ?", a: "Oui ! Wilbor est disponible en Portugais, Anglais, Espagnol, Français et Allemand." },
+  ];
+  const faqItemsDe = [
+    { q: "Ersetzt Wilbor den Kinderarzt?", a: "Nein. Wilbor ist digitale neonatale Unterstützung. Im Notfall suchen Sie bitte einen Arzt auf." },
+    { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 3 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (9,90€/Monat): 500 Antworten/Monat. HANDBUCH (14,90€): Vollständiger Inhalt ohne KI." },
+    { q: "Ist es kostenlos? Brauche ich eine Kreditkarte?", a: "Ja, starten Sie mit 5 kostenlosen Beratungen. Keine Kreditkarte erforderlich." },
+    { q: "Für welche Altersgruppe ist es geeignet?", a: "Wilbor ist für Babys von 0 bis 12 Monaten konzipiert." },
+    { q: "Basiert es auf zuverlässigen Protokollen?", a: "Ja, alle Empfehlungen folgen den offiziellen Richtlinien der AAP, WHO und DGKJ." },
+    { q: "Wann sollte ich sofort einen Arzt aufsuchen?", a: "Bei Fieber über 38°C, Krämpfen, Blutungen oder Atemschwierigkeiten." },
+    { q: "Kann ich es für mehr als ein Baby verwenden?", a: "Ja! Wilbor unterstützt Zwillinge, Drillinge und mehrere Babys mit individuellen Profilen." },
+    { q: "Funktioniert es in anderen Sprachen?", a: "Ja! Wilbor ist auf Portugiesisch, Englisch, Spanisch, Französisch und Deutsch verfügbar." },
+  ];
+  const faqItems = locale === "en" ? faqItemsEn : locale === "es" ? faqItemsEs : locale === "fr" ? faqItemsFr : locale === "de" ? faqItemsDe : faqItemsPt;
 
   const features = [
     { icon: Brain, title: t("features.chat"), desc: t("features.chat_desc") },
@@ -200,16 +220,58 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hero Image */}
+          {/* Hero Mockup Dinâmico - 5 idiomas */}
           <div className="relative">
-            <img 
-              src={IMAGES.hero} 
-              alt="Wilbor - Assistente Neonatal IA com Sleep Tracker, Feeding Tracker e Panic Button" 
-              className="rounded-3xl shadow-2xl w-full"
-              loading="eager"
-              width="1920"
-              height="1080"
-            />
+            <div className="rounded-3xl shadow-2xl w-full overflow-hidden bg-gradient-to-br from-purple-700 to-pink-600 p-6 md:p-8">
+              <div className="flex gap-4 items-start">
+                {/* Foto mãe + bebê */}
+                <div className="flex-1">
+                  <img
+                    src={IMAGES.hero}
+                    alt={t("hero.mockup_alt")}
+                    className="rounded-2xl w-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+                {/* Card do App */}
+                <div className="flex-1 bg-white rounded-2xl p-4 shadow-xl">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">W</span>
+                    </div>
+                    <span className="font-bold text-gray-900 text-sm">Wilbor</span>
+                  </div>
+                  <p className="text-xs text-gray-700 mb-3 leading-relaxed">{t("hero.mockup_title")}</p>
+                  <div className="space-y-2 mb-3">
+                    <div className="flex items-center gap-2 bg-purple-50 rounded-lg px-2 py-1">
+                      <span className="text-purple-600 text-xs">🌙</span>
+                      <span className="text-xs text-gray-700">{t("hero.mockup_sleep")}</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-pink-50 rounded-lg px-2 py-1">
+                      <span className="text-pink-600 text-xs">🍼</span>
+                      <span className="text-xs text-gray-700">{t("hero.mockup_feeding")}</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-red-50 rounded-lg px-2 py-1">
+                      <span className="text-red-600 text-xs">🆘</span>
+                      <span className="text-xs text-gray-700">{t("hero.mockup_panic")}</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="flex-1 bg-purple-600 text-white text-xs py-1.5 rounded-full font-semibold">
+                      {t("hero.mockup_cta1")}
+                    </button>
+                    {locale === "pt" && (
+                      <button className="flex-1 border border-green-500 text-green-600 text-xs py-1.5 rounded-full font-semibold">
+                        {t("hero.mockup_cta2")}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 text-center">
+                <p className="text-white text-sm font-semibold opacity-90">{t("hero.mockup_tagline")}</p>
+              </div>
+            </div>
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-purple-200 rounded-full opacity-20 blur-2xl"></div>
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-pink-200 rounded-full opacity-20 blur-2xl"></div>
           </div>
@@ -229,7 +291,7 @@ export default function Home() {
             <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img 
                 src={IMAGES.growth} 
-                alt="Infográfico Crises de Crescimento do Bebê - 1, 3, 6 e 12 meses com alertas Wilbor" 
+                alt={t("img.growth_alt")} 
                 className="w-full"
                 loading="lazy"
                 width="1200"
@@ -241,7 +303,7 @@ export default function Home() {
             <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img 
                 src={IMAGES.sleep} 
-                alt="Wilbor Sleep Tracker - Monitoramento de sono do bebê com previsão de próxima soneca" 
+                alt={t("img.sleep_alt")} 
                 className="w-full"
                 loading="lazy"
                 width="1200"
@@ -260,7 +322,7 @@ export default function Home() {
             <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img 
                 src={IMAGES.feeding} 
-                alt="Wilbor Feeding Tracker - Controle de mamadas com timer e histórico diário" 
+                alt={t("img.feeding_alt")} 
                 className="w-full"
                 loading="lazy"
                 width="1200"
@@ -272,7 +334,7 @@ export default function Home() {
             <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               <img 
                 src={IMAGES.exercises} 
-                alt="Exercícios pós-parto com Wilbor - Recuperação e vínculo mãe-bebê" 
+                alt={t("img.exercises_alt")} 
                 className="w-full"
                 loading="lazy"
                 width="1200"
@@ -388,7 +450,7 @@ export default function Home() {
           <div className="rounded-2xl overflow-hidden shadow-xl">
             <img 
               src={IMAGES.testimonials} 
-              alt="Depoimentos de mães que usam Wilbor - Growth Crises, Sleep Tracker e Panic Button" 
+              alt={t("img.testimonials_alt")} 
               className="w-full"
               loading="lazy"
               width="1200"
@@ -544,7 +606,7 @@ export default function Home() {
           <div className="hidden md:block">
             <img 
               src={IMAGES.cta} 
-              alt="Comece sua jornada com Wilbor - Sleep Tracker, Feeding Tracker, Panic Button e WhatsApp" 
+              alt={t("img.cta_alt")} 
               className="rounded-2xl shadow-2xl w-full opacity-90"
               loading="lazy"
               width="1200"

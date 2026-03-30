@@ -8,6 +8,7 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useI18n } from "@/contexts/i18n";
 
 interface ManusDialogProps {
   title?: string;
@@ -27,6 +28,28 @@ export function ManusDialog({
   onClose,
 }: ManusDialogProps) {
   const [internalOpen, setInternalOpen] = useState(open);
+  const { locale } = useI18n();
+
+  const loginDesc =
+    locale === "en" ? "Sign in to access Wilbor" :
+    locale === "es" ? "Inicia sesión para acceder a Wilbor" :
+    locale === "fr" ? "Connectez-vous pour accéder à Wilbor" :
+    locale === "de" ? "Melden Sie sich an, um auf Wilbor zuzugreifen" :
+    "Faça login para acessar o Wilbor";
+
+  const loginBtn =
+    locale === "en" ? "Sign in to Wilbor" :
+    locale === "es" ? "Entrar en Wilbor" :
+    locale === "fr" ? "Se connecter à Wilbor" :
+    locale === "de" ? "Bei Wilbor anmelden" :
+    "Entrar no Wilbor";
+
+  const logoAlt =
+    locale === "en" ? "Wilbor logo" :
+    locale === "es" ? "Logo de Wilbor" :
+    locale === "fr" ? "Logo Wilbor" :
+    locale === "de" ? "Wilbor-Logo" :
+    "Logo do Wilbor";
 
   useEffect(() => {
     if (!onOpenChange) {
@@ -57,7 +80,7 @@ export function ManusDialog({
             <div className="w-16 h-16 bg-white rounded-xl border border-[rgba(0,0,0,0.08)] flex items-center justify-center">
               <img
                 src={logo}
-                alt="Dialog graphic"
+                alt={logoAlt}
                 className="w-10 h-10 rounded-md"
               />
             </div>
@@ -70,7 +93,7 @@ export function ManusDialog({
             </DialogTitle>
           ) : null}
           <DialogDescription className="text-sm text-[#858481] leading-5 tracking-[-0.154px]">
-            Please login with Manus to continue
+            {loginDesc}
           </DialogDescription>
         </div>
 
@@ -80,7 +103,7 @@ export function ManusDialog({
             onClick={onLogin}
             className="w-full h-10 bg-[#1a1a19] hover:bg-[#1a1a19]/90 text-white rounded-[10px] text-sm font-medium leading-5 tracking-[-0.154px]"
           >
-            Login with Manus
+            {loginBtn}
           </Button>
         </DialogFooter>
       </DialogContent>

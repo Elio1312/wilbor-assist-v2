@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
+import { useI18n } from "@/contexts/i18n";
 
 interface SOSButtonProps {
   onEmergency?: (message: string) => void;
@@ -11,38 +12,46 @@ interface SOSButtonProps {
 export function SOSButton({ onEmergency, disabled = false }: SOSButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const { locale } = useI18n();
 
   const checkCredits = trpc.wilbor.checkExtraCredits.useQuery();
   const getUserCredits = trpc.wilbor.getUserCreditsStatus.useQuery();
+
+  // Textos por idioma
+  const txt = {
+    processing: locale === "en" ? "Processing..." : locale === "es" ? "Procesando..." : locale === "fr" ? "Traitement..." : locale === "de" ? "Verarbeitung..." : "Processando...",
+    sosLabel: locale === "en" ? "SOS Baby crying" : locale === "es" ? "SOS Bebé llorando" : locale === "fr" ? "SOS Bébé qui pleure" : locale === "de" ? "SOS Baby weint" : "SOS Bebê chorando",
+    sosMessage: locale === "en" ? "🚨 SOS Mode activated. I'm here to help urgently! 💙" : locale === "es" ? "🚨 Modo SOS activado. ¡Estoy aquí para ayudar con urgencia! 💙" : locale === "fr" ? "🚨 Mode SOS activé. Je suis là pour vous aider d'urgence ! 💙" : locale === "de" ? "🚨 SOS-Modus aktiviert. Ich bin hier, um dringend zu helfen! 💙" : "🚨 Modo SOS ativado. Estou aqui para ajudar com urgência! 💙",
+    errorMsg: locale === "en" ? "Sorry, we couldn't activate SOS mode right now. Please try again." : locale === "es" ? "Lo sentimos, no pudimos activar el modo SOS ahora. Inténtalo de nuevo." : locale === "fr" ? "Désolé, nous n'avons pas pu activer le mode SOS. Veuillez réessayer." : locale === "de" ? "Entschuldigung, wir konnten den SOS-Modus nicht aktivieren. Bitte versuchen Sie es erneut." : "Desculpe, não conseguimos ativar o modo SOS agora. Tente novamente.",
+    warningExtra: locale === "en" ? "You still have full access to content and can chat normally. 💜" : locale === "es" ? "Todavía tienes acceso completo al contenido y puedes chatear normalmente. 💜" : locale === "fr" ? "Vous avez toujours accès à tout le contenu et pouvez discuter normalement. 💜" : locale === "de" ? "Sie haben weiterhin vollen Zugriff auf alle Inhalte und können normal chatten. 💜" : "Você ainda tem acesso ao conteúdo completo e pode conversar normalmente. 💜",
+    creditsLeft: locale === "en" ? "⚠️ You have" : locale === "es" ? "⚠️ Tienes" : locale === "fr" ? "⚠️ Vous avez" : locale === "de" ? "⚠️ Sie haben" : "⚠️ Você tem",
+    creditsUnit: locale === "en" ? "extra credits available this month." : locale === "es" ? "créditos extra disponibles este mes." : locale === "fr" ? "crédits supplémentaires disponibles ce mois." : locale === "de" ? "Zusatzguthaben diesen Monat verfügbar." : "disponíveis em créditos extras este mês.",
+  };
 
   const handleSOSClick = async () => {
     setIsLoading(true);
 
     try {
-      // Verificar se pode usar créditos extras
       const creditsCheck = await checkCredits.refetch();
 
       if (!creditsCheck.data?.canUse) {
-        // Mostrar aviso delicado
         setShowWarning(true);
         if (onEmergency) {
-          onEmergency(creditsCheck.data?.message || "Não conseguimos processar sua solicitação.");
+          onEmergency(creditsCheck.data?.message || txt.errorMsg);
         }
         setIsLoading(false);
         return;
       }
 
-      // Se pode usar, iniciar conversa SOS
       if (onEmergency) {
-        onEmergency("🚨 Modo SOS ativado. Estou aqui para ajudar com urgência! 💙");
+        onEmergency(txt.sosMessage);
       }
 
-      // Log do uso SOS
       console.log("[SOS] Emergency mode activated");
     } catch (error) {
       console.error("[SOS] Error:", error);
       if (onEmergency) {
-        onEmergency("Desculpe, não conseguimos ativar o modo SOS agora. Tente novamente.");
+        onEmergency(txt.errorMsg);
       }
     } finally {
       setIsLoading(false);
@@ -74,7 +83,7 @@ export function SOSButton({ onEmergency, disabled = false }: SOSButtonProps) {
           <AlertCircle className="w-7 h-7" style={{ color: "#1A284F" }} />
         )}
         <span className="text-lg font-extrabold" style={{ color: "#1A284F" }}>
-          {isLoading ? "Processando..." : "SOS Bebê chorando"}
+          {isLoading ? txt.processing : txt.sosLabel}
         </span>
       </button>
 
@@ -85,7 +94,7 @@ export function SOSButton({ onEmergency, disabled = false }: SOSButtonProps) {
             {checkCredits.data?.message}
           </p>
           <p className="text-xs mt-2" style={{ color: "#666" }}>
-            Você ainda tem acesso ao conteúdo completo e pode conversar normalmente. 💜
+            {txt.warningExtra}
           </p>
         </div>
       )}
@@ -94,7 +103,7 @@ export function SOSButton({ onEmergency, disabled = false }: SOSButtonProps) {
       {canUse && remainingLimit < 5 && (
         <div className="rounded-2xl p-3" style={{ backgroundColor: "rgba(255,179,71,0.08)" }}>
           <p className="text-xs font-semibold" style={{ color: "#E65100" }}>
-            ⚠️ Você tem R$ {remainingLimit.toFixed(2)} disponíveis em créditos extras este mês.
+            {txt.creditsLeft} {remainingLimit.toFixed(2)} {txt.creditsUnit}
           </p>
         </div>
       )}

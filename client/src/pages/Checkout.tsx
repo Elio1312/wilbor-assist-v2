@@ -20,6 +20,8 @@ const PLANS = {
       pt: ["Chat IA 24h", "Até 3 bebês", "Trilha de desenvolvimento", "Receitas por idade"],
       en: ["24/7 AI Chat", "Up to 3 babies", "Development milestones", "Age-based recipes"],
       es: ["Chat IA 24h", "Hasta 3 bebés", "Hitos de desarrollo", "Recetas por edad"],
+      fr: ["Chat IA 24h", "Jusqu'à 3 bébés", "Étapes de développement", "Recettes par âge"],
+      de: ["KI-Chat 24h", "Bis zu 3 Babys", "Entwicklungsmeilensteine", "Altersgerechte Rezepte"],
     },
   },
   premium: {
@@ -27,9 +29,11 @@ const PLANS = {
     USD: { amount: 1490, label: "$14.90/month" },
     EUR: { amount: 1490, label: "€14,90/mês" },
     features: {
-      pt: ["Tudo do Básico", "Bebês ilimitados", "Sono e alimentação", "Meu Corpo (fitness)", "Suporte prioritário"],
+      pt: ["Organização completa da rotina do bebê", "Respostas sempre disponíveis", "Sono e alimentação", "Meu Corpo (pós-parto)", "Suporte prioritário"],
       en: ["Everything in Basic", "Unlimited babies", "Sleep & feeding tracker", "My Body (fitness)", "Priority support"],
       es: ["Todo lo del Básico", "Bebés ilimitados", "Seguimiento sueño/alimentación", "Mi Cuerpo (fitness)", "Soporte prioritario"],
+      fr: ["Organisation complète de la routine", "Réponses toujours disponibles", "Sommeil et alimentation", "Mon Corps (post-partum)", "Support prioritaire"],
+      de: ["Vollständige Routineorganisation", "Antworten immer verfügbar", "Schlaf & Ernährung", "Mein Körper (Nachgeburt)", "Prioritäts-Support"],
     },
   },
 };
@@ -38,12 +42,14 @@ const CURRENCY_BY_LOCALE: Record<string, Currency> = {
   pt: "BRL",
   en: "USD",
   es: "EUR",
+  fr: "EUR",
+  de: "EUR",
 };
 
 const LABELS = {
   pt: {
     title: "Escolha seu plano",
-    subtitle: "Cancele quando quiser. Sem fidelidade.",
+    subtitle: "Cancele quando quiser. Sem fidelidade.\nTenha respostas sempre que precisar, sem depender de tentativa e erro.",
     basic: "Básico",
     premium: "Premium",
     popular: "Mais popular",
@@ -80,6 +86,32 @@ const LABELS = {
     back: "Volver",
     login: "Inicia sesión para suscribirte",
   },
+  fr: {
+    title: "Choisissez votre plan",
+    subtitle: "Annulez quand vous voulez. Sans engagement.\nAyez toujours des réponses quand vous en avez besoin.",
+    basic: "Basique",
+    premium: "Premium",
+    popular: "Le plus populaire",
+    currency: "Devise",
+    pay: "S'abonner maintenant",
+    processing: "Traitement en cours...",
+    test: "Test : utilisez la carte 4242 4242 4242 4242",
+    back: "Retour",
+    login: "Connectez-vous pour vous abonner",
+  },
+  de: {
+    title: "Wählen Sie Ihren Plan",
+    subtitle: "Jederzeit kündbar. Keine Bindung.\nErhalten Sie immer Antworten, wenn Sie sie brauchen.",
+    basic: "Basis",
+    premium: "Premium",
+    popular: "Am beliebtesten",
+    currency: "Währung",
+    pay: "Jetzt abonnieren",
+    processing: "Wird verarbeitet...",
+    test: "Test: Karte 4242 4242 4242 4242 verwenden",
+    back: "Zurück",
+    login: "Anmelden zum Abonnieren",
+  },
 };
 
 export default function Checkout() {
@@ -103,6 +135,8 @@ export default function Checkout() {
     if (params.get("payment") === "success") {
       toast.success(locale === "en" ? "Payment confirmed! Welcome to Wilbor Premium! 💜" :
         locale === "es" ? "¡Pago confirmado! ¡Bienvenida a Wilbor Premium! 💜" :
+        locale === "fr" ? "Paiement confirmé ! Bienvenue sur Wilbor Premium ! 💜" :
+        locale === "de" ? "Zahlung bestätigt! Willkommen bei Wilbor Premium! 💜" :
         "Pagamento confirmado! Bem-vinda ao Wilbor Premium! 💜");
       setTimeout(() => setLocation("/dashboard"), 2000);
     }
@@ -113,11 +147,15 @@ export default function Checkout() {
       if (data.success && data.url) {
         toast.info(locale === "en" ? "Redirecting to secure checkout..." :
           locale === "es" ? "Redirigiendo al pago seguro..." :
+          locale === "fr" ? "Redirection vers le paiement sécurisé..." :
+          locale === "de" ? "Weiterleitung zur sicheren Zahlung..." :
           "Redirecionando para o pagamento seguro...");
         window.open(data.url, "_blank");
       } else {
         toast.error(locale === "en" ? "Error creating checkout. Try again." :
           locale === "es" ? "Error al crear el pago. Inténtalo de nuevo." :
+          locale === "fr" ? "Erreur lors du paiement. Réessayez." :
+          locale === "de" ? "Fehler beim Erstellen der Zahlung. Erneut versuchen." :
           "Erro ao criar o pagamento. Tente novamente.");
       }
       setIsLoading(false);
@@ -125,6 +163,8 @@ export default function Checkout() {
     onError: () => {
       toast.error(locale === "en" ? "Connection error. Try again." :
         locale === "es" ? "Error de conexión. Inténtalo de nuevo." :
+        locale === "fr" ? "Erreur de connexion. Réessayez." :
+        locale === "de" ? "Verbindungsfehler. Erneut versuchen." :
         "Erro de conexão. Tente novamente.");
       setIsLoading(false);
     },
