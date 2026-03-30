@@ -302,3 +302,21 @@
 ## FASE 32: LIMPEZA DUPLICATAS FR/DE
 - [x] Verificar se FR_new e DE_new existem em blogArticlesI18n.ts
 - [x] Remover arrays duplicados sem impacto nos artigos principais (3659 → 3395 linhas, 264 linhas removidas)
+
+## FASE 33: SYNC COMMIT 4ac00df - 4 NOVOS ARTIGOS PT
+- [ ] Fazer pull do commit 4ac00df do GitHub (branch master)
+- [ ] Adicionar 4 artigos ao BlogArticle.tsx: surtos-de-crescimento-do-bebe, ictericia-neonatal-causas-e-tratamento, dentição-do-bebe-sintomas-e-alivio, ansiedade-pos-parto-vs-depressao-diferencas
+- [ ] Corrigir campo date? como opcional na interface BlogArticle do Blog.tsx
+- [ ] Build: 0 erros TypeScript
+- [ ] Atualizar sitemap com os 4 novos slugs
+- [ ] Salvar checkpoint e publicar
+
+## FASE 33: SYNC COMMIT 4ac00df - 4 NOVOS ARTIGOS PT
+- [x] Fazer pull do commit 4ac00df do GitHub (via git show origin/master)
+- [x] Adicionar 4 novos artigos ao BlogArticle.tsx (16 slugs total):
+  - surtos-de-crescimento-do-bebe
+  - ictericia-neonatal-causas-e-tratamento
+  - dentição-do-bebe-sintomas-e-alivio
+  - ansiedade-pos-parto-vs-depressao-diferencas
+- [x] Build: 0 erros TypeScript
+- [x] Testes: 60/60 passando
