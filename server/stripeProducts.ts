@@ -17,7 +17,7 @@ export const PRODUCTS = {
       "Análise avançada de sono",
     ],
     price: {
-      amount: 1990, // R$ 19,90 in centavos
+      amount: 2900, // R$ 29,00 in centavos
       currency: "brl",
       interval: "month" as const,
     },

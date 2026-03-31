@@ -13,7 +13,7 @@ type Plan = "basic" | "premium";
 
 const PLANS = {
   basic: {
-    BRL: { amount: 2990, label: "R$ 29,90/mês" },
+    BRL: { amount: 2900, label: "R$ 29,00/mês" },
     USD: { amount: 990,  label: "$9.90/month" },
     EUR: { amount: 990,  label: "€9,90/mês" },
     features: {

@@ -28,7 +28,7 @@ export default function Home() {
 
   const faqItemsPt = [
     { q: "O Wilbor substitui o pediatra?", a: "Não. O Wilbor é um apoio neonatal digital. Em caso de emergência, procure atendimento presencial." },
-    { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos: VISITA LIVRE (Grátis): 5 consultas com IA/mês. PREMIUM (R$ 19,90/mês): 500 créditos IA/mês. MANUAL (R$ 29,90): Conteúdo completo sem IA." },
+    { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos: VISITA LIVRE (Grátis): 5 consultas com IA/mês. PREMIUM (R$ 29,00/mês): 500 créditos IA/mês. MANUAL (R$ 45,00): Conteúdo completo sem IA." },
     { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 5 consultas grátis no plano Visita Livre. Sem cartão necessário." },
     { q: "Para qual idade é indicado?", a: "O Wilbor é indicado para bebês de 0 a 12 meses." },
     { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
@@ -38,7 +38,7 @@ export default function Home() {
   ];
   const faqItemsEn = [
     { q: "Does Wilbor replace a pediatrician?", a: "No. Wilbor is digital neonatal support. In case of emergency, seek in-person care." },
-    { q: "How do Wilbor plans work?", a: "We have 3 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($9.90/mo): 500 AI credits/month. MANUAL ($14.90): Full content without AI." },
+    { q: "How do Wilbor plans work?", a: "We have 3 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($9.00/mo): 500 AI credits/month. MANUAL ($14.00): Full content without AI." },
     { q: "Is it free? Do I need a credit card?", a: "Yes, start with 5 free consultations on the Free Visit plan. No credit card required." },
     { q: "What age range is it for?", a: "Wilbor is designed for babies from 0 to 12 months." },
     { q: "Is it based on reliable protocols?", a: "Yes, all guidance follows official recommendations from AAP, WHO, and SBP." },
@@ -48,7 +48,7 @@ export default function Home() {
   ];
   const faqItemsEs = [
     { q: "¿Wilbor reemplaza al pediatra?", a: "No. Wilbor es apoyo neonatal digital. En caso de emergencia, busque atención presencial." },
-    { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 3 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($9.90/mes): 500 créditos IA/mes. MANUAL ($14.90): Contenido completo sin IA." },
+    { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 3 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($9.00/mes): 500 créditos IA/mes. MANUAL ($14.00): Contenido completo sin IA." },
     { q: "¿Es gratis? ¿Necesito tarjeta?", a: "Sí, empieza con 5 consultas gratis en el plan Visita Libre. Sin tarjeta necesaria." },
     { q: "¿Para qué edad está indicado?", a: "Wilbor está diseñado para bebés de 0 a 12 meses." },
     { q: "¿Está basado en protocolos confiables?", a: "Sí, todas las orientaciones siguen las recomendaciones oficiales de AAP, OMS y SBP." },
@@ -58,7 +58,7 @@ export default function Home() {
   ];
   const faqItemsFr = [
     { q: "Wilbor remplace-t-il le pédiatre ?", a: "Non. Wilbor est un soutien néonatal numérique. En cas d'urgence, consultez un médecin en personne." },
-    { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 3 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (9,90€/mois) : 500 réponses IA/mois. MANUEL (14,90€) : Contenu complet sans IA." },
+    { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 3 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (9,00€/mois) : 500 réponses IA/mois. MANUEL (14,00€) : Contenu complet sans IA." },
     { q: "Est-ce gratuit ? Ai-je besoin d'une carte bancaire ?", a: "Oui, commencez avec 5 consultations gratuites. Aucune carte bancaire requise." },
     { q: "Pour quelle tranche d'âge est-il indiqué ?", a: "Wilbor est conçu pour les bébés de 0 à 12 mois." },
     { q: "Est-il basé sur des protocoles fiables ?", a: "Oui, toutes les recommandations suivent les directives officielles de l'AAP, de l'OMS et de la SFP." },
@@ -68,7 +68,7 @@ export default function Home() {
   ];
   const faqItemsDe = [
     { q: "Ersetzt Wilbor den Kinderarzt?", a: "Nein. Wilbor ist digitale neonatale Unterstützung. Im Notfall suchen Sie bitte einen Arzt auf." },
-    { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 3 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (9,90€/Monat): 500 Antworten/Monat. HANDBUCH (14,90€): Vollständiger Inhalt ohne KI." },
+    { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 3 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (9,00€/Monat): 500 Antworten/Monat. HANDBUCH (14,00€): Vollständiger Inhalt ohne KI." },
     { q: "Ist es kostenlos? Brauche ich eine Kreditkarte?", a: "Ja, starten Sie mit 5 kostenlosen Beratungen. Keine Kreditkarte erforderlich." },
     { q: "Für welche Altersgruppe ist es geeignet?", a: "Wilbor ist für Babys von 0 bis 12 Monaten konzipiert." },
     { q: "Basiert es auf zuverlässigen Protokollen?", a: "Ja, alle Empfehlungen folgen den offiziellen Richtlinien der AAP, WHO und DGKJ." },
