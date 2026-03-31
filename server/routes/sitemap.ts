@@ -37,6 +37,7 @@ const BLOG_SLUGS_PT = [
   "ictericia-neonatal-causas-e-tratamento",
   "dentição-do-bebe-sintomas-e-alivio",
   "ansiedade-pos-parto-vs-depressao-diferencas",
+  "por-que-wilbor-nunca-prescreve-remedios",
 ];
 
 const BLOG_SLUGS_EN = [
@@ -55,6 +56,7 @@ const BLOG_SLUGS_EN = [
   "newborn-jaundice-causes-and-treatment",
   "baby-teething-symptoms-and-relief",
   "postpartum-anxiety-vs-depression-key-differences",
+  "why-wilbor-never-prescribes-medication",
 ];
 
 const BLOG_SLUGS_ES = [
@@ -73,6 +75,7 @@ const BLOG_SLUGS_ES = [
   "ictericia-neonatal-causas-y-tratamiento",
   "ansiedad-posparto-sintomas-y-diferencias-con-depresion",
   "crecimiento-del-bebe-tablas-de-peso-y-talla-oms",
+  "por-que-wilbor-nunca-receta-medicamentos",
 ];
 
 const BLOG_SLUGS_FR = [
@@ -92,6 +95,7 @@ const BLOG_SLUGS_FR = [
   "ictere-neonatal-causes-et-traitement",
   "dentition-du-bebe-symptomes-et-soulagement",
   "anxiete-post-partum-vs-depression-differences",
+  "pourquoi-wilbor-ne-prescrit-jamais-de-medicaments",
 ];
 
 const BLOG_SLUGS_DE = [
@@ -111,6 +115,7 @@ const BLOG_SLUGS_DE = [
   "neugeborenengelbsucht-ursachen-und-behandlung",
   "zahnen-beim-baby-symptome-und-linderung",
   "wochenbettangst-vs-wochenbettdepression-unterschiede",
+  "warum-wilbor-niemals-medikamente-verschreibt",
 ];
 
 // Map language prefix to its slug array

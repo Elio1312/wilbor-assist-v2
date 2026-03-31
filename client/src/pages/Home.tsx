@@ -278,6 +278,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== HOW WILBOR RESPONDS SECTION ===== */}
+      <section className="py-20 px-4 bg-purple-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="bg-purple-100 text-purple-800 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide uppercase mb-4 inline-block">
+              {t("how.badge")}
+            </span>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("how.h2")}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t("how.subtitle")}</p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { icon: Heart, title: t("how.step1_title"), desc: t("how.step1_desc") },
+              { icon: Brain, title: t("how.step2_title"), desc: t("how.step2_desc") },
+              { icon: BookOpen, title: t("how.step3_title"), desc: t("how.step3_desc") },
+              { icon: Shield, title: t("how.step4_title"), desc: t("how.step4_desc") },
+            ].map((step, i) => (
+              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-purple-100 relative">
+                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                  <step.icon className="w-6 h-6 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-purple-200"></div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== GROWTH CRISES + SLEEP TRACKER SECTION ===== */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">

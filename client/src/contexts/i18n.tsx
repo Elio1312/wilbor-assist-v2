@@ -57,6 +57,19 @@ const translations: Record<Locale, Record<string, string>> = {
     "hero.mockup_cta2": "WhatsApp",
     "hero.mockup_tagline": "Orientação confiável para mães, 24h por dia",
 
+    // How Wilbor Responds
+    "how.badge": "Inteligência Médica",
+    "how.h2": "Como o Wilbor responde?",
+    "how.subtitle": "Não é um chat genérico. É um protocolo clínico de segurança.",
+    "how.step1_title": "1. Acolhimento",
+    "how.step1_desc": "Entende sua angústia e valida sua preocupação sem julgamentos.",
+    "how.step2_title": "2. Triagem Clínica",
+    "how.step2_desc": "Faz perguntas essenciais para entender a gravidade da situação.",
+    "how.step3_title": "3. Base de Conhecimento",
+    "how.step3_desc": "Cruza os sintomas com os protocolos da SBP, OMS e AAP.",
+    "how.step4_title": "4. Orientação Segura",
+    "how.step4_desc": "Indica o que fazer em casa e os sinais exatos de alerta para ir ao hospital.",
+
     // Features
     "features.h2": "Para o seu bebê",
     "features.subtitle": "Tudo funciona junto para organizar a rotina do seu bebê de forma simples e previsível.",
@@ -252,6 +265,19 @@ const translations: Record<Locale, Record<string, string>> = {
     "hero.mockup_cta2": "WhatsApp",
     "hero.mockup_tagline": "Reliable guidance for mothers, 24 hours a day",
 
+    // How Wilbor Responds
+    "how.badge": "Medical Intelligence",
+    "how.h2": "How does Wilbor respond?",
+    "how.subtitle": "It's not a generic chat. It's a clinical safety protocol.",
+    "how.step1_title": "1. Empathy",
+    "how.step1_desc": "Understands your distress and validates your concern without judgment.",
+    "how.step2_title": "2. Clinical Triage",
+    "how.step2_desc": "Asks essential questions to understand the severity of the situation.",
+    "how.step3_title": "3. Knowledge Base",
+    "how.step3_desc": "Cross-references symptoms with AAP, WHO, and SBP protocols.",
+    "how.step4_title": "4. Safe Guidance",
+    "how.step4_desc": "Tells you what to do at home and the exact warning signs to go to the hospital.",
+
     // Features
     "features.h2": "For your baby",
     "features.subtitle": "Everything works together to organize your baby's routine in a simple and predictable way.",
@@ -446,6 +472,19 @@ const translations: Record<Locale, Record<string, string>> = {
     "hero.mockup_cta1": "Probar Gratis",
     "hero.mockup_cta2": "WhatsApp",
     "hero.mockup_tagline": "Orientación confiable para madres, 24 horas al día",
+
+    // How Wilbor Responds
+    "how.badge": "Inteligencia Médica",
+    "how.h2": "¿Cómo responde Wilbor?",
+    "how.subtitle": "No es un chat genérico. Es un protocolo clínico de seguridad.",
+    "how.step1_title": "1. Empatía",
+    "how.step1_desc": "Entiende tu angustia y valida tu preocupación sin juzgar.",
+    "how.step2_title": "2. Triaje Clínico",
+    "how.step2_desc": "Hace preguntas esenciales para entender la gravedad de la situación.",
+    "how.step3_title": "3. Base de Conocimiento",
+    "how.step3_desc": "Cruza los síntomas con los protocolos de la AAP, OMS y SBP.",
+    "how.step4_title": "4. Orientación Segura",
+    "how.step4_desc": "Indica qué hacer en casa y las señales exactas de alerta para ir al hospital.",
 
     // Features
     "features.h2": "Para tu bebé",
@@ -643,6 +682,19 @@ const translations: Record<Locale, Record<string, string>> = {
     "hero.mockup_cta2": "WhatsApp",
     "hero.mockup_tagline": "Conseils fiables pour les mères, 24 heures sur 24",
 
+    // How Wilbor Responds
+    "how.badge": "Intelligence Médicale",
+    "how.h2": "Comment Wilbor répond-il ?",
+    "how.subtitle": "Ce n'est pas un chat générique. C'est un protocole de sécurité clinique.",
+    "how.step1_title": "1. Empathie",
+    "how.step1_desc": "Comprend votre détresse et valide votre inquiétude sans jugement.",
+    "how.step2_title": "2. Triage Clinique",
+    "how.step2_desc": "Pose des questions essentielles pour comprendre la gravité de la situation.",
+    "how.step3_title": "3. Base de Connaissances",
+    "how.step3_desc": "Croise les symptômes avec les protocoles de l'AAP, de l'OMS et de la SFP.",
+    "how.step4_title": "4. Orientation Sûre",
+    "how.step4_desc": "Indique quoi faire à la maison et les signes d'alerte exacts pour aller à l'hôpital.",
+
     // Features
     "features.h2": "Pour votre bébé",
     "features.subtitle": "Tout fonctionne ensemble pour organiser la routine de votre bébé de manière simple et prévisible.",
@@ -838,6 +890,19 @@ const translations: Record<Locale, Record<string, string>> = {
     "hero.mockup_cta1": "Kostenlos testen",
     "hero.mockup_cta2": "WhatsApp",
     "hero.mockup_tagline": "Zuverlässige Unterstützung für Mütter, 24 Stunden am Tag",
+
+    // How Wilbor Responds
+    "how.badge": "Medizinische Intelligenz",
+    "how.h2": "Wie antwortet Wilbor?",
+    "how.subtitle": "Es ist kein generischer Chat. Es ist ein klinisches Sicherheitsprotokoll.",
+    "how.step1_title": "1. Empathie",
+    "how.step1_desc": "Versteht Ihre Not und validiert Ihre Sorge ohne Urteil.",
+    "how.step2_title": "2. Klinische Triage",
+    "how.step2_desc": "Stellt wesentliche Fragen, um die Schwere der Situation zu verstehen.",
+    "how.step3_title": "3. Wissensdatenbank",
+    "how.step3_desc": "Gleicht Symptome mit den Protokollen der AAP, WHO und DGKJ ab.",
+    "how.step4_title": "4. Sichere Anleitung",
+    "how.step4_desc": "Zeigt, was zu Hause zu tun ist und die genauen Warnzeichen, um ins Krankenhaus zu gehen.",
 
     // Features
     "features.h2": "Für Ihr Baby",

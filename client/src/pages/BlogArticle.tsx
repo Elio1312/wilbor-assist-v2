@@ -1130,6 +1130,26 @@ Comece gratuitamente.`,
     ],
     content: `## O Período Pós-Parto e a Saúde Mental\nO período pós-parto é um momento de intensas transformações físicas e emocionais. Embora muitas pessoas conheçam o "baby blues", transtornos mais sérios como a **Depressão Pós-Parto (DPP)** e a **Ansiedade Pós-Parto (APP)** são comuns e frequentemente mal compreendidos.\n## Principais Diferenças\n| | Depressão Pós-Parto (DPP) | Ansiedade Pós-Parto (APP) |\n|---|---|---|\n| **Sentimento principal** | Tristeza persistente, desesperança | Preocupação excessiva, medo |\n| **Pensamentos** | Negativos, vazios | Acelerados, catastróficos |\n| **Sintomas físicos** | Cansaço, alteração do apetite | Coração acelerado, tontura |\n| **Relação com o bebê** | Dificuldade de criar vínculo | Superproteção excessiva |\n## Importante: Ambas Têm Tratamento\nDPP e APP podem ocorrer ao mesmo tempo. As duas condições são **altamente tratáveis** com acompanhamento profissional — psicoterapia, medicação ou grupos de apoio.\nExperimentar esses sentimentos **não faz de você uma mãe ruim**. É uma condição de saúde que merece cuidado.\n---\n**Fonte:** Sociedade Brasileira de Pediatria (SBP) e Organização Mundial da Saúde (OMS).`,
   },
+  {
+    slug: "por-que-wilbor-nunca-prescreve-remedios",
+    title: "Por que o Wilbor nunca prescreve remédios (e por que isso é a sua maior segurança)",
+    metaTitle: "Por que o Wilbor não prescreve remédios | Wilbor-Assist",
+    metaDescription: "Entenda como funciona o protocolo de segurança de 6 blocos do Wilbor e por que uma IA ética nunca deve calcular doses ou prescrever medicamentos para bebês.",
+    icon: ShieldCheck,
+    iconColor: "text-blue-600",
+    iconBg: "bg-blue-50",
+    readTime: "5 min",
+    category: "Segurança",
+    excerpt: "Descubra como o Wilbor usa um protocolo clínico de 6 blocos para orientar mães sobre medicamentos com total segurança, sem nunca substituir o pediatra.",
+    keywords: ["prescrição IA", "segurança bebê", "protocolo médico", "remédio bebê", "Wilbor segurança"],
+
+    schemaFAQ: [
+      { question: "O Wilbor pode calcular a dose de remédio para meu bebê?", answer: "Não. O Wilbor educa sobre o uso e orienta como verificar a dosagem correta com o pediatra, mas nunca calcula doses por segurança." },
+      { question: "Por que o Wilbor não prescreve remédios?", answer: "Porque a prescrição médica exige avaliação clínica presencial. O Wilbor atua como uma rede de apoio e triagem, não como substituto do médico." },
+      { question: "O que o Wilbor faz quando meu bebê tem febre?", answer: "Ele acolhe, faz perguntas de triagem para entender a gravidade, orienta medidas práticas e indica os sinais de alerta para ir ao pronto-socorro." }
+    ],
+    content: `## A Linha Tênue Entre Ajuda e Risco\n\nQuando o bebê chora de madrugada com febre, o primeiro instinto de qualquer mãe é buscar alívio rápido. Na era da inteligência artificial, é tentador perguntar a um chat: *"Quantas gotas de paracetamol dou para meu bebê de 8kg?"*\n\nMuitas IAs genéricas responderiam a essa pergunta com um cálculo matemático. **O Wilbor não.** E existe um motivo muito sério para isso.\n\n## O Protocolo de 6 Blocos do Wilbor\n\nO Wilbor foi treinado com uma diretriz inegociável: **a segurança do seu bebê está acima de qualquer conveniência tecnológica.**\n\nQuando você pergunta sobre medicamentos, o Wilbor ativa um protocolo clínico rigoroso de 6 etapas:\n\n1. **Acolhimento:** Ele entende sua angústia e valida sua preocupação.\n2. **Informação Neutra:** Explica para que serve o medicamento citado, sem incentivar o uso.\n3. **Educação sobre Dosagem:** Explica que a dose depende do peso e da concentração, mas **nunca faz o cálculo**.\n4. **Orientação Segura:** Lembra a importância de confirmar a dose com o pediatra.\n5. **Triagem Clínica:** Faz perguntas essenciais (Há quanto tempo? Qual a temperatura? Há outros sintomas?).\n6. **Sinais de Alerta:** Indica exatamente quando a situação deixa de ser um cuidado caseiro e passa a ser uma emergência de pronto-socorro.\n\n## Por Que Isso é a Sua Maior Segurança?\n\nUm erro de cálculo de miligramas pode causar intoxicação grave em um bebê. Uma IA não pode ver a concentração exata do frasco que você tem em casa, nem avaliar o estado geral da criança.\n\nO Wilbor atua como a sua **rede de apoio mais inteligente e segura**. Ele organiza as informações, acalma seu coração, diz o que observar e quando correr para o hospital. Ele empodera você com conhecimento, mas nunca ultrapassa a linha da responsabilidade médica.\n\nPorque cuidar de verdade é saber exatamente até onde ir.\n\n---\n**Fonte:** Protocolos de Segurança em Saúde Digital e Diretrizes da Sociedade Brasileira de Pediatria (SBP).`
+  },
 ];
 
 // ==========================================

@@ -862,6 +862,16 @@ Experiencing these feelings does **not** make you a bad parent. It is a medical 
 ---
 **Source:** American Academy of Pediatrics (AAP), WHO.`,
   },
+  {
+    slug: "why-wilbor-never-prescribes-medication",
+    title: "Why Wilbor Never Prescribes Medication (And Why That's Your Greatest Safety)",
+    metaTitle: "Why Wilbor Doesn't Prescribe Medication | Wilbor-Assist",
+    metaDescription: "Understand how Wilbor's 6-block safety protocol works and why an ethical AI should never calculate doses or prescribe medication for babies.",
+    readTime: "5 min",
+    excerpt: "Discover how Wilbor uses a 6-block clinical protocol to guide mothers on medications with total safety, without ever replacing the pediatrician.",
+    keywords: ["AI prescription", "baby safety", "medical protocol", "baby medication", "Wilbor safety"],
+    content: `## The Fine Line Between Help and Risk\n\nWhen a baby cries in the middle of the night with a fever, any mother's first instinct is to seek quick relief. In the age of artificial intelligence, it's tempting to ask a chat: *"How many drops of paracetamol do I give my 8kg baby?"*\n\nMany generic AIs would answer this question with a mathematical calculation. **Wilbor does not.** And there is a very serious reason for this.\n\n## Wilbor's 6-Block Protocol\n\nWilbor was trained with a non-negotiable guideline: **your baby's safety is above any technological convenience.**\n\nWhen you ask about medications, Wilbor activates a rigorous 6-step clinical protocol:\n\n1. **Empathy:** It understands your distress and validates your concern.\n2. **Neutral Information:** Explains what the mentioned medication is for, without encouraging its use.\n3. **Dosage Education:** Explains that the dose depends on weight and concentration, but **never does the calculation**.\n4. **Safe Guidance:** Reminds the importance of confirming the dose with the pediatrician.\n5. **Clinical Triage:** Asks essential questions (How long? What is the temperature? Are there other symptoms?).\n6. **Warning Signs:** Indicates exactly when the situation ceases to be home care and becomes an emergency room emergency.\n\n## Why Is This Your Greatest Safety?\n\nA milligram calculation error can cause severe intoxication in a baby. An AI cannot see the exact concentration of the bottle you have at home, nor evaluate the child's general condition.\n\nWilbor acts as your **smartest and safest support network**. It organizes information, calms your heart, tells you what to observe, and when to rush to the hospital. It empowers you with knowledge, but never crosses the line of medical responsibility.\n\nBecause truly caring means knowing exactly how far to go.\n\n---\n**Source:** Digital Health Safety Protocols and American Academy of Pediatrics (AAP) Guidelines.`,
+  },
 ];
 
 export const blogArticlesES: BlogArticleTranslation[] = [
@@ -1527,7 +1537,17 @@ Si la curva de crecimiento de tu beb\u00e9 **cae dr\u00e1sticamente** o cruza va
 Si tienes preguntas sobre las medidas de tu beb\u00e9, Wilbor Assist est\u00e1 disponible para ofrecerte orientaci\u00f3n basada en la OMS y la AAP.
 
 ---
-**Fuente:** Organizaci\u00f3n Mundial de la Salud (OMS), American Academy of Pediatrics (AAP).`,
+**Fuente:** Organización Mundial de la Salud (OMS), American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "por-que-wilbor-nunca-receta-medicamentos",
+    title: "Por qué Wilbor nunca receta medicamentos (y por qué esa es tu mayor seguridad)",
+    metaTitle: "Por qué Wilbor no receta medicamentos | Wilbor-Assist",
+    metaDescription: "Entiende cómo funciona el protocolo de seguridad de 6 bloques de Wilbor y por qué una IA ética nunca debe calcular dosis o recetar medicamentos para bebés.",
+    readTime: "5 min",
+    excerpt: "Descubre cómo Wilbor usa un protocolo clínico de 6 bloques para guiar a las madres sobre medicamentos con total seguridad, sin reemplazar nunca al pediatra.",
+    keywords: ["prescripción IA", "seguridad bebé", "protocolo médico", "medicamento bebé", "Wilbor seguridad"],
+    content: `## La Fina Línea Entre Ayuda y Riesgo\n\nCuando el bebé llora de madrugada con fiebre, el primer instinto de cualquier madre es buscar alivio rápido. En la era de la inteligencia artificial, es tentador preguntarle a un chat: *"¿Cuántas gotas de paracetamol le doy a mi bebé de 8kg?"*\n\nMuchas IA genéricas responderían a esta pregunta con un cálculo matemático. **Wilbor no.** Y hay una razón muy seria para esto.\n\n## El Protocolo de 6 Bloques de Wilbor\n\nWilbor fue entrenado con una directriz innegociable: **la seguridad de tu bebé está por encima de cualquier conveniencia tecnológica.**\n\nCuando preguntas sobre medicamentos, Wilbor activa un riguroso protocolo clínico de 6 etapas:\n\n1. **Acogida:** Entiende tu angustia y valida tu preocupación.\n2. **Información Neutral:** Explica para qué sirve el medicamento mencionado, sin fomentar su uso.\n3. **Educación sobre Dosis:** Explica que la dosis depende del peso y la concentración, pero **nunca hace el cálculo**.\n4. **Orientación Segura:** Recuerda la importancia de confirmar la dosis con el pediatra.\n5. **Triaje Clínico:** Hace preguntas esenciales (¿Cuánto tiempo? ¿Cuál es la temperatura? ¿Hay otros síntomas?).\n6. **Señales de Alerta:** Indica exactamente cuándo la situación deja de ser un cuidado en casa y se convierte en una emergencia de urgencias.\n\n## ¿Por Qué Esta es Tu Mayor Seguridad?\n\nUn error de cálculo de miligramos puede causar una intoxicación grave en un bebé. Una IA no puede ver la concentración exacta del frasco que tienes en casa, ni evaluar el estado general del niño.\n\nWilbor actúa como tu **red de apoyo más inteligente y segura**. Organiza la información, calma tu corazón, te dice qué observar y cuándo correr al hospital. Te empodera con conocimiento, pero nunca cruza la línea de la responsabilidad médica.\n\nPorque cuidar de verdad es saber exactamente hasta dónde llegar.\n\n---\n**Fuente:** Protocolos de Seguridad en Salud Digital y Directrices de la American Academy of Pediatrics (AAP).`,
   },
 ];
 
@@ -2472,6 +2492,16 @@ Wilbor ne pose pas de diagnostic. Mais il **perçoit** quand quelque chose va au
     keywords: ["anxiété post-partum", "dépression post-partum", "santé mentale maternelle", "baby blues", "trouble post-partum"],
     content: `## La période post-partum et la santé mentale\n\nLa période post-partum est un moment de transformations physiques et émotionnelles intenses. Bien que beaucoup connaissent le \"baby blues\", des troubles plus sérieux comme la **Dépression Post-Partum (DPP)** et l'**Anxiété Post-Partum (APP)** sont fréquents et souvent mal compris.\n\n## Principales différences\n\n| | Dépression Post-Partum (DPP) | Anxiété Post-Partum (APP) |\n|---|---|---|\n| **Sentiment principal** | Tristesse persistante, désespoir | Inquiétude excessive, peur |\n| **Pensées** | Négatives, vides | Rapides, catastrophiques |\n| **Symptômes physiques** | Fatigue, changement d'appétit | C\u0153ur accéléré, étourdissements |\n| **Relation avec le bébé** | Difficulté \u00e0 créer un lien | Surprotection excessive |\n\n## Important : les deux se traitent\n\nLa DPP et l'APP peuvent survenir en même temps. Les deux conditions sont **hautement traitables** avec un accompagnement professionnel \u2014 psychothérapie, médication ou groupes de soutien.\n\nRessentir cela **ne fait pas de vous une mauvaise mère**. C'est une condition de santé qui mérite de l'attention.\n\n---\n**Source :** Société Française de Pédiatrie (SFP) et Organisation Mondiale de la Santé (OMS).`,
   },
+  {
+    slug: "pourquoi-wilbor-ne-prescrit-jamais-de-medicaments",
+    title: "Pourquoi Wilbor ne prescrit jamais de médicaments (et pourquoi c'est votre plus grande sécurité)",
+    metaTitle: "Pourquoi Wilbor ne prescrit pas de médicaments | Wilbor-Assist",
+    metaDescription: "Comprenez comment fonctionne le protocole de sécurité en 6 blocs de Wilbor et pourquoi une IA éthique ne devrait jamais calculer de doses ou prescrire des médicaments pour les bébés.",
+    readTime: "5 min",
+    excerpt: "Découvrez comment Wilbor utilise un protocole clinique en 6 blocs pour guider les mères sur les médicaments en toute sécurité, sans jamais remplacer le pédiatre.",
+    keywords: ["prescription IA", "sécurité bébé", "protocole médical", "médicament bébé", "Wilbor sécurité"],
+    content: `## La Fine Ligne Entre Aide et Risque\n\nQuand le bébé pleure au milieu de la nuit avec de la fièvre, le premier instinct de toute mère est de chercher un soulagement rapide. À l'ère de l'intelligence artificielle, il est tentant de demander à un chat : *"Combien de gouttes de paracétamol dois-je donner à mon bébé de 8 kg ?"*\n\nDe nombreuses IA génériques répondraient à cette question par un calcul mathématique. **Wilbor ne le fait pas.** Et il y a une raison très sérieuse à cela.\n\n## Le Protocole en 6 Blocs de Wilbor\n\nWilbor a été formé avec une directive non négociable : **la sécurité de votre bébé est au-dessus de toute commodité technologique.**\n\nLorsque vous posez des questions sur les médicaments, Wilbor active un protocole clinique rigoureux en 6 étapes :\n\n1. **Empathie :** Il comprend votre détresse et valide votre inquiétude.\n2. **Information Neutre :** Explique à quoi sert le médicament mentionné, sans encourager son utilisation.\n3. **Éducation sur le Dosage :** Explique que la dose dépend du poids et de la concentration, mais **ne fait jamais le calcul**.\n4. **Orientation Sûre :** Rappelle l'importance de confirmer la dose avec le pédiatre.\n5. **Triage Clinique :** Pose des questions essentielles (Depuis combien de temps ? Quelle est la température ? Y a-t-il d'autres symptômes ?).\n6. **Signes d'Alerte :** Indique exactement quand la situation cesse d'être un soin à domicile et devient une urgence hospitalière.\n\n## Pourquoi Est-ce Votre Plus Grande Sécurité ?\n\nUne erreur de calcul en milligrammes peut provoquer une intoxication grave chez un bébé. Une IA ne peut pas voir la concentration exacte du flacon que vous avez à la maison, ni évaluer l'état général de l'enfant.\n\nWilbor agit comme votre **réseau de soutien le plus intelligent et le plus sûr**. Il organise les informations, apaise votre cœur, vous dit quoi observer et quand courir à l'hôpital. Il vous donne les moyens d'agir grâce à la connaissance, mais ne franchit jamais la ligne de la responsabilité médicale.\n\nParce que prendre vraiment soin, c'est savoir exactement jusqu'où aller.\n\n---\n**Source :** Protocoles de Sécurité en Santé Numérique et Directives de la Société Française de Pédiatrie (SFP).`,
+  },
 ];
 // ============================================
 // GERMAN (DE) ARTICLES
@@ -3391,5 +3421,300 @@ Wilbor diagnostiziert nicht. Aber es **nimmt wahr**, wenn etwas über das Weinen
     metaDescription: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression, erkennen Sie die Symptome und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
     keywords: ["Wochenbettangst", "Wochenbettdepression", "psychische Gesundheit Mutter", "Baby Blues", "postpartale Störung"],
     content: `## Die Zeit nach der Geburt und die psychische Gesundheit\n\nDie Zeit nach der Geburt ist ein Abschnitt intensiver körperlicher und emotionaler Veränderungen. Obwohl viele Menschen den \u201eBaby Blues\u201c kennen, sind ernstere Störungen wie die **Wochenbettdepression (DPP)** und die **Wochenbettangst (APP)** häufig und werden oft missverstanden.\n\n## Wichtigste Unterschiede\n\n| | Wochenbettdepression (DPP) | Wochenbettangst (APP) |\n|---|---|---|\n| **Hauptgefühl** | Anhaltende Traurigkeit, Hoffnungslosigkeit | \u00dcbermäßige Sorge, Angst |\n| **Gedanken** | Negativ, leer | Beschleunigt, katastrophisierend |\n| **Körperliche Symptome** | Müdigkeit, Appetitveränderung | Herzrasen, Schwindel |\n| **Beziehung zum Baby** | Schwierigkeit, eine Bindung aufzubauen | \u00dcbermäßiger Beschützerinstinkt |\n\n## Wichtig: Beide sind behandelbar\n\nDPP und APP können gleichzeitig auftreten. Beide Zustände sind **sehr gut behandelbar** mit professioneller Begleitung \u2014 Psychotherapie, Medikamente oder Selbsthilfegruppen.\n\nDiese Gefühle zu erleben **macht Sie nicht zu einer schlechten Mutter**. Es ist ein gesundheitlicher Zustand, der Fürsorge verdient.\n\n---\n**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und Weltgesundheitsorganisation (WHO).`,
+  },
+  {
+    slug: "warum-wilbor-niemals-medikamente-verschreibt",
+    title: "Warum Wilbor niemals Medikamente verschreibt (und warum das Ihre größte Sicherheit ist)",
+    metaTitle: "Warum Wilbor keine Medikamente verschreibt | Wilbor-Assist",
+    metaDescription: "Verstehen Sie, wie das 6-Block-Sicherheitsprotokoll von Wilbor funktioniert und warum eine ethische KI niemals Dosen berechnen oder Medikamente für Babys verschreiben sollte.",
+    readTime: "5 min",
+    excerpt: "Entdecken Sie, wie Wilbor ein klinisches 6-Block-Protokoll verwendet, um Mütter bei Medikamenten mit absoluter Sicherheit anzuleiten, ohne jemals den Kinderarzt zu ersetzen.",
+    keywords: ["KI-Verschreibung", "Babysicherheit", "medizinisches Protokoll", "Babymedikamente", "Wilbor Sicherheit"],
+    content: `## Der schmale Grat zwischen Hilfe und Risiko\n\nWenn das Baby mitten in der Nacht mit Fieber weint, ist der erste Instinkt jeder Mutter, schnelle Linderung zu suchen. Im Zeitalter der künstlichen Intelligenz ist es verlockend, einen Chat zu fragen: *"Wie viele Tropfen Paracetamol gebe ich meinem 8 kg schweren Baby?"*\n\nViele generische KIs würden diese Frage mit einer mathematischen Berechnung beantworten. **Wilbor tut das nicht.** Und dafür gibt es einen sehr ernsten Grund.\n\n## Das 6-Block-Protokoll von Wilbor\n\nWilbor wurde mit einer nicht verhandelbaren Richtlinie trainiert: **Die Sicherheit Ihres Babys steht über jeder technologischen Bequemlichkeit.**\n\nWenn Sie nach Medikamenten fragen, aktiviert Wilbor ein strenges klinisches 6-Stufen-Protokoll:\n\n1. **Empathie:** Er versteht Ihre Not und validiert Ihre Sorge.\n2. **Neutrale Information:** Erklärt, wofür das erwähnte Medikament dient, ohne dessen Verwendung zu fördern.\n3. **Aufklärung über Dosierung:** Erklärt, dass die Dosis von Gewicht und Konzentration abhängt, aber **führt niemals die Berechnung durch**.\n4. **Sichere Anleitung:** Erinnert an die Wichtigkeit, die Dosis mit dem Kinderarzt zu bestätigen.\n5. **Klinische Triage:** Stellt wesentliche Fragen (Wie lange? Wie hoch ist die Temperatur? Gibt es andere Symptome?).\n6. **Warnzeichen:** Gibt genau an, wann die Situation keine häusliche Pflege mehr ist und zu einem Notfall für die Notaufnahme wird.\n\n## Warum ist das Ihre größte Sicherheit?\n\nEin Berechnungsfehler im Milligrammbereich kann bei einem Baby zu einer schweren Vergiftung führen. Eine KI kann weder die genaue Konzentration der Flasche sehen, die Sie zu Hause haben, noch den Allgemeinzustand des Kindes beurteilen.\n\nWilbor fungiert als Ihr **intelligentestes und sicherstes Unterstützungsnetzwerk**. Er organisiert Informationen, beruhigt Ihr Herz, sagt Ihnen, worauf Sie achten müssen und wann Sie ins Krankenhaus eilen sollten. Er stärkt Sie mit Wissen, überschreitet aber niemals die Grenze der medizinischen Verantwortung.\n\nDenn sich wirklich zu kümmern bedeutet, genau zu wissen, wie weit man gehen darf.\n\n---\n**Quelle:** Sicherheitsprotokolle für digitale Gesundheit und Richtlinien der Deutschen Gesellschaft für Kinder- und Jugendmedizin (DGKJ).`,
+  },
+];
+// ==========================================
+// FRENCH ARTICLES (FR) \u2014 Articles 13-16
+// ==========================================
+export const blogArticlesFR_new: BlogArticleTranslation[] = [
+  {
+    slug: "poussees-de-croissance-du-bebe",
+    title: "Poussées de Croissance du Bébé : Signes et Comment Réagir",
+    excerpt: "Reconnaissez les signes des poussées de croissance du bébé et apprenez à répondre avec patience aux changements de routine.",
+    readTime: "4 min",
+    metaTitle: "Poussées de Croissance du Bébé : Signes et Comment Réagir | Wilbor-Assist",
+    metaDescription: "Reconnaissez les signes des poussées de croissance du bébé et apprenez à répondre avec patience aux changements de routine. Basé sur les protocoles de la SFP et de l'AAP.",
+    keywords: ["poussée de croissance bébé", "bébé agité", "développement infantile", "bébé plus faim", "bébé pleureur"],
+    content: `## Qu'est-ce qu'une poussée de croissance ?
+
+Les poussées de croissance sont des périodes de développement physique accéléré que chaque bébé traverse durant sa première année de vie. Ces phases peuvent perturber la routine établie, mais reconnaître les signes permet de réagir avec calme et sécurité.
+
+## Signes courants d'une poussée de croissance
+
+- **Plus de faim** — tète plus fréquemment que d'habitude
+- **Sommeil perturbé** — se réveille plus souvent la nuit
+- **Irritabilité** — pleure plus que la normale
+- **Besoin de proximité** — veut être porté en permanence
+
+## Quand cela se produit-il ?
+
+Les poussées de croissance surviennent généralement à : **7–10 jours**, **2–3 semaines**, **4–6 semaines**, **3 mois**, **6 mois** et **9 mois**.
+
+## Comment agir
+
+Suivez le rythme de votre bébé. Offrez plus de tétées lorsqu'il montre des signes de faim et apportez beaucoup de contact et de réconfort. Les poussées de croissance durent en moyenne **2 à 3 jours**. Pour un accompagnement personnalisé, consultez Wilbor à tout moment.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "ictere-neonatal-causes-et-traitement",
+    title: "Ictère Néonatal : Causes, Symptômes et Traitement",
+    excerpt: "Comprenez ce qu'est l'ictère néonatal, pourquoi il apparaît, quand consulter un médecin et comment il est traité.",
+    readTime: "5 min",
+    metaTitle: "Ictère Néonatal : Causes, Symptômes et Traitement | Wilbor-Assist",
+    metaDescription: "Comprenez ce qu'est l'ictère néonatal, pourquoi il apparaît, quand consulter un médecin et comment il est traité. Basé sur les protocoles de la SFP et de l'AAP.",
+    keywords: ["ictère néonatal", "bébé jaune", "bilirubine bébé", "ictère nouveau-né", "photothérapie bébé"],
+    content: `## Qu'est-ce que l'ictère néonatal ?
+
+L'ictère néonatal est une condition **très fréquente** caractérisée par un jaunissement de la peau et du blanc des yeux du nouveau-né. Elle survient lorsqu'il y a un excès de **bilirubine** dans le sang du bébé.
+
+## Pourquoi cela se produit-il ?
+
+Comme le foie du nouveau-né est encore en développement, il peut ne pas traiter la bilirubine suffisamment rapidement. La majorité des cas est **légère et se résout spontanément** en 1 à 2 semaines, à mesure que le foie mûrit.
+
+## Quand consulter un médecin
+
+Consultez un professionnel de santé si :
+
+- L'ictère **apparaît dans les premières 24 heures** de vie
+- La coloration jaune **s'intensifie ou s'étend**
+- Le bébé est **très somnolent** ou difficile à réveiller
+
+## Traitement
+
+Lorsque les niveaux de bilirubine sont élevés, le médecin peut recommander une **photothérapie** — le bébé est placé sous des lumières bleues spéciales qui aident à décomposer la bilirubine. Les cas graves sont rares.
+
+**Des tétées fréquentes** (lait maternel ou formule) aident le bébé à éliminer la bilirubine par les selles.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "dentition-du-bebe-symptomes-et-soulagement",
+    title: "Dentition du Bébé : Symptômes et Comment Soulager l'Inconfort",
+    excerpt: "Votre bébé fait ses dents ? Découvrez les symptômes et des moyens sûrs de soulager l'inconfort des gencives.",
+    readTime: "4 min",
+    metaTitle: "Dentition du Bébé : Symptômes et Comment Soulager | Wilbor-Assist",
+    metaDescription: "Votre bébé fait ses dents ? Découvrez les symptômes courants et les moyens sûrs et efficaces de soulager l'inconfort des gencives. Basé sur la SFP et l'AAP.",
+    keywords: ["dentition bébé", "bébé qui fait ses dents", "gencives bébé", "première dent bébé", "anneau de dentition"],
+    content: `## Quand commence la dentition ?
+
+La dentition est une étape importante de la première année du bébé. La plupart des bébés ont leur **première dent vers 6 mois**, bien que cette période puisse varier considérablement.
+
+## Signes courants de la dentition
+
+- **Salivation excessive**
+- **Mord des objets** fréquemment
+- **Irritabilité** et agitation
+- **Gencives gonflées et sensibles**
+- Légère augmentation de la température corporelle (ce n'est pas de la fièvre)
+
+> Une fièvre supérieure à **38°C** N'EST PAS causée par la dentition et doit être évaluée par un pédiatre.
+
+## Moyens sûrs de soulager l'inconfort
+
+- **Anneau de dentition réfrigéré** (non congelé)
+- **Linge humide froid** pour masser les gencives
+- **Massage doux avec le doigt** sur les gencives
+- Consultez le pédiatre concernant l'utilisation de **paracétamol** si nécessaire
+
+⚠️ **Évitez** les gels de dentition contenant de la **benzocaïne** — ils peuvent présenter des risques sérieux pour la santé du bébé.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "anxiete-post-partum-vs-depression-differences",
+    title: "Anxiété Post-Partum vs Dépression Post-Partum : Différences Essentielles",
+    excerpt: "Comprenez les différences entre l'anxiété post-partum et la dépression post-partum, et sachez quand consulter un professionnel.",
+    readTime: "6 min",
+    metaTitle: "Anxiété Post-Partum vs Dépression Post-Partum : Différences | Wilbor-Assist",
+    metaDescription: "Comprenez les différences entre l'anxiété post-partum et la dépression post-partum, reconnaissez les symptômes et sachez quand consulter un professionnel.",
+    keywords: ["anxiété post-partum", "dépression post-partum", "santé mentale maternelle", "baby blues", "trouble post-partum"],
+    content: `## La période post-partum et la santé mentale
+
+La période post-partum est un moment de transformations physiques et émotionnelles intenses. Bien que beaucoup connaissent le "baby blues", des troubles plus sérieux comme la **Dépression Post-Partum (DPP)** et l'**Anxiété Post-Partum (APP)** sont fréquents et souvent mal compris.
+
+## Principales différences
+
+| | Dépression Post-Partum (DPP) | Anxiété Post-Partum (APP) |
+|---|---|---|
+| **Sentiment principal** | Tristesse persistante, désespoir | Inquiétude excessive, peur |
+| **Pensées** | Négatives, vides | Rapides, catastrophiques |
+| **Symptômes physiques** | Fatigue, changement d'appétit | Cœur accéléré, étourdissements |
+| **Relation avec le bébé** | Difficulté à créer un lien | Surprotection excessive |
+
+## Important : les deux se traitent
+
+La DPP et l'APP peuvent survenir en même temps. Les deux conditions sont **hautement traitables** avec un accompagnement professionnel — psychothérapie, médication ou groupes de soutien.
+
+Ressentir cela **ne fait pas de vous une mauvaise mère**. C'est une condition de santé qui mérite de l'attention. Si vous ou quelqu'un que vous connaissez traverse cela, consulter un professionnel de santé est la première étape.
+
+---
+**Source :** Société Française de Pédiatrie (SFP) et Organisation Mondiale de la Santé (OMS).`,
+  },
+  {
+    slug: "pourquoi-wilbor-ne-prescrit-jamais-de-medicaments",
+    title: "Pourquoi Wilbor ne prescrit jamais de médicaments (et pourquoi c'est votre plus grande sécurité)",
+    metaTitle: "Pourquoi Wilbor ne prescrit pas de médicaments | Wilbor-Assist",
+    metaDescription: "Comprenez comment fonctionne le protocole de sécurité en 6 blocs de Wilbor et pourquoi une IA éthique ne devrait jamais calculer de doses ou prescrire des médicaments pour les bébés.",
+    readTime: "5 min",
+    excerpt: "Découvrez comment Wilbor utilise un protocole clinique en 6 blocs pour guider les mères sur les médicaments en toute sécurité, sans jamais remplacer le pédiatre.",
+    keywords: ["prescription IA", "sécurité bébé", "protocole médical", "médicament bébé", "Wilbor sécurité"],
+    content: `## La Fine Ligne Entre Aide et Risque\n\nQuand le bébé pleure au milieu de la nuit avec de la fièvre, le premier instinct de toute mère est de chercher un soulagement rapide. À l'ère de l'intelligence artificielle, il est tentant de demander à un chat : *"Combien de gouttes de paracétamol dois-je donner à mon bébé de 8 kg ?"*\n\nDe nombreuses IA génériques répondraient à cette question par un calcul mathématique. **Wilbor ne le fait pas.** Et il y a une raison très sérieuse à cela.\n\n## Le Protocole en 6 Blocs de Wilbor\n\nWilbor a été formé avec une directive non négociable : **la sécurité de votre bébé est au-dessus de toute commodité technologique.**\n\nLorsque vous posez des questions sur les médicaments, Wilbor active un protocole clinique rigoureux en 6 étapes :\n\n1. **Empathie :** Il comprend votre détresse et valide votre inquiétude.\n2. **Information Neutre :** Explique à quoi sert le médicament mentionné, sans encourager son utilisation.\n3. **Éducation sur le Dosage :** Explique que la dose dépend du poids et de la concentration, mais **ne fait jamais le calcul**.\n4. **Orientation Sûre :** Rappelle l'importance de confirmer la dose avec le pédiatre.\n5. **Triage Clinique :** Pose des questions essentielles (Depuis combien de temps ? Quelle est la température ? Y a-t-il d'autres symptômes ?).\n6. **Signes d'Alerte :** Indique exactement quand la situation cesse d'être un soin à domicile et devient une urgence hospitalière.\n\n## Pourquoi Est-ce Votre Plus Grande Sécurité ?\n\nUne erreur de calcul en milligrammes peut provoquer une intoxication grave chez un bébé. Une IA ne peut pas voir la concentration exacte du flacon que vous avez à la maison, ni évaluer l'état général de l'enfant.\n\nWilbor agit comme votre **réseau de soutien le plus intelligent et le plus sûr**. Il organise les informations, apaise votre cœur, vous dit quoi observer et quand courir à l'hôpital. Il vous donne les moyens d'agir grâce à la connaissance, mais ne franchit jamais la ligne de la responsabilité médicale.\n\nParce que prendre vraiment soin, c'est savoir exactement jusqu'où aller.\n\n---\n**Source :** Protocoles de Sécurité en Santé Numérique et Directives de la Société Française de Pédiatrie (SFP).`,
+  },
+];
+
+// ==========================================
+// GERMAN ARTICLES (DE) — Articles 13-16
+// ==========================================
+export const blogArticlesDE_new: BlogArticleTranslation[] = [
+  {
+    slug: "wachstumsschube-beim-baby",
+    title: "Wachstumsschübe beim Baby: Anzeichen und Wie Man Reagieren Sollte",
+    excerpt: "Erkennen Sie die Anzeichen von Wachstumsschüben beim Baby und erfahren Sie, wie Sie geduldig auf Veränderungen im Alltag reagieren können.",
+    readTime: "4 min",
+    metaTitle: "Wachstumsschübe beim Baby: Anzeichen und Wie Man Reagieren Sollte | Wilbor-Assist",
+    metaDescription: "Erkennen Sie die Anzeichen von Wachstumsschüben beim Baby und erfahren Sie, wie Sie geduldig auf Veränderungen im Alltag reagieren können. Basierend auf den Protokollen der DGKJ und der AAP.",
+    keywords: ["Wachstumsschub Baby", "Baby unruhig", "Babyentwicklung", "Baby mehr Hunger", "Baby weint viel"],
+    content: `## Was ist ein Wachstumsschub?
+
+Wachstumsschübe sind Phasen beschleunigter körperlicher Entwicklung, die jedes Baby im ersten Lebensjahr erlebt. Diese Phasen können den etablierten Alltag durcheinanderbringen, aber das Erkennen der Anzeichen hilft dabei, ruhig und sicher zu reagieren.
+
+## Häufige Anzeichen eines Wachstumsschubs
+
+- **Mehr Hunger** — trinkt häufiger als gewöhnlich
+- **Veränderter Schlaf** — wacht nachts öfter auf
+- **Reizbarkeit** — weint mehr als sonst
+- **Starkes Nähebedürfnis** — möchte ständig auf den Arm
+
+## Wann treten sie auf?
+
+Wachstumsschübe treten typischerweise auf mit: **7–10 Tagen**, **2–3 Wochen**, **4–6 Wochen**, **3 Monaten**, **6 Monaten** und **9 Monaten**.
+
+## Wie sollte man reagieren?
+
+Folgen Sie dem Rhythmus Ihres Babys. Bieten Sie mehr Mahlzeiten an, wenn es Anzeichen von Hunger zeigt, und geben Sie viel Nähe und Geborgenheit. Wachstumsschübe dauern im Durchschnitt **2 bis 3 Tage**. Für eine persönliche Orientierung können Sie Wilbor jederzeit konsultieren.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "neugeborenengelbsucht-ursachen-und-behandlung",
+    title: "Neugeborenengelbsucht: Ursachen, Symptome und Behandlung",
+    excerpt: "Verstehen Sie, was Neugeborenengelbsucht ist, warum sie auftritt, wann Sie einen Arzt aufsuchen sollten und wie die Behandlung erfolgt.",
+    readTime: "5 min",
+    metaTitle: "Neugeborenengelbsucht: Ursachen, Symptome und Behandlung | Wilbor-Assist",
+    metaDescription: "Verstehen Sie, was Neugeborenengelbsucht ist, warum sie auftritt, wann Sie einen Arzt aufsuchen sollten und wie die Behandlung erfolgt. Basierend auf den Protokollen der DGKJ und der AAP.",
+    keywords: ["Neugeborenengelbsucht", "Baby gelb", "Bilirubin Baby", "Gelbsucht Neugeborenes", "Phototherapie Baby"],
+    content: `## Was ist Neugeborenengelbsucht?
+
+Neugeborenengelbsucht ist eine **sehr häufige** Erkrankung, die durch eine Gelbfärbung der Haut und des weißen Teils der Augen des Neugeborenen gekennzeichnet ist. Sie tritt auf, wenn sich zu viel **Bilirubin** im Blut des Babys befindet.
+
+## Warum tritt sie auf?
+
+Da die Leber des Neugeborenen noch in Entwicklung ist, kann sie das Bilirubin möglicherweise nicht schnell genug verarbeiten. Die meisten Fälle sind **mild und verschwinden von selbst** innerhalb von 1 bis 2 Wochen, während die Leber weiter reift.
+
+## Wann sollte man einen Arzt aufsuchen?
+
+Suchen Sie ärztliche Hilfe auf, wenn:
+
+- die Gelbsucht **in den ersten 24 Lebensstunden** auftritt
+- sich die gelbe Färbung **verstärkt oder ausbreitet**
+- das Baby **sehr schläfrig** ist oder sich schwer wecken lässt
+
+## Behandlung
+
+Wenn die Bilirubinwerte erhöht sind, kann der Arzt eine **Phototherapie** empfehlen — das Baby wird unter spezielle blaue Lichter gelegt, die helfen, das Bilirubin abzubauen. Schwere Fälle sind selten.
+
+**Häufiges Füttern** (Muttermilch oder Säuglingsnahrung) hilft dem Baby, das Bilirubin über den Stuhl auszuscheiden.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "zahnen-beim-baby-symptome-und-linderung",
+    title: "Zahnen beim Baby: Symptome und Wie Man das Unwohlsein Lindert",
+    excerpt: "Bekommt Ihr Baby Zähne? Lernen Sie die Symptome kennen und entdecken Sie sichere Wege, das Unwohlsein im Zahnfleisch zu lindern.",
+    readTime: "4 min",
+    metaTitle: "Zahnen beim Baby: Symptome und Wie Man das Unwohlsein Lindert | Wilbor-Assist",
+    metaDescription: "Bekommt Ihr Baby Zähne? Lernen Sie die häufigsten Symptome kennen und entdecken Sie sichere und wirksame Wege, das Unwohlsein im Zahnfleisch zu lindern. Basierend auf der DGKJ und der AAP.",
+    keywords: ["Zahnen Baby", "Baby zahnt", "Zahnfleisch Baby", "erster Zahn Baby", "Beißring Baby"],
+    content: `## Wann beginnt das Zahnen?
+
+Das Zahnen ist ein wichtiger Meilenstein im ersten Lebensjahr des Babys. Die meisten Babys bekommen den **ersten Zahn etwa mit 6 Monaten**, auch wenn dieser Zeitraum stark variieren kann.
+
+## Häufige Anzeichen des Zahnens
+
+- **Starker Speichelfluss**
+- **Beißt häufig auf Gegenständen** herum
+- **Reizbarkeit** und Unruhe
+- **Geschwollenes und empfindliches Zahnfleisch**
+- Leichter Anstieg der Körpertemperatur (kein Fieber)
+
+> Fieber über **38°C** wird NICHT durch das Zahnen verursacht und sollte vom Kinderarzt beurteilt werden.
+
+## Sichere Möglichkeiten zur Linderung des Unwohlseins
+
+- **Gekühlter Beißring** (nicht eingefroren) zum Kauen
+- **Kaltes feuchtes Tuch** zur Massage des Zahnfleischs
+- **Sanfte Massage mit dem Finger** am Zahnfleisch
+- Fragen Sie den Kinderarzt nach der Anwendung von **Paracetamol**, falls nötig
+
+⚠️ **Vermeiden Sie** Zahnungsgels mit **Benzocain** — sie können ernsthafte Risiken für die Gesundheit des Babys darstellen.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und American Academy of Pediatrics (AAP).`,
+  },
+  {
+    slug: "wochenbettangst-vs-wochenbettdepression-unterschiede",
+    title: "Wochenbettangst vs. Wochenbettdepression: Unterschiede, die Jede Mutter Kennen Sollte",
+    excerpt: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
+    readTime: "6 min",
+    metaTitle: "Wochenbettangst vs. Wochenbettdepression: Unterschiede | Wilbor-Assist",
+    metaDescription: "Verstehen Sie die Unterschiede zwischen Wochenbettangst und Wochenbettdepression, erkennen Sie die Symptome und erfahren Sie, wann Sie professionelle Hilfe suchen sollten.",
+    keywords: ["Wochenbettangst", "Wochenbettdepression", "psychische Gesundheit Mutter", "Baby Blues", "postpartale Störung"],
+    content: `## Die Zeit nach der Geburt und die psychische Gesundheit
+
+Die Zeit nach der Geburt ist ein Abschnitt intensiver körperlicher und emotionaler Veränderungen. Obwohl viele Menschen den „Baby Blues“ kennen, sind ernstere Störungen wie die **Wochenbettdepression (DPP)** und die **Wochenbettangst (APP)** häufig und werden oft missverstanden.
+
+## Wichtigste Unterschiede
+
+| | Wochenbettdepression (DPP) | Wochenbettangst (APP) |
+|---|---|---|
+| **Hauptgefühl** | Anhaltende Traurigkeit, Hoffnungslosigkeit | Übermäßige Sorge, Angst |
+| **Gedanken** | Negativ, leer | Beschleunigt, katastrophisierend |
+| **Körperliche Symptome** | Müdigkeit, Appetitveränderung | Herzrasen, Schwindel |
+| **Beziehung zum Baby** | Schwierigkeit, eine Bindung aufzubauen | Übermäßiger Beschützerinstinkt |
+
+## Wichtig: Beide sind behandelbar
+
+DPP und APP können gleichzeitig auftreten. Beide Zustände sind **sehr gut behandelbar** mit professioneller Begleitung — Psychotherapie, Medikamente oder Selbsthilfegruppen.
+
+Diese Gefühle zu erleben **macht Sie nicht zu einer schlechten Mutter**. Es ist ein gesundheitlicher Zustand, der Fürsorge verdient. Wenn Sie oder jemand, den Sie kennen, dies durchmacht, ist die Suche nach einem Gesundheitsfachmann der erste Schritt.
+
+---
+**Quelle:** Deutsche Gesellschaft für Kinder- und Jugendmedizin (DGKJ) und Weltgesundheitsorganisation (WHO).`,
+  },
+  {
+    slug: "warum-wilbor-niemals-medikamente-verschreibt",
+    title: "Warum Wilbor niemals Medikamente verschreibt (und warum das Ihre größte Sicherheit ist)",
+    metaTitle: "Warum Wilbor keine Medikamente verschreibt | Wilbor-Assist",
+    metaDescription: "Verstehen Sie, wie das 6-Block-Sicherheitsprotokoll von Wilbor funktioniert und warum eine ethische KI niemals Dosen berechnen oder Medikamente für Babys verschreiben sollte.",
+    readTime: "5 min",
+    excerpt: "Entdecken Sie, wie Wilbor ein klinisches 6-Block-Protokoll verwendet, um Mütter bei Medikamenten mit absoluter Sicherheit anzuleiten, ohne jemals den Kinderarzt zu ersetzen.",
+    keywords: ["KI-Verschreibung", "Babysicherheit", "medizinisches Protokoll", "Babymedikamente", "Wilbor Sicherheit"],
+    content: `## Der schmale Grat zwischen Hilfe und Risiko\n\nWenn das Baby mitten in der Nacht mit Fieber weint, ist der erste Instinkt jeder Mutter, schnelle Linderung zu suchen. Im Zeitalter der künstlichen Intelligenz ist es verlockend, einen Chat zu fragen: *"Wie viele Tropfen Paracetamol gebe ich meinem 8 kg schweren Baby?"*\n\nViele generische KIs würden diese Frage mit einer mathematischen Berechnung beantworten. **Wilbor tut das nicht.** Und dafür gibt es einen sehr ernsten Grund.\n\n## Das 6-Block-Protokoll von Wilbor\n\nWilbor wurde mit einer nicht verhandelbaren Richtlinie trainiert: **Die Sicherheit Ihres Babys steht über jeder technologischen Bequemlichkeit.**\n\nWenn Sie nach Medikamenten fragen, aktiviert Wilbor ein strenges klinisches 6-Stufen-Protokoll:\n\n1. **Empathie:** Er versteht Ihre Not und validiert Ihre Sorge.\n2. **Neutrale Information:** Erklärt, wofür das erwähnte Medikament dient, ohne dessen Verwendung zu fördern.\n3. **Aufklärung über Dosierung:** Erklärt, dass die Dosis von Gewicht und Konzentration abhängt, aber **führt niemals die Berechnung durch**.\n4. **Sichere Anleitung:** Erinnert an die Wichtigkeit, die Dosis mit dem Kinderarzt zu bestätigen.\n5. **Klinische Triage:** Stellt wesentliche Fragen (Wie lange? Wie hoch ist die Temperatur? Gibt es andere Symptome?).\n6. **Warnzeichen:** Gibt genau an, wann die Situation keine häusliche Pflege mehr ist und zu einem Notfall für die Notaufnahme wird.\n\n## Warum ist das Ihre größte Sicherheit?\n\nEin Berechnungsfehler im Milligrammbereich kann bei einem Baby zu einer schweren Vergiftung führen. Eine KI kann weder die genaue Konzentration der Flasche sehen, die Sie zu Hause haben, noch den Allgemeinzustand des Kindes beurteilen.\n\nWilbor fungiert als Ihr **intelligentestes und sicherstes Unterstützungsnetzwerk**. Er organisiert Informationen, beruhigt Ihr Herz, sagt Ihnen, worauf Sie achten müssen und wann Sie ins Krankenhaus eilen sollten. Er stärkt Sie mit Wissen, überschreitet aber niemals die Grenze der medizinischen Verantwortung.\n\nDenn sich wirklich zu kümmern bedeutet, genau zu wissen, wie weit man gehen darf.\n\n---\n**Quelle:** Sicherheitsprotokolle für digitale Gesundheit und Richtlinien der Deutschen Gesellschaft für Kinder- und Jugendmedizin (DGKJ).`,
   },
 ];

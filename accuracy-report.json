@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-03-30T16:34:53.271Z",
+  "timestamp": "2026-03-31T14:33:37.492Z",
   "totalQuestionsEvaluated": 5,
   "averageScores": {
-    "relevance": 98,
-    "clarity": 95,
+    "relevance": 99,
+    "clarity": 96,
     "accuracy": 95,
-    "overall": 96
+    "overall": 96.66666666666667
   },
   "results": [
     {
@@ -16,7 +16,7 @@
       "clarity": 100,
       "accuracy": 100,
       "avgScore": 100,
-      "feedback": "A resposta é excelente. Aborda diretamente a pergunta, é clara, concisa e medicamente precisa, cobrindo os pontos essenciais para um sono seguro do bebê e o risco de SMSL."
+      "feedback": "A resposta é excelente, aborda diretamente a pergunta, é clara e as informações são medicamente corretas e seguras para prevenir a SMSL."
     },
     {
       "questionId": 2,
@@ -26,7 +26,7 @@
       "clarity": 95,
       "accuracy": 90,
       "avgScore": 95,
-      "feedback": "A resposta é muito relevante e aborda diretamente a pergunta. A clareza é boa, mas o termo 'efeito vulcão' pode não ser universalmente reconhecido na literatura médica, embora a descrição do cortisol alto e bebê exausto seja conceitualmente correta. As horas de sono e janela de vigília estão dentro do esperado, assim como os sinais de sono e o ambiente ideal."
+      "feedback": "A resposta é muito relevante e aborda diretamente a pergunta sobre horas de sono e janela de vigília. A clareza é alta, com informações concisas e úteis. A acurácia é boa, pois os intervalos de sono e vigília estão corretos, e os sinais de sono e ambiente ideal são recomendações válidas. O termo 'efeito vulcão' é uma metáfora que pode não ser universalmente reconhecida na literatura médica formal, mas a descrição do cortisol alto e bebê exausto é conceitualmente correta."
     },
     {
       "questionId": 3,
@@ -36,7 +36,7 @@
       "clarity": 95,
       "accuracy": 95,
       "avgScore": 96.66666666666667,
-      "feedback": "A resposta aborda diretamente todas as partes da pergunta, definindo cólica pela 'Regra dos 3' e oferecendo informações adicionais relevantes e precisas sobre o tema. A clareza é boa, mas a formatação poderia ser ligeiramente melhor para facilitar a leitura (ex: bullet points para as técnicas). A acurácia médica é alta, com conselhos seguros e baseados em evidências."
+      "feedback": "A resposta define cólica corretamente pela 'Regra dos 3' e oferece técnicas de alívio válidas. A informação sobre o horário típico, pico e melhora é precisa. Poderia ser um pouco mais explícita sobre a importância de consultar um pediatra para um diagnóstico definitivo e para descartar outras causas de choro excessivo."
     },
     {
       "questionId": 4,
@@ -46,17 +46,17 @@
       "clarity": 95,
       "accuracy": 95,
       "avgScore": 95,
-      "feedback": "A resposta aborda a pergunta de forma clara e concisa, listando técnicas eficazes para alívio da cólica, incluindo a massagem I-L-U. A menção de fazer as massagens fora da crise é um ponto de segurança importante. A única pequena lacuna é não mencionar a Shantala, que foi perguntada, mas as outras técnicas são bem explicadas."
+      "feedback": "A resposta é muito relevante, clara e medicamente precisa, abordando as massagens e outras técnicas comuns para cólica. A ausência da Shantala, que foi perguntada, é o único ponto a ser considerado, mas as outras sugestões são excelentes."
     },
     {
       "questionId": 5,
       "question": "Como é a pega correta na amamentação? Amamentação dói?...",
       "category": "amamentacao",
-      "relevance": 95,
-      "clarity": 90,
+      "relevance": 100,
+      "clarity": 95,
       "accuracy": 95,
-      "avgScore": 93.33333333333333,
-      "feedback": "A resposta aborda bem as duas perguntas principais, oferecendo dicas práticas e clinicamente corretas. A menção à livre demanda, embora correta, não responde diretamente às perguntas sobre pega e dor, mas é um bom complemento. Os sinais de fome são relevantes para o contexto geral da amamentação."
+      "avgScore": 96.66666666666667,
+      "feedback": "A resposta aborda diretamente a pergunta sobre a pega correta e a dor na amamentação. A explicação da pega é clara e concisa. A afirmação de que 'amamentação NÃO deve doer' é fundamental e correta. A dica sobre a livre demanda, embora verdadeira, não responde diretamente à pergunta sobre a pega e a dor, mas é uma informação útil no contexto da amamentação. Os sinais de fome também são relevantes para o momento da amamentação. A frase 'aréola mais visível acima da boca do bebê' pode ser um pouco confusa para algumas mães, pois o ideal é que a maior parte da aréola esteja dentro da boca do bebê, e a parte superior da aréola pode estar mais visível, mas a ênfase é na inclusão da aréola. No geral, é uma resposta muito boa e segura."
     }
   ]
 }

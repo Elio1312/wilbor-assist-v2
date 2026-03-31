@@ -337,3 +337,11 @@
 - [x] Mostrar contador "X de 5 consultas usadas" no header do chat
 - [x] Testes: 60/60 passando (paywall integrado ao backend)
 - [x] Checkpoint e publicar
+
+## FASE 36: SYNC COMMIT 9ee5f8a — ARTIGO MEDICAMENTOS + SEÇÃO "COMO O WILBOR RESPONDE"
+- [x] Pull do commit 9ee5f8a do GitHub (5 arquivos: i18n.tsx, Blog.tsx, BlogArticle.tsx, Home.tsx, blogArticlesI18n.ts)
+- [x] Artigo "Por que o Wilbor nunca prescreve remédios" adicionado (PT/EN/ES/FR/DE)
+- [x] Seção "Como o Wilbor responde?" na landing page (4 cards, 5 idiomas)
+- [x] Sitemap atualizado com novo slug em todos os 5 idiomas (PT/EN/ES/FR/DE)
+- [x] Build: 0 erros TypeScript
+- [x] Testes: 60/60 passando
