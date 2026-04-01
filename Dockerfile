@@ -5,7 +5,7 @@ RUN npm install -g pnpm@10.4.1
 
 WORKDIR /app
 
-# Copy all source files first
+# Copy all source files
 COPY . .
 
 # Install all dependencies (including dev for build)
@@ -25,8 +25,8 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 COPY patches/ ./patches/
 
-# Install only production dependencies
-RUN pnpm install --prod --no-frozen-lockfile
+# Install ALL dependencies (vite is required at runtime due to external packages)
+RUN pnpm install --no-frozen-lockfile
 
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
