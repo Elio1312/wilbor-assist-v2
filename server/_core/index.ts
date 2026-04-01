@@ -13,7 +13,7 @@ import sitemapRouter from "../routes/sitemap";
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
     const server = net.createServer();
-    server.listen(port, () => {
+    server.listen(port, "0.0.0.0", () => {
       server.close(() => resolve(true));
     });
     server.on("error", () => resolve(false));
@@ -60,10 +60,12 @@ async function startServer() {
     '/blog/banho-do-recem-nascido': '/blog/banho-do-recem-nascido',
   };
 
-  // Middleware to handle 301 redirects
+  // Middleware to handle 301 redirects (only when coming from old domain)
   app.use((req, res, next) => {
+    const host = req.hostname || '';
     const path = req.path;
-    if (redirectMappings[path]) {
+    // Only redirect if coming from old Manus domain, not from health checks or direct access
+    if (host === 'wilborassist-ljucsyxh.manus.space' && redirectMappings[path]) {
       const newUrl = `https://www.wilbor-assist.com${redirectMappings[path]}`;
       res.redirect(301, newUrl);
       return;
@@ -99,8 +101,10 @@ async function startServer() {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+  // Listen on 0.0.0.0 to accept connections from all network interfaces
+  // This is required for Koyeb and other cloud platforms
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on http://0.0.0.0:${port}/`);
   });
 }
 
