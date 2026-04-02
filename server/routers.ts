@@ -133,7 +133,7 @@ export const appRouter = router({
       };
     }),
 
-    chat: protectedProcedure
+    chat: publicProcedure
       .input(z.object({
         messages: z.array(z.object({
           role: z.enum(["system", "user", "assistant"]),
@@ -144,47 +144,49 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database connection failed");
 
-        // --- PAYWALL: check credit limit ---
-        const credits = await db
-          .select()
-          .from(wilborUserCredits)
-          .where(eq(wilborUserCredits.userId, ctx.user.id))
-          .limit(1);
+        // --- ANONYMOUS ACCESS: Allow users without authentication ---
+        const userId = ctx.user?.id ?? ("anon-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9));
 
-        if (credits.length === 0) {
-          // First time: create free record
-          const periodStart = new Date();
-          const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
-          await db.insert(wilborUserCredits).values({
-            userId: ctx.user.id,
-            plan: "free",
-            monthlyLimit: 5,
-            messagesUsed: 0,
-            ragMessagesUsed: 0,
-            cacheHits: 0,
-            totalSaved: 0,
-            periodStart,
-            periodEnd,
-          });
-        } else {
-          const credit = credits[0];
-          if (credit.messagesUsed >= credit.monthlyLimit) {
-            // Track the hit_limit event
-            await db.insert(wilborConversionEvents).values({
+        // Only check credit limit for authenticated users
+        if (ctx.user?.id) {
+          const credits = await db
+            .select()
+            .from(wilborUserCredits)
+            .where(eq(wilborUserCredits.userId, ctx.user.id))
+            .limit(1);
+
+          if (credits.length === 0) {
+            const periodStart = new Date();
+            const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
+            await db.insert(wilborUserCredits).values({
               userId: ctx.user.id,
-              eventType: "hit_limit",
-            }).catch(() => {}); // non-blocking
-            throw new Error("CREDIT_LIMIT_REACHED");
+              plan: "free",
+              monthlyLimit: 5,
+              messagesUsed: 0,
+              ragMessagesUsed: 0,
+              cacheHits: 0,
+              totalSaved: 0,
+              periodStart,
+              periodEnd,
+            });
+          } else {
+            const credit = credits[0];
+            if (credit.messagesUsed >= credit.monthlyLimit) {
+              await db.insert(wilborConversionEvents).values({
+                userId: ctx.user.id,
+                eventType: "hit_limit",
+              }).catch(() => {});
+              throw new Error("CREDIT_LIMIT_REACHED");
+            }
+            await db
+              .update(wilborUserCredits)
+              .set({ messagesUsed: credit.messagesUsed + 1 })
+              .where(eq(wilborUserCredits.userId, ctx.user.id));
           }
-          // Deduct one credit
-          await db
-            .update(wilborUserCredits)
-            .set({ messagesUsed: credit.messagesUsed + 1 })
-            .where(eq(wilborUserCredits.userId, ctx.user.id));
         }
-        // --- END PAYWALL ---
+        // --- END ANONYMOUS ACCESS ---
 
-        const response = await simpleChatWithWilbor(String(ctx.user.id), input.messages);
+        const response = await simpleChatWithWilbor(String(userId), input.messages);
         return response;
       }),
 
