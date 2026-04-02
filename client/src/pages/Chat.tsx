@@ -5,50 +5,42 @@ import type { Message } from "@/components/AIChatBox";
 import { trpc } from "@/lib/trpc";
 import { PaywallModal } from "@/components/PaywallModal";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Link } from "wouter";
 import { getLoginUrl } from "@/const";
-import { Sparkles } from "lucide-react";
+import { Sparkles, LogIn } from "lucide-react";
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const CREDIT_TEXTS: Record<string, {
   remaining: (n: number, total: number) => string;
   unlimited: string;
   login_prompt: string;
   login_cta: string;
+  anon_limit_reached: string;
 }> = {
   pt: {
     remaining: (n, t) => `${n} de ${t} consultas gratuitas`,
     unlimited: "Consultas ilimitadas",
     login_prompt: "Faça login para usar o chat",
-    login_cta: "Entrar",
+    login_cta: "Entrar com Google",
+    anon_limit_reached: "Limite de consultas anônimas atingido. Faça login para continuar!",
   },
   en: {
     remaining: (n, t) => `${n} of ${t} free consultations`,
     unlimited: "Unlimited consultations",
     login_prompt: "Sign in to use the chat",
-    login_cta: "Sign In",
+    login_cta: "Sign In with Google",
+    anon_limit_reached: "Anonymous consultation limit reached. Sign in to continue!",
   },
   es: {
     remaining: (n, t) => `${n} de ${t} consultas gratuitas`,
     unlimited: "Consultas ilimitadas",
     login_prompt: "Inicia sesión para usar el chat",
-    login_cta: "Entrar",
-  },
-  fr: {
-    remaining: (n, t) => `${n} sur ${t} consultations gratuites`,
-    unlimited: "Consultations illimitées",
-    login_prompt: "Connectez-vous pour utiliser le chat",
-    login_cta: "Se connecter",
-  },
-  de: {
-    remaining: (n, t) => `${n} von ${t} kostenlosen Beratungen`,
-    unlimited: "Unbegrenzte Beratungen",
-    login_prompt: "Melden Sie sich an, um den Chat zu nutzen",
-    login_cta: "Anmelden",
+    login_cta: "Entrar con Google",
+    anon_limit_reached: "Límite de consultas anónimas alcanzado. ¡Inicia sesión para continuar!",
   },
 };
 
 export function Chat() {
-  const { t, locale, localePath } = useI18n();
+  const { t, locale } = useI18n();
   const { user, loading: authLoading } = useAuth();
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -57,14 +49,37 @@ export function Chat() {
     },
   ]);
   const [paywallOpen, setPaywallOpen] = useState(false);
+  const [fingerprint, setFingerprint] = useState<string | null>(null);
+
+  // Initialize fingerprint
+  useEffect(() => {
+    const setFp = async () => {
+      const fpPromise = FingerprintJS.load();
+      const fp = await fpPromise;
+      const result = await fp.get();
+      setFingerprint(result.visitorId);
+    };
+    setFp();
+  }, []);
 
   const chatMutation = trpc.wilbor.chat.useMutation();
+  
+  // Credits for authenticated users
   const creditsQuery = trpc.wilbor.getCredits.useQuery(undefined, {
     enabled: !!user,
     refetchOnWindowFocus: false,
   });
 
-  const credits = creditsQuery.data;
+  // Credits for anonymous users
+  const anonCreditsQuery = trpc.wilbor.getAnonymousCredits.useQuery(
+    { fingerprint: fingerprint || "" },
+    {
+      enabled: !user && !!fingerprint,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const credits = user ? creditsQuery.data : anonCreditsQuery.data;
   const ctexts = CREDIT_TEXTS[locale] ?? CREDIT_TEXTS.pt;
 
   // Show paywall if user hits limit
@@ -91,6 +106,7 @@ export function Chat() {
     try {
       const response = await chatMutation.mutateAsync({
         messages: newMessages,
+        fingerprint: fingerprint || undefined,
       });
 
       const responseText =
@@ -104,14 +120,18 @@ export function Chat() {
       ]);
 
       // Refresh credits after each message
-      creditsQuery.refetch();
+      if (user) {
+        creditsQuery.refetch();
+      } else {
+        anonCreditsQuery.refetch();
+      }
     } catch (error: any) {
       const errorMessage = error?.message || "";
-      if (errorMessage.includes("CREDIT_LIMIT_REACHED")) {
+      if (errorMessage.includes("CREDIT_LIMIT_REACHED") || errorMessage.includes("ANONYMOUS_LIMIT_REACHED")) {
         // Remove the optimistic user message
         setMessages((prev) => prev.slice(0, -1));
         setPaywallOpen(true);
-        creditsQuery.refetch();
+        if (user) creditsQuery.refetch(); else anonCreditsQuery.refetch();
         return;
       }
       console.error("Error calling Wilbor chat:", error);
@@ -125,9 +145,9 @@ export function Chat() {
     }
   };
 
-  const isPremium = credits?.plan !== "free";
+  const isPremium = user && credits?.plan !== "free";
   const remaining = credits?.remaining ?? 0;
-  const monthlyLimit = credits?.monthlyLimit ?? 5;
+  const monthlyLimit = credits?.limit ?? credits?.monthlyLimit ?? 5;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-white">
@@ -145,8 +165,8 @@ export function Chat() {
           </div>
 
           {/* Credit counter */}
-          {!authLoading && user && credits && (
-            <div className="flex items-center gap-2">
+          {!authLoading && credits && (
+            <div className="flex items-center gap-4">
               {isPremium ? (
                 <div className="flex items-center gap-1.5 bg-purple-100 text-purple-700 px-3 py-1.5 rounded-full text-sm font-medium">
                   <Sparkles className="w-4 h-4" />
@@ -182,17 +202,22 @@ export function Chat() {
                   <span>{ctexts.remaining(remaining, monthlyLimit)}</span>
                 </div>
               )}
-            </div>
-          )}
 
-          {/* Login prompt if not authenticated */}
-          {!authLoading && !user && (
-            <a
-              href={getLoginUrl()}
-              className="text-sm text-purple-600 hover:text-purple-800 font-medium underline"
-            >
-              {ctexts.login_cta}
-            </a>
+              {/* Login button if not authenticated */}
+              {!user && (
+                <a
+                  href={getLoginUrl()}
+                  className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
+                >
+                  <LogIn className="w-4 h-4" />
+                  {ctexts.login_cta}
+                </a>
+              ) : (
+                <div className="text-sm text-gray-500 font-medium">
+                  {user.name || user.email}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </header>
@@ -208,20 +233,18 @@ export function Chat() {
         </div>
 
         {/* Upgrade nudge bar when 1-2 remaining */}
-        {user && credits && !isPremium && remaining > 0 && remaining <= 2 && (
+        {credits && !isPremium && remaining > 0 && remaining <= 2 && (
           <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
             <p className="text-amber-800 text-sm">
               {locale === "pt" && `Você tem apenas ${remaining} consulta${remaining > 1 ? "s" : ""} gratuita${remaining > 1 ? "s" : ""} restante${remaining > 1 ? "s" : ""}.`}
               {locale === "en" && `You have only ${remaining} free consultation${remaining > 1 ? "s" : ""} left.`}
               {locale === "es" && `Solo te quedan ${remaining} consulta${remaining > 1 ? "s" : ""} gratuita${remaining > 1 ? "s" : ""}.`}
-              {locale === "fr" && `Il vous reste seulement ${remaining} consultation${remaining > 1 ? "s" : ""} gratuite${remaining > 1 ? "s" : ""}.`}
-              {locale === "de" && `Sie haben noch ${remaining} kostenlose Beratung${remaining > 1 ? "en" : ""} übrig.`}
             </p>
             <button
               onClick={() => setPaywallOpen(true)}
               className="flex-shrink-0 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
             >
-              {locale === "pt" ? "Ver planos" : locale === "en" ? "View plans" : locale === "es" ? "Ver planes" : locale === "fr" ? "Voir les plans" : "Pläne ansehen"}
+              {locale === "pt" ? "Ver planos" : locale === "en" ? "View plans" : "Ver planes"}
             </button>
           </div>
         )}

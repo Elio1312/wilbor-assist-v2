@@ -1,9 +1,11 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/contexts/i18n";
-import { Lock, Sparkles, Check, ArrowRight } from "lucide-react";
+import { Lock, Sparkles, Check, ArrowRight, LogIn } from "lucide-react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { getLoginUrl } from "@/const";
 
 interface PaywallModalProps {
   open: boolean;
@@ -22,6 +24,9 @@ const PAYWALL_TEXTS: Record<string, {
   price: string;
   period: string;
   later: string;
+  login_title: string;
+  login_subtitle: string;
+  login_cta: string;
 }> = {
   pt: {
     title: "Você usou suas 5 consultas gratuitas 🎉",
@@ -42,6 +47,9 @@ const PAYWALL_TEXTS: Record<string, {
     price: "R$ 29,00",
     period: "/mês",
     later: "Agora não",
+    login_title: "Ganhe mais 5 consultas grátis! 🎁",
+    login_subtitle: "Faça login com sua conta Google para ganhar mais 5 consultas gratuitas e salvar seu histórico.",
+    login_cta: "Entrar com Google",
   },
   en: {
     title: "You've used your 5 free consultations 🎉",
@@ -62,6 +70,9 @@ const PAYWALL_TEXTS: Record<string, {
     price: "$9.90",
     period: "/month",
     later: "Not now",
+    login_title: "Get 5 more free consultations! 🎁",
+    login_subtitle: "Sign in with your Google account to get 5 more free consultations and save your history.",
+    login_cta: "Sign In with Google",
   },
   es: {
     title: "Has usado tus 5 consultas gratuitas 🎉",
@@ -82,51 +93,15 @@ const PAYWALL_TEXTS: Record<string, {
     price: "€9,90",
     period: "/mes",
     later: "Ahora no",
-  },
-  fr: {
-    title: "Vous avez utilisé vos 5 consultations gratuites 🎉",
-    subtitle: "Vous avez déjà reçu des conseils fiables de Wilbor. Pour continuer avec un soutien illimité :",
-    used: "5 sur 5 consultations utilisées",
-    limit: "Limite du plan gratuit atteinte",
-    upgrade_title: "Continuez avec Wilbor Premium",
-    upgrade_desc: "Chat illimité · Étapes de développement · Recettes · Mon Corps",
-    features: [
-      "Chat IA illimité 24h",
-      "Profil bébé personnalisé",
-      "Étapes de développement semaine par semaine",
-      "55 recettes par âge",
-      "Alertes vaccins",
-      "Section Mon Corps (post-partum)",
-    ],
-    cta: "S'abonner pour €9,90/mois",
-    price: "€9,90",
-    period: "/mois",
-    later: "Pas maintenant",
-  },
-  de: {
-    title: "Sie haben Ihre 5 kostenlosen Beratungen genutzt 🎉",
-    subtitle: "Sie haben bereits zuverlässige Beratung von Wilbor erhalten. Um unbegrenzte Unterstützung zu erhalten:",
-    used: "5 von 5 Beratungen genutzt",
-    limit: "Limit des kostenlosen Plans erreicht",
-    upgrade_title: "Weiter mit Wilbor Premium",
-    upgrade_desc: "Unbegrenzter Chat · Entwicklungsmeilensteine · Rezepte · Mein Körper",
-    features: [
-      "Unbegrenzter KI-Chat 24h",
-      "Personalisiertes Baby-Profil",
-      "Wöchentliche Entwicklungsmeilensteine",
-      "55 altersgerechte Rezepte",
-      "Impfstoff-Erinnerungen",
-      "Mein Körper (Nachgeburt)",
-    ],
-    cta: "Abonnieren für €9,90/Monat",
-    price: "€9,90",
-    period: "/Monat",
-    later: "Nicht jetzt",
+    login_title: "¡Obtén 5 consultas gratis más! 🎁",
+    login_subtitle: "Inicia sesión con tu cuenta de Google para obtener 5 consultas gratuitas más y guardar tu historial.",
+    login_cta: "Entrar con Google",
   },
 };
 
 export function PaywallModal({ open, onClose }: PaywallModalProps) {
   const { locale, localePath } = useI18n();
+  const { user } = useAuth();
   const [, navigate] = useLocation();
   const trackEvent = trpc.wilbor.trackEvent.useMutation();
 
@@ -142,21 +117,23 @@ export function PaywallModal({ open, onClose }: PaywallModalProps) {
     onClose();
   };
 
+  const isAnonymous = !user;
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-md mx-auto p-0 overflow-hidden rounded-2xl border-0 shadow-2xl">
         {/* Header gradient */}
         <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 px-6 pt-8 pb-6 text-white text-center">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-8 h-8 text-white" />
+            {isAnonymous ? <Sparkles className="w-8 h-8 text-white" /> : <Lock className="w-8 h-8 text-white" />}
           </div>
           <DialogHeader>
             <DialogTitle className="text-white text-xl font-bold leading-tight">
-              {texts.title}
+              {isAnonymous ? texts.login_title : texts.title}
             </DialogTitle>
           </DialogHeader>
           <p className="text-purple-100 text-sm mt-2 leading-relaxed">
-            {texts.subtitle}
+            {isAnonymous ? texts.login_subtitle : texts.subtitle}
           </p>
 
           {/* Usage bar */}
@@ -170,10 +147,26 @@ export function PaywallModal({ open, onClose }: PaywallModalProps) {
 
         {/* Content */}
         <div className="px-6 py-5 bg-white">
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-purple-600" />
-            <h3 className="font-bold text-gray-900 text-base">{texts.upgrade_title}</h3>
-          </div>
+          {isAnonymous ? (
+            <div className="space-y-4">
+              <a
+                href={getLoginUrl()}
+                className="flex items-center justify-center gap-2 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-xl text-base shadow-lg transition-all"
+              >
+                <LogIn className="w-5 h-5" />
+                {texts.login_cta}
+              </a>
+              <div className="relative py-2">
+                <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-gray-200"></span></div>
+                <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-2 text-gray-400">Ou faça upgrade agora</span></div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="w-5 h-5 text-purple-600" />
+              <h3 className="font-bold text-gray-900 text-base">{texts.upgrade_title}</h3>
+            </div>
+          )}
 
           <ul className="space-y-2 mb-5">
             {texts.features.map((feature, i) => (

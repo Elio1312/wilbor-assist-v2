@@ -4,6 +4,11 @@ import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
+import session from "express-session";
+import passport from "passport";
+import cookieParser from "cookie-parser";
+import { setupGoogleOAuth } from "./googleOAuth";
+import { ENV } from "./env";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -40,6 +45,38 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.use(cookieParser(ENV.sessionSecret));
+
+  // Setup Session and Passport
+  app.use(
+    session({
+      secret: ENV.sessionSecret,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: ENV.isProduction,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      },
+    })
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+  setupGoogleOAuth();
+
+  // Google OAuth Routes
+  app.get("/api/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+  app.get(
+    "/api/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/login?error=google_failed" }),
+    (req, res) => {
+      res.redirect("/chat");
+    }
+  );
+  app.get("/api/auth/logout", (req, res) => {
+    req.logout(() => {
+      res.redirect("/");
+    });
+  });
 
   // 301 Redirects from old domain (wilborassist-ljucsyxh.manus.space) to new domain (www.wilbor-assist.com)
   // This preserves SEO ranking and prevents duplicate content penalties

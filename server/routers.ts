@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
 import { simpleChatWithWilbor } from "./wilborChat";
+import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit } from "./wilborDb";
 import { stripeRouter } from "./stripeRoutes";
 import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
@@ -133,22 +134,37 @@ export const appRouter = router({
       };
     }),
 
+    getAnonymousCredits: publicProcedure
+      .input(z.object({ fingerprint: z.string() }))
+      .query(async ({ input }) => {
+        const usage = await getAnonymousUsage(input.fingerprint);
+        const limit = 5;
+        const used = usage?.messagesUsed ?? 0;
+        return {
+          used,
+          limit,
+          remaining: Math.max(0, limit - used),
+          isOverLimit: used >= limit,
+        };
+      }),
+
     chat: publicProcedure
       .input(z.object({
         messages: z.array(z.object({
           role: z.enum(["system", "user", "assistant"]),
           content: z.string(),
         })),
+        fingerprint: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database connection failed");
 
-        // --- ANONYMOUS ACCESS: Allow users without authentication ---
-        const userId = ctx.user?.id ?? ("anon-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9));
+        let userId: string | number;
 
-        // Only check credit limit for authenticated users
         if (ctx.user?.id) {
+          // Authenticated user logic
+          userId = ctx.user.id;
           const credits = await db
             .select()
             .from(wilborUserCredits)
@@ -162,7 +178,7 @@ export const appRouter = router({
               userId: ctx.user.id,
               plan: "free",
               monthlyLimit: 5,
-              messagesUsed: 0,
+              messagesUsed: 1, // First message
               ragMessagesUsed: 0,
               cacheHits: 0,
               totalSaved: 0,
@@ -183,8 +199,20 @@ export const appRouter = router({
               .set({ messagesUsed: credit.messagesUsed + 1 })
               .where(eq(wilborUserCredits.userId, ctx.user.id));
           }
+        } else {
+          // Anonymous user logic with fingerprint
+          if (!input.fingerprint) {
+            throw new Error("FINGERPRINT_REQUIRED");
+          }
+          
+          const canChat = await checkAnonymousLimit(input.fingerprint);
+          if (!canChat) {
+            throw new Error("ANONYMOUS_LIMIT_REACHED");
+          }
+          
+          await incrementAnonymousUsage(input.fingerprint);
+          userId = `anon-${input.fingerprint}`;
         }
-        // --- END ANONYMOUS ACCESS ---
 
         const response = await simpleChatWithWilbor(String(userId), input.messages);
         return response;

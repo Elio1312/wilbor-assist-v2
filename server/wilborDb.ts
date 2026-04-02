@@ -601,3 +601,44 @@ export async function deleteWeighIn(id: number, userId: number) {
   await db.delete(wilborMotherWeighIns)
     .where(and(eq(wilborMotherWeighIns.id, id), eq(wilborMotherWeighIns.userId, userId)));
 }
+
+// ==========================================
+// ANONYMOUS USAGE OPERATIONS
+// ==========================================
+
+import { wilborAnonymousUsage } from "../drizzle/schema_fingerprint";
+
+export async function getAnonymousUsage(deviceFingerprint: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(wilborAnonymousUsage).where(eq(wilborAnonymousUsage.deviceFingerprint, deviceFingerprint)).limit(1);
+  return result[0] || undefined;
+}
+
+export async function incrementAnonymousUsage(deviceFingerprint: string) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const existing = await getAnonymousUsage(deviceFingerprint);
+  if (existing) {
+    await db.update(wilborAnonymousUsage)
+      .set({ 
+        messagesUsed: existing.messagesUsed + 1,
+        lastMessageAt: new Date(),
+        updatedAt: new Date()
+      })
+      .where(eq(wilborAnonymousUsage.deviceFingerprint, deviceFingerprint));
+  } else {
+    await db.insert(wilborAnonymousUsage).values({
+      deviceFingerprint,
+      messagesUsed: 1,
+      lastMessageAt: new Date(),
+    });
+  }
+}
+
+export async function checkAnonymousLimit(deviceFingerprint: string, limit: number = 5): Promise<boolean> {
+  const usage = await getAnonymousUsage(deviceFingerprint);
+  if (!usage) return true;
+  return usage.messagesUsed < limit;
+}
