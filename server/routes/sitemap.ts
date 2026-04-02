@@ -127,8 +127,8 @@ const LANG_SLUGS: Record<string, string[]> = {
   "/de": BLOG_SLUGS_DE,
 };
 
-router.get("/sitemap.xml", (req, res) => {
-  const baseUrl = "https://www.wilbor-assist.com";
+  router.get("/sitemap.xml", (req, res) => {
+	  const baseUrl = "https://wilbor-assist.com";
   const today = new Date().toISOString().split("T")[0];
 
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -164,8 +164,8 @@ router.get("/sitemap.xml", (req, res) => {
   res.send(sitemap);
 });
 
-router.get("/sitemap-index.xml", (req, res) => {
-  const baseUrl = "https://www.wilbor-assist.com";
+	router.get("/sitemap-index.xml", (req, res) => {
+	  const baseUrl = "https://wilbor-assist.com";
   const today = new Date().toISOString().split("T")[0];
   res.type("application/xml");
   res.send(`<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${baseUrl}/sitemap.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n</sitemapindex>`);

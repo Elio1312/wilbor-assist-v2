@@ -1307,20 +1307,23 @@ export function BlogArticle({ params }: RouteComponentProps<{ slug: string }>) {
         "keywords": article.keywords.join(", "),
       };
 
-      const faqSchema = {
+      const faqSchema = article.schemaFAQ.length > 0 ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": article.schemaFAQ.map(faq => ({
           "@type": "Question",
           "name": faq.question,
-          "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": faq.answer 
+          }
         }))
-      };
+      } : null;
 
       const scriptEl = document.createElement('script');
       scriptEl.id = 'blog-article-schema';
       scriptEl.type = 'application/ld+json';
-      scriptEl.textContent = JSON.stringify([schema, faqSchema]);
+      scriptEl.textContent = JSON.stringify(faqSchema ? [schema, faqSchema] : [schema]);
       document.head.appendChild(scriptEl);
 
       return () => {
