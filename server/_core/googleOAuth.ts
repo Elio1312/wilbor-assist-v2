@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { ENV } from "./env";
-import { db } from "../db";
+import * as db from "../db";
 import { wilborUsers } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 
@@ -42,9 +42,11 @@ export function setupGoogleOAuth() {
               trialExpiresAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days trial
               subscriptionStatus: "trial",
             });
-            const insertId = (result as any)[0]?.insertId || (result as any).insertId;
-            const newUser = await dbConn.select().from(wilborUsers).where(eq(wilborUsers.id, insertId)).limit(1);
-            user = newUser[0];
+            
+            // For MySQL/Drizzle, the result might be different depending on the driver
+            // We'll try to find the user by email again to be safe
+            const newUserResult = await dbConn.select().from(wilborUsers).where(eq(wilborUsers.email, email)).limit(1);
+            user = newUserResult[0];
           } else {
             // Update last active
             await dbConn.update(wilborUsers)
