@@ -134,14 +134,44 @@ export type WilborDiaryEntry = typeof wilborDiaryEntries.$inferSelect;
 export type InsertWilborDiaryEntry = typeof wilborDiaryEntries.$inferInsert;
 
 // ==========================================
-// DEVELOPMENT TRAIL (Trilha de Desenvolvimento)
+// DEVELOPMENT TRAIL CONTENT (Conteúdo dos Marcos - Genérico)
+// ==========================================
+export const wilborMilestoneContent = mysqlTable("wilborMilestoneContent", {
+  id: int("id").autoincrement().primaryKey(),
+  month: int("month").notNull(), // 6 a 24
+  category: mysqlEnum("milestoneCategory", ["motor", "cognitivo", "linguagem", "social"]).notNull(),
+  
+  // Português
+  titlePt: text("titlePt").notNull(),
+  descriptionPt: text("descriptionPt").notNull(),
+  
+  // English
+  titleEn: text("titleEn"),
+  descriptionEn: text("descriptionEn"),
+  
+  // Español
+  titleEs: text("titleEs"),
+  descriptionEs: text("descriptionEs"),
+  
+  // Metadados
+  order: int("order").default(0),
+  isActive: mysqlEnum("contentIsActive", ["true", "false"]).default("true").notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WilborMilestoneContent = typeof wilborMilestoneContent.$inferSelect;
+export type InsertWilborMilestoneContent = typeof wilborMilestoneContent.$inferInsert;
+
+// ==========================================
+// DEVELOPMENT TRAIL USER TRACKING (Marcos Atingidos pelo Bebê)
 // ==========================================
 export const wilborDevMilestones = mysqlTable("wilborDevMilestones", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
   babyId: int("babyId").notNull(),
-  weekNumber: int("weekNumber").notNull(),
-  milestoneKey: varchar("milestoneKey", { length: 100 }).notNull(),
+  contentId: int("contentId").notNull(), // FK para wilborMilestoneContent
   achieved: mysqlEnum("achieved", ["yes", "no", "partial"]).default("no").notNull(),
   achievedAt: timestamp("achievedAt"),
   notes: text("notes"),

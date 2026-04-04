@@ -16,6 +16,7 @@ import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRouter";
 import { adminRouter } from "./adminRouter";
+import { babiesRouter } from "./routers/babiesRouter";
 import { identifyUpsellCategory } from "./upsellLogic";
 import { wilborEbooks } from "../drizzle/schema";
 import { desc } from "drizzle-orm";
@@ -28,9 +29,10 @@ export const appRouter = router({
   instagram: instagramRouter,
   shop: shopRouter,
   admin: adminRouter,
+  babies: babiesRouter,
 
   // 1. Dando vida ao Módulo "Meus Bebês" (Personalização 95%)
-  babies: router({
+  babiesLegacy: router({
     list: protectedProcedure.query(async ({ ctx }) => {
       return await getBabiesByUser(ctx.user.id);
     }),
