@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { getLoginUrl } from "@/const";
-import { Heart, Brain, Shield, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Apple, Droplets, ChevronDown, Mail, Check, ArrowRight } from "lucide-react";
-import { useState } from "react";
-import { Link } from "wouter";
+import { Heart, ArrowRight, Check, ChevronDown, Brain, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Droplets, Apple, Shield } from "lucide-react";
+import { Link, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useI18n } from "@/contexts/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useState, useMemo, useEffect } from "react";
 
 // CDN Image URLs
 const IMAGES = {
@@ -21,62 +20,66 @@ const IMAGES = {
 
 export default function Home() {
   const { data: user } = trpc.auth.me.useQuery();
-  const isAuthenticated = !!user;
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const loginUrl = getLoginUrl();
   const { t, locale, localePath } = useI18n();
+  const [, setLocation] = useLocation();
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
-  const faqItemsPt = [
-    { q: "O Wilbor substitui o pediatra?", a: "Não. O Wilbor é um apoio neonatal digital. Em caso de emergência, procure atendimento presencial." },
-    { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos: VISITA LIVRE (Grátis): 5 consultas com IA/mês. PREMIUM (R$ 29,00/mês): 500 créditos IA/mês. MANUAL (R$ 45,00): Conteúdo completo sem IA." },
-    { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 5 consultas grátis no plano Visita Livre. Sem cartão necessário." },
-    { q: "Para qual idade é indicado?", a: "O Wilbor é indicado para bebês de 0 a 12 meses." },
-    { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
-    { q: "Quando devo procurar atendimento médico imediatamente?", a: "Em caso de febre acima de 38°C, convulsões, sangramento ou dificuldade respiratória." },
-    { q: "Posso usar em mais de um bebê?", a: "Sim! O Wilbor suporta gêmeos, trigêmeos e múltiplos bebês com perfis individuais." },
-    { q: "Funciona em outros idiomas?", a: "Sim! O Wilbor está disponível em Português, Inglês, Espanhol, Francês e Alemão." },
-  ];
-  const faqItemsEn = [
-    { q: "Does Wilbor replace a pediatrician?", a: "No. Wilbor is digital neonatal support. In case of emergency, seek in-person care." },
-    { q: "How do Wilbor plans work?", a: "We have 3 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($9.00/mo): 500 AI credits/month. MANUAL ($14.00): Full content without AI." },
-    { q: "Is it free? Do I need a credit card?", a: "Yes, start with 5 free consultations on the Free Visit plan. No credit card required." },
-    { q: "What age range is it for?", a: "Wilbor is designed for babies from 0 to 12 months." },
-    { q: "Is it based on reliable protocols?", a: "Yes, all guidance follows official recommendations from AAP, WHO, and SBP." },
-    { q: "When should I seek immediate medical attention?", a: "In case of fever above 100.4°F (38°C), seizures, bleeding, or difficulty breathing." },
-    { q: "Can I use it for more than one baby?", a: "Yes! Wilbor supports twins, triplets, and multiple babies with individual profiles." },
-    { q: "Does it work in other languages?", a: "Yes! Wilbor is available in Portuguese, English, Spanish, French and German." },
-  ];
-  const faqItemsEs = [
-    { q: "¿Wilbor reemplaza al pediatra?", a: "No. Wilbor es apoyo neonatal digital. En caso de emergencia, busque atención presencial." },
-    { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 3 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($9.00/mes): 500 créditos IA/mes. MANUAL ($14.00): Contenido completo sin IA." },
-    { q: "¿Es gratis? ¿Necesito tarjeta?", a: "Sí, empieza con 5 consultas gratis en el plan Visita Libre. Sin tarjeta necesaria." },
-    { q: "¿Para qué edad está indicado?", a: "Wilbor está diseñado para bebés de 0 a 12 meses." },
-    { q: "¿Está basado en protocolos confiables?", a: "Sí, todas las orientaciones siguen las recomendaciones oficiales de AAP, OMS y SBP." },
-    { q: "¿Cuándo debo buscar atención médica inmediata?", a: "En caso de fiebre superior a 38°C, convulsiones, sangrado o dificultad respiratoria." },
-    { q: "¿Puedo usarlo para más de un bebé?", a: "¡Sí! Wilbor soporta gemelos, trillizos y múltiples bebés con perfiles individuales." },
-    { q: "¿Funciona en otros idiomas?", a: "¡Sí! Wilbor está disponible en Portugués, Inglés, Español, Francés y Alemán." },
-  ];
-  const faqItemsFr = [
-    { q: "Wilbor remplace-t-il le pédiatre ?", a: "Non. Wilbor est un soutien néonatal numérique. En cas d'urgence, consultez un médecin en personne." },
-    { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 3 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (9,00€/mois) : 500 réponses IA/mois. MANUEL (14,00€) : Contenu complet sans IA." },
-    { q: "Est-ce gratuit ? Ai-je besoin d'une carte bancaire ?", a: "Oui, commencez avec 5 consultations gratuites. Aucune carte bancaire requise." },
-    { q: "Pour quelle tranche d'âge est-il indiqué ?", a: "Wilbor est conçu pour les bébés de 0 à 12 mois." },
-    { q: "Est-il basé sur des protocoles fiables ?", a: "Oui, toutes les recommandations suivent les directives officielles de l'AAP, de l'OMS et de la SFP." },
-    { q: "Quand dois-je consulter un médecin immédiatement ?", a: "En cas de fièvre supérieure à 38°C, convulsions, saignements ou difficultés respiratoires." },
-    { q: "Puis-je l'utiliser pour plusieurs bébés ?", a: "Oui ! Wilbor supporte les jumeaux, triplettes et plusieurs bébés avec des profils individuels." },
-    { q: "Fonctionne-t-il dans d'autres langues ?", a: "Oui ! Wilbor est disponible en Portugais, Anglais, Espagnol, Français et Allemand." },
-  ];
-  const faqItemsDe = [
-    { q: "Ersetzt Wilbor den Kinderarzt?", a: "Nein. Wilbor ist digitale neonatale Unterstützung. Im Notfall suchen Sie bitte einen Arzt auf." },
-    { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 3 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (9,00€/Monat): 500 Antworten/Monat. HANDBUCH (14,00€): Vollständiger Inhalt ohne KI." },
-    { q: "Ist es kostenlos? Brauche ich eine Kreditkarte?", a: "Ja, starten Sie mit 5 kostenlosen Beratungen. Keine Kreditkarte erforderlich." },
-    { q: "Für welche Altersgruppe ist es geeignet?", a: "Wilbor ist für Babys von 0 bis 12 Monaten konzipiert." },
-    { q: "Basiert es auf zuverlässigen Protokollen?", a: "Ja, alle Empfehlungen folgen den offiziellen Richtlinien der AAP, WHO und DGKJ." },
-    { q: "Wann sollte ich sofort einen Arzt aufsuchen?", a: "Bei Fieber über 38°C, Krämpfen, Blutungen oder Atemschwierigkeiten." },
-    { q: "Kann ich es für mehr als ein Baby verwenden?", a: "Ja! Wilbor unterstützt Zwillinge, Drillinge und mehrere Babys mit individuellen Profilen." },
-    { q: "Funktioniert es in anderen Sprachen?", a: "Ja! Wilbor ist auf Portugiesisch, Englisch, Spanisch, Französisch und Deutsch verfügbar." },
-  ];
-  const faqItems = locale === "en" ? faqItemsEn : locale === "es" ? faqItemsEs : locale === "fr" ? faqItemsFr : locale === "de" ? faqItemsDe : faqItemsPt;
+  // 1. Otimização: FAQ carregado sob demanda por idioma (Performance)
+  const faqItems = useMemo(() => {
+    const items: Record<string, any[]> = {
+      pt: [
+        { q: "O Wilbor substitui o pediatra?", a: "Não. O Wilbor é um apoio neonatal digital baseado em SBP/OMS. Em emergências, procure o PS." },
+        { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos: VISITA LIVRE (Grátis): 5 consultas com IA/mês. PREMIUM (R$ 29,00/mês): 500 créditos IA/mês. MANUAL (R$ 45,00): Conteúdo completo sem IA." },
+        { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 5 consultas grátis no plano Visita Livre. Sem cartão necessário." },
+        { q: "Para qual idade é indicado?", a: "O Wilbor é indicado para bebês de 0 a 12 meses." },
+        { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
+        { q: "Quando devo procurar atendimento médico imediatamente?", a: "Em caso de febre acima de 38°C, convulsões, sangramento ou dificuldade respiratória." },
+        { q: "Posso usar em mais de um bebê?", a: "Sim! O Wilbor suporta gêmeos, trigêmeos e múltiplos bebês com perfis individuais." },
+        { q: "Funciona em outros idiomas?", a: "Sim! O Wilbor está disponível em Português, Inglês, Espanhol, Francês e Alemão." },
+      ],
+      en: [
+        { q: "Does Wilbor replace a pediatrician?", a: "No. Wilbor is digital neonatal support based on AAP/WHO. In case of emergency, seek in-person care." },
+        { q: "How do Wilbor plans work?", a: "We have 3 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($9.00/mo): 500 AI credits/month. MANUAL ($14.00): Full content without AI." },
+        { q: "Is it free? Do I need a credit card?", a: "Yes, start with 5 free consultations on the Free Visit plan. No credit card required." },
+        { q: "What age range is it for?", a: "Wilbor is designed for babies from 0 to 12 months." },
+        { q: "Is it based on reliable protocols?", a: "Yes, all guidance follows official recommendations from AAP, WHO, and SBP." },
+        { q: "When should I seek immediate medical attention?", a: "In case of fever above 100.4°F (38°C), seizures, bleeding, or difficulty breathing." },
+        { q: "Can I use it for more than one baby?", a: "Yes! Wilbor supports twins, triplets, and multiple babies with individual profiles." },
+        { q: "Does it work in other languages?", a: "Yes! Wilbor is available in Portuguese, English, Spanish, French and German." },
+      ],
+      es: [
+        { q: "¿Wilbor reemplaza al pediatra?", a: "No. Wilbor es apoyo neonatal digital. En caso de emergencia, busque atención presencial." },
+        { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 3 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($9.00/mes): 500 créditos IA/mes. MANUAL ($14.00): Contenido completo sin IA." },
+        { q: "¿Es gratis? ¿Necesito tarjeta?", a: "Sí, empieza con 5 consultas gratis en el plan Visita Libre. Sin tarjeta necesaria." },
+        { q: "¿Para qué edad está indicado?", a: "Wilbor está diseñado para bebés de 0 a 12 meses." },
+        { q: "¿Está basado en protocolos confiables?", a: "Sí, todas las orientaciones siguen las recomendaciones oficiales de AAP, OMS y SBP." },
+        { q: "¿Cuándo debo buscar atención médica inmediata?", a: "En caso de fiebre superior a 38°C, convulsiones, sangrado o dificultad respiratoria." },
+        { q: "¿Puedo usarlo para más de un bebé?", a: "¡Sí! Wilbor soporta gemelos, trillizos y múltiples bebés con perfiles individuales." },
+        { q: "¿Funciona en otros idiomas?", a: "¡Sí! Wilbor está disponible en Portugués, Inglés, Español, Francés y Alemán." },
+      ],
+      fr: [
+        { q: "Wilbor remplace-t-il le pédiatre ?", a: "Non. Wilbor est un soutien néonatal numérique. En cas d'urgence, consultez un médecin en personne." },
+        { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 3 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (9,00€/mois) : 500 réponses IA/mois. MANUEL (14,00€) : Contenu complet sans IA." },
+        { q: "Est-ce gratuit ? Ai-je besoin d'une carte bancaire ?", a: "Oui, commencez avec 5 consultations gratuites. Aucune carte bancaire requise." },
+        { q: "Pour quelle tranche d'âge est-il indiqué ?", a: "Wilbor est conçu pour les bébés de 0 à 12 mois." },
+        { q: "Est-il basé sur des protocoles fiables ?", a: "Oui, toutes les recommandations suivent les directives officielles de l'AAP, de l'OMS et de la SFP." },
+        { q: "Quand dois-je consulter un médecin immédiatement ?", a: "En cas de fièvre supérieure à 38°C, convulsions, saignements ou difficultés respiratoires." },
+        { q: "Puis-je l'utiliser pour plusieurs bébés ?", a: "Oui ! Wilbor supporte les jumeaux, triplettes et plusieurs bébés avec des profils individuels." },
+        { q: "Fonctionne-t-il dans d'autres langues ?", a: "Oui ! Wilbor est disponible en Portugais, Anglais, Espagnol, Français et Allemand." },
+      ],
+      de: [
+        { q: "Ersetzt Wilbor den Kinderarzt?", a: "Nein. Wilbor ist digitale neonatale Unterstützung. Im Notfall suchen Sie bitte einen Arzt auf." },
+        { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 3 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (9,00€/Monat): 500 Antworten/Monat. HANDBUCH (14,00€): Vollständiger Inhalt ohne KI." },
+        { q: "Ist es kostenlos? Brauche ich eine Kreditkarte?", a: "Ja, starten Sie mit 5 kostenlosen Beratungen. Keine Kreditkarte erforderlich." },
+        { q: "Für welche Altersgruppe ist es geeignet?", a: "Wilbor ist für Babys von 0 bis 12 Monaten konzipiert." },
+        { q: "Basiert es auf zuverlässigen Protokollen?", a: "Ja, alle Empfehlungen folgen den offiziellen Richtlinien der AAP, WHO und DGKJ." },
+        { q: "Wann sollte ich sofort einen Arzt aufsuchen?", a: "Bei Fieber über 38°C, Krämpfen, Blutungen oder Atemschwierigkeiten." },
+        { q: "Kann ich es für mehr als ein Baby verwenden?", a: "Ja! Wilbor unterstützt Zwillinge, Drillinge und mehrere Babys mit individuellen Profilen." },
+        { q: "Funktioniert es in anderen Sprachen?", a: "Ja! Wilbor ist auf Portugiesisch, Englisch, Spanisch, Französisch und Deutsch verfügbar." },
+      ],
+    };
+    return items[locale] || items.pt;
+  }, [locale]);
 
   const features = [
     { icon: Brain, title: t("features.chat"), desc: t("features.chat_desc") },
@@ -146,463 +149,206 @@ export default function Home() {
         variant="floating"
       />
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      {/* Header Blindado */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation(localePath("/"))}>
             <Heart className="w-8 h-8 text-purple-600 fill-purple-600" />
             <span className="text-xl font-bold text-gray-900">Wilbor</span>
           </div>
-          <div className="flex items-center gap-3">
+          
+          <div className="flex items-center gap-4">
             <LanguageSwitcher />
-            <Link href={localePath("/blog")}>
-              <a className="text-gray-600 hover:text-gray-900 font-medium">{t("nav.blog")}</a>
-            </Link>
-            {isAuthenticated ? (
-              <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => window.location.href = localePath('/dashboard')}>{t("nav.dashboard")}</Button>
-            ) : (
-              <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => window.location.href = localePath('/chat')}>
-                {t("nav.enter")}
-              </Button>
-            )}
+            <Button 
+              variant="ghost" 
+              onClick={() => setLocation(localePath("/blog"))}
+              className="hidden md:flex"
+            >
+              {t("nav.blog")}
+            </Button>
+            <Button 
+              className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
+              onClick={() => setLocation(user ? localePath("/dashboard") : localePath("/chat"))}
+            >
+              {user ? t("nav.dashboard") : t("nav.enter")}
+            </Button>
           </div>
         </div>
       </header>
 
-      {/* ===== HERO SECTION - COM IMAGEM ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-white py-16 md:py-20 px-4">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          {/* Texto + CTA */}
+      {/* Hero Section Otimizada para Conversão */}
+      <section className="bg-gradient-to-br from-purple-50 via-pink-50 to-white py-20 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">
-                {t("hero.badge")}
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-                {t("hero.h1")}
-              </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                {t("hero.desc")}
-              </p>
+            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-bold">
+              <Check className="w-4 h-4" /> {t("hero.badge")}
             </div>
-
-            {/* CTAs */}
+            <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight">
+              {t("hero.h1")}
+            </h1>
+            <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+              {t("hero.desc")}
+            </p>
+            
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg h-14 rounded-full"
-                onClick={() => window.location.href = localePath('/chat')}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
+                onClick={() => setLocation(localePath("/chat"))}
               >
                 {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <WhatsAppButton 
                 phoneNumber="+55 12 997999971"
                 message="Olá! Gostaria de conhecer o Wilbor"
-                variant="fixed"
-                className="text-base h-14"
-              />
-            </div>
-
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-600" />
-                {t("hero.trust_1")}
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-600" />
-                {t("hero.trust_2")}
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-600" />
-                {t("hero.trust_3")}
-              </div>
-            </div>
-          </div>
-
-          {/* Hero Mockup Dinâmico - 5 idiomas */}
-          <div className="relative">
-            <div className="rounded-3xl shadow-2xl w-full overflow-hidden bg-gradient-to-br from-purple-700 to-pink-600 p-6 md:p-8">
-              <div className="flex gap-4 items-start">
-                {/* Foto mãe + bebê */}
-                <div className="flex-1">
-                  <img
-                    src={IMAGES.hero}
-                    alt={t("hero.mockup_alt")}
-                    className="rounded-2xl w-full object-cover"
-                    loading="eager"
-                  />
-                </div>
-                {/* Card do App */}
-                <div className="flex-1 bg-white rounded-2xl p-4 shadow-xl">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">W</span>
-                    </div>
-                    <span className="font-bold text-gray-900 text-sm">Wilbor</span>
-                  </div>
-                  <p className="text-xs text-gray-700 mb-3 leading-relaxed">{t("hero.mockup_title")}</p>
-                  <div className="space-y-2 mb-3">
-                    <div className="flex items-center gap-2 bg-purple-50 rounded-lg px-2 py-1">
-                      <span className="text-purple-600 text-xs">🌙</span>
-                      <span className="text-xs text-gray-700">{t("hero.mockup_sleep")}</span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-pink-50 rounded-lg px-2 py-1">
-                      <span className="text-pink-600 text-xs">🍼</span>
-                      <span className="text-xs text-gray-700">{t("hero.mockup_feeding")}</span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-red-50 rounded-lg px-2 py-1">
-                      <span className="text-red-600 text-xs">🆘</span>
-                      <span className="text-xs text-gray-700">{t("hero.mockup_panic")}</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="flex-1 bg-purple-600 text-white text-xs py-1.5 rounded-full font-semibold">
-                      {t("hero.mockup_cta1")}
-                    </button>
-                    {locale === "pt" && (
-                      <button className="flex-1 border border-green-500 text-green-600 text-xs py-1.5 rounded-full font-semibold">
-                        {t("hero.mockup_cta2")}
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 text-center">
-                <p className="text-white text-sm font-semibold opacity-90">{t("hero.mockup_tagline")}</p>
-              </div>
-            </div>
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-purple-200 rounded-full opacity-20 blur-2xl"></div>
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-pink-200 rounded-full opacity-20 blur-2xl"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== HOW WILBOR RESPONDS SECTION ===== */}
-      <section className="py-20 px-4 bg-purple-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="bg-purple-100 text-purple-800 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide uppercase mb-4 inline-block">
-              {t("how.badge")}
-            </span>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("how.h2")}</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t("how.subtitle")}</p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { icon: Heart, title: t("how.step1_title"), desc: t("how.step1_desc") },
-              { icon: Brain, title: t("how.step2_title"), desc: t("how.step2_desc") },
-              { icon: BookOpen, title: t("how.step3_title"), desc: t("how.step3_desc") },
-              { icon: Shield, title: t("how.step4_title"), desc: t("how.step4_desc") },
-            ].map((step, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-purple-100 relative">
-                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                  <step.icon className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
-                {i < 3 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-purple-200"></div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== GROWTH CRISES + SLEEP TRACKER SECTION ===== */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("trackers.h2")}</h2>
-            <p className="text-xl text-gray-600">{t("trackers.subtitle")}</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Growth Crises */}
-            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img 
-                src={IMAGES.growth} 
-                alt={t("img.growth_alt")} 
-                className="w-full"
-                loading="lazy"
-                width="1200"
-                height="800"
-              />
-            </div>
-
-            {/* Sleep Tracker */}
-            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img 
-                src={IMAGES.sleep} 
-                alt={t("img.sleep_alt")} 
-                className="w-full"
-                loading="lazy"
-                width="1200"
-                height="800"
+                variant="fixed" 
+                className="h-16 border-2 border-purple-200 text-purple-700 hover:bg-purple-50" 
               />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ===== FEEDING TRACKER + EXERCISES SECTION ===== */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Feeding Tracker */}
-            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img 
-                src={IMAGES.feeding} 
-                alt={t("img.feeding_alt")} 
-                className="w-full"
-                loading="lazy"
-                width="1200"
-                height="800"
-              />
-            </div>
-
-            {/* Postpartum Exercises */}
-            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img 
-                src={IMAGES.exercises} 
-                alt={t("img.exercises_alt")} 
-                className="w-full"
-                loading="lazy"
-                width="1200"
-                height="800"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== BEFORE/AFTER SECTION ===== */}
-      <section className="py-20 px-4 bg-white" id="features">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("compare.h2")}</h2>
-            <p className="text-xl text-gray-600">{t("compare.subtitle")}</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Before */}
-            <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-red-700 mb-6 flex items-center gap-2">
-                <span>❌</span> {t("compare.before")}
-              </h3>
-              <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_1")}</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_2")}</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_3")}</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_4")}</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_5")}</span></li>
-                <li className="flex gap-3"><span className="text-red-500 font-bold">•</span><span>{t("compare.before_6")}</span></li>
-              </ul>
-            </div>
-
-            {/* After */}
-            <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-green-700 mb-6 flex items-center gap-2">
-                <span>✅</span> {t("compare.after")}
-              </h3>
-              <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_1")}</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_2")}</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_3")}</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_4")}</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_5")}</span></li>
-                <li className="flex gap-3"><span className="text-green-500 font-bold">•</span><span>{t("compare.after_6")}</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FEATURES SECTION ===== */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("features.h2")}</h2>
-            <p className="text-xl text-gray-600">{t("features.subtitle")}</p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-6">
-            {features.map((feature, i) => (
-              <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                <feature.icon className="w-12 h-12 text-purple-600 mb-4" />
-                <h3 className="font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== MOTHER FEATURES SECTION ===== */}
-      <section className="py-20 px-4 bg-gradient-to-r from-green-50 to-emerald-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              {t("mother.badge")}
-            </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("mother.h2")}</h2>
-            <p className="text-xl text-gray-600">{t("mother.subtitle")}</p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-6">
-            {motherFeatures.map((feature, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                <feature.icon className="w-12 h-12 text-green-600 mb-4" />
-                <h3 className="font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button 
-              size="lg"
-              className="bg-green-600 hover:bg-green-700 text-white text-lg h-14 rounded-full"
-              onClick={() => window.location.href = localePath('/checkout')}
-            >
-              {t("mother.cta")} <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== TESTIMONIALS SECTION ===== */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("testimonials.h2")}</h2>
-            <p className="text-xl text-gray-600">{t("testimonials.subtitle")}</p>
-          </div>
-          <div className="rounded-2xl overflow-hidden shadow-xl">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-purple-200 blur-3xl opacity-30 rounded-full group-hover:opacity-50 transition-opacity" />
             <img 
-              src={IMAGES.testimonials} 
-              alt={t("img.testimonials_alt")} 
-              className="w-full"
-              loading="lazy"
+              src={IMAGES.hero} 
+              alt={t("hero.mockup_alt")}
+              className="relative rounded-3xl shadow-2xl border-8 border-white"
+              loading="eager"
               width="1200"
-              height="600"
+              height="800"
             />
           </div>
         </div>
       </section>
 
-      {/* ===== CREDIBILITY SECTION ===== */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-        <div className="max-w-6xl mx-auto text-white text-center">
-          <div className="inline-block bg-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            {t("credibility.badge")}
+      {/* Features Section */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("features.h2")}</h2>
+            <p className="text-xl text-gray-600">{t("features.subtitle")}</p>
           </div>
-          <h2 className="text-4xl font-bold mb-6">{t("credibility.h2")}</h2>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto mb-8">
-            {t("credibility.desc")}
-          </p>
-          <div className="flex justify-center gap-8 flex-wrap">
-            <div className="bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="text-3xl font-bold">{t("credibility.stat_1")}</div>
-              <div className="text-sm text-white/80">{t("credibility.stat_1_label")}</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {features.map((f, i) => (
+              <div key={i} className="p-6 rounded-2xl bg-gray-50 hover:bg-purple-50 transition-colors group">
+                <f.icon className="w-10 h-10 text-purple-600 mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold text-gray-900 mb-2">{f.title}</h3>
+                <p className="text-sm text-gray-600">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mother Care Section */}
+      <section className="py-24 px-6 bg-purple-900 text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-pink-500/10 to-transparent" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="inline-block bg-pink-500 text-white px-4 py-1 rounded-full text-sm font-bold mb-6">
+                {t("mother.badge")}
+              </div>
+              <h2 className="text-4xl font-bold mb-6">{t("mother.h2")}</h2>
+              <p className="text-xl text-purple-100 mb-12">{t("mother.subtitle")}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {motherFeatures.map((f, i) => (
+                  <div key={i} className="flex gap-4 items-start">
+                    <div className="bg-white/10 p-3 rounded-xl">
+                      <f.icon className="w-6 h-6 text-pink-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold mb-1">{f.title}</h4>
+                      <p className="text-sm text-purple-200">{f.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Button 
+                className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg"
+                onClick={() => setLocation(localePath("/chat"))}
+              >
+                {t("mother.cta")}
+              </Button>
             </div>
-            <div className="bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="text-3xl font-bold">{t("credibility.stat_2")}</div>
-              <div className="text-sm text-white/80">{t("credibility.stat_2_label")}</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur px-6 py-4 rounded-xl">
-              <div className="text-3xl font-bold">{t("credibility.stat_3")}</div>
-              <div className="text-sm text-white/80">{t("credibility.stat_3_label")}</div>
+            <div className="relative">
+              <img 
+                src={IMAGES.exercises} 
+                alt={t("img.exercises_alt")}
+                className="rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== PRICING SECTION ===== */}
-      <section className="py-20 px-4">
+      {/* Pricing Section */}
+      <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("pricing.h2")}</h2>
             <p className="text-xl text-gray-600">{t("pricing.subtitle")}</p>
           </div>
-
           <div className="grid md:grid-cols-3 gap-8">
             {plans.map((plan, i) => (
               <div 
                 key={i} 
-                className={`rounded-2xl p-8 transition-all ${
+                className={`rounded-3xl p-8 transition-all ${
                   plan.popular 
-                    ? "bg-gradient-to-br from-purple-600 to-pink-600 text-white shadow-2xl scale-105" 
-                    : "bg-white border border-gray-200 hover:shadow-lg"
+                    ? "bg-white shadow-2xl border-4 border-purple-600 scale-105 relative" 
+                    : "bg-white border border-gray-200 hover:shadow-xl"
                 }`}
               >
                 {plan.popular && (
-                  <div className="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold">
                     {t("pricing.premium_popular")}
                   </div>
                 )}
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  {plan.period && <span className={plan.popular ? "text-white/80" : "text-gray-600"}>{plan.period}</span>}
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                <div className="mb-6">
+                  <span className="text-5xl font-extrabold text-gray-900">{plan.price}</span>
+                  {plan.period && <span className="text-gray-500 ml-2">{plan.period}</span>}
                 </div>
-                <p className={`text-sm mb-6 ${plan.popular ? "text-white/90" : "text-gray-600"}`}>{plan.desc}</p>
-
+                <p className="text-gray-600 mb-8">{plan.desc}</p>
                 <Button 
-                  size="lg"
-                  className={`w-full mb-8 h-12 rounded-full font-semibold ${
-                    plan.popular 
-                      ? "bg-white text-purple-600 hover:bg-gray-100" 
-                      : "bg-purple-600 text-white hover:bg-purple-700"
+                  className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
+                    plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
                   }`}
-                  onClick={() => window.location.href = localePath('/checkout')}
+                  onClick={() => setLocation(localePath("/checkout"))}
                 >
                   {t("pricing.cta")}
                 </Button>
-
-                <div className="space-y-3">
-                  {plan.features.map((feature, j) => (
-                    <div key={j} className="flex gap-3 items-start">
-                      <Check className={`w-5 h-5 flex-shrink-0 ${plan.popular ? "text-white" : "text-green-600"}`} />
-                      <span className="text-sm">{feature}</span>
-                    </div>
+                <ul className="space-y-4">
+                  {plan.features.map((f, j) => (
+                    <li key={j} className="flex gap-3 items-start text-sm text-gray-600">
+                      <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      {f}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-gray-600">
-              {t("pricing.footer")}
-            </p>
           </div>
         </div>
       </section>
 
-      {/* ===== FAQ SECTION ===== */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t("faq.h2")}</h2>
-          </div>
-
+      {/* FAQ Section Otimizada */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">{t("faq.h2")}</h2>
           <div className="space-y-4">
             {faqItems.map((item, i) => (
-              <div key={i} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <div key={i} className="border border-gray-200 rounded-2xl overflow-hidden">
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                  className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
                 >
-                  <span className="font-semibold text-gray-900 text-left">{item.q}</span>
-                  <ChevronDown 
-                    className={`w-5 h-5 text-gray-600 transition-transform ${expandedFaq === i ? "rotate-180" : ""}`}
-                  />
+                  <span className="font-bold text-gray-900">{item.q}</span>
+                  <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${expandedFaq === i ? "rotate-180" : ""}`} />
                 </button>
                 {expandedFaq === i && (
-                  <div className="px-6 pb-6 text-gray-600 border-t border-gray-200 whitespace-pre-line">
+                  <div className="px-6 pb-6 text-gray-600 leading-relaxed">
                     {item.a}
                   </div>
                 )}
@@ -612,81 +358,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== FINAL CTA WITH IMAGE ===== */}
-      <section className="relative py-20 px-4 bg-gradient-to-r from-purple-600 to-pink-600 overflow-hidden">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-white">
-            <h2 className="text-4xl font-bold mb-6">{t("final_cta.h2")}</h2>
-            <p className="text-xl text-white/90 mb-8">
-              {t("final_cta.desc")}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg"
-                className="bg-white text-purple-600 hover:bg-gray-100 text-lg h-14 rounded-full font-semibold"
-                onClick={() => window.location.href = localePath('/checkout')}
-              >
-                {t("pricing.cta")} <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <WhatsAppButton 
-                phoneNumber="+55 12 997999971"
-                message="Olá! Gostaria de conhecer o Wilbor"
-                variant="fixed"
-                className="text-base h-14 border-2 border-white text-white hover:bg-white/10"
-              />
-            </div>
-          </div>
-          <div className="hidden md:block">
-            <img 
-              src={IMAGES.cta} 
-              alt={t("img.cta_alt")} 
-              className="rounded-2xl shadow-2xl w-full opacity-90"
-              loading="lazy"
-              width="1200"
-              height="600"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FOOTER ===== */}
-      <footer className="bg-gray-900 text-gray-400 py-12 px-4">
+      {/* Footer Blindado */}
+      <footer className="bg-gray-900 text-gray-400 py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Heart className="w-6 h-6 text-purple-400 fill-purple-400" />
-                <span className="font-bold text-white">Wilbor</span>
+          <div className="grid md:grid-cols-4 gap-12 mb-16">
+            <div className="col-span-1 md:col-span-1">
+              <div className="flex items-center gap-2 mb-6">
+                <Heart className="w-8 h-8 text-purple-500 fill-purple-500" />
+                <span className="text-2xl font-bold text-white">Wilbor</span>
               </div>
-              <p className="text-sm">{t("footer.tagline")}</p>
+              <p className="text-sm leading-relaxed">{t("footer.tagline")}</p>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">{t("footer.product")}</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href={localePath("/blog")}><a className="hover:text-white">{t("footer.blog")}</a></Link></li>
-                <li><a href="#" className="hover:text-white">{t("footer.pricing")}</a></li>
-                <li><a href="#" className="hover:text-white">{t("footer.faq")}</a></li>
+              <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">{t("footer.product")}</h4>
+              <ul className="space-y-4 text-sm">
+                <li><Link href={localePath("/blog")}><a className="hover:text-white transition-colors">{t("footer.blog")}</a></Link></li>
+                <li><Link href={localePath("/pricing")}><a className="hover:text-white transition-colors">{t("footer.pricing")}</a></Link></li>
+                <li><Link href={localePath("/faq")}><a className="hover:text-white transition-colors">{t("footer.faq")}</a></Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">{t("footer.legal")}</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">{t("footer.privacy")}</a></li>
-                <li><a href="#" className="hover:text-white">{t("footer.terms")}</a></li>
-                <li><a href="#" className="hover:text-white">{t("footer.contact")}</a></li>
+              <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">{t("footer.legal")}</h4>
+              <ul className="space-y-4 text-sm">
+                <li><Link href={localePath("/privacy")}><a className="hover:text-white transition-colors">{t("footer.privacy")}</a></Link></li>
+                <li><Link href={localePath("/terms")}><a className="hover:text-white transition-colors">{t("footer.terms")}</a></Link></li>
+                <li><Link href={localePath("/contact")}><a className="hover:text-white transition-colors">{t("footer.contact")}</a></Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">{t("footer.social")}</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="https://www.instagram.com/wilbor.assist" target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a></li>
-                <li><a href="https://wa.me/5512997999971" target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a></li>
-                <li><a href="#" className="hover:text-white">Email</a></li>
-              </ul>
+              <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">{t("footer.social")}</h4>
+              <div className="flex gap-4">
+                <a href="https://instagram.com/wilbor.assist" target="_blank" rel="noreferrer" className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
+                  <Smile className="w-5 h-5 text-white" />
+                </a>
+                <a href="https://wa.me/5512997999971" target="_blank" rel="noreferrer" className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
+                  <Mail className="w-5 h-5 text-white" />
+                </a>
+              </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-sm">
+          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
             <p>{t("footer.copyright")}</p>
+            <p className="max-w-md text-center md:text-right opacity-50">{t("footer.disclaimer")}</p>
           </div>
         </div>
       </footer>
