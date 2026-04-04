@@ -38,8 +38,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.error": "Desculpe, houve um erro. Tente novamente.",
     "chat.placeholder": "Digite sua dúvida sobre o bebê...",
     "chat.empty_state": "Olá! Como posso ajudar você e seu bebê hoje?",
+    "chat.messages_left": "mensagens restantes",
     "paywall.title": "Limite atingido",
     "paywall.cta": "Assinar Wilbor Premium",
+    "nav.usage": "Seu Uso",
+    "nav.my_babies": "Meus Bebês",
+    "nav.recipes": "Receitas",
 
     // Hero
     "hero.badge": "Apoio real para mães de verdade",
@@ -250,8 +254,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.error": "Sorry, something went wrong. Try again.",
     "chat.placeholder": "Type your question about the baby...",
     "chat.empty_state": "Hello! How can I help you and your baby today?",
+    "chat.messages_left": "messages left",
     "paywall.title": "Limit reached",
     "paywall.cta": "Subscribe to Wilbor Premium",
+    "nav.usage": "Your Usage",
+    "nav.my_babies": "My Babies",
+    "nav.recipes": "Recipes",
 
     // Hero
     "hero.badge": "Real support for real mothers",
@@ -462,9 +470,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.error": "Lo sentimos, ocurrió un error. Intenta nuevamente.",
     "chat.placeholder": "Escribe tu duda sobre el bebé...",
     "chat.empty_state": "¡Hola! ¿Cómo posso ajudar a ti e a tu bebé hoy?",
+    "chat.messages_left": "mensajes restantes",
     "paywall.title": "Límite alcanzado",
     "paywall.cta": "Suscribirse a Wilbor Premium",
-
+    "nav.usage": "Tu Uso",
+    "nav.my_babies": "Mis Bebés",
+    "nav.recipes": "Recetas",
     // Hero
     "hero.badge": "Apoyo real para madres reales",
     "hero.h1": "Sabe qué hacer con tu bebé, en cualquier momento del día.",
@@ -674,8 +685,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.error": "Désolé, une erreur s'est produite. Veuillez réessayer.",
     "chat.placeholder": "Posez votre question sur le bébé...",
     "chat.empty_state": "Bonjour ! Comment puis-je vous aider, vous et votre bébé ?",
+    "chat.messages_left": "messages restants",
     "paywall.title": "Limite atteinte",
     "paywall.cta": "S'abonner à Wilbor Premium",
+    "nav.usage": "Votre Utilisation",
+    "nav.my_babies": "Mes Bébés",
+    "nav.recipes": "Recettes",
 
     // Hero
     "hero.badge": "Un soutien réel pour de vraies mères",
@@ -886,8 +901,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.error": "Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     "chat.placeholder": "Stellen Sie Ihre Frage zum Baby...",
     "chat.empty_state": "Hallo! Wie kann ich Ihnen und Ihrem Baby heute helfen?",
+    "chat.messages_left": "Nachrichten übrig",
     "paywall.title": "Limit erreicht",
     "paywall.cta": "Wilbor Premium abonnieren",
+    "nav.usage": "Ihre Nutzung",
+    "nav.my_babies": "Meine Babys",
+    "nav.recipes": "Rezepte",
 
     // Hero
     "hero.badge": "Echte Unterstützung für echte Mütter",
