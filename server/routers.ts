@@ -15,6 +15,7 @@ import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRouter";
+import { adminRouter } from "./adminRouter";
 import { identifyUpsellCategory } from "./upsellLogic";
 import { wilborEbooks } from "../drizzle/schema";
 import { desc } from "drizzle-orm";
@@ -26,6 +27,7 @@ export const appRouter = router({
   whatsapp: whatsappRouter,
   instagram: instagramRouter,
   shop: shopRouter,
+  admin: adminRouter,
 
   // 1. Dando vida ao Módulo "Meus Bebês" (Personalização 95%)
   babies: router({
