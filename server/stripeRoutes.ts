@@ -1,22 +1,23 @@
 import { protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
-import { createExtraCreditsCheckout } from "./stripeIntegration";
+import { createExtraCreditsCheckout, getPaymentStatus } from "./stripeIntegration";
 import { addExtraCreditTransaction, logSosUsage } from "./db";
 
 export const stripeRouter = router({
   /**
-   * Criar sessão de checkout para compra de créditos extras
+   * Criar sessão de checkout - Agora com suporte a Multi-Moeda (ROI)
    */
   createCheckout: protectedProcedure
     .input(z.object({
-      amountReais: z.number().min(9.90).max(500),
+      amount: z.number().min(5), // Mínimo de 5 na moeda local
+      currency: z.enum(["brl", "usd", "eur"]).default("brl"),
     }))
     .mutation(async ({ ctx, input }) => {
       try {
-        const session = await createExtraCreditsCheckout(ctx.user.id, input.amountReais);
+        const session = await createExtraCreditsCheckout(ctx.user.id, input.amount, input.currency);
         
         // Log do evento
-        console.log(`[Stripe] Checkout session created for user ${ctx.user.id}: ${session.id}`);
+        console.log(`[Stripe] Checkout session created for user ${ctx.user.id}: ${session.id} (${input.currency.toUpperCase()})`);
         
         return {
           success: true,
@@ -33,7 +34,7 @@ export const stripeRouter = router({
     }),
 
   /**
-   * Verificar status de pagamento
+   * Verificar status de pagamento (Otimizado)
    */
   checkPaymentStatus: protectedProcedure
     .input(z.object({
@@ -41,19 +42,21 @@ export const stripeRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       try {
-        const Stripe = require("stripe");
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-        
-        const session = await stripe.checkout.sessions.retrieve(input.sessionId);
+        const session = await getPaymentStatus(input.sessionId);
         
         if (session.payment_status === "paid") {
-          const amountReais = (session.amount_total / 100).toFixed(2);
-          const creditsReceived = Math.round(parseFloat(amountReais) * 5.5); // 1 real = 5.5 créditos
+          const amountTotal = session.amount_total ? session.amount_total / 100 : 0;
+          const currency = session.currency?.toUpperCase() || "BRL";
+          
+          // Fator de conversão dinâmico (Sugestão: 1 unidade monetária = 5 créditos)
+          // Em BRL, 29.90 reais = ~150 créditos (29.90 * 5 = 149.5)
+          // Em USD, 9.90 dólares = ~50 créditos (9.90 * 5 = 49.5)
+          const creditsReceived = Math.round(amountTotal * 5); 
           
           // Registrar transação
           await addExtraCreditTransaction(
             ctx.user.id,
-            amountReais,
+            amountTotal.toString(),
             creditsReceived,
             session.id
           );
@@ -62,7 +65,7 @@ export const stripeRouter = router({
           await logSosUsage(
             ctx.user.id,
             null,
-            amountReais,
+            amountTotal.toString(),
             creditsReceived,
             session.id
           );
@@ -70,9 +73,10 @@ export const stripeRouter = router({
           return {
             success: true,
             paid: true,
-            amountReais,
+            amount: amountTotal,
+            currency,
             creditsReceived,
-            message: `✅ Pagamento recebido! Você recebeu ${creditsReceived} créditos extras. 💜`,
+            message: `✅ Pagamento confirmado em ${currency}! +${creditsReceived} créditos. 💜`,
           };
         }
         
@@ -91,31 +95,40 @@ export const stripeRouter = router({
     }),
 
   /**
-   * Obter opções de compra de créditos
+   * Opções de Crédito Internacionalizadas (Escalabilidade)
    */
-  getCreditOptions: protectedProcedure.query(async () => {
-    return [
-      {
-        id: "credits_50",
-        amountReais: 9.90,
-        creditsReceived: 50,
-        label: "R$ 9,90 - 50 créditos",
-        popular: false,
-      },
-      {
-        id: "credits_150",
-        amountReais: 29.90,
-        creditsReceived: 150,
-        label: "R$ 29,90 - 150 créditos (⭐ Mais popular)",
-        popular: true,
-      },
-      {
-        id: "credits_350",
-        amountReais: 99.90,
-        creditsReceived: 350,
-        label: "R$ 99,90 - 350 créditos",
-        popular: false,
-      },
-    ];
+  getCreditOptions: protectedProcedure.query(async ({ ctx }) => {
+    // Detecta o idioma do usuário para mostrar a moeda correta
+    const lang = ctx.user.language || "pt";
+    
+    const options: Record<string, any[]> = {
+      pt: [
+        { id: "c1", amount: 9.90, creditsReceived: 50, label: "R$ 9,90 - 50 créditos", currency: "BRL" },
+        { id: "c2", amount: 29.90, creditsReceived: 150, label: "R$ 29,90 - 150 créditos (⭐ Popular)", currency: "BRL", popular: true },
+        { id: "c3", amount: 99.90, creditsReceived: 500, label: "R$ 99,90 - 500 créditos", currency: "BRL" },
+      ],
+      en: [
+        { id: "c1", amount: 4.90, creditsReceived: 25, label: "$ 4.90 - 25 credits", currency: "USD" },
+        { id: "c2", amount: 9.90, creditsReceived: 50, label: "$ 9.90 - 50 credits (⭐ Popular)", currency: "USD", popular: true },
+        { id: "c3", amount: 29.90, creditsReceived: 150, label: "$ 29.90 - 150 credits", currency: "USD" },
+      ],
+      es: [
+        { id: "c1", amount: 4.90, creditsReceived: 25, label: "€ 4,90 - 25 créditos", currency: "EUR" },
+        { id: "c2", amount: 9.90, creditsReceived: 50, label: "€ 9,90 - 50 créditos (⭐ Popular)", currency: "EUR", popular: true },
+        { id: "c3", amount: 29.90, creditsReceived: 150, label: "€ 29,90 - 150 créditos", currency: "EUR" },
+      ],
+      fr: [
+        { id: "c1", amount: 4.90, creditsReceived: 25, label: "4,90 € - 25 crédits", currency: "EUR" },
+        { id: "c2", amount: 9.90, creditsReceived: 50, label: "9,90 € - 50 crédits (⭐ Populaire)", currency: "EUR", popular: true },
+        { id: "c3", amount: 29.90, creditsReceived: 150, label: "29,90 € - 150 crédits", currency: "EUR" },
+      ],
+      de: [
+        { id: "c1", amount: 4.90, creditsReceived: 25, label: "4,90 € - 25 Credits", currency: "EUR" },
+        { id: "c2", amount: 9.90, creditsReceived: 50, label: "9,90 € - 50 Credits (⭐ Beliebt)", currency: "EUR", popular: true },
+        { id: "c3", amount: 29.90, creditsReceived: 150, label: "29,90 € - 150 Credits", currency: "EUR" },
+      ]
+    };
+
+    return options[lang] || options.en;
   }),
 });
