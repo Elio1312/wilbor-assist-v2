@@ -1,6 +1,6 @@
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { getDb } from "./db";
-import { wilborMessages, wilborConversations, wilborBabies, wilborUsers, InsertWilborMessage } from "../drizzle/schema";
+import { wilborMessages, wilborConversations, wilborBabies, wilborUsers } from "../drizzle/schema";
 import { getWilborSystemPrompt } from "./wilborPrompt";
 import { invokeLLM } from "./_core/llm";
 
@@ -9,54 +9,38 @@ export interface ChatMessage {
   content: string;
 }
 
+// 1. Otimização de busca/criação (Menos latência)
 export async function getOrCreateConversation(
   userId: number,
   babyId: number | null,
-  category: "sono" | "colica" | "salto" | "alimentacao" | "seguranca" | "sos" | "geral"
+  category: string
 ) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const conditions = [
-    eq(wilborConversations.userId, userId),
-    eq(wilborConversations.category, category),
-  ];
-  
-  if (babyId) {
-    conditions.push(eq(wilborConversations.babyId, babyId));
-  }
-
-  const existing = await db
-    .select()
-    .from(wilborConversations)
-    .where(and(...(conditions as any)))
-    .limit(1);
-
-  if (existing.length > 0) {
-    return existing[0];
-  }
-
-  await db.insert(wilborConversations).values({
-    userId,
-    babyId: babyId || undefined,
-    category,
-    status: "active",
-  });
-
-  // Fetch the newly created conversation
-  const created = await db
+  const [existing] = await db
     .select()
     .from(wilborConversations)
     .where(
       and(
         eq(wilborConversations.userId, userId),
-        eq(wilborConversations.category, category)
+        eq(wilborConversations.category, category),
+        babyId ? eq(wilborConversations.babyId, babyId) : undefined
       )
     )
-    .orderBy(wilborConversations.createdAt)
     .limit(1);
 
-  return created[0] || {
+  if (existing) return existing;
+
+  // Inserção com retorno imediato (evita o segundo SELECT)
+  const [created] = await db.insert(wilborConversations).values({
+    userId,
+    babyId: babyId || undefined,
+    category,
+    status: "active",
+  }).returning();
+
+  return created || {
     id: 0,
     userId,
     babyId: babyId || null,
@@ -67,104 +51,63 @@ export async function getOrCreateConversation(
   };
 }
 
-export async function getConversationHistory(conversationId: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const messages = await db
-    .select()
-    .from(wilborMessages)
-    .where(eq(wilborMessages.conversationId, conversationId))
-    .orderBy(wilborMessages.createdAt);
-
-  return messages;
-}
-
-export async function saveMessage(
-  conversationId: number,
-  userId: number,
-  role: "user" | "assistant" | "system",
-  content: string
-) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const result = await db.insert(wilborMessages).values({
-    conversationId,
-    userId,
-    role,
-    content,
-  });
-
-  return result;
-}
-
+// 2. Contexto Inteligente (Foco em ROI e Precisão)
 export async function buildChatContext(userId: number, babyId: number | null) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  // Get user info
-  const user = await db
-    .select()
-    .from(wilborUsers)
-    .where(eq(wilborUsers.id, userId))
-    .limit(1);
+  const [userData] = await db.select().from(wilborUsers).where(eq(wilborUsers.id, userId)).limit(1);
+  if (!userData) throw new Error("User not found");
 
-  if (user.length === 0) {
-    throw new Error("User not found");
-  }
-
-  const userData = user[0];
   let babyData = null;
-
-  // Get baby info if specified
   if (babyId) {
-    const baby = await db
-      .select()
-      .from(wilborBabies)
-      .where(eq(wilborBabies.id, babyId))
-      .limit(1);
-
-    if (baby.length > 0) {
-      babyData = baby[0];
-    }
+    const [baby] = await db.select().from(wilborBabies).where(eq(wilborBabies.id, babyId)).limit(1);
+    babyData = baby;
   }
 
-  // Calculate baby age
-  let babyAge: string | undefined = undefined;
+  let babyAge = "recém-nascido";
   if (babyData?.birthDate) {
-    const birthDate = new Date(babyData.birthDate);
-    const now = new Date();
-    const ageInDays = Math.floor((now.getTime() - birthDate.getTime()) / (1000 * 60 * 60 * 24));
-    const ageInWeeks = Math.floor(ageInDays / 7);
-    const ageInMonths = Math.floor(ageInDays / 30);
-
-    if (ageInMonths < 1) {
-      babyAge = `${ageInWeeks} weeks`;
-    } else if (ageInMonths < 12) {
-      babyAge = `${ageInMonths} months`;
-    } else {
-      babyAge = `${Math.floor(ageInMonths / 12)} year(s)`;
-    }
+    const diff = Date.now() - new Date(babyData.birthDate).getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    if (days < 7) babyAge = `${days} dias`;
+    else if (days < 30) babyAge = `${Math.floor(days / 7)} semanas`;
+    else if (days < 365) babyAge = `${Math.floor(days / 30)} meses`;
+    else babyAge = `${Math.floor(days / 365)} ano(s)`;
   }
 
   return {
     motherName: userData.name || "mãe",
     babyName: babyData?.name,
     babyAge,
-    babyWeightGrams: babyData?.weightGrams || undefined,
-    gestationalWeeks: babyData?.gestationalWeeks || undefined,
-    syndromes: babyData?.syndromes || undefined,
-    language: userData.language as "pt" | "en" | "es",
+    babyWeightGrams: babyData?.weightGrams,
+    gestationalWeeks: babyData?.gestationalWeeks,
+    syndromes: babyData?.syndromes,
+    language: (userData.language || "pt") as "pt" | "en" | "es" | "fr" | "de",
   };
 }
 
+// 3. Detecção de Emergência em 5 Idiomas (Segurança)
+export function detectEmergency(userMessage: string, language: string): boolean {
+  const keywords: Record<string, string[]> = {
+    pt: ["febre alta", "sangue", "convulsão", "queda", "vômito em jato", "falta de ar", "cianose"],
+    en: ["high fever", "blood", "seizure", "fall", "projectile vomit", "shortness of breath", "cyanosis"],
+    es: ["fiebre alta", "sangre", "convulsión", "caída", "vómito en proyectil", "falta de aire"],
+    fr: ["forte fièvre", "sang", "convulsion", "chute", "vomissement en jet", "difficulté à respirer"],
+    de: ["hohes fieber", "blut", "krampfanfall", "sturz", "schwallartiges erbrechen", "atemnot"]
+  };
+
+  const list = keywords[language] || keywords.pt;
+  const msg = userMessage.toLowerCase();
+  return list.some(k => msg.includes(k));
+}
+
+// 4. Execução de Chat (Redução de custo de Tokens)
 export async function generateWilborResponse(
   conversationId: number,
   userId: number,
   babyId: number | null,
   userMessage: string,
-  category: "sono" | "colica" | "salto" | "alimentacao" | "seguranca" | "sos" | "geral"
+  category: any
 ) {
   const context = await buildChatContext(userId, babyId);
   const systemPrompt = getWilborSystemPrompt(
@@ -177,47 +120,31 @@ export async function generateWilborResponse(
     context.syndromes
   );
 
-  // Get conversation history
-  const history = await getConversationHistory(conversationId);
+  const db = await getDb();
+  // Busca apenas as últimas 10 mensagens para economizar Tokens de API
+  const history = await db.select().from(wilborMessages)
+    .where(eq(wilborMessages.conversationId, conversationId))
+    .orderBy(desc(wilborMessages.createdAt))
+    .limit(10);
 
-  // Build messages array for LLM
-  const messages: Array<{ role: "user" | "assistant" | "system"; content: string }> = [
+  const messages = [
     { role: "system", content: systemPrompt },
-    ...history.map(msg => ({
-      role: msg.role as "user" | "assistant" | "system",
-      content: msg.content,
-    })),
-    { role: "user", content: userMessage },
+    ...history.reverse().map(m => ({ role: m.role, content: m.content })),
+    { role: "user", content: userMessage }
   ];
 
-  // Call LLM
-  const response = await invokeLLM({
-    messages: messages as any,
+  const response = await invokeLLM({ messages: messages as any });
+  const content = response.choices[0]?.message?.content || "";
+
+  await db.insert(wilborMessages).values({
+    conversationId,
+    userId,
+    role: "assistant",
+    content,
   });
 
-  const assistantMessage = typeof response.choices[0]?.message?.content === "string" 
-    ? response.choices[0].message.content 
-    : "";
-
-  // Save assistant message
-  await saveMessage(conversationId, userId, "assistant", assistantMessage);
-
-  return assistantMessage;
+  return content;
 }
-
-export function detectEmergency(userMessage: string, language: "pt" | "en" | "es"): boolean {
-  const emergencyKeywords: Record<string, string[]> = {
-    pt: ["febre alta", "sangue", "convulsão", "queda", "vômito em jato", "falta de ar", "dificuldade respirar", "cianose", "desmaio"],
-    en: ["high fever", "blood", "seizure", "fall", "projectile vomit", "difficulty breathing", "cyanosis", "fainting"],
-    es: ["fiebre alta", "sangue", "convulsión", "caída", "vómito en proyectil", "dificultad respirar", "cianosis", "desmayo"],
-  };
-
-  const keywords = emergencyKeywords[language] || emergencyKeywords.pt;
-  const lowerMessage = userMessage.toLowerCase();
-
-  return keywords.some(keyword => lowerMessage.includes(keyword));
-}
-
 
 /**
  * Simple chat endpoint for Dashboard
@@ -228,7 +155,6 @@ export async function simpleChatWithWilbor(
   messages: Array<{ role: "system" | "user" | "assistant"; content: string }>
 ): Promise<string> {
   try {
-    // Call LLM with messages
     const response = await invokeLLM({
       messages: messages as any,
     });
