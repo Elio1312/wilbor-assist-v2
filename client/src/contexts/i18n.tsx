@@ -242,7 +242,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.loading": "Carregando...",
     "common.error": "Erro",
     "common.not_found": "Página não encontrada",
-    "common.back": "Voltar",
   },
 
   en: {
@@ -464,7 +463,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.loading": "Loading...",
     "common.error": "Error",
     "common.not_found": "Page not found",
-    "common.back": "Back",
   },
 
   es: {
@@ -685,7 +683,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.loading": "Cargando...",
     "common.error": "Error",
     "common.not_found": "Página no encontrada",
-    "common.back": "Volver",
   },
 
   fr: {
@@ -907,7 +904,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.loading": "Chargement...",
     "common.error": "Erreur",
     "common.not_found": "Page non trouvée",
-    "common.back": "Retour",
   },
 
   de: {
@@ -1129,7 +1125,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.loading": "Wird geladen...",
     "common.error": "Fehler",
     "common.not_found": "Seite nicht gefunden",
-    "common.back": "Zurück",
   },
 };
 

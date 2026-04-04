@@ -14,6 +14,7 @@ import { stripeRouter } from "./stripeRoutes";
 import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
+import { shopRouter } from "./shopRouter";
 
 export const appRouter = router({
   system: systemRouter,
@@ -21,6 +22,7 @@ export const appRouter = router({
   currency: stripeMultiCurrencyRouter,
   whatsapp: whatsappRouter,
   instagram: instagramRouter,
+  shop: shopRouter,
 
   // 1. Dando vida ao Módulo "Meus Bebês" (Personalização 95%)
   babies: router({

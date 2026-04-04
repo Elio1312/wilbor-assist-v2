@@ -393,3 +393,59 @@ export const blogComments = mysqlTable("blogComments", {
 export type BlogComment = typeof blogComments.$inferSelect;
 export type InsertBlogComment = typeof blogComments.$inferInsert;
 
+
+// ==========================================
+// E-BOOKS (Produtos Digitais)
+// ==========================================
+export const wilborEbooks = mysqlTable("wilborEbooks", {
+  id: varchar("id", { length: 100 }).primaryKey(), // Ex: 'casamento-01'
+  
+  // Internacionalização Nativa
+  titlePt: text("titlePt").notNull(),
+  titleEn: text("titleEn"),
+  titleEs: text("titleEs"),
+  
+  descriptionPt: text("descriptionPt").notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionEs: text("descriptionEs"),
+  
+  category: varchar("category", { length: 50 }).notNull(), // Ex: 'casamento', 'emocoes'
+  
+  // Preços em Centavos
+  priceBrl: int("priceBrl").notNull(),
+  priceUsd: int("priceUsd").notNull(),
+  priceEur: int("priceEur").notNull(),
+  
+  coverImage: text("coverImage").notNull(),
+  pdfUrl: text("pdfUrl").notNull(),
+  
+  rating: decimal("rating", { precision: 3, scale: 2 }).default("5.00"),
+  reviewCount: int("reviewCount").default(0),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WilborEbook = typeof wilborEbooks.$inferSelect;
+export type InsertWilborEbook = typeof wilborEbooks.$inferInsert;
+
+// ==========================================
+// E-BOOK PURCHASES (Controle de Vendas)
+// ==========================================
+export const wilborEbookPurchases = mysqlTable("wilborEbookPurchases", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  ebookId: varchar("ebookId", { length: 100 }).notNull(),
+  
+  amount: int("amount").notNull(), // Valor pago em centavos
+  currency: varchar("currency", { length: 10 }).notNull(), // 'BRL', 'USD', 'EUR'
+  
+  stripeSessionId: varchar("stripeSessionId", { length: 255 }).notNull().unique(),
+  status: mysqlEnum("purchaseStatus", ["pending", "completed", "failed", "refunded"]).default("pending").notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WilborEbookPurchase = typeof wilborEbookPurchases.$inferSelect;
+export type InsertWilborEbookPurchase = typeof wilborEbookPurchases.$inferInsert;

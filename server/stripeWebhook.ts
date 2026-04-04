@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { Request, Response, Express } from "express";
 import express from "express";
 import { getDb, addExtraCreditTransaction } from "./db";
-import { wilborUserCredits, wilborConversionEvents, wilborUsers } from "../drizzle/schema";
+import { wilborUserCredits, wilborConversionEvents, wilborUsers, wilborEbookPurchases } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { PRODUCTS } from "./stripeProducts";
 
@@ -144,6 +144,24 @@ export function registerStripeRoutes(app: Express) {
               });
 
               console.log(`[Stripe] User ${userId} processed successfully. Credits: ${credits}`);
+            }
+
+            // 4. ENTREGA DE E-BOOK (Venda Única)
+            if (session.metadata?.type === "ebook_purchase") {
+              const ebookId = session.metadata.ebookId;
+              if (userId && ebookId) {
+                await db.insert(wilborEbookPurchases).values({
+                  userId,
+                  ebookId,
+                  amount: session.amount_total || 0,
+                  currency: session.currency || "brl",
+                  stripeSessionId: session.id,
+                  status: "completed",
+                }).onDuplicateKeyUpdate({
+                  set: { status: "completed" }
+                });
+                console.log(`[Stripe] E-book ${ebookId} delivered to User ${userId}`);
+              }
             }
             break;
           }

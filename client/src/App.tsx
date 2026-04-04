@@ -11,6 +11,8 @@ import Dashboard from "@/pages/Dashboard";
 import BuyCredits from "@/pages/BuyCredits";
 import Checkout from "@/pages/Checkout";
 import { Chat } from "@/pages/Chat";
+import ShopPage from "@/pages/ShopPage";
+import MyEbooks from "@/pages/MyEbooks";
 
 import { Route, Switch, useLocation } from "wouter";
 import { useEffect } from "react";
@@ -49,6 +51,8 @@ function Router() {
       <Route path="/:lang?/recipes/:slug" component={RecipeDetail} />
       <Route path="/:lang?/feedback" component={FeedbackDashboard} />
       <Route path="/:lang?/checkout" component={Checkout} />
+      <Route path="/:lang?/shop" component={ShopPage} />
+      <Route path="/:lang?/my-ebooks" component={MyEbooks} />
 
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
