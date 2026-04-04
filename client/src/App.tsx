@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 import { Blog } from "@/pages/Blog";
 import { BlogArticle } from "@/pages/BlogArticle";
+import Recipes from "@/pages/Recipes";
 import { FeedbackDashboard } from "@/pages/FeedbackDashboard";
 import Dashboard from "@/pages/Dashboard";
 import BuyCredits from "@/pages/BuyCredits";
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/:lang?/chat" component={Chat} />
       <Route path="/:lang?/blog" component={Blog} />
       <Route path="/:lang?/blog/:slug" component={BlogArticle} />
+      <Route path="/:lang?/recipes" component={Recipes} />
       <Route path="/:lang?/feedback" component={FeedbackDashboard} />
       <Route path="/:lang?/checkout" component={Checkout} />
 

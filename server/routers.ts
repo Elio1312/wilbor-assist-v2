@@ -7,6 +7,7 @@ import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } fro
 import { eq } from "drizzle-orm";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
+import { recipesData } from "./recipeData";
 import { simpleChatWithWilbor } from "./wilborChat";
 import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit } from "./wilborDb";
 import { stripeRouter } from "./stripeRoutes";
@@ -407,6 +408,69 @@ export const appRouter = router({
             description: article.description,
             readTimeMinutes: article.readTimeMinutes,
           }));
+      }),
+  }),
+
+  recipes: router({
+    getRecipes: publicProcedure
+      .input(z.object({ 
+        ageMonths: z.number().optional(),
+        category: z.string().optional()
+      }))
+      .query(async ({ ctx, input }) => {
+        // 1. Verificar status do usuário (Premium vs Free)
+        const isPremium = ctx.user?.id ? (await (async () => {
+          const db = await getDb();
+          if (!db) return false;
+          const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
+          return credits[0]?.plan === "premium";
+        })()) : false;
+
+        // 2. Filtrar receitas
+        let filtered = recipesData;
+        if (input.ageMonths !== undefined) {
+          filtered = filtered.filter(r => input.ageMonths! >= r.minAgeMonths && input.ageMonths! <= r.maxAgeMonths);
+        }
+        if (input.category) {
+          filtered = filtered.filter(r => r.category === input.category);
+        }
+
+        // 3. Aplicar Paywall: Se não for premium, oculta detalhes das receitas premium
+        return filtered.map(recipe => {
+          if (recipe.isPremium && !isPremium) {
+            return {
+              ...recipe,
+              ingredients: ["Conteúdo exclusivo para assinantes Premium"],
+              instructions: ["Assine o Wilbor Premium para acessar o passo a passo completo."],
+              nutritionalBenefits: "Disponível no Plano Premium",
+              locked: true
+            };
+          }
+          return { ...recipe, locked: false };
+        });
+      }),
+
+    getRecipe: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ ctx, input }) => {
+        const recipe = recipesData.find(r => r.slug === input.slug);
+        if (!recipe) throw new Error("Recipe not found");
+
+        // Verificação de Premium para acesso individual
+        if (recipe.isPremium) {
+          const isPremium = ctx.user?.id ? (await (async () => {
+            const db = await getDb();
+            if (!db) return false;
+            const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
+            return credits[0]?.plan === "premium";
+          })()) : false;
+
+          if (!isPremium) {
+            throw new Error("PREMIUM_REQUIRED");
+          }
+        }
+
+        return recipe;
       }),
   }),
 });
