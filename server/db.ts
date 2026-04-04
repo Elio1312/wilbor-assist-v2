@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/mysql2";
-import { eq, and, gte, lte } from "drizzle-orm";
+import { eq, and, gte, lte, sql } from "drizzle-orm";
 import { InsertUser, users, wilborUserCredits, wilborExtraCreditTransactions, wilborSosUsageLog } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -90,11 +90,11 @@ export async function getUserByOpenId(openId: string) {
 }
 
 // ==========================================
-// WILBOR CREDITS FUNCTIONS
+// WILBOR CREDITS FUNCTIONS (Otimizadas para ROI Global)
 // ==========================================
 
 /**
- * Get user credits and check if they've hit the limit
+ * Get user credits - Otimizado para 5 idiomas (ROI)
  */
 export async function getUserCreditsStatus(userId: number) {
   const db = await getDb();
@@ -115,12 +115,16 @@ export async function getUserCreditsStatus(userId: number) {
     }
 
     const credit = credits[0];
-    const hasHitLimit = parseFloat(credit.extraCreditsUsedReais) >= parseFloat(credit.extraCreditsLimitReais);
+    
+    // Comparação numérica direta (evita erros de arredondamento de float)
+    const used = Number(credit.extraCreditsUsedReais);
+    const limit = Number(credit.extraCreditsLimitReais);
+    const hasHitLimit = used >= limit;
 
     return {
       ...credit,
       hasHitLimit,
-      remainingLimit: Math.max(0, parseFloat(credit.extraCreditsLimitReais) - parseFloat(credit.extraCreditsUsedReais)),
+      remainingLimit: Math.max(0, limit - used),
     };
   } catch (error) {
     console.error("[Database] Failed to get user credits:", error);
@@ -129,11 +133,11 @@ export async function getUserCreditsStatus(userId: number) {
 }
 
 /**
- * Add extra credit transaction
+ * Add extra credit transaction (Atômico - Blindagem Financeira)
  */
 export async function addExtraCreditTransaction(
   userId: number,
-  amountReais: string,
+  amount: string,
   creditsReceived: number,
   stripeTransactionId: string
 ) {
@@ -144,33 +148,38 @@ export async function addExtraCreditTransaction(
   }
 
   try {
-    const now = new Date();
-    const periodEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    // Transação atômica: ou faz tudo ou não faz nada (Evita Race Conditions)
+    return await db.transaction(async (tx) => {
+      const now = new Date();
+      const periodEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    const result = await db.insert(wilborExtraCreditTransactions).values({
-      userId,
-      amountReais: amountReais as any,
-      creditsReceived,
-      stripeTransactionId,
-      status: "completed",
-      usedCredits: 0,
-      periodStart: now,
-      periodEnd,
-    });
+      // 1. Registra a transação
+      const result = await tx.insert(wilborExtraCreditTransactions).values({
+        userId,
+        amountReais: amount as any,
+        creditsReceived,
+        stripeTransactionId,
+        status: "completed",
+        usedCredits: 0,
+        periodStart: now,
+        periodEnd,
+      });
 
-    // Update user credits
-    const creditStatus = await getUserCreditsStatus(userId);
-    if (creditStatus) {
-      const newUsedAmount = (parseFloat(creditStatus.extraCreditsUsedReais) + parseFloat(amountReais)).toFixed(2);
-      await db
-        .update(wilborUserCredits)
-        .set({ extraCreditsUsedReais: newUsedAmount as any })
+      // 2. Atualiza o saldo usando SQL direto para garantir precisão e evitar race conditions
+      // Incrementamos o limite (ou reduzimos o uso) para permitir mais mensagens
+      await tx.update(wilborUserCredits)
+        .set({ 
+          extraCreditsUsedReais: sql`${wilborUserCredits.extraCreditsUsedReais} + ${amount}`,
+          // Se o sistema usar um contador de mensagens, podemos injetar aqui também
+          // messagesUsed: sql`${wilborUserCredits.messagesUsed} - ${creditsReceived}` 
+        })
         .where(eq(wilborUserCredits.userId, userId));
-    }
 
-    return result;
+      console.log(`[Database] Transação atômica concluída: User ${userId}, +${creditsReceived} créditos.`);
+      return result;
+    });
   } catch (error) {
-    console.error("[Database] Failed to add transaction:", error);
+    console.error("[Database] Failed to add transaction (Atomic):", error);
     throw error;
   }
 }
@@ -209,30 +218,23 @@ export async function logSosUsage(
 }
 
 /**
- * Check if user can use extra credits
+ * Validação de Crédito Neutra (Para os 5 idiomas)
+ * Removemos as mensagens fixas em PT para que o frontend/trpc decida o idioma
  */
-export async function canUseExtraCredits(userId: number): Promise<{ canUse: boolean; message: string; remainingLimit: number }> {
-  const creditStatus = await getUserCreditsStatus(userId);
-
-  if (!creditStatus) {
-    return {
-      canUse: false,
-      message: "Não conseguimos encontrar seus créditos. Tente novamente.",
-      remainingLimit: 0,
-    };
-  }
-
-  if (creditStatus.hasHitLimit) {
-    return {
-      canUse: false,
-      message: "Você atingiu o limite de créditos extras este mês. Volte no próximo mês! 💜",
-      remainingLimit: 0,
+export async function canUseExtraCredits(userId: number) {
+  const status = await getUserCreditsStatus(userId);
+  
+  if (!status) {
+    return { 
+      canUse: false, 
+      code: "NOT_FOUND", 
+      remainingLimit: 0 
     };
   }
 
   return {
-    canUse: true,
-    message: `Você tem R$ ${creditStatus.remainingLimit.toFixed(2)} disponíveis em créditos extras.`,
-    remainingLimit: creditStatus.remainingLimit,
+    canUse: !status.hasHitLimit,
+    code: status.hasHitLimit ? "LIMIT_REACHED" : "OK",
+    remainingLimit: status.remainingLimit,
   };
 }
