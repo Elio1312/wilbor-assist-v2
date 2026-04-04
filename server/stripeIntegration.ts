@@ -17,19 +17,37 @@ function getStripe(): Stripe {
 }
 
 /**
- * Criar sessão de checkout para compra de créditos extras - Suporte Multi-Moeda
+ * Criar sessão de checkout Multi-Moeda (ROI Máximo)
  */
-export async function createExtraCreditsCheckout(userId: number, amount: number, currency: string = "brl") {
+export async function createExtraCreditsCheckout(
+  userId: number, 
+  amount: number, 
+  currency: string = "brl",
+  lang: string = "pt"
+) {
   try {
     const stripe = getStripe();
+    const frontendUrl = process.env.VITE_FRONTEND_URL || "https://www.wilbor-assist.com";
     
-    // Nomes de produtos internacionalizados
+    // Ajusta a URL de retorno com base no idioma (UX Profissional)
+    // Se o idioma for PT, vai para a raiz, senão vai para a subpasta do idioma
+    const baseUrl = lang === "pt" ? frontendUrl : `${frontendUrl}/${lang}`;
+
+    // Nomes de produtos internacionalizados (Pentaglota)
     const productNames: Record<string, string> = {
-      brl: "Créditos Extras Wilbor",
-      usd: "Wilbor Extra Credits",
-      eur: "Créditos Extras Wilbor (EUR)",
+      pt: "Créditos Extras Wilbor",
+      en: "Wilbor Extra Credits",
+      es: "Créditos Extras Wilbor (ES)",
       fr: "Crédits Supplémentaires Wilbor",
       de: "Wilbor Extra-Guthaben"
+    };
+
+    const productDescriptions: Record<string, string> = {
+      pt: "Apoio neonatal inteligente ilimitado",
+      en: "Unlimited intelligent neonatal support",
+      es: "Apoyo neonatal inteligente ilimitado",
+      fr: "Soutien néonatal intelligent illimité",
+      de: "Unbegrenzte intelligente neonatale Unterstützung"
     };
 
     const session = await stripe.checkout.sessions.create({
@@ -39,8 +57,8 @@ export async function createExtraCreditsCheckout(userId: number, amount: number,
           price_data: {
             currency: currency.toLowerCase(),
             product_data: {
-              name: productNames[currency.toLowerCase()] || productNames.en,
-              description: `Top up your AI credits to continue using Wilbor Assist`,
+              name: productNames[lang] || productNames.en,
+              description: productDescriptions[lang] || productDescriptions.en,
             },
             unit_amount: Math.round(amount * 100), // Stripe usa centavos
           },
@@ -48,8 +66,8 @@ export async function createExtraCreditsCheckout(userId: number, amount: number,
         },
       ],
       mode: "payment",
-      success_url: `${process.env.VITE_FRONTEND_URL || "https://www.wilbor-assist.com"}/dashboard?payment=success&sessionId={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.VITE_FRONTEND_URL || "https://www.wilbor-assist.com"}/dashboard?payment=cancelled`,
+      success_url: `${baseUrl}/dashboard?payment=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/dashboard?payment=cancelled`,
       metadata: {
         userId: String(userId),
         amount: String(amount),
@@ -66,7 +84,41 @@ export async function createExtraCreditsCheckout(userId: number, amount: number,
 }
 
 /**
- * Verificar status de pagamento
+ * Webhook: Onde a venda é consolidada no DB (Blindagem de Entrega)
+ */
+export async function handleStripeWebhook(event: Stripe.Event) {
+  // Importação dinâmica para evitar dependência circular
+  const { addExtraCreditTransaction } = await import("./db");
+
+  switch (event.type) {
+    case "checkout.session.completed":
+      const session = event.data.object as Stripe.Checkout.Session;
+      const userId = Number(session.metadata?.userId);
+      const amount = Number(session.metadata?.amount);
+      const currency = session.metadata?.currency || "BRL";
+
+      if (userId && amount) {
+        // Regra de 95% de assertividade: 1 unidade (Real/Dólar/Euro) = 5 créditos
+        const credits = Math.round(amount * 5);
+        
+        // Registrar transação e injetar créditos no banco de dados
+        await addExtraCreditTransaction(userId, amount.toString(), credits, session.id);
+        console.log(`[Stripe Webhook] Créditos entregues: User ${userId}, +${credits} créditos (${currency})`);
+      }
+      return { success: true };
+
+    case "payment_intent.succeeded":
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      console.log("[Stripe Webhook] Payment intent succeeded:", paymentIntent.id);
+      return { success: true };
+
+    default:
+      return { success: true };
+  }
+}
+
+/**
+ * Verificar status de pagamento (Fallback para redirecionamento direto)
  */
 export async function getPaymentStatus(sessionId: string) {
   try {
@@ -76,27 +128,5 @@ export async function getPaymentStatus(sessionId: string) {
   } catch (error) {
     console.error("[Stripe] Failed to get payment status:", error);
     throw error;
-  }
-}
-
-/**
- * Processar webhook de pagamento
- */
-export async function handleStripeWebhook(event: Stripe.Event) {
-  const stripe = getStripe();
-  
-  switch (event.type) {
-    case "checkout.session.completed":
-      const session = event.data.object as Stripe.Checkout.Session;
-      console.log("[Stripe] Payment completed:", session.id);
-      return { success: true, session };
-
-    case "payment_intent.succeeded":
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      console.log("[Stripe] Payment intent succeeded:", paymentIntent.id);
-      return { success: true, paymentIntent };
-
-    default:
-      return { success: true };
   }
 }

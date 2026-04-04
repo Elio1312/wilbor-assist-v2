@@ -14,10 +14,12 @@ export const stripeRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       try {
-        const session = await createExtraCreditsCheckout(ctx.user.id, input.amount, input.currency);
+        // Passamos o idioma do usuário para o Stripe para URLs e nomes de produtos localizados
+        const lang = ctx.user.language || "pt";
+        const session = await createExtraCreditsCheckout(ctx.user.id, input.amount, input.currency, lang);
         
         // Log do evento
-        console.log(`[Stripe] Checkout session created for user ${ctx.user.id}: ${session.id} (${input.currency.toUpperCase()})`);
+        console.log(`[Stripe] Checkout session created for user ${ctx.user.id}: ${session.id} (${input.currency.toUpperCase()}) [Lang: ${lang}]`);
         
         return {
           success: true,
