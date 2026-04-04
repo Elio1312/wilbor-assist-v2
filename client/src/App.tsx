@@ -14,6 +14,7 @@ import { Chat } from "@/pages/Chat";
 import ShopPage from "@/pages/ShopPage";
 import MyEbooks from "@/pages/MyEbooks";
 import AdminDashboard from "@/pages/AdminDashboard";
+import ShopSuccess from "@/pages/ShopSuccess";
 
 import { Route, Switch, useLocation } from "wouter";
 import { useEffect } from "react";
@@ -54,6 +55,7 @@ function Router() {
       <Route path="/:lang?/checkout" component={Checkout} />
       <Route path="/:lang?/shop" component={ShopPage} />
       <Route path="/:lang?/my-ebooks" component={MyEbooks} />
+      <Route path="/:lang?/shop/success" component={ShopSuccess} />
       <Route path="/admin-secret-panel" component={AdminDashboard} />
 
       <Route path="/404" component={NotFound} />

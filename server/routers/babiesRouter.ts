@@ -14,6 +14,7 @@ import { eq, and, gte, lte, desc } from "drizzle-orm";
  * Router para Marcos de Desenvolvimento (Trilha) e Diário do Bebê
  * 
  * Procedures:
+ * - getCurrentBabyAge: Calcular idade atual do bebê em meses
  * - getMilestones: Buscar marcos por mês
  * - getAllMilestones: Buscar todos os marcos (admin)
  * - markMilestoneAchieved: Marcar marco como atingido
@@ -25,6 +26,58 @@ import { eq, and, gte, lte, desc } from "drizzle-orm";
  */
 
 export const babiesRouter = router({
+  // ==========================================
+  // CÁLCULO DE IDADE DO BEBÊ
+  // ==========================================
+
+  /**
+   * GET: Calcular a idade atual do bebê em meses
+   * Usado pela MilestonesPage para abrir a trilha no mês correto automaticamente.
+   * @param babyId - ID do bebê (opcional; se omitido, usa o bebê ativo do usuário)
+   * @returns { ageInMonths: number, babyName: string, birthDate: string }
+   */
+  getCurrentBabyAge: protectedProcedure
+    .input(z.object({ babyId: z.number().optional() }))
+    .query(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+
+      // Buscar bebê ativo do usuário (ou o especificado)
+      const conditions = [eq(wilborBabies.userId, ctx.user.id)];
+      if (input.babyId) {
+        conditions.push(eq(wilborBabies.id, input.babyId));
+      }
+
+      const babies = await db
+        .select()
+        .from(wilborBabies)
+        .where(and(...conditions))
+        .orderBy(wilborBabies.createdAt as any)
+        .limit(1);
+
+      if (!babies.length || !babies[0].birthDate) {
+        return { ageInMonths: 6, babyName: null, birthDate: null };
+      }
+
+      const baby = babies[0];
+      const birth = new Date(baby.birthDate!);
+      const today = new Date();
+
+      // Cálculo preciso de meses completos
+      let months = (today.getFullYear() - birth.getFullYear()) * 12;
+      months += today.getMonth() - birth.getMonth();
+      if (today.getDate() < birth.getDate()) months--;
+
+      // Clamp entre 0 e 24 para não sair da trilha
+      const ageInMonths = Math.max(0, Math.min(24, months));
+
+      return {
+        ageInMonths,
+        babyName: baby.name,
+        birthDate: baby.birthDate ? baby.birthDate.toISOString() : null,
+      };
+    }),
+
   // ==========================================
   // MARCOS DE DESENVOLVIMENTO (Milestones)
   // ==========================================
