@@ -36,6 +36,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.subtitle": "Sua companheira de maternidade 24h",
     "chat.welcome": "Olá! Sou o Wilbor. Estou aqui para te ajudar com seu bebê a qualquer hora — sem julgamentos, com carinho. O que está acontecendo?",
     "chat.error": "Desculpe, houve um erro. Tente novamente.",
+    "chat.placeholder": "Digite sua mensagem...",
+    "chat.empty_state": "Comece uma conversa com o Wilbor",
 
     // Hero
     "hero.badge": "Apoio real para mães de verdade",
@@ -244,6 +246,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.subtitle": "Your 24h motherhood companion",
     "chat.welcome": "Hi! I'm Wilbor. I'm here to help you with your baby anytime — without judgment, with care. What's happening?",
     "chat.error": "Sorry, something went wrong. Try again.",
+    "chat.placeholder": "Type your message...",
+    "chat.empty_state": "Start a conversation with Wilbor",
 
     // Hero
     "hero.badge": "Real support for real mothers",
