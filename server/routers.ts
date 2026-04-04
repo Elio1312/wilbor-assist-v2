@@ -4,12 +4,12 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb, upsertUser, getUserByOpenId } from "./db";
 import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } from "../drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
 import { recipesData } from "./recipeData";
 import { simpleChatWithWilbor } from "./wilborChat";
-import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit } from "./wilborDb";
+import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit, getBabiesByUser, createWilborBaby } from "./wilborDb";
 import { stripeRouter } from "./stripeRoutes";
 import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
@@ -21,6 +21,27 @@ export const appRouter = router({
   currency: stripeMultiCurrencyRouter,
   whatsapp: whatsappRouter,
   instagram: instagramRouter,
+
+  // 1. Dando vida ao Módulo "Meus Bebês" (Personalização 95%)
+  babies: router({
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await getBabiesByUser(ctx.user.id);
+    }),
+    add: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        birthDate: z.string().optional(),
+        weightGrams: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return await createWilborBaby({
+          userId: ctx.user.id,
+          name: input.name,
+          birthDate: input.birthDate ? new Date(input.birthDate) : null,
+          weightGrams: input.weightGrams,
+        });
+      }),
+  }),
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -412,19 +433,17 @@ export const appRouter = router({
   }),
 
   recipes: router({
-    getRecipes: publicProcedure
+    getRecipes: protectedProcedure
       .input(z.object({ 
         ageMonths: z.number().optional(),
         category: z.string().optional()
       }))
       .query(async ({ ctx, input }) => {
         // 1. Verificar status do usuário (Premium vs Free)
-        const isPremium = ctx.user?.id ? (await (async () => {
-          const db = await getDb();
-          if (!db) return false;
-          const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
-          return credits[0]?.plan === "premium";
-        })()) : false;
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
+        const isPremium = credits[0]?.plan === "premium";
 
         // 2. Filtrar receitas
         let filtered = recipesData;
@@ -450,7 +469,7 @@ export const appRouter = router({
         });
       }),
 
-    getRecipe: publicProcedure
+    getRecipe: protectedProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ ctx, input }) => {
         const recipe = recipesData.find(r => r.slug === input.slug);
@@ -458,12 +477,10 @@ export const appRouter = router({
 
         // Verificação de Premium para acesso individual
         if (recipe.isPremium) {
-          const isPremium = ctx.user?.id ? (await (async () => {
-            const db = await getDb();
-            if (!db) return false;
-            const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
-            return credits[0]?.plan === "premium";
-          })()) : false;
+          const db = await getDb();
+          if (!db) throw new Error("Database connection failed");
+          const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
+          const isPremium = credits[0]?.plan === "premium";
 
           if (!isPremium) {
             throw new Error("PREMIUM_REQUIRED");
