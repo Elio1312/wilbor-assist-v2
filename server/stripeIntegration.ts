@@ -66,8 +66,8 @@ export async function createExtraCreditsCheckout(
         },
       ],
       mode: "payment",
-      success_url: `${baseUrl}/dashboard?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/dashboard?payment=cancelled`,
+      success_url: `${baseUrl}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/shop?payment=cancelled`,
       metadata: {
         userId: String(userId),
         amount: String(amount),
