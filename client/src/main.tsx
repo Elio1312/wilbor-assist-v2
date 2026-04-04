@@ -9,7 +9,17 @@ import { getLoginUrl } from "./const";
 import { I18nProvider } from "@/contexts/i18n";
 import "./index.css";
 
-const queryClient = new QueryClient();
+// 1. Configuração do Motor de Cache (Performance ROI)
+// Cache de 5 min para as 362 perguntas e respostas frequentes.
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutos
+      retry: 1,
+      refetchOnWindowFocus: false, // Evita recarregar ao trocar de aba (Economia de Tokens)
+    }
+  }
+});
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
@@ -38,6 +48,7 @@ queryClient.getMutationCache().subscribe(event => {
   }
 });
 
+// 2. Instância do Cliente tRPC (Efeito Instantâneo)
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({

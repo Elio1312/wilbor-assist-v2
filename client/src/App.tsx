@@ -10,58 +10,41 @@ import BuyCredits from "@/pages/BuyCredits";
 import Checkout from "@/pages/Checkout";
 import { Chat } from "@/pages/Chat";
 
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
+import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 function Router() {
+  const [location, setLocation] = useLocation();
+
+  // Redirecionamento Inteligente (ROI de Internacionalização)
+  // Se a mãe cair na raiz "/" e o navegador dela for EN, ES, FR ou DE, redirecionamos automaticamente.
+  useEffect(() => {
+    if (location === "/") {
+      const browserLang = navigator.language.split('-')[0];
+      const supportedLangs = ['en', 'es', 'fr', 'de'];
+      if (supportedLangs.includes(browserLang)) {
+        setLocation(`/${browserLang}`);
+      }
+    }
+  }, [location, setLocation]);
+
   return (
     <Switch>
-      {/* PT-BR (default) */}
-      <Route path="/" component={Home} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/buy-credits" component={BuyCredits} />
-      <Route path="/chat" component={Chat} />
-      <Route path="/blog" component={Blog} />
-      <Route path="/blog/:slug" component={BlogArticle} />
-      <Route path="/feedback" component={FeedbackDashboard} />
-      <Route path="/checkout" component={Checkout} />
-
-      {/* EN routes */}
-      <Route path="/en" component={Home} />
-      <Route path="/en/dashboard" component={Dashboard} />
-      <Route path="/en/buy-credits" component={BuyCredits} />
-      <Route path="/en/chat" component={Chat} />
-      <Route path="/en/blog" component={Blog} />
-      <Route path="/en/blog/:slug" component={BlogArticle} />
-      <Route path="/en/checkout" component={Checkout} />
-
-      {/* ES routes */}
-      <Route path="/es" component={Home} />
-      <Route path="/es/dashboard" component={Dashboard} />
-      <Route path="/es/buy-credits" component={BuyCredits} />
-      <Route path="/es/chat" component={Chat} />
-      <Route path="/es/blog" component={Blog} />
-      <Route path="/es/blog/:slug" component={BlogArticle} />
-      <Route path="/es/checkout" component={Checkout} />
-
-      {/* FR routes */}
-      <Route path="/fr" component={Home} />
-      <Route path="/fr/dashboard" component={Dashboard} />
-      <Route path="/fr/buy-credits" component={BuyCredits} />
-      <Route path="/fr/chat" component={Chat} />
-      <Route path="/fr/blog" component={Blog} />
-      <Route path="/fr/blog/:slug" component={BlogArticle} />
-      <Route path="/fr/checkout" component={Checkout} />
-
-      {/* DE routes */}
-      <Route path="/de" component={Home} />
-      <Route path="/de/dashboard" component={Dashboard} />
-      <Route path="/de/buy-credits" component={BuyCredits} />
-      <Route path="/de/chat" component={Chat} />
-      <Route path="/de/blog" component={Blog} />
-      <Route path="/de/blog/:slug" component={BlogArticle} />
-      <Route path="/de/checkout" component={Checkout} />
+      {/* 
+        Rotas Dinâmicas (Otimização Gemini): 
+        O parâmetro :lang? permite que uma única rota atenda a todos os idiomas.
+        Ex: /chat, /en/chat, /fr/chat agora usam o mesmo bloco de código.
+      */}
+      <Route path="/:lang?/" component={Home} />
+      <Route path="/:lang?/dashboard" component={Dashboard} />
+      <Route path="/:lang?/buy-credits" component={BuyCredits} />
+      <Route path="/:lang?/chat" component={Chat} />
+      <Route path="/:lang?/blog" component={Blog} />
+      <Route path="/:lang?/blog/:slug" component={BlogArticle} />
+      <Route path="/:lang?/feedback" component={FeedbackDashboard} />
+      <Route path="/:lang?/checkout" component={Checkout} />
 
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
@@ -75,7 +58,7 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
-          <Toaster />
+          <Toaster position="top-center" richColors />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
