@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
 import { useI18n } from "@/contexts/i18n";
-import { CheckCircle2, Download, PartyPopper, LayoutDashboard } from "lucide-react";
+import { CheckCircle2, BookOpen, PartyPopper, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -9,7 +9,6 @@ import { Card } from "@/components/ui/card";
 function launchConfetti() {
   const colors = ["#9333ea", "#db2777", "#2563eb", "#16a34a"];
   const count = 120;
-  const container = document.body;
 
   for (let i = 0; i < count; i++) {
     const el = document.createElement("div");
@@ -25,11 +24,10 @@ function launchConfetti() {
       z-index: 9999;
       animation: confettiFall ${1.5 + Math.random() * 2}s ease-in forwards;
     `;
-    container.appendChild(el);
+    document.body.appendChild(el);
     setTimeout(() => el.remove(), 4000);
   }
 
-  // Injetar keyframe se ainda não existir
   if (!document.getElementById("confetti-style")) {
     const style = document.createElement("style");
     style.id = "confetti-style";
@@ -48,8 +46,8 @@ export default function ShopSuccess() {
   const [, setLocation] = useLocation();
   const search = useSearch();
   const params = new URLSearchParams(search);
-  // session_id é enviado pelo Stripe no redirect de sucesso
-  const sessionId = params.get("session_id");
+  // session_id enviado pelo Stripe no redirect de sucesso
+  const _sessionId = params.get("session_id");
 
   useEffect(() => {
     launchConfetti();
@@ -57,7 +55,7 @@ export default function ShopSuccess() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-      <Card className="max-w-md w-full p-8 text-center shadow-2xl border-none rounded-3xl bg-white">
+      <Card className="max-w-md w-full p-8 text-center shadow-2xl border-none rounded-3xl bg-white animate-in fade-in zoom-in duration-500">
         {/* Ícone de sucesso */}
         <div className="mb-6 flex justify-center">
           <div className="bg-green-100 p-4 rounded-full">
@@ -71,37 +69,35 @@ export default function ShopSuccess() {
         </h1>
         <p className="text-slate-500 mb-8 leading-relaxed">
           {t("shop.payment_confirmed_desc") ??
-            "Sua transação foi concluída com sucesso! O Wilbor já liberou seu acesso exclusivo."}
+            "Sua transação foi concluída! O Wilbor já liberou seu acesso exclusivo para guiar você e seu bebê."}
         </p>
 
         {/* CTAs */}
         <div className="space-y-4">
-          {/* E-book: acesso imediato ao PDF */}
+          {/* Botão Principal: Acesso ao Produto Adquirido (ROI de Renda Rápida) */}
           <Button
             className="w-full h-14 bg-purple-600 hover:bg-purple-700 rounded-2xl text-lg font-bold gap-3 shadow-lg shadow-purple-100"
             onClick={() => setLocation(localePath("/my-ebooks"))}
           >
-            <Download className="size-5" />
+            <BookOpen className="size-5" />
             {t("shop.access_ebooks") ?? "Acessar Meus E-books"}
           </Button>
 
-          {/* Assinatura Premium: ir ao Dashboard */}
+          {/* Botão Secundário: Retorno ao Dashboard (LTV e Engajamento) */}
           <Button
             variant="outline"
             className="w-full h-14 border-slate-200 text-slate-700 rounded-2xl text-lg font-bold gap-3 hover:bg-slate-50"
             onClick={() => setLocation(localePath("/dashboard"))}
           >
             <LayoutDashboard className="size-5" />
-            {t("shop.go_to_dashboard") ?? "Ir para o Dashboard"}
+            {t("nav.dashboard") ?? "Ir para o Dashboard"}
           </Button>
         </div>
 
         {/* Rodapé de celebração */}
-        <div className="mt-8 pt-8 border-t border-slate-100">
-          <div className="flex items-center justify-center gap-2 text-purple-600 font-bold text-sm">
-            <PartyPopper className="size-4" />
-            <span>{t("shop.welcome_premium") ?? "Bem-vinda ao nível Premium!"}</span>
-          </div>
+        <div className="mt-8 pt-8 border-t border-slate-100 flex items-center justify-center gap-2 text-purple-600 font-bold text-sm">
+          <PartyPopper className="size-4" />
+          <span>{t("shop.welcome_premium") ?? "Bem-vinda ao nível Premium Wilbor!"}</span>
         </div>
       </Card>
     </div>
