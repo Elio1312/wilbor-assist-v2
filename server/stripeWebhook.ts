@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { Request, Response, Express } from "express";
 import express from "express";
-import { getDb } from "./db";
+import { getDb, addExtraCreditTransaction } from "./db";
 import { wilborUserCredits, wilborConversionEvents, wilborUsers } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { PRODUCTS } from "./stripeProducts";
@@ -10,12 +10,12 @@ import { PRODUCTS } from "./stripeProducts";
 function getStripe(): Stripe | null {
   const key = process.env.STRIPE_SECRET_KEY_CUSTOM || process.env.STRIPE_SECRET_KEY;
   if (!key) return null;
-  return new Stripe(key, { apiVersion: "2025-01-27.acacia" as any });
+  // Using a stable API version for consistency across the project
+  return new Stripe(key, { apiVersion: "2023-10-16" as any });
 }
 
 /**
  * Notify ManyChat subscriber about a payment failure.
- * Requires MANYCHAT_API_KEY env variable and manychat_subscriber_id in Stripe metadata.
  */
 async function notifyManyChatPaymentFailed(manychatSubscriberId: string): Promise<void> {
   const MANYCHAT_API_KEY = process.env.MANYCHAT_API_KEY;
@@ -38,7 +38,7 @@ async function notifyManyChatPaymentFailed(manychatSubscriberId: string): Promis
             messages: [
               {
                 type: "text",
-                text: "Olá! Notei que houve um probleminha com o seu cartão de pagamento. Não se preocupe — acontece! Clique aqui para atualizar seu método de pagamento e continuar com acesso ao Wilbor: https://wilbor-assist.com/wilbor/dashboard",
+                text: "Olá! Notei que houve um probleminha com o seu cartão de pagamento. Não se preocupe — acontece! Clique aqui para atualizar seu método de pagamento e continuar com acesso ao Wilbor: https://wilbor-assist.com/dashboard",
               },
             ],
           },
@@ -61,7 +61,6 @@ async function notifyManyChatPaymentFailed(manychatSubscriberId: string): Promis
  * MUST be called BEFORE express.json() middleware for webhook to work.
  */
 export function registerStripeRoutes(app: Express) {
-  // Webhook endpoint - needs raw body for signature verification
   app.post(
     "/api/stripe/webhook",
     express.raw({ type: "application/json" }),
@@ -88,107 +87,111 @@ export function registerStripeRoutes(app: Express) {
 
       // Handle test events
       if (event.id.startsWith("evt_test_")) {
-        console.log("[Stripe Webhook] Test event detected, returning verification response");
+        console.log("[Stripe Webhook] Test event detected");
         return res.json({ verified: true });
       }
 
       console.log(`[Stripe Webhook] Event: ${event.type} (${event.id})`);
 
       try {
+        const db = await getDb();
+        if (!db) throw new Error("Database not available");
+
         switch (event.type) {
           case "checkout.session.completed": {
             const session = event.data.object as Stripe.Checkout.Session;
-            const userId = session.metadata?.user_id;
-            if (!userId) break;
+            const userId = Number(session.metadata?.user_id || session.client_reference_id);
+            const amount = session.amount_total ? session.amount_total / 100 : 0;
+            
+            if (userId && amount > 0) {
+              // 1. BLINDAGEM DE ENTREGA: 1 unidade (BRL/USD/EUR) = 5 créditos
+              const credits = Math.round(amount * 5);
+              
+              // addExtraCreditTransaction handles idempotency via session.id
+              await addExtraCreditTransaction(
+                userId, 
+                amount.toString(), 
+                credits, 
+                session.id
+              );
 
-            const db = await getDb();
-            if (!db) break;
+              // 2. ATUALIZAÇÃO DE STATUS PREMIUM
+              if (session.mode === "subscription") {
+                await db.update(wilborUsers)
+                  .set({ subscriptionStatus: "premium" })
+                  .where(eq(wilborUsers.id, userId));
+                
+                await db.update(wilborUserCredits)
+                  .set({
+                    plan: "premium",
+                    monthlyLimit: 500,
+                    stripeCustomerId: session.customer as string,
+                    stripeSubscriptionId: session.subscription as string,
+                  })
+                  .where(eq(wilborUserCredits.userId, userId));
+              }
 
-            // Upgrade user to Premium
-            await db
-              .update(wilborUserCredits)
-              .set({
-                plan: "premium",
-                monthlyLimit: 500,
-                stripeCustomerId: session.customer as string,
-                stripeSubscriptionId: session.subscription as string,
-              })
-              .where(eq(wilborUserCredits.userId, Number(userId)));
+              // 3. TRACK CONVERSION
+              await db.insert(wilborConversionEvents).values({
+                userId: userId,
+                eventType: "payment_success",
+                metadata: JSON.stringify({
+                  sessionId: session.id,
+                  amount: session.amount_total,
+                  currency: session.currency,
+                  mode: session.mode,
+                }),
+              });
 
-            // Update subscription status on user record
-            await db
-              .update(wilborUsers)
-              .set({ subscriptionStatus: "active" })
-              .where(eq(wilborUsers.id, Number(userId)));
-
-            // Track conversion
-            await db.insert(wilborConversionEvents).values({
-              userId: Number(userId),
-              eventType: "payment_success",
-              metadata: JSON.stringify({
-                sessionId: session.id,
-                amount: session.amount_total,
-                currency: session.currency,
-                manychat_subscriber_id: session.metadata?.manychat_subscriber_id ?? null,
-              }),
-            });
-
-            console.log(`[Stripe] User ${userId} upgraded to Premium`);
+              console.log(`[Stripe] User ${userId} processed successfully. Credits: ${credits}`);
+            }
             break;
           }
 
           case "customer.subscription.deleted": {
             const subscription = event.data.object as Stripe.Subscription;
-            const db = await getDb();
-            if (!db) break;
+            const userId = Number(subscription.metadata?.user_id);
+            
+            if (userId) {
+              // Downgrade user back to Basic/Free
+              await db.update(wilborUsers)
+                .set({ subscriptionStatus: "basic" })
+                .where(eq(wilborUsers.id, userId));
 
-            // Downgrade user back to Free
-            const credits = await db
-              .select()
-              .from(wilborUserCredits)
-              .where(eq(wilborUserCredits.stripeSubscriptionId, subscription.id))
-              .limit(1);
-
-            if (credits.length > 0) {
-              await db
-                .update(wilborUserCredits)
+              await db.update(wilborUserCredits)
                 .set({
                   plan: "free",
                   monthlyLimit: 5,
                   stripeSubscriptionId: null,
                 })
-                .where(eq(wilborUserCredits.id, credits[0].id));
+                .where(eq(wilborUserCredits.userId, userId));
 
-              console.log(`[Stripe] User ${credits[0].userId} downgraded to Free (subscription cancelled)`);
+              console.log(`[Stripe] User ${userId} downgraded (subscription cancelled)`);
             }
             break;
           }
 
           case "invoice.payment_failed": {
             const invoice = event.data.object as Stripe.Invoice;
-            const db = await getDb();
-            if (!db) break;
-
-            const subId = (invoice as any).subscription as string;
+            const subId = invoice.subscription as string;
+            
             if (subId) {
-              const credits = await db
-                .select()
-                .from(wilborUserCredits)
+              const userCredits = await db.select().from(wilborUserCredits)
                 .where(eq(wilborUserCredits.stripeSubscriptionId, subId))
                 .limit(1);
 
-              if (credits.length > 0) {
-                // Record failure event
+              if (userCredits.length > 0) {
+                const userId = userCredits[0].userId;
+                
                 await db.insert(wilborConversionEvents).values({
-                  userId: credits[0].userId,
+                  userId: userId,
                   eventType: "payment_failed",
                   metadata: JSON.stringify({ invoiceId: invoice.id }),
                 });
 
-                // Notify ManyChat if subscriber ID is available in invoice metadata
-                const manychatSubscriberId = (invoice as any).metadata?.manychat_subscriber_id;
-                if (manychatSubscriberId) {
-                  await notifyManyChatPaymentFailed(manychatSubscriberId);
+                const manychatId = invoice.metadata?.manychat_subscriber_id;
+                if (manychatId) {
+                  await notifyManyChatPaymentFailed(manychatId);
                 }
               }
             }
@@ -206,8 +209,6 @@ export function registerStripeRoutes(app: Express) {
 
 /**
  * Create a Stripe Checkout Session for Premium subscription.
- * Called from tRPC procedure.
- * Pass manychatSubscriberId when available so ManyChat can be notified on payment failure.
  */
 export async function createCheckoutSession(
   userId: number,
@@ -218,7 +219,7 @@ export async function createCheckoutSession(
 ): Promise<{ url: string } | { error: string }> {
   const stripe = getStripe();
   if (!stripe) {
-    return { error: "Stripe not configured. Please configure Stripe keys in Settings → Payment." };
+    return { error: "Stripe not configured." };
   }
 
   try {
@@ -230,16 +231,12 @@ export async function createCheckoutSession(
       client_reference_id: userId.toString(),
       metadata: {
         user_id: userId.toString(),
-        customer_email: userEmail,
-        customer_name: userName,
-        // ManyChat subscriber ID — used to send payment failure notifications via ManyChat API
-        ...(manychatSubscriberId ? { manychat_subscriber_id: manychatSubscriberId } : {}),
+        manychat_subscriber_id: manychatSubscriberId ?? "",
       },
       subscription_data: {
         metadata: {
           user_id: userId.toString(),
-          // Propagate to subscription so invoice.payment_failed can access it
-          ...(manychatSubscriberId ? { manychat_subscriber_id: manychatSubscriberId } : {}),
+          manychat_subscriber_id: manychatSubscriberId ?? "",
         },
       },
       line_items: [
@@ -258,8 +255,8 @@ export async function createCheckoutSession(
           quantity: 1,
         },
       ],
-      success_url: `${origin}/wilbor/dashboard?payment=success`,
-      cancel_url: `${origin}/wilbor/dashboard?payment=cancelled`,
+      success_url: `${origin}/dashboard?payment=success`,
+      cancel_url: `${origin}/dashboard?payment=cancelled`,
     });
 
     return { url: session.url! };
