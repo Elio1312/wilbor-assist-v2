@@ -36,8 +36,10 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.subtitle": "Sua companheira de maternidade 24h",
     "chat.welcome": "Olá! Sou o Wilbor. Estou aqui para te ajudar com seu bebê a qualquer hora — sem julgamentos, com carinho. O que está acontecendo?",
     "chat.error": "Desculpe, houve um erro. Tente novamente.",
-    "chat.placeholder": "Digite sua mensagem...",
-    "chat.empty_state": "Comece uma conversa com o Wilbor",
+    "chat.placeholder": "Digite sua dúvida sobre o bebê...",
+    "chat.empty_state": "Olá! Como posso ajudar você e seu bebê hoje?",
+    "paywall.title": "Limite atingido",
+    "paywall.cta": "Assinar Wilbor Premium",
 
     // Hero
     "hero.badge": "Apoio real para mães de verdade",
@@ -246,8 +248,10 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.subtitle": "Your 24h motherhood companion",
     "chat.welcome": "Hi! I'm Wilbor. I'm here to help you with your baby anytime — without judgment, with care. What's happening?",
     "chat.error": "Sorry, something went wrong. Try again.",
-    "chat.placeholder": "Type your message...",
-    "chat.empty_state": "Start a conversation with Wilbor",
+    "chat.placeholder": "Type your question about the baby...",
+    "chat.empty_state": "Hello! How can I help you and your baby today?",
+    "paywall.title": "Limit reached",
+    "paywall.cta": "Subscribe to Wilbor Premium",
 
     // Hero
     "hero.badge": "Real support for real mothers",
@@ -456,6 +460,10 @@ const translations: Record<Locale, Record<string, string>> = {
     "chat.subtitle": "Tu compañera de maternidad 24h",
     "chat.welcome": "¡Hola! Soy Wilbor. Estoy aquí para ayudarte con tu bebé en cualquier momento — sin juicios, con cariño. ¿Qué está pasando?",
     "chat.error": "Lo sentimos, ocurrió un error. Intenta nuevamente.",
+    "chat.placeholder": "Escribe tu duda sobre el bebé...",
+    "chat.empty_state": "¡Hola! ¿Cómo posso ajudar a ti e a tu bebé hoy?",
+    "paywall.title": "Límite alcanzado",
+    "paywall.cta": "Suscribirse a Wilbor Premium",
 
     // Hero
     "hero.badge": "Apoyo real para madres reales",
@@ -663,8 +671,11 @@ const translations: Record<Locale, Record<string, string>> = {
     // Chat
     "chat.subtitle": "Votre compagne de maternité 24h/24",
     "chat.welcome": "Bonjour ! Je suis Wilbor. Je suis là pour vous aider avec votre bébé à tout moment — sans jugement, avec bienveillance. Que se passe-t-il ?",
-    "chat.placeholder": "Que se passe-t-il avec votre bébé en ce moment ?",
     "chat.error": "Désolé, une erreur s'est produite. Veuillez réessayer.",
+    "chat.placeholder": "Posez votre question sur le bébé...",
+    "chat.empty_state": "Bonjour ! Comment puis-je vous aider, vous et votre bébé ?",
+    "paywall.title": "Limite atteinte",
+    "paywall.cta": "S'abonner à Wilbor Premium",
 
     // Hero
     "hero.badge": "Un soutien réel pour de vraies mères",
@@ -872,8 +883,11 @@ const translations: Record<Locale, Record<string, string>> = {
     // Chat
     "chat.subtitle": "Ihre 24h-Mutterschaftsbegleiterin",
     "chat.welcome": "Hallo! Ich bin Wilbor. Ich bin hier, um Ihnen jederzeit mit Ihrem Baby zu helfen — ohne Bewertung, mit Fürsorge. Was passiert gerade?",
-    "chat.placeholder": "Was passiert gerade mit Ihrem Baby?",
     "chat.error": "Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "chat.placeholder": "Stellen Sie Ihre Frage zum Baby...",
+    "chat.empty_state": "Hallo! Wie kann ich Ihnen und Ihrem Baby heute helfen?",
+    "paywall.title": "Limit erreicht",
+    "paywall.cta": "Wilbor Premium abonnieren",
 
     // Hero
     "hero.badge": "Echte Unterstützung für echte Mütter",
@@ -1097,7 +1111,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback((key: string): string => {
     const currentLocale = detectLocaleFromPath();
-    return translations[currentLocale][key] || translations.pt[key] || key;
+    // 2. Lógica de Fallback Inteligente: Idioma -> Inglês -> Português -> Chave
+    return translations[currentLocale][key] || 
+           translations.en[key] || 
+           translations.pt[key] || 
+           key;
   }, []);
 
   // Always use current locale from URL, not from state
