@@ -15,6 +15,9 @@ import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRouter";
+import { identifyUpsellCategory } from "./upsellLogic";
+import { wilborEbooks } from "../drizzle/schema";
+import { desc } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
@@ -170,6 +173,26 @@ export const appRouter = router({
           remaining: Math.max(0, limit - used),
           isOverLimit: used >= limit,
         };
+      }),
+
+    getRecommendedEbook: protectedProcedure
+      .input(z.object({ lastAssistantMessage: z.string() }))
+      .query(async ({ input, ctx }) => {
+        const category = identifyUpsellCategory(input.lastAssistantMessage);
+        if (!category) return null;
+
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        // Busca o e-book mais bem avaliado da categoria identificada
+        const [ebook] = await db
+          .select()
+          .from(wilborEbooks)
+          .where(eq(wilborEbooks.category, category))
+          .orderBy(desc(wilborEbooks.rating))
+          .limit(1);
+
+        return ebook || null;
       }),
 
     chat: publicProcedure

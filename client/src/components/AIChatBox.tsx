@@ -6,6 +6,7 @@ import { Loader2, Send, User, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/contexts/i18n"; // Injeção de internacionalização
 import ReactMarkdown from 'react-markdown'; // Mais estável para React que Streamdown puro
+import { ChatUpsell } from "./ChatUpsell";
 
 export type Message = {
   role: "system" | "user" | "assistant";
@@ -105,6 +106,10 @@ export function AIChatBox({
               </div>
             </div>
           ))}
+
+          {!isLoading && displayMessages.length > 0 && displayMessages[displayMessages.length - 1].role === "assistant" && (
+            <ChatUpsell assistantMessage={displayMessages[displayMessages.length - 1].content} />
+          )}
 
           {isLoading && (
             <div className="flex gap-3 animate-pulse">
