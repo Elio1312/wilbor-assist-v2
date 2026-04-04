@@ -1,6 +1,5 @@
 /**
- * Recipe Data - 55+ receitas otimizadas por faixa etária
- * Foco: Introdução Alimentar Segura (SBP/OMS)
+ * Recipe Data - 55+ receitas originais extraídas do backup
  */
 
 export interface Recipe {
@@ -10,181 +9,1163 @@ export interface Recipe {
   description: string;
   minAgeMonths: number;
   maxAgeMonths: number;
-  category: "puree" | "blw" | "soup" | "snack" | "meal";
+  category: string;
   ingredients: string[];
   instructions: string[];
   nutritionalBenefits: string;
+  imageUrl: string;
   isPremium: boolean;
 }
 
 export const recipesData: Recipe[] = [
   {
-    id: 1,
-    slug: "pure-abobora-cenoura",
-    title: "Purê de Abóbora com Cenoura",
-    description: "Um purê suave e adocicado, ideal para os primeiros dias de introdução alimentar.",
-    minAgeMonths: 6,
-    maxAgeMonths: 8,
-    category: "puree",
-    ingredients: ["100g de abóbora cabotiá", "1 cenoura média", "Água filtrada"],
-    instructions: [
-      "Cozinhe a abóbora e a cenoura no vapor até ficarem bem macias.",
-      "Amasse com um garfo até obter uma consistência de purê liso.",
-      "Se necessário, adicione um pouco da água do cozimento para ajustar a textura."
+    "id": 1,
+    "slug": "arroz-feijo-preto-carne-moda-abbora",
+    "title": "Arroz + Feijão Preto + Carne Moída + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "feijão preto",
+      "carne moída",
+      "abóbora"
     ],
-    nutritionalBenefits: "Rico em Betacaroteno (Vitamina A) para a visão e imunidade.",
-    isPremium: false
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/HdFRUcOhtKvszIys.png",
+    "isPremium": false
   },
   {
-    id: 2,
-    slug: "banana-com-aveia",
-    title: "Banana Amassada com Aveia",
-    description: "Lanche rápido e nutritivo que ajuda no funcionamento do intestino.",
-    minAgeMonths: 6,
-    maxAgeMonths: 12,
-    category: "snack",
-    ingredients: ["1 banana prata madura", "1 colher de sobremesa de aveia em flocos finos"],
-    instructions: [
-      "Descasque a banana e amasse bem com um garfo.",
-      "Misture a aveia e sirva imediatamente."
+    "id": 2,
+    "slug": "arroz-lentilha-frango-desfiado-brcolis",
+    "title": "Arroz + Lentilha + Frango Desfiado + Brócolis",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "lentilha",
+      "frango desfiado",
+      "brócolis"
     ],
-    nutritionalBenefits: "Fibras para o intestino e potássio para os músculos.",
-    isPremium: false
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/sMeQAkvcQIAvlxFW.png",
+    "isPremium": false
   },
   {
-    id: 3,
-    slug: "blw-brocolis-vapor",
-    title: "Brócolis no Vapor (Estilo BLW)",
-    description: "Árvores de brócolis macias para o bebê explorar texturas e sabores.",
-    minAgeMonths: 6,
-    maxAgeMonths: 24,
-    category: "blw",
-    ingredients: ["3 a 4 buquês de brócolis grandes"],
-    instructions: [
-      "Cozinhe o brócolis no vapor por cerca de 8-10 minutos.",
-      "O ponto ideal é quando o talo está macio ao apertar, mas não desmancha.",
-      "Ofereça ao bebê segurando pelo talo."
+    "id": 3,
+    "slug": "batata-doce-feijo-carioca-peixe-sem-espinha-cenoura",
+    "title": "Batata Doce + Feijão Carioca + Peixe Sem Espinha + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "batata doce",
+      "feijão carioca",
+      "peixe sem espinha",
+      "cenoura"
     ],
-    nutritionalBenefits: "Fonte de Ferro e Cálcio para o crescimento ósseo.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/lYfVzYLfEcAMhdGj.png",
+    "isPremium": false
   },
   {
-    id: 4,
-    slug: "papinha-carne-legumes",
-    title: "Papinha de Carne com Legumes Coloridos",
-    description: "Refeição completa com proteína para o almoço ou jantar.",
-    minAgeMonths: 7,
-    maxAgeMonths: 10,
-    category: "meal",
-    ingredients: ["50g de carne moída (patinho)", "1 batata pequena", "1/2 chuchu", "Folhas de espinafre"],
-    instructions: [
-      "Refogue a carne com um fio de azeite.",
-      "Adicione os legumes picados e cubra com água.",
-      "Cozinhe até amolecer e amasse grosseiramente (deixe pequenos pedaços)."
+    "id": 4,
+    "slug": "mandioca-gro-de-bico-ovo-cozido-espinafre",
+    "title": "Mandioca + Grão-de-bico + Ovo Cozido + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "mandioca",
+      "grão-de-bico",
+      "ovo cozido",
+      "espinafre"
     ],
-    nutritionalBenefits: "Proteína de alta qualidade e Ferro heme.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/ecwfUyskFLCUwpvG.png",
+    "isPremium": true
   },
   {
-    id: 5,
-    slug: "creme-milho-frango",
-    title: "Creme de Milho com Frango Desfiado",
-    description: "Textura cremosa e sabor suave que os bebês adoram.",
-    minAgeMonths: 8,
-    maxAgeMonths: 12,
-    category: "meal",
-    ingredients: ["1 espiga de milho verde", "50g de peito de frango", "Cebolinha picada"],
-    instructions: [
-      "Cozinhe o milho e bata no liquidificador com um pouco de água, depois peneire.",
-      "Cozinhe o frango e desfie bem fininho.",
-      "Misture o creme de milho com o frango e leve ao fogo até engrossar."
+    "id": 5,
+    "slug": "milho-feijo-branco-carne-desfiada-abobrinha",
+    "title": "Milho + Feijão Branco + Carne Desfiada + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "milho",
+      "feijão branco",
+      "carne desfiada",
+      "abobrinha"
     ],
-    nutritionalBenefits: "Energia através do milho e proteína magra do frango.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/MDBaYjTCbLiQwLCx.png",
+    "isPremium": true
   },
   {
-    id: 6,
-    slug: "omelete-bebe-espinafre",
-    title: "Omelete de Forno com Espinafre",
-    description: "Prático para o bebê segurar e comer sozinho.",
-    minAgeMonths: 9,
-    maxAgeMonths: 24,
-    category: "blw",
-    ingredients: ["1 ovo", "Folhas de espinafre picadas", "1 colher de sopa de ricota amassada"],
-    instructions: [
-      "Bata o ovo e misture o espinafre e a ricota.",
-      "Coloque em forminhas de muffin untadas.",
-      "Asse em forno médio por 15 minutos ou até dourar."
+    "id": 6,
+    "slug": "macarro-integral-lentilha-frango-desfiado-chuchu",
+    "title": "Macarrão Integral + Lentilha + Frango Desfiado + Chuchu",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "macarrão integral",
+      "lentilha",
+      "frango desfiado",
+      "chuchu"
     ],
-    nutritionalBenefits: "Colina para o desenvolvimento cerebral e Vitamina K.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/oFchqkfhqMtIkkFk.png",
+    "isPremium": true
   },
   {
-    id: 7,
-    slug: "risotinho-frango-ervilha",
-    title: "Risotinho de Frango com Ervilha Fresca",
-    description: "Introdução de grãos inteiros e texturas mais complexas.",
-    minAgeMonths: 10,
-    maxAgeMonths: 18,
-    category: "meal",
-    ingredients: ["2 colheres de sopa de arroz arbóreo ou comum", "Frango picadinho", "Ervilhas frescas"],
-    instructions: [
-      "Cozinhe o arroz com bastante água para ficar bem papado.",
-      "Adicione o frango e as ervilhas no meio do cozimento.",
-      "Finalize com um fio de azeite extra virgem."
+    "id": 7,
+    "slug": "inhame-feijo-preto-peru-desfiado-couve",
+    "title": "Inhame + Feijão Preto + Peru Desfiado + Couve",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "inhame",
+      "feijão preto",
+      "peru desfiado",
+      "couve"
     ],
-    nutritionalBenefits: "Carboidratos complexos e fibras vegetais.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/HihmDRWfPaqRcHwm.png",
+    "isPremium": true
   },
   {
-    id: 8,
-    slug: "muffin-maca-canela",
-    title: "Muffin de Maçã com Canela (Sem Açúcar)",
-    description: "Lanche saudável para passeios ou merenda.",
-    minAgeMonths: 12,
-    maxAgeMonths: 36,
-    category: "snack",
-    ingredients: ["1 maçã ralada", "1 ovo", "1 xícara de farinha de aveia", "Canela em pó"],
-    instructions: [
-      "Misture todos os ingredientes até formar uma massa homogênea.",
-      "Coloque em forminhas e asse por 20 minutos.",
-      "Espere esfriar antes de oferecer ao bebê."
+    "id": 8,
+    "slug": "quinoa-gro-de-bico-carne-moda-beterraba",
+    "title": "Quinoa + Grão-de-bico + Carne Moída + Beterraba",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "quinoa",
+      "grão-de-bico",
+      "carne moída",
+      "beterraba"
     ],
-    nutritionalBenefits: "Lanche natural sem conservantes ou açúcares adicionados.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/LammEbVVwhkVJpkk.png",
+    "isPremium": true
   },
   {
-    id: 9,
-    slug: "sopa-letrinhas-caseira",
-    title: "Sopa de Letrinhas com Legumes Picados",
-    description: "Divertida e nutritiva para incentivar a mastigação.",
-    minAgeMonths: 12,
-    maxAgeMonths: 24,
-    category: "soup",
-    ingredients: ["Macarrão de letrinhas", "Cenoura em cubinhos", "Vagem picada", "Caldo de carne caseiro"],
-    instructions: [
-      "Cozinhe os legumes no caldo de carne.",
-      "Adicione o macarrão e cozinhe até ficar al dente.",
-      "Sirva morno."
+    "id": 9,
+    "slug": "car-lentilha-ovo-cozido-abbora",
+    "title": "Cará + Lentilha + Ovo Cozido + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cará",
+      "lentilha",
+      "ovo cozido",
+      "abóbora"
     ],
-    nutritionalBenefits: "Hidratação e variedade de micronutrientes.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/lnkBxjOmuYEmfjsY.png",
+    "isPremium": true
   },
   {
-    id: 10,
-    slug: "panqueca-aveia-frutas-vermelhas",
-    title: "Panqueca de Aveia com Frutas Vermelhas",
-    description: "Café da manhã especial e cheio de antioxidantes.",
-    minAgeMonths: 12,
-    maxAgeMonths: 36,
-    category: "snack",
-    ingredients: ["1 ovo", "2 colheres de sopa de aveia", "Mirtilos ou morangos picados"],
-    instructions: [
-      "Bata o ovo com a aveia.",
-      "Aqueça uma frigideira antiaderente e despeje a massa.",
-      "Coloque as frutas por cima e vire para dourar os dois lados."
+    "id": 10,
+    "slug": "cuscuz-feijo-carioca-frango-desfiado-brcolis",
+    "title": "Cuscuz + Feijão Carioca + Frango Desfiado + Brócolis",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cuscuz",
+      "feijão carioca",
+      "frango desfiado",
+      "brócolis"
     ],
-    nutritionalBenefits: "Antioxidantes e energia de longa duração.",
-    isPremium: true
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/WovGoXkhNQSNBGaJ.png",
+    "isPremium": true
+  },
+  {
+    "id": 11,
+    "slug": "arroz-feijo-branco-patinho-desfiado-cenoura",
+    "title": "Arroz + Feijão Branco + Patinho Desfiado + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "feijão branco",
+      "patinho desfiado",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/eGLbdmCmDIsvcVyh.png",
+    "isPremium": true
+  },
+  {
+    "id": 12,
+    "slug": "batata-inglesa-lentilha-peixe-sem-espinha-espinafre",
+    "title": "Batata Inglesa + Lentilha + Peixe Sem Espinha + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "batata inglesa",
+      "lentilha",
+      "peixe sem espinha",
+      "espinafre"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/ZzgTNBqzPMkpvSVG.png",
+    "isPremium": true
+  },
+  {
+    "id": 13,
+    "slug": "mandioca-feijo-preto-frango-desfiado-abobrinha",
+    "title": "Mandioca + Feijão Preto + Frango Desfiado + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "mandioca",
+      "feijão preto",
+      "frango desfiado",
+      "abobrinha"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/zjTHOWVlQyohacFv.png",
+    "isPremium": true
+  },
+  {
+    "id": 14,
+    "slug": "macarro-integral-gro-de-bico-carne-moda-couve",
+    "title": "Macarrão Integral + Grão-de-bico + Carne Moída + Couve",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "macarrão integral",
+      "grão-de-bico",
+      "carne moída",
+      "couve"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/IMpAXVyJWJUFHjMg.png",
+    "isPremium": true
+  },
+  {
+    "id": 15,
+    "slug": "milho-lentilha-peru-desfiado-chuchu",
+    "title": "Milho + Lentilha + Peru Desfiado + Chuchu",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "milho",
+      "lentilha",
+      "peru desfiado",
+      "chuchu"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/gLioSwWwMAVBGkBx.png",
+    "isPremium": true
+  },
+  {
+    "id": 16,
+    "slug": "quinoa-feijo-branco-ovo-cozido-abbora",
+    "title": "Quinoa + Feijão Branco + Ovo Cozido + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "quinoa",
+      "feijão branco",
+      "ovo cozido",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/PbAoYOHHEqddxLeO.png",
+    "isPremium": true
+  },
+  {
+    "id": 17,
+    "slug": "car-feijo-carioca-carne-moda-espinafre",
+    "title": "Cará + Feijão Carioca + Carne Moída + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cará",
+      "feijão carioca",
+      "carne moída",
+      "espinafre"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/bpxYOqnbShAIkPff.png",
+    "isPremium": true
+  },
+  {
+    "id": 18,
+    "slug": "inhame-gro-de-bico-frango-desfiado-cenoura",
+    "title": "Inhame + Grão-de-bico + Frango Desfiado + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "inhame",
+      "grão-de-bico",
+      "frango desfiado",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/mQxMIfGqQoNtmSTY.png",
+    "isPremium": true
+  },
+  {
+    "id": 19,
+    "slug": "cuscuz-lentilha-peixe-sem-espinha-abobrinha",
+    "title": "Cuscuz + Lentilha + Peixe Sem Espinha + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cuscuz",
+      "lentilha",
+      "peixe sem espinha",
+      "abobrinha"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/MJfLNoIXlXFEosKU.png",
+    "isPremium": true
+  },
+  {
+    "id": 20,
+    "slug": "arroz-feijo-preto-ovo-cozido-brcolis",
+    "title": "Arroz + Feijão Preto + Ovo Cozido + Brócolis",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "feijão preto",
+      "ovo cozido",
+      "brócolis"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/LZPnMpnORLRXjCEh.png",
+    "isPremium": true
+  },
+  {
+    "id": 21,
+    "slug": "fgado-de-boi-ralado-arroz-lentilha-batata-doce",
+    "title": "Fígado de Boi Ralado + Arroz + Lentilha + Batata Doce",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Fígado é riquíssimo em ferro, essencial a partir dos 6 meses. Introduza...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "fígado de boi",
+      "arroz",
+      "lentilha",
+      "batata doce"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "Fígado cozido e ralado finamente (se mistura aos outros alimentos). 6 meses: ralado fino misturado ao arroz. 9 meses+: picado em pedacinhos pequenos.",
+      "Fígado deve ser bem cozido e ralado fino. Nunca oferecer em pedaços grandes. Supervisionar durante toda a refeição."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Fígado é riquíssimo em ferro, essencial a partir dos 6 meses. Introduza em pequenas porções. Supervisione sempre.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/vRHMvgvEsSsAuhTy.png",
+    "isPremium": true
+  },
+  {
+    "id": 22,
+    "slug": "mandioca-feijo-branco-carne-moda-espinafre",
+    "title": "Mandioca + Feijão Branco + Carne Moída + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "mandioca",
+      "feijão branco",
+      "carne moída",
+      "espinafre"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/kqYzDHeDNYPSFVfr.png",
+    "isPremium": true
+  },
+  {
+    "id": 23,
+    "slug": "macarro-curto-gro-de-bico-peru-desfiado-abbora",
+    "title": "Macarrão (Curto) + Grão-de-bico + Peru Desfiado + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "macarrão curto",
+      "grão-de-bico",
+      "peru desfiado",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/juJTAPDcTNZKfNip.png",
+    "isPremium": true
+  },
+  {
+    "id": 24,
+    "slug": "milho-feijo-carioca-ovo-cozido-couve",
+    "title": "Milho + Feijão Carioca + Ovo Cozido + Couve",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "milho",
+      "feijão carioca",
+      "ovo cozido",
+      "couve"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/RKsvhfzFwjgSQTwo.png",
+    "isPremium": true
+  },
+  {
+    "id": 25,
+    "slug": "inhame-lentilha-peixe-sem-espinha-beterraba",
+    "title": "Inhame + Lentilha + Peixe Sem Espinha + Beterraba",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "inhame",
+      "lentilha",
+      "peixe sem espinha",
+      "beterraba"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/ztRktvvvBeUaPhIc.png",
+    "isPremium": true
+  },
+  {
+    "id": 26,
+    "slug": "quinoa-feijo-preto-carne-moda-brcolis",
+    "title": "Quinoa + Feijão Preto + Carne Moída + Brócolis",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "quinoa",
+      "feijão preto",
+      "carne moída",
+      "brócolis"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/aYYreKHlywOcMhXi.png",
+    "isPremium": true
+  },
+  {
+    "id": 27,
+    "slug": "lombo-suno-desfiado-feijo-branco-mandioca-cenoura",
+    "title": "Lombo Suíno Desfiado + Feijão Branco + Mandioca + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Lombo suíno é proteína magra e saborosa. Cozinhar bem na pressão. Super...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "lombo suíno",
+      "feijão branco",
+      "mandioca",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "Lombo cozido na pressão até desmanchar, desfiado em fios curtíssimos. 6 meses: desfiado fino. 9 meses+: em tiras macias para BLW.",
+      "Lombo deve ser cozido até ficar muito macio. Desfiar em fios curtos. Mandioca em bastões macios. Supervisionar sempre."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Lombo suíno é proteína magra e saborosa. Cozinhar bem na pressão. Supervisione durante toda a refeição.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/LkbAafTfRRZXhTla.png",
+    "isPremium": true
+  },
+  {
+    "id": 28,
+    "slug": "arroz-gro-de-bico-ovo-cozido-espinafre",
+    "title": "Arroz + Grão-de-bico + Ovo Cozido + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "grão-de-bico",
+      "ovo cozido",
+      "espinafre"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/woNDfLppKLXVkwiV.png",
+    "isPremium": true
+  },
+  {
+    "id": 29,
+    "slug": "batata-inglesa-feijo-preto-carne-moda-abbora",
+    "title": "Batata Inglesa + Feijão Preto + Carne Moída + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "batata inglesa",
+      "feijão preto",
+      "carne moída",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/dbjvWrGRDfzFigHM.png",
+    "isPremium": true
+  },
+  {
+    "id": 30,
+    "slug": "cuscuz-lentilha-frango-desfiado-abobrinha",
+    "title": "Cuscuz + Lentilha + Frango Desfiado + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cuscuz",
+      "lentilha",
+      "frango desfiado",
+      "abobrinha"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/LpsmuZpwUOwAyziB.png",
+    "isPremium": true
+  },
+  {
+    "id": 31,
+    "slug": "quinoa-feijo-carioca-peixe-sem-espinha-cenoura",
+    "title": "Quinoa + Feijão Carioca + Peixe Sem Espinha + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "quinoa",
+      "feijão carioca",
+      "peixe sem espinha",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/MGSAEZWFvWVocasX.png",
+    "isPremium": true
+  },
+  {
+    "id": 32,
+    "slug": "inhame-gro-de-bico-carne-moda-couve",
+    "title": "Inhame + Grão-de-bico + Carne Moída + Couve",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "inhame",
+      "grão-de-bico",
+      "carne moída",
+      "couve"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/nrRLMjxdRSvKfrWl.png",
+    "isPremium": true
+  },
+  {
+    "id": 33,
+    "slug": "milho-lentilha-ovo-cozido-espinafre",
+    "title": "Milho + Lentilha + Ovo Cozido + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "milho",
+      "lentilha",
+      "ovo cozido",
+      "espinafre"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/sAJFxFEuViBsDWWI.png",
+    "isPremium": true
+  },
+  {
+    "id": 34,
+    "slug": "arroz-feijo-branco-peru-desfiado-abbora",
+    "title": "Arroz + Feijão Branco + Peru Desfiado + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "feijão branco",
+      "peru desfiado",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/jacSvlMJsrqzvIgI.png",
+    "isPremium": true
+  },
+  {
+    "id": 35,
+    "slug": "fil-de-tilpia-no-vapor-quinoa-ervilha-abbora",
+    "title": "Filé de Tilápia no Vapor + Quinoa + Ervilha + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Tilápia é peixe branco de fácil digestão. Quinoa exige mais digestão, p...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "filé de tilápia",
+      "quinoa",
+      "ervilha",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "Peixe em lascas grandes (BLW) ou levemente amassado. 8 meses: amassado com garfo. 9 meses+: lascas grandes para o bebê segurar.",
+      "Verificar cuidadosamente se não há espinhas. Oferecer em lascas macias. Ervilha: amassar levemente para evitar engasgo. Supervisionar sempre."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Tilápia é peixe branco de fácil digestão. Quinoa exige mais digestão, por isso a partir de 8 meses. Supervisione sempre.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/siozbROBvqOOftVl.png",
+    "isPremium": true
+  },
+  {
+    "id": 36,
+    "slug": "car-feijo-preto-carne-moda-cenoura",
+    "title": "Cará + Feijão Preto + Carne Moída + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 6 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 6,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cará",
+      "feijão preto",
+      "carne moída",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/QHetunGOCyqAWmez.png",
+    "isPremium": true
+  },
+  {
+    "id": 37,
+    "slug": "batata-doce-gro-de-bico-ovo-cozido-abobrinha",
+    "title": "Batata Doce + Grão-de-bico + Ovo Cozido + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "batata doce",
+      "grão-de-bico",
+      "ovo cozido",
+      "abobrinha"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/AkxycFmzKiYkvVrG.png",
+    "isPremium": true
+  },
+  {
+    "id": 38,
+    "slug": "macarro-curto-feijo-carioca-peixe-sem-espinha-espinafre",
+    "title": "Macarrão (Curto) + Feijão Carioca + Peixe Sem Espinha + Espinafre",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "macarrão curto",
+      "feijão carioca",
+      "peixe sem espinha",
+      "espinafre"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/BhfTIeywRGjuvcxo.png",
+    "isPremium": true
+  },
+  {
+    "id": 39,
+    "slug": "quinoa-lentilha-carne-moda-abbora",
+    "title": "Quinoa + Lentilha + Carne Moída + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "quinoa",
+      "lentilha",
+      "carne moída",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/gVdcUsVYFYRaUgoI.png",
+    "isPremium": true
+  },
+  {
+    "id": 40,
+    "slug": "cuscuz-feijo-branco-frango-desfiado-beterraba",
+    "title": "Cuscuz + Feijão Branco + Frango Desfiado + Beterraba",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cuscuz",
+      "feijão branco",
+      "frango desfiado",
+      "beterraba"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/KVybKYZLPONTIYbY.png",
+    "isPremium": true
+  },
+  {
+    "id": 41,
+    "slug": "arroz-gro-de-bico-peru-desfiado-cenoura",
+    "title": "Arroz + Grão-de-bico + Peru Desfiado + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "grão-de-bico",
+      "peru desfiado",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/qAbTgLgshHCWjjUl.png",
+    "isPremium": true
+  },
+  {
+    "id": 42,
+    "slug": "batata-inglesa-feijo-preto-ovo-cozido-couve",
+    "title": "Batata Inglesa + Feijão Preto + Ovo Cozido + Couve",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "batata inglesa",
+      "feijão preto",
+      "ovo cozido",
+      "couve"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/pKLvFEscAOMUVVPV.png",
+    "isPremium": true
+  },
+  {
+    "id": 43,
+    "slug": "inhame-lentilha-carne-moda-abobrinha",
+    "title": "Inhame + Lentilha + Carne Moída + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "inhame",
+      "lentilha",
+      "carne moída",
+      "abobrinha"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/HjkvNRfaJAazaled.png",
+    "isPremium": true
+  },
+  {
+    "id": 44,
+    "slug": "tofu-grelhado-gro-de-bico-arroz-integral-brcolis",
+    "title": "Tofu Grelhado + Grão-de-bico + Arroz Integral + Brócolis",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Opção vegana rica em proteína. Grão-de-bico e tofu a partir de 8 meses....",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "tofu",
+      "grão-de-bico",
+      "arroz integral",
+      "brócolis"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "Tofu em bastões firmes para o bebê segurar. Grão-de-bico: sem casca e amassado. 8 meses: tofu amassado + grão-de-bico sem casca. 9 meses+: bastões de tofu para BLW.",
+      "Tofu em bastões do tamanho do dedo adulto. Grão-de-bico: retirar casca e amassar levemente. Brócolis em floretes macios. Supervisionar sempre."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Opção vegana rica em proteína. Grão-de-bico e tofu a partir de 8 meses. Supervisione durante toda a refeição.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/RMxzZyTpRoXCxBvN.png",
+    "isPremium": true
+  },
+  {
+    "id": 45,
+    "slug": "macarro-curto-feijo-branco-peixe-sem-espinha-cenoura",
+    "title": "Macarrão (Curto) + Feijão Branco + Peixe Sem Espinha + Cenoura",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "macarrão curto",
+      "feijão branco",
+      "peixe sem espinha",
+      "cenoura"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/BkYGlPSuZLHWLsHE.png",
+    "isPremium": true
+  },
+  {
+    "id": 46,
+    "slug": "quinoa-gro-de-bico-ovo-cozido-brcolis",
+    "title": "Quinoa + Grão-de-bico + Ovo Cozido + Brócolis",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "quinoa",
+      "grão-de-bico",
+      "ovo cozido",
+      "brócolis"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/CxFJjtWbwfVTOPqg.png",
+    "isPremium": true
+  },
+  {
+    "id": 47,
+    "slug": "car-lentilha-peru-desfiado-abbora",
+    "title": "Cará + Lentilha + Peru Desfiado + Abóbora",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "cará",
+      "lentilha",
+      "peru desfiado",
+      "abóbora"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/lnkBxjOmuYEmfjsY.png",
+    "isPremium": true
+  },
+  {
+    "id": 48,
+    "slug": "mandioca-feijo-preto-carne-moda-beterraba",
+    "title": "Mandioca + Feijão Preto + Carne Moída + Beterraba",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "mandioca",
+      "feijão preto",
+      "carne moída",
+      "beterraba"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/BPgaHJLqdUNLXRwa.png",
+    "isPremium": true
+  },
+  {
+    "id": 49,
+    "slug": "arroz-lentilha-ovo-cozido-abobrinha",
+    "title": "Arroz + Lentilha + Ovo Cozido + Abobrinha",
+    "description": "Receita nutritiva para bebês a partir de 8 meses. Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de c...",
+    "minAgeMonths": 8,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "arroz",
+      "lentilha",
+      "ovo cozido",
+      "abobrinha"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "• 6 meses: amasse com garfo\n• 9 meses: pique pequeno\n• 12 meses+: consistência da família",
+      "Oferecer alimentos macios. Cortar em cubos pequenos ou tiras grossas macias (formato dedo adulto) para BLW. Sempre supervisionar."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Supervisione durante toda a refeição. Introduza novos alimentos um de cada vez.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/izhZdnzaIpOmVJQo.png",
+    "isPremium": true
+  },
+  {
+    "id": 50,
+    "slug": "moela-de-frango-picadinha-cuscuz-feijo-preto-couve",
+    "title": "Moela de Frango Picadinha + Cuscuz + Feijão Preto + Couve",
+    "description": "Receita nutritiva para bebês a partir de 9 meses. Não adicionar sal ou açúcar. Moela é extremamente nutritiva e rica em ferro. Cuscuz contém glúten, p...",
+    "minAgeMonths": 9,
+    "maxAgeMonths": 36,
+    "category": "meal",
+    "ingredients": [
+      "moela de frango",
+      "cuscuz",
+      "feijão preto",
+      "couve"
+    ],
+    "instructions": [
+      "Cozinhe os alimentos até ficarem macios, sem adição de sal. Separe no prato para o bebê identificar os sabores. Ajuste a textura conforme a idade.",
+      "Moela cozida exaustivamente e picada em cubinhos mínimos (2mm). 9 meses: cubinhos mínimos bem cozidos. 12 meses+: pedaços um pouco maiores para treinar mastigação.",
+      "Moela deve ser cozida por tempo prolongado até ficar muito macia. Picar em cubinhos de no máximo 2mm. Cuscuz em porções pequenas. Supervisionar sempre."
+    ],
+    "nutritionalBenefits": "Não adicionar sal ou açúcar. Moela é extremamente nutritiva e rica em ferro. Cuscuz contém glúten, por isso a partir de 9 meses. Supervisione sempre.",
+    "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/yUXRZnMxeZKNPHgO.png",
+    "isPremium": true
   }
 ];
