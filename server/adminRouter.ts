@@ -1,7 +1,7 @@
 import { router, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
 import { getDb } from "./db";
-import { wilborUsers, wilborPurchases, wilborEbooks, wilborUserCredits } from "../drizzle/schema";
+import { wilborUsers, wilborEbookPurchases, wilborEbooks, wilborUserCredits } from "../drizzle/schema";
 import { eq, gte, sql, desc } from "drizzle-orm";
 
 export const adminRouter = router({
@@ -49,18 +49,18 @@ export const adminRouter = router({
         totalUsd: sql<number>`sum(case when currency = 'USD' then amount else 0 end)`,
         totalEur: sql<number>`sum(case when currency = 'EUR' then amount else 0 end)`,
       })
-      .from(wilborPurchases)
-      .where(eq(wilborPurchases.status, "completed"));
+      .from(wilborEbookPurchases)
+      .where(eq(wilborEbookPurchases.status, "completed"));
 
     // 5. Top 3 E-books mais vendidos (Renda Rápida)
     const topEbooks = await db
       .select({
-        ebookId: wilborPurchases.ebookId,
+        ebookId: wilborEbookPurchases.ebookId,
         salesCount: sql<number>`count(*)`,
       })
-      .from(wilborPurchases)
-      .where(eq(wilborPurchases.status, "completed"))
-      .groupBy(wilborPurchases.ebookId)
+      .from(wilborEbookPurchases)
+      .where(eq(wilborEbookPurchases.status, "completed"))
+      .groupBy(wilborEbookPurchases.ebookId)
       .orderBy(desc(sql`count(*)`))
       .limit(3);
 

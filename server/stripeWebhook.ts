@@ -118,7 +118,7 @@ export function registerStripeRoutes(app: Express) {
               // 2. ATUALIZAÇÃO DE STATUS PREMIUM
               if (session.mode === "subscription") {
                 await db.update(wilborUsers)
-                  .set({ subscriptionStatus: "premium" })
+                  .set({ subscriptionStatus: "active" })
                   .where(eq(wilborUsers.id, userId));
                 
                 await db.update(wilborUserCredits)
@@ -173,7 +173,7 @@ export function registerStripeRoutes(app: Express) {
             if (userId) {
               // Downgrade user back to Basic/Free
               await db.update(wilborUsers)
-                .set({ subscriptionStatus: "basic" })
+                .set({ subscriptionStatus: "cancelled" })
                 .where(eq(wilborUsers.id, userId));
 
               await db.update(wilborUserCredits)
@@ -191,7 +191,7 @@ export function registerStripeRoutes(app: Express) {
 
           case "invoice.payment_failed": {
             const invoice = event.data.object as Stripe.Invoice;
-            const subId = invoice.subscription as string;
+            const subId = (invoice as any).subscription as string;
             
             if (subId) {
               const userCredits = await db.select().from(wilborUserCredits)

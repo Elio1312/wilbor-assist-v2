@@ -15,7 +15,7 @@ export const stripeRouter = router({
     .mutation(async ({ ctx, input }) => {
       try {
         // Passamos o idioma do usuário para o Stripe para URLs e nomes de produtos localizados
-        const lang = ctx.user.language || "pt";
+        const lang = (ctx.user as any).language || "pt";
         const session = await createExtraCreditsCheckout(ctx.user.id, input.amount, input.currency, lang);
         
         // Log do evento
@@ -101,7 +101,7 @@ export const stripeRouter = router({
    */
   getCreditOptions: protectedProcedure.query(async ({ ctx }) => {
     // Detecta o idioma do usuário para mostrar a moeda correta
-    const lang = ctx.user.language || "pt";
+    const lang = (ctx.user as any).language || "pt";
     
     const options: Record<string, any[]> = {
       pt: [

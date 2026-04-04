@@ -77,7 +77,7 @@ export const shopRouter = router({
       if (!ebook) throw new Error("EBOOK_NOT_FOUND");
 
       // Detecção de Moeda Baseada no Idioma do Usuário (Internacionalização)
-      const userLang = ctx.user.language || "pt";
+      const userLang = (ctx.user as any).language || "pt";
       const currencyMap: Record<string, { code: string; price: number }> = {
         pt: { code: "brl", price: ebook.priceBrl },
         en: { code: "usd", price: ebook.priceUsd },
