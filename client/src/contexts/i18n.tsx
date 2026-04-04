@@ -44,6 +44,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.usage": "Seu Uso",
     "nav.my_babies": "Meus Bebês",
     "nav.recipes": "Receitas",
+    "checkout.title": "Escolha seu plano",
+    "checkout.subtitle": "Cancele quando quiser. Sem fidelidade.",
+    "checkout.cta": "Assinar agora",
+    "checkout.error": "Erro ao processar pagamento. Tente novamente.",
+    "paywall.features": "Chat IA 24h,Até 3 bebês,Trilha de desenvolvimento,Receitas por idade",
+    "common.back": "Voltar",
 
     // Hero
     "hero.badge": "Apoio real para mães de verdade",
@@ -260,6 +266,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.usage": "Your Usage",
     "nav.my_babies": "My Babies",
     "nav.recipes": "Recipes",
+    "checkout.title": "Choose your plan",
+    "checkout.subtitle": "Cancel anytime. No commitment.",
+    "checkout.cta": "Subscribe now",
+    "checkout.error": "Error processing payment. Please try again.",
+    "paywall.features": "24/7 AI Chat,Up to 3 babies,Development milestones,Age-based recipes",
+    "common.back": "Back",
 
     // Hero
     "hero.badge": "Real support for real mothers",
@@ -476,6 +488,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.usage": "Tu Uso",
     "nav.my_babies": "Mis Bebés",
     "nav.recipes": "Recetas",
+    "checkout.title": "Elige tu plan",
+    "checkout.subtitle": "Cancela cuando quieras. Sin compromiso.",
+    "checkout.cta": "Suscribirse ahora",
+    "checkout.error": "Error al procesar el pago. Inténtalo de nuevo.",
+    "paywall.features": "Chat IA 24h,Hasta 3 bebés,Hitos de desarrollo,Recetas por edad",
+    "common.back": "Volver",
     // Hero
     "hero.badge": "Apoyo real para madres reales",
     "hero.h1": "Sabe qué hacer con tu bebé, en cualquier momento del día.",
@@ -691,6 +709,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.usage": "Votre Utilisation",
     "nav.my_babies": "Mes Bébés",
     "nav.recipes": "Recettes",
+    "checkout.title": "Choisissez votre plan",
+    "checkout.subtitle": "Annulez quand vous voulez. Sans engagement.",
+    "checkout.cta": "S'abonner maintenant",
+    "checkout.error": "Erreur lors du paiement. Veuillez réessayer.",
+    "paywall.features": "Chat IA 24h,Jusqu'à 3 bébés,Étapes de développement,Recettes par âge",
+    "common.back": "Retour",
 
     // Hero
     "hero.badge": "Un soutien réel pour de vraies mères",
@@ -907,6 +931,12 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.usage": "Ihre Nutzung",
     "nav.my_babies": "Meine Babys",
     "nav.recipes": "Rezepte",
+    "checkout.title": "Wählen Sie Ihren Plan",
+    "checkout.subtitle": "Jederzeit kündbar. Keine Bindung.",
+    "checkout.cta": "Jetzt abonnieren",
+    "checkout.error": "Fehler bei der Zahlungsverarbeitung. Bitte versuchen Sie es erneut.",
+    "paywall.features": "KI-Chat 24h,Bis zu 3 Babys,Entwicklungsmeilensteine,Altersgerechte Rezepte",
+    "common.back": "Zurück",
 
     // Hero
     "hero.badge": "Echte Unterstützung für echte Mütter",
