@@ -100,67 +100,92 @@ export function registerStripeRoutes(app: Express) {
         switch (event.type) {
           case "checkout.session.completed": {
             const session = event.data.object as Stripe.Checkout.Session;
-            const userId = Number(session.metadata?.user_id || session.client_reference_id);
-            const amount = session.amount_total ? session.amount_total / 100 : 0;
-            
-            if (userId && amount > 0) {
-              // 1. BLINDAGEM DE ENTREGA: 1 unidade (BRL/USD/EUR) = 5 créditos
-              const credits = Math.round(amount * 5);
-              
-              // addExtraCreditTransaction handles idempotency via session.id
-              await addExtraCreditTransaction(
-                userId, 
-                amount.toString(), 
-                credits, 
-                session.id
-              );
+            // Lê userId de metadata.userId (shopRouter) ou user_id (stripeWebhook)
+            const userId = Number(
+              session.metadata?.userId ||
+              session.metadata?.user_id ||
+              session.client_reference_id
+            );
+            const paymentType = session.metadata?.type; // 'ebook_purchase' | 'subscription' | 'extra_credits'
 
-              // 2. ATUALIZAÇÃO DE STATUS PREMIUM
-              if (session.mode === "subscription") {
-                await db.update(wilborUsers)
-                  .set({ subscriptionStatus: "active" })
-                  .where(eq(wilborUsers.id, userId));
-                
-                await db.update(wilborUserCredits)
-                  .set({
-                    plan: "premium",
-                    monthlyLimit: 500,
-                    stripeCustomerId: session.customer as string,
-                    stripeSubscriptionId: session.subscription as string,
-                  })
-                  .where(eq(wilborUserCredits.userId, userId));
-              }
-
-              // 3. TRACK CONVERSION
-              await db.insert(wilborConversionEvents).values({
-                userId: userId,
-                eventType: "payment_success",
-                metadata: JSON.stringify({
-                  sessionId: session.id,
-                  amount: session.amount_total,
-                  currency: session.currency,
-                  mode: session.mode,
-                }),
-              });
-
-              console.log(`[Stripe] User ${userId} processed successfully. Credits: ${credits}`);
-            }
-
-            // 4. ENTREGA DE E-BOOK (Venda Única)
-            if (session.metadata?.type === "ebook_purchase") {
-              const ebookId = session.metadata.ebookId;
+            // ─── BIFURCAÇÃO PRINCIPAL: E-BOOK vs ASSINATURA/CRÉDITOS ───
+            if (paymentType === "ebook_purchase") {
+              // FLUXO 1: E-BOOK — Registra entrega e NÃO injeta créditos de assinatura
+              const ebookId = session.metadata?.ebookId;
               if (userId && ebookId) {
                 await db.insert(wilborEbookPurchases).values({
                   userId,
                   ebookId,
                   amount: session.amount_total || 0,
-                  currency: session.currency || "brl",
+                  currency: (session.currency || "brl").toLowerCase(),
                   stripeSessionId: session.id,
                   status: "completed",
                 }).onDuplicateKeyUpdate({
                   set: { status: "completed" }
                 });
-                console.log(`[Stripe] E-book ${ebookId} delivered to User ${userId}`);
+
+                // Track conversão de e-book
+                await db.insert(wilborConversionEvents).values({
+                  userId,
+                  eventType: "payment_success", // enum válido; type=ebook_purchase fica no metadata
+                  metadata: JSON.stringify({
+                    sessionId: session.id,
+                    ebookId,
+                    amount: session.amount_total,
+                    currency: session.currency,
+                    type: "ebook_purchase",
+                  }),
+                });
+
+                console.log(`[Stripe] ✅ E-book ${ebookId} entregue ao usuário ${userId}`);
+              }
+            } else {
+              // FLUXO 2: ASSINATURA ou CRÉDITOS EXTRAS — Injeta créditos e atualiza status
+              const amount = session.amount_total ? session.amount_total / 100 : 0;
+
+              if (userId && amount > 0) {
+                const credits = Math.round(amount * 5);
+
+                // Registra transação de créditos (com idempotência via session.id)
+                await addExtraCreditTransaction(
+                  userId,
+                  amount.toString(),
+                  credits,
+                  session.id
+                );
+
+                // Atualiza status para ASSINATURA PREMIUM
+                if (session.mode === "subscription") {
+                  await db.update(wilborUsers)
+                    .set({ subscriptionStatus: "active" })
+                    .where(eq(wilborUsers.id, userId));
+
+                  await db.update(wilborUserCredits)
+                    .set({
+                      plan: "premium",
+                      monthlyLimit: 500,
+                      stripeCustomerId: session.customer as string,
+                      stripeSubscriptionId: (session as any).subscription as string,
+                    })
+                    .where(eq(wilborUserCredits.userId, userId));
+
+                  console.log(`[Stripe] ✅ Assinatura Premium ativada para usuário ${userId}`);
+                } else {
+                  console.log(`[Stripe] ✅ Créditos extras (+${credits}) adicionados ao usuário ${userId}`);
+                }
+
+                // Track conversão
+                await db.insert(wilborConversionEvents).values({
+                  userId,
+                  eventType: "payment_success",
+                  metadata: JSON.stringify({
+                    sessionId: session.id,
+                    amount: session.amount_total,
+                    currency: session.currency,
+                    mode: session.mode,
+                    type: paymentType || "extra_credits",
+                  }),
+                });
               }
             }
             break;
