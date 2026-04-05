@@ -31,6 +31,10 @@ RUN pnpm install --no-frozen-lockfile
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
 
+# Copy drizzle configuration and schema for database migrations
+COPY drizzle.config.ts ./
+COPY drizzle/ ./drizzle/
+
 # Set environment
 ENV NODE_ENV=production
 ENV PORT=8000
