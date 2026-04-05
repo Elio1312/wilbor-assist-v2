@@ -36,6 +36,13 @@
       "when": 1773874377603,
       "tag": "0004_furry_la_nuit",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1775370053080,
+      "tag": "0005_sweet_centennial",
+      "breakpoints": true
     }
   ]
 }
