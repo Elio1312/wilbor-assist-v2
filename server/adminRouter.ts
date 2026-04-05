@@ -1,8 +1,10 @@
 import { router, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
 import { getDb } from "./db";
-import { wilborUsers, wilborEbookPurchases, wilborEbooks, wilborUserCredits } from "../drizzle/schema";
-import { eq, gte, sql, desc } from "drizzle-orm";
+import { wilborUsers, wilborEbookPurchases, wilborEbooks, wilborUserCredits, wilborResponseFeedback } from "../drizzle/schema";
+import { analyzeFeedbackTriagem } from "./lib/aiTriagem";
+import { sendAdminReport } from "./lib/sendAdminReport";
+import { eq, gte, sql, desc, and } from "drizzle-orm";
 
 export const adminRouter = router({
   /**
@@ -74,5 +76,146 @@ export const adminRouter = router({
       },
       topEbooks,
     };
+  }),
+
+  /**
+   * getWeeklyVeridicalFeedbacks: Relatório Dominical do CEO
+   * Retorna apenas reclamações confirmadas pela IA na última semana
+   */
+  getWeeklyVeridicalFeedbacks: protectedProcedure.query(async ({ ctx }) => {
+    const adminEmails = ["elio@wilbor.com", "admin@wilbor.com"];
+    if (!adminEmails.includes(ctx.user.email || "")) {
+      throw new Error("UNAUTHORIZED");
+    }
+
+    const db = await getDb();
+    if (!db) throw new Error("Database connection failed");
+
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    return await db
+      .select()
+      .from(wilborResponseFeedback)
+      .where(
+        and(
+          eq(wilborResponseFeedback.aiVerdict, "VERÍDICA"),
+          gte(wilborResponseFeedback.createdAt, oneWeekAgo)
+        )
+      )
+      .orderBy(desc(wilborResponseFeedback.createdAt));
+  }),
+
+  /**
+   * triggerFeedbackTriagem: Aciona a triagem de IA em feedbacks pendentes
+   * Pode ser chamado manualmente ou pelo agendamento semanal
+   */
+  triggerFeedbackTriagem: protectedProcedure.mutation(async ({ ctx }) => {
+    const adminEmails = ["elio@wilbor.com", "admin@wilbor.com"];
+    if (!adminEmails.includes(ctx.user.email || "")) {
+      throw new Error("UNAUTHORIZED");
+    }
+
+    const db = await getDb();
+    if (!db) throw new Error("Database connection failed");
+
+    // Buscar feedbacks negativos ainda não analisados
+    const pendingFeedbacks = await db
+      .select()
+      .from(wilborResponseFeedback)
+      .where(eq(wilborResponseFeedback.aiVerdict, "pending"))
+      .limit(50); // Processar em lotes de 50
+
+    let processed = 0;
+    for (const feedback of pendingFeedbacks) {
+      try {
+        const result = await analyzeFeedbackTriagem(
+          feedback.comment || "",
+          feedback.aiResponse,
+          feedback.userQuestion
+        );
+
+        await db
+          .update(wilborResponseFeedback)
+          .set({
+            aiVerdict: result.verdict,
+            aiJustification: result.justification,
+            status: "reviewed",
+          })
+          .where(eq(wilborResponseFeedback.id, feedback.id));
+
+        processed++;
+      } catch (err) {
+        console.error(`[Triagem] Erro ao processar feedback ${feedback.id}:`, err);
+      }
+    }
+
+    return { processed, total: pendingFeedbacks.length };
+  }),
+
+  /**
+   * sendWeeklyReport: Disparado todo domingo às 21h pelo agendamento automático
+   * 1. Aciona a triagem nos feedbacks pendentes
+   * 2. Busca os VERÍDICOS da semana
+   * 3. Envia o relatório formatado para o WhatsApp do Elio
+   */
+  sendWeeklyReport: protectedProcedure.mutation(async ({ ctx }) => {
+    const adminEmails = ["elio@wilbor.com", "admin@wilbor.com"];
+    if (!adminEmails.includes(ctx.user.email || "")) {
+      throw new Error("UNAUTHORIZED");
+    }
+
+    const db = await getDb();
+    if (!db) throw new Error("Database connection failed");
+
+    // Passo 1: Triar feedbacks pendentes
+    const pendingFeedbacks = await db
+      .select()
+      .from(wilborResponseFeedback)
+      .where(eq(wilborResponseFeedback.aiVerdict, "pending"))
+      .limit(100);
+
+    for (const feedback of pendingFeedbacks) {
+      try {
+        const result = await analyzeFeedbackTriagem(
+          feedback.comment || "",
+          feedback.aiResponse,
+          feedback.userQuestion
+        );
+        await db
+          .update(wilborResponseFeedback)
+          .set({ aiVerdict: result.verdict, aiJustification: result.justification, status: "reviewed" })
+          .where(eq(wilborResponseFeedback.id, feedback.id));
+      } catch (err) {
+        console.error(`[Triagem] Erro no feedback ${feedback.id}:`, err);
+      }
+    }
+
+    // Passo 2: Buscar VERÍDICOS da última semana
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    const veridicos = await db
+      .select()
+      .from(wilborResponseFeedback)
+      .where(
+        and(
+          eq(wilborResponseFeedback.aiVerdict, "VERÍDICA"),
+          gte(wilborResponseFeedback.createdAt, oneWeekAgo)
+        )
+      )
+      .orderBy(desc(wilborResponseFeedback.createdAt));
+
+    // Passo 3: Enviar relatório via WhatsApp
+    await sendAdminReport(veridicos.map(f => ({
+      id: f.id,
+      userQuestion: f.userQuestion,
+      aiResponse: f.aiResponse,
+      comment: f.comment,
+      aiJustification: f.aiJustification,
+      createdAt: f.createdAt,
+    })));
+
+    return { sent: true, veridicos: veridicos.length, triaged: pendingFeedbacks.length };
   }),
 });

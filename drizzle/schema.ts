@@ -278,6 +278,10 @@ export const wilborResponseFeedback = mysqlTable("wilborResponseFeedback", {
   accuracy: mysqlEnum("accuracy", ["accurate", "mostly_accurate", "partially_accurate", "inaccurate"]),
   comment: text("comment"),
   language: mysqlEnum("feedbackLanguage", ["pt", "en", "es"]).default("pt").notNull(),
+  // Triagem Inteligente por IA
+  aiVerdict: mysqlEnum("aiVerdict", ["VERÍDICA", "INCONSISTENTE", "ELOGIO", "pending"]).default("pending"),
+  aiJustification: text("aiJustification"),
+  status: mysqlEnum("feedbackStatus", ["new", "reviewed", "archived"]).default("new").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
