@@ -15,6 +15,8 @@ import { runPendingMigrations } from "../runMigrations";
 import { serveStatic, setupVite } from "./vite";
 import { registerStripeRoutes } from "../stripeWebhook";
 import sitemapRouter from "../routes/sitemap";
+import { getDb } from "../db";
+import { wilborMilestoneContent } from "../../drizzle/schema";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -120,8 +122,6 @@ async function startServer() {
   // Secret route to seed milestones (temporary)
   app.get("/api/seed-milestones-secret", async (req, res) => {
     try {
-      const { getDb } = await import("./db");
-      const { wilborMilestoneContent } = await import("../../drizzle/schema");
       const db = await getDb();
       
       if (!db) {
@@ -179,8 +179,6 @@ async function startServer() {
     
     // Auto-seed milestones on startup
     try {
-      const { getDb } = await import("./db");
-      const { wilborMilestoneContent } = await import("../../drizzle/schema");
       const db = await getDb();
       
       if (db) {
@@ -205,8 +203,14 @@ async function startServer() {
           console.log("✅ Milestones already exist, skipping auto-seed.");
         }
       }
-    } catch (error) {
-      console.error("❌ Error auto-seeding milestones:", error);
+    } catch (error: any) {
+      // Tabela pode não existir ainda se db:push não foi rodado — não é crítico
+      const msg = error?.message ?? String(error);
+      if (msg.includes("doesn't exist") || msg.includes("Table") || msg.includes("Failed query")) {
+        console.warn("[Seed] Tabela wilborMilestoneContent não encontrada — rode db:push para criar.");
+      } else {
+        console.error("❌ Error auto-seeding milestones:", msg);
+      }
     }
   });
 }
