@@ -135,7 +135,7 @@ export const EBOOK_PRODUCTS: EbookProduct[] = [
     title: "Koliken und Babygesundheit",
     subtitle: "Sofortige Linderung und evidenzbasierte Prävention",
     description: "Bewährte Techniken zur Linderung von Koliken, zum Verstehen des Weinens und zur Ruhe.",
-    pdfUrl: `${CDN}/Koliken-and-Babygesundheit_16dec94e.pdf`,
+    pdfUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/lvYynDKxsESXtLoc.pdf",
     priceBRL: 2900,
     priceUSD: 700,
     priceEUR: 700,
