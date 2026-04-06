@@ -434,23 +434,31 @@ export type InsertBlogComment = typeof blogComments.$inferInsert;
 // E-BOOKS (Produtos Digitais)
 // ==========================================
 export const wilborEbooks = mysqlTable("wilborEbooks", {
-  id: varchar("id", { length: 100 }).primaryKey(), // Ex: 'casamento-01'
+  id: varchar("id", { length: 100 }).primaryKey(), // Ex: 'sleep-pt'
+  
+  // Idioma principal do ebook
+  lang: mysqlEnum("ebookLang", ["pt", "en", "es", "fr", "de"]).default("pt").notNull(),
   
   // Internacionalização Nativa
   titlePt: text("titlePt").notNull(),
   titleEn: text("titleEn"),
   titleEs: text("titleEs"),
+  titleFr: text("titleFr"),
+  titleDe: text("titleDe"),
   
   descriptionPt: text("descriptionPt").notNull(),
   descriptionEn: text("descriptionEn"),
   descriptionEs: text("descriptionEs"),
+  descriptionFr: text("descriptionFr"),
+  descriptionDe: text("descriptionDe"),
   
-  category: varchar("category", { length: 50 }).notNull(), // Ex: 'casamento', 'emocoes'
+  category: varchar("category", { length: 50 }).notNull(), // 'sleep', 'colic', 'sexuality'
   
   // Preços em Centavos
   priceBrl: int("priceBrl").notNull(),
   priceUsd: int("priceUsd").notNull(),
   priceEur: int("priceEur").notNull(),
+  priceGbp: int("priceGbp").default(600).notNull(),
   
   coverImage: text("coverImage").notNull(),
   pdfUrl: text("pdfUrl").notNull(),

@@ -110,24 +110,23 @@ export function registerStripeRoutes(app: Express) {
 
             // ─── BIFURCAÇÃO PRINCIPAL: E-BOOK vs ASSINATURA/CRÉDITOS ───
             if (paymentType === "ebook_purchase") {
-              // FLUXO 1: E-BOOK — Registra entrega e NÃO injeta créditos de assinatura
+              // FLUXO 1: E-BOOK INDIVIDUAL — Registra entrega
               const ebookId = session.metadata?.ebookId;
               if (userId && ebookId) {
                 await db.insert(wilborEbookPurchases).values({
                   userId,
                   ebookId,
                   amount: session.amount_total || 0,
-                  currency: (session.currency || "brl").toLowerCase(),
+                  currency: (session.currency || "brl").toUpperCase(),
                   stripeSessionId: session.id,
                   status: "completed",
                 }).onDuplicateKeyUpdate({
                   set: { status: "completed" }
                 });
 
-                // Track conversão de e-book
                 await db.insert(wilborConversionEvents).values({
                   userId,
-                  eventType: "payment_success", // enum válido; type=ebook_purchase fica no metadata
+                  eventType: "payment_success",
                   metadata: JSON.stringify({
                     sessionId: session.id,
                     ebookId,
@@ -138,6 +137,38 @@ export function registerStripeRoutes(app: Express) {
                 });
 
                 console.log(`[Stripe] ✅ E-book ${ebookId} entregue ao usuário ${userId}`);
+              }
+            } else if (paymentType === "ebook_bundle") {
+              // FLUXO 1B: BUNDLE DE E-BOOKS — Registra todos os ebooks do bundle
+              const ebookIds = session.metadata?.ebookIds?.split(",") || [];
+              if (userId && ebookIds.length > 0) {
+                const perEbookAmount = Math.round((session.amount_total || 0) / ebookIds.length);
+                for (const ebookId of ebookIds) {
+                  await db.insert(wilborEbookPurchases).values({
+                    userId,
+                    ebookId,
+                    amount: perEbookAmount,
+                    currency: (session.currency || "brl").toUpperCase(),
+                    stripeSessionId: `${session.id}_${ebookId}`,
+                    status: "completed",
+                  }).onDuplicateKeyUpdate({
+                    set: { status: "completed" }
+                  });
+                }
+
+                await db.insert(wilborConversionEvents).values({
+                  userId,
+                  eventType: "payment_success",
+                  metadata: JSON.stringify({
+                    sessionId: session.id,
+                    ebookIds,
+                    amount: session.amount_total,
+                    currency: session.currency,
+                    type: "ebook_bundle",
+                  }),
+                });
+
+                console.log(`[Stripe] ✅ Bundle (${ebookIds.join(",")}) entregue ao usuário ${userId}`);
               }
             } else {
               // FLUXO 2: ASSINATURA ou CRÉDITOS EXTRAS — Injeta créditos e atualiza status
