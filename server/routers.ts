@@ -17,7 +17,7 @@ import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRoutes";
 import { detectEbookIntent, buildEbookOffer } from "./ebookOfferDetector";
-import { generateMagicLink, verifyMagicLink, sendMagicLinkEmail } from "./_core/magicLink";
+
 
 export const appRouter = router({
   system: systemRouter,
