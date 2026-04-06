@@ -8,6 +8,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Sparkles, LogIn } from "lucide-react";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
+import { EbookOfferCard } from "@/components/EbookOfferCard";
 
 const CREDIT_TEXTS: Record<string, {
   remaining: (n: number, total: number) => string;
@@ -52,6 +53,7 @@ export function Chat() {
   ]);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [fingerprint, setFingerprint] = useState<string | null>(null);
+  const [ebookOffer, setEbookOffer] = useState<any>(null);
 
   // Initialize fingerprint
   useEffect(() => {
@@ -118,6 +120,10 @@ export function Chat() {
       
       // Capturar messageId para o sistema de rating
       const messageId = (response as any)?.messageId ?? null;
+
+      // Capturar oferta contextual de ebook (Regra do Mentor: DEPOIS da resposta)
+      const offer = (response as any)?.ebookOffer ?? null;
+      if (offer) setEbookOffer(offer);
 
       setMessages((prev) => [
         ...prev,
@@ -236,6 +242,14 @@ export function Chat() {
             isLoading={chatMutation.isPending}
           />
         </div>
+
+        {/* Oferta Contextual de Ebook (Regra do Mentor: DEPOIS da resposta útil) */}
+        {ebookOffer && (
+          <EbookOfferCard
+            key={ebookOffer.ebookId}
+            offer={ebookOffer}
+          />
+        )}
 
         {/* Upgrade nudge bar when 1-2 remaining */}
         {credits && !isPremium && remaining > 0 && remaining <= 2 && (

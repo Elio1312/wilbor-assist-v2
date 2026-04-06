@@ -15,6 +15,7 @@ import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRoutes";
+import { detectEbookIntent, buildEbookOffer } from "./ebookOfferDetector";
 
 export const appRouter = router({
   system: systemRouter,
@@ -234,7 +235,6 @@ export const appRouter = router({
         let aiMessageId: number | null = null;
         if (ctx.user?.id && response?.content) {
           try {
-            const userMsg = input.messages[input.messages.length - 1];
             const [insertedMsg] = await db.insert(wilborMessages).values({
               conversationId: 0, // sem conversa formal
               userId: ctx.user.id,
@@ -244,8 +244,42 @@ export const appRouter = router({
             aiMessageId = (insertedMsg as any)?.insertId ?? null;
           } catch (_) {}
         }
+
+        // ─── OFERTA CONTEXTUAL DE EBOOK (Regra do Mentor: DEPOIS da resposta útil) ───
+        // Detecta o idioma da conversa a partir do system prompt ou do último user message
+        const systemMsg = input.messages.find(m => m.role === "system");
+        const langMatch = systemMsg?.content?.match(/idioma[:\s]+([a-z]{2})/i) ||
+                          systemMsg?.content?.match(/language[:\s]+([a-z]{2})/i);
+        const detectedLang = langMatch?.[1] || "pt";
+
+        // Pega a última mensagem do usuário para detectar intent
+        const lastUserMsg = [...input.messages].reverse().find(m => m.role === "user");
+        const intent = lastUserMsg ? detectEbookIntent(lastUserMsg.content, detectedLang) : null;
+
+        // Só oferece se o usuário ainda não comprou o ebook (verificação rápida)
+        let ebookOffer = null;
+        if (intent && ctx.user?.id) {
+          // Verifica se já comprou este ebook
+          const { wilborEbookPurchases } = await import("../drizzle/schema");
+          const { eq: eqOp, and: andOp } = await import("drizzle-orm");
+          const ebookIdForLang = `${intent}-${detectedLang}`;
+          const existing = await db.select()
+            .from(wilborEbookPurchases)
+            .where(andOp(
+              eqOp(wilborEbookPurchases.userId, ctx.user.id),
+              eqOp(wilborEbookPurchases.ebookId, ebookIdForLang)
+            ))
+            .limit(1)
+            .catch(() => []);
+          if (existing.length === 0) {
+            ebookOffer = buildEbookOffer(intent, detectedLang);
+          }
+        } else if (intent && !ctx.user?.id) {
+          // Usuário anônimo: sempre mostra a oferta (sem verificação de compra)
+          ebookOffer = buildEbookOffer(intent, detectedLang);
+        }
         
-        return { ...response, messageId: aiMessageId };
+        return { ...response, messageId: aiMessageId, ebookOffer };
       }),
 
     // ⭐ FEEDBACK DE QUALIDADE (Termômetro dos 95% de Assertividade)
