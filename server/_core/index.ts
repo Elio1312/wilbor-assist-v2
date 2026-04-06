@@ -11,6 +11,7 @@ import { setupGoogleOAuth } from "./googleOAuth";
 import { ENV } from "./env";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
+import { runPendingMigrations } from "../runMigrations";
 import { serveStatic, setupVite } from "./vite";
 import { registerStripeRoutes } from "../stripeWebhook";
 import sitemapRouter from "../routes/sitemap";
@@ -35,6 +36,9 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  // Rodar migrations pendentes automaticamente
+  await runPendingMigrations();
+
   const app = express();
   const server = createServer(app);
   
