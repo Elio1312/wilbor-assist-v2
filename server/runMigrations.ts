@@ -3,10 +3,15 @@
  * Roda migrations pendentes automaticamente no startup do servidor
  * Pool (Manus) - 06/04/2026
  */
-import { db } from "./db";
+import { getDb } from "./db";
 import { sql } from "drizzle-orm";
 
 export async function runPendingMigrations() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Migration] Database not available, skipping migrations");
+    return;
+  }
   try {
     // Migration 1: Adicionar feedbackRating em wilborMessages
     await db.execute(sql`
