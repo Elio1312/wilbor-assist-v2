@@ -7,6 +7,7 @@ import { useI18n } from "@/contexts/i18n";
 import { getLoginUrl } from "@/const";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useState, useMemo, useEffect } from "react";
+import { getAnonymousSessionId } from "@/lib/anonymousSession";
 
 // CDN Image URLs
 const IMAGES = {
@@ -169,7 +170,15 @@ export default function Home() {
             </Button>
             <Button 
               className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
-              onClick={() => setLocation(user ? localePath("/dashboard") : localePath("/chat"))}
+              onClick={() => {
+                if (user) {
+                  setLocation(localePath("/dashboard"));
+                } else {
+                  // Anonymous session for non-logged-in users
+                  getAnonymousSessionId();
+                  setLocation(localePath("/chat"));
+                }
+              }}
             >
               {user ? t("nav.dashboard") : t("nav.enter")}
             </Button>
@@ -196,11 +205,9 @@ export default function Home() {
                 size="lg" 
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
                 onClick={() => {
-                  if (user) {
-                    setLocation(localePath("/chat"));
-                  } else {
-                    window.location.href = getLoginUrl();
-                  }
+                  // Anonymous session - no login required
+                  getAnonymousSessionId();
+                  setLocation(localePath("/chat"));
                 }}
               >
                 {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />

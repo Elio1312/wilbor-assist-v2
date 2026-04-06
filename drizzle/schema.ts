@@ -52,6 +52,21 @@ export const wilborUsers = mysqlTable("wilborUsers", {
 export type WilborUser = typeof wilborUsers.$inferSelect;
 export type InsertWilborUser = typeof wilborUsers.$inferInsert;
 
+// ==========================================
+// MAGIC LINK AUTHENTICATION
+// ==========================================
+export const magicLinkTokens = mysqlTable("magicLinkTokens", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull(),
+  token: varchar("token", { length: 255 }).notNull().unique(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  usedAt: timestamp("usedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type MagicLinkToken = typeof magicLinkTokens.$inferSelect;
+export type InsertMagicLinkToken = typeof magicLinkTokens.$inferInsert;
+
 // Sub-perfis de bebês (suporta gêmeos/trigêmeos)
 export const wilborBabies = mysqlTable("wilborBabies", {
   id: int("id").autoincrement().primaryKey(),
@@ -73,7 +88,8 @@ export type InsertWilborBaby = typeof wilborBabies.$inferInsert;
 
 export const wilborConversations = mysqlTable("wilborConversations", {
   id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull(),
+  userId: int("userId"),
+  anonymousSessionId: varchar("anonymousSessionId", { length: 255 }), // For anonymous users
   babyId: int("babyId"),
   category: mysqlEnum("category", ["sono", "colica", "salto", "alimentacao", "seguranca", "sos", "geral"]).notNull(),
   status: mysqlEnum("status", ["active", "completed"]).default("active").notNull(),
@@ -87,7 +103,8 @@ export type InsertWilborConversation = typeof wilborConversations.$inferInsert;
 export const wilborMessages = mysqlTable("wilborMessages", {
   id: int("id").autoincrement().primaryKey(),
   conversationId: int("conversationId").notNull(),
-  userId: int("userId").notNull(),
+  userId: int("userId"),
+  anonymousSessionId: varchar("anonymousSessionId", { length: 255 }), // For anonymous users
   role: mysqlEnum("role", ["user", "assistant", "system"]).notNull(),
   content: text("content").notNull(),
   // Rating de feedback (1-5 estrelas) - para medir assertividade da IA

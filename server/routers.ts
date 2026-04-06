@@ -7,6 +7,7 @@ import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } fro
 import { eq, and, gt, sql } from "drizzle-orm";
 import { wilborMessages } from "../drizzle/schema";
 import { COOKIE_NAME } from "@shared/const";
+import { getSessionCookieOptions } from "./_core/cookies";
 import { blogArticlesData } from "./blogArticles";
 import { simpleChatWithWilbor } from "./wilborChat";
 import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit } from "./wilborDb";
@@ -16,6 +17,7 @@ import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRoutes";
 import { detectEbookIntent, buildEbookOffer } from "./ebookOfferDetector";
+import { generateMagicLink, verifyMagicLink, sendMagicLinkEmail } from "./_core/magicLink";
 
 export const appRouter = router({
   system: systemRouter,

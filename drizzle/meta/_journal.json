@@ -43,6 +43,13 @@
       "when": 1775370053080,
       "tag": "0005_sweet_centennial",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1775512538836,
+      "tag": "0006_little_dark_beast",
+      "breakpoints": true
     }
   ]
 }

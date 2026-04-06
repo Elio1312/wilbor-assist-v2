@@ -7,7 +7,9 @@ import { eq } from "drizzle-orm";
 
 export function setupGoogleOAuth() {
   if (!ENV.googleClientId || !ENV.googleClientSecret) {
-    console.warn("Google OAuth credentials not found. Google login will not work.");
+    console.error("❌ Google OAuth credentials not found. GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET must be set.");
+    console.error("   GOOGLE_CLIENT_ID:", ENV.googleClientId ? "✓ set" : "✗ missing");
+    console.error("   GOOGLE_CLIENT_SECRET:", ENV.googleClientSecret ? "✓ set" : "✗ missing");
     return;
   }
 
@@ -23,12 +25,16 @@ export function setupGoogleOAuth() {
         try {
           const email = profile.emails?.[0]?.value;
           if (!email) {
+            console.error("[Google OAuth] No email in profile:", profile);
             return done(new Error("No email found in Google profile"));
           }
 
           // Check if user exists
           const dbConn = await db.getDb();
-          if (!dbConn) return done(new Error("Database not available"));
+          if (!dbConn) {
+            console.error("[Google OAuth] Database connection failed. DATABASE_URL:", process.env.DATABASE_URL ? "✓ set" : "✗ missing");
+            return done(new Error("Database not available"));
+          }
 
           const existing = await dbConn.select().from(wilborUsers).where(eq(wilborUsers.email, email)).limit(1);
           let user = existing[0];
