@@ -4,22 +4,16 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb, upsertUser, getUserByOpenId } from "./db";
 import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } from "../drizzle/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, gt, sql } from "drizzle-orm";
+import { wilborMessages } from "../drizzle/schema";
 import { COOKIE_NAME } from "@shared/const";
 import { blogArticlesData } from "./blogArticles";
-import { recipesData } from "./recipeData";
 import { simpleChatWithWilbor } from "./wilborChat";
-import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit, getBabiesByUser, createWilborBaby } from "./wilborDb";
+import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit } from "./wilborDb";
 import { stripeRouter } from "./stripeRoutes";
 import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
-import { shopRouter } from "./shopRouter";
-import { adminRouter } from "./adminRouter";
-import { babiesRouter } from "./routers/babiesRouter";
-import { identifyUpsellCategory } from "./upsellLogic";
-import { wilborEbooks } from "../drizzle/schema";
-import { desc } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
@@ -27,30 +21,6 @@ export const appRouter = router({
   currency: stripeMultiCurrencyRouter,
   whatsapp: whatsappRouter,
   instagram: instagramRouter,
-  shop: shopRouter,
-  admin: adminRouter,
-  babies: babiesRouter,
-
-  // 1. Dando vida ao Módulo "Meus Bebês" (Personalização 95%)
-  babiesLegacy: router({
-    list: protectedProcedure.query(async ({ ctx }) => {
-      return await getBabiesByUser(ctx.user.id);
-    }),
-    add: protectedProcedure
-      .input(z.object({
-        name: z.string(),
-        birthDate: z.string().optional(),
-        weightGrams: z.number().optional(),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        return await createWilborBaby({
-          userId: ctx.user.id,
-          name: input.name,
-          birthDate: input.birthDate ? new Date(input.birthDate) : null,
-          weightGrams: input.weightGrams,
-        });
-      }),
-  }),
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -179,26 +149,6 @@ export const appRouter = router({
         };
       }),
 
-    getRecommendedEbook: protectedProcedure
-      .input(z.object({ lastAssistantMessage: z.string() }))
-      .query(async ({ input, ctx }) => {
-        const category = identifyUpsellCategory(input.lastAssistantMessage);
-        if (!category) return null;
-
-        const db = await getDb();
-        if (!db) throw new Error("Database connection failed");
-
-        // Busca o e-book mais bem avaliado da categoria identificada
-        const [ebook] = await db
-          .select()
-          .from(wilborEbooks)
-          .where(eq(wilborEbooks.category, category))
-          .orderBy(desc(wilborEbooks.rating))
-          .limit(1);
-
-        return ebook || null;
-      }),
-
     chat: publicProcedure
       .input(z.object({
         messages: z.array(z.object({
@@ -245,10 +195,21 @@ export const appRouter = router({
               }).catch(() => {});
               throw new Error("CREDIT_LIMIT_REACHED");
             }
-            await db
+            // ⚡ DEDUÇÃO ATÔMICA: Previne race condition (double-spend)
+            // Usa SQL atômico para decrementar apenas se messagesUsed < monthlyLimit
+            const updateResult = await db
               .update(wilborUserCredits)
-              .set({ messagesUsed: credit.messagesUsed + 1 })
-              .where(eq(wilborUserCredits.userId, ctx.user.id));
+              .set({ messagesUsed: sql`${wilborUserCredits.messagesUsed} + 1` })
+              .where(
+                and(
+                  eq(wilborUserCredits.userId, ctx.user.id),
+                  gt(wilborUserCredits.monthlyLimit, wilborUserCredits.messagesUsed)
+                )
+              );
+            // Se rowsAffected === 0, os créditos acabaram no microssegundo anterior
+            if ((updateResult as any)[0]?.affectedRows === 0) {
+              throw new Error("CREDIT_LIMIT_REACHED");
+            }
           }
         } else {
           // Anonymous user logic with fingerprint
@@ -266,8 +227,83 @@ export const appRouter = router({
         }
 
         const response = await simpleChatWithWilbor(String(userId), input.messages);
-        return response;
+        
+        // Salvar mensagem da IA no banco para rastreamento de feedback
+        let aiMessageId: number | null = null;
+        if (ctx.user?.id && response?.content) {
+          try {
+            const userMsg = input.messages[input.messages.length - 1];
+            const [insertedMsg] = await db.insert(wilborMessages).values({
+              conversationId: 0, // sem conversa formal
+              userId: ctx.user.id,
+              role: "assistant",
+              content: typeof response.content === 'string' ? response.content : JSON.stringify(response.content),
+            });
+            aiMessageId = (insertedMsg as any)?.insertId ?? null;
+          } catch (_) {}
+        }
+        
+        return { ...response, messageId: aiMessageId };
       }),
+
+    // ⭐ FEEDBACK DE QUALIDADE (Termômetro dos 95% de Assertividade)
+    submitFeedback: protectedProcedure
+      .input(z.object({
+        messageId: z.number(),
+        rating: z.number().min(1).max(5),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        
+        await db
+          .update(wilborMessages)
+          .set({ feedbackRating: input.rating })
+          .where(eq(wilborMessages.id, input.messageId));
+        
+        // 🚨 ALARME CEO: Se rating <= 2, notificar imediatamente
+        if (input.rating <= 2) {
+          try {
+            const { notifyOwner } = await import("./_core/notification");
+            await notifyOwner({
+              title: `⚠️ Wilbor: Resposta com Nota Baixa (${input.rating}/5)`,
+              content: `Uma mãe avaliou uma resposta do Wilbor com ${input.rating} estrela(s). Verifique o painel de feedback para revisar a qualidade das respostas.`,
+            });
+          } catch (_) {}
+        }
+        
+        return { success: true };
+      }),
+
+    // 📊 ESTATÍSTICAS DE QUALIDADE (Dashboard CEO)
+    getQualityStats: protectedProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) throw new Error("Database connection failed");
+      
+      const stats = await db
+        .select({
+          avgRating: sql<number>`AVG(${wilborMessages.feedbackRating})`,
+          totalRated: sql<number>`COUNT(CASE WHEN ${wilborMessages.feedbackRating} IS NOT NULL THEN 1 END)`,
+          totalMessages: sql<number>`COUNT(*)`,
+          lowRatings: sql<number>`COUNT(CASE WHEN ${wilborMessages.feedbackRating} <= 2 THEN 1 END)`,
+        })
+        .from(wilborMessages)
+        .where(eq(wilborMessages.role, "assistant"));
+      
+      const result = stats[0];
+      const avgRating = Number(result?.avgRating ?? 0);
+      const alertCEO = avgRating > 0 && avgRating < 4.5;
+      
+      return {
+        avgRating: avgRating.toFixed(2),
+        totalRated: Number(result?.totalRated ?? 0),
+        totalMessages: Number(result?.totalMessages ?? 0),
+        lowRatings: Number(result?.lowRatings ?? 0),
+        assertivityPercent: avgRating > 0 ? ((avgRating / 5) * 100).toFixed(1) : '0',
+        alertCEO, // true se média < 4.5 estrelas
+        status: alertCEO ? '🚨 ABAIXO DA META' : '✅ DENTRO DA META',
+      };
+    }),
 
     checkExtraCredits: protectedProcedure.query(async ({ ctx }) => {
       const { canUseExtraCredits } = await import("./db");
@@ -458,65 +494,6 @@ export const appRouter = router({
             description: article.description,
             readTimeMinutes: article.readTimeMinutes,
           }));
-      }),
-  }),
-
-  recipes: router({
-    getRecipes: protectedProcedure
-      .input(z.object({ 
-        ageMonths: z.number().optional(),
-        category: z.string().optional()
-      }))
-      .query(async ({ ctx, input }) => {
-        // 1. Verificar status do usuário (Premium vs Free)
-        const db = await getDb();
-        if (!db) throw new Error("Database connection failed");
-        const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
-        const isPremium = credits[0]?.plan === "premium";
-
-        // 2. Filtrar receitas
-        let filtered = recipesData;
-        if (input.ageMonths !== undefined) {
-          filtered = filtered.filter(r => input.ageMonths! >= r.minAgeMonths && input.ageMonths! <= r.maxAgeMonths);
-        }
-        if (input.category) {
-          filtered = filtered.filter(r => r.category === input.category);
-        }
-
-        // 3. Aplicar Paywall: Se não for premium, oculta detalhes das receitas premium
-        return filtered.map(recipe => {
-          if (recipe.isPremium && !isPremium) {
-            return {
-              ...recipe,
-              ingredients: ["Conteúdo exclusivo para assinantes Premium"],
-              instructions: ["Assine o Wilbor Premium para acessar o passo a passo completo."],
-              nutritionalBenefits: "Disponível no Plano Premium",
-              locked: true
-            };
-          }
-          return { ...recipe, locked: false };
-        });
-      }),
-
-    getRecipe: protectedProcedure
-      .input(z.object({ slug: z.string() }))
-      .query(async ({ ctx, input }) => {
-        const recipe = recipesData.find(r => r.slug === input.slug);
-        if (!recipe) throw new Error("Recipe not found");
-
-        // Verificação de Premium para acesso individual
-        if (recipe.isPremium) {
-          const db = await getDb();
-          if (!db) throw new Error("Database connection failed");
-          const credits = await db.select().from(wilborUserCredits).where(eq(wilborUserCredits.userId, ctx.user.id)).limit(1);
-          const isPremium = credits[0]?.plan === "premium";
-
-          if (!isPremium) {
-            throw new Error("PREMIUM_REQUIRED");
-          }
-        }
-
-        return recipe;
       }),
   }),
 });

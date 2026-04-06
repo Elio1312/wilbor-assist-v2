@@ -42,7 +42,9 @@ const CREDIT_TEXTS: Record<string, {
 export function Chat() {
   const { t, locale } = useI18n();
   const { user, loading: authLoading } = useAuth();
-  const [messages, setMessages] = useState<Message[]>([
+  // Tipo estendido para incluir messageId do backend
+  type WilborMsg = Message & { messageId?: number | null };
+  const [messages, setMessages] = useState<WilborMsg[]>([
     {
       role: "assistant",
       content: t("chat.welcome") || "Olá! Sou o Wilbor, seu assistente neonatal IA. Como posso ajudar você e seu bebê hoje?",
@@ -113,10 +115,13 @@ export function Chat() {
         typeof response === "string"
           ? response
           : (response as any).content || (response as any).message || "Desculpe, não consegui processar sua pergunta.";
+      
+      // Capturar messageId para o sistema de rating
+      const messageId = (response as any)?.messageId ?? null;
 
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: responseText },
+        { role: "assistant", content: responseText, messageId },
       ]);
 
       // Refresh credits after each message

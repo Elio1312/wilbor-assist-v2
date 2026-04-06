@@ -90,6 +90,8 @@ export const wilborMessages = mysqlTable("wilborMessages", {
   userId: int("userId").notNull(),
   role: mysqlEnum("role", ["user", "assistant", "system"]).notNull(),
   content: text("content").notNull(),
+  // Rating de feedback (1-5 estrelas) - para medir assertividade da IA
+  feedbackRating: int("feedbackRating"), // null = sem feedback, 1-5 = avaliação da mãe
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
