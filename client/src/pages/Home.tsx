@@ -4,6 +4,7 @@ import { Link, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useI18n } from "@/contexts/i18n";
+import { getLoginUrl } from "@/const";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useState, useMemo, useEffect } from "react";
 
@@ -194,7 +195,13 @@ export default function Home() {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
-                onClick={() => setLocation(localePath("/chat"))}
+                onClick={() => {
+                  if (user) {
+                    setLocation(localePath("/chat"));
+                  } else {
+                    window.location.href = getLoginUrl();
+                  }
+                }}
               >
                 {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
