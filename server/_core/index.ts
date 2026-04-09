@@ -7,7 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
-import { setupGoogleOAuth } from "./googleOAuth";
+// import { setupGoogleOAuth } from "./googleOAuth"; // Removed: using anonymous login instead
 import { ENV } from "./env";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
@@ -67,17 +67,17 @@ async function startServer() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  setupGoogleOAuth();
+  // setupGoogleOAuth(); // Removed: using anonymous login instead
 
-  // Google OAuth Routes
-  app.get("/api/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-  app.get(
-    "/api/auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login?error=google_failed" }),
-    (req, res) => {
-      res.redirect("/chat");
-    }
-  );
+  // Google OAuth Routes (Removed - using anonymous login)
+  // app.get("/api/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+  // app.get(
+  //   "/api/auth/google/callback",
+  //   passport.authenticate("google", { failureRedirect: "/login?error=google_failed" }),
+  //   (req, res) => {
+  //     res.redirect("/chat");
+  //   }
+  // );
   app.get("/api/auth/logout", (req, res) => {
     req.logout(() => {
       res.redirect("/");
