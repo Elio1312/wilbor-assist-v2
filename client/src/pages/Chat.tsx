@@ -9,6 +9,7 @@ import { getLoginUrl } from "@/const";
 import { Sparkles, LogIn } from "lucide-react";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { EbookOfferCard } from "@/components/EbookOfferCard";
+import { getAnonymousSessionId } from "@/lib/anonymousSession";
 
 const CREDIT_TEXTS: Record<string, {
   remaining: (n: number, total: number) => string;
@@ -21,21 +22,21 @@ const CREDIT_TEXTS: Record<string, {
     remaining: (n, t) => `${n} de ${t} consultas gratuitas`,
     unlimited: "Consultas ilimitadas",
     login_prompt: "Faça login para usar o chat",
-    login_cta: "Entrar com Google",
+    login_cta: "Fazer login",
     anon_limit_reached: "Limite de consultas anônimas atingido. Faça login para continuar!",
   },
   en: {
     remaining: (n, t) => `${n} of ${t} free consultations`,
     unlimited: "Unlimited consultations",
     login_prompt: "Sign in to use the chat",
-    login_cta: "Sign In with Google",
+    login_cta: "Sign In",
     anon_limit_reached: "Anonymous consultation limit reached. Sign in to continue!",
   },
   es: {
     remaining: (n, t) => `${n} de ${t} consultas gratuitas`,
     unlimited: "Consultas ilimitadas",
     login_prompt: "Inicia sesión para usar el chat",
-    login_cta: "Entrar con Google",
+    login_cta: "Iniciar sesión",
     anon_limit_reached: "Límite de consultas anónimas alcanzado. ¡Inicia sesión para continuar!",
   },
 };
@@ -55,13 +56,20 @@ export function Chat() {
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [ebookOffer, setEbookOffer] = useState<any>(null);
 
-  // Initialize fingerprint
+  // Initialize fingerprint or use anonymous session ID as fallback
   useEffect(() => {
     const setFp = async () => {
-      const fpPromise = FingerprintJS.load();
-      const fp = await fpPromise;
-      const result = await fp.get();
-      setFingerprint(result.visitorId);
+      try {
+        const fpPromise = FingerprintJS.load();
+        const fp = await fpPromise;
+        const result = await fp.get();
+        setFingerprint(result.visitorId);
+      } catch (error) {
+        console.warn('[Chat] FingerprintJS failed, using anonymous session ID:', error);
+        // Fallback to anonymous session ID
+        const anonId = getAnonymousSessionId();
+        setFingerprint(anonId);
+      }
     };
     setFp();
   }, []);
