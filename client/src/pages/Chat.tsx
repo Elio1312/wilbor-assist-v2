@@ -129,8 +129,26 @@ export function Chat() {
     setMessages(newMessages);
 
     try {
+      // Build messages array with system prompt for the backend
+      const systemPrompt = {
+        role: "system" as const,
+        content: "Você é o Wilbor, um assistente neonatal IA especializado em cuidados com recém-nascidos. Responda em português, com base em protocolos SBP, OMS e AAP. Seja empático, prático e sempre priorize a segurança do bebê."
+      };
+      
+      // Filter out the welcome message (assistant role) from the display messages
+      // and include only user/assistant messages for the API
+      const messagesForApi = newMessages
+        .filter(m => m.role !== "assistant" || m.content !== (t("chat.welcome") || "Olá! Sou o Wilbor, seu assistente neonatal IA. Como posso ajudar você e seu bebê hoje?"))
+        .map(m => ({
+          role: m.role as "system" | "user" | "assistant",
+          content: m.content
+        }));
+      
+      // Add system prompt at the beginning
+      const messagesWithSystem = [systemPrompt, ...messagesForApi];
+      
       const response = await chatMutation.mutateAsync({
-        messages: newMessages,
+        messages: messagesWithSystem,
         fingerprint: fingerprint || undefined,
       });
 
