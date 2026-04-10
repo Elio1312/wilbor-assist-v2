@@ -254,18 +254,17 @@ export const appRouter = router({
           userId = `anon-${input.fingerprint}`;
         }
 
-        const response = await simpleChatWithWilbor(String(userId), sanitizedMessages);
-
+        const { content: responseText, imageUrl: responseImageUrl } = await simpleChatWithWilbor(String(userId), sanitizedMessages);
+        
+        // Salvar mensagem da IA no banco para rastreamento de feedback)
         let aiMessageId: number | null = null;
-        if (ctx.user?.id && response?.content) {
+        if (ctx.user?.id && responseText) {
           try {
             const [insertedMsg] = await db.insert(wilborMessages).values({
               conversationId: 0,
               userId: ctx.user.id,
               role: "assistant",
-              content: typeof response.content === "string"
-                ? response.content
-                : JSON.stringify(response.content),
+              content: responseText,
             });
             aiMessageId = (insertedMsg as any)?.insertId ?? null;
           } catch (insertErr) {
@@ -300,8 +299,7 @@ export const appRouter = router({
         } else if (intent && !ctx.user?.id) {
           ebookOffer = buildEbookOffer(intent, detectedLang);
         }
-
-        return { ...response, messageId: aiMessageId, ebookOffer };
+        return { content: responseText, messageId: aiMessageId, ebookOffer, imageUrl: responseImageUrl ?? null };)
       }),
 
     submitFeedback: protectedProcedure
