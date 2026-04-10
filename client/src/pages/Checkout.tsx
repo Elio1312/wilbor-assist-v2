@@ -34,8 +34,8 @@ export default function Checkout() {
   });
 
   const handleSubscribe = () => {
-    // Passamos apenas o plano, o backend decide o preço/moeda com base no IP/User
-    checkout.mutate({ planId: selectedPlan });
+    const amount = selectedPlan === "premium" ? 29 : 9.9;
+    checkout.mutate({ amount, currency: "brl" });
   };
 
   const features = t("paywall.features").split(",");

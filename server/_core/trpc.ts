@@ -31,7 +31,10 @@ export const adminProcedure = t.procedure.use(
   t.middleware(async opts => {
     const { ctx, next } = opts;
 
-    if (!ctx.user || ctx.user.role !== 'admin') {
+    const adminEmails = ["elio@wilbor.com", "admin@wilbor.com"];
+    const userEmail = ctx.user?.email ?? "";
+
+    if (!ctx.user || !adminEmails.includes(userEmail)) {
       throw new TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
     }
 

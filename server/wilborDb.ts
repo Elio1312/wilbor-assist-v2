@@ -18,7 +18,7 @@ import { getDb } from "./db";
 // WILBOR USER OPERATIONS (Otimização ROI)
 // ==========================================
 
-export async function createWilborUser(data: { email: string; name: string; whatsapp?: string; city?: string; state?: string; language?: "pt" | "en" | "es" | "fr" | "de" }) {
+export async function createWilborUser(data: { email: string; name: string; whatsapp?: string; city?: string; state?: string; language?: "pt" | "en" | "es" }) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -83,7 +83,7 @@ export async function getWilborUserById(id: number) {
   return user;
 }
 
-export async function updateWilborUserLanguage(userId: number, language: "pt" | "en" | "es" | "fr" | "de") {
+export async function updateWilborUserLanguage(userId: number, language: "pt" | "en" | "es") {
   const db = await getDb();
   if (!db) return;
   await db.update(wilborUsers)

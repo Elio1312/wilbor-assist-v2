@@ -37,7 +37,7 @@ export function SOSButton({ onEmergency, disabled = false }: SOSButtonProps) {
       if (!creditsCheck.data?.canUse) {
         setShowWarning(true);
         if (onEmergency) {
-          onEmergency(creditsCheck.data?.message || txt.errorMsg);
+          onEmergency(txt.errorMsg);
         }
         setIsLoading(false);
         return;
@@ -91,7 +91,7 @@ export function SOSButton({ onEmergency, disabled = false }: SOSButtonProps) {
       {showWarning && !canUse && (
         <div className="rounded-2xl p-4" style={{ backgroundColor: "rgba(255,179,71,0.1)", borderLeft: "4px solid #FF8C42" }}>
           <p className="text-sm font-semibold" style={{ color: "#D6336C" }}>
-            {checkCredits.data?.message}
+            {txt.errorMsg}
           </p>
           <p className="text-xs mt-2" style={{ color: "#666" }}>
             {txt.warningExtra}

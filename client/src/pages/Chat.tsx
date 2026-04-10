@@ -166,7 +166,9 @@ export function Chat() {
 
   const isPremium = user && credits?.plan !== "free";
   const remaining = credits?.remaining ?? 0;
-  const monthlyLimit = credits?.limit ?? credits?.monthlyLimit ?? 5;
+  const monthlyLimit = credits
+    ? ("limit" in credits ? credits.limit : "monthlyLimit" in credits ? credits.monthlyLimit : 5)
+    : 5;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-white">

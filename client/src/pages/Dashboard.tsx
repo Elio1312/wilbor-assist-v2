@@ -32,9 +32,9 @@ export default function Dashboard() {
   // 2. Busca de Créditos e Status (ROI de Vendas)
   const credits = trpc.wilbor.getCredits.useQuery();
   const chatMutation = trpc.wilbor.chat.useMutation({
-    onSuccess: (response: string) => {
-      setMessages((prev) => [...prev, { role: "assistant", content: response }]);
-      setLastAssistantMessage(response);
+    onSuccess: (response) => {
+      setMessages((prev) => [...prev, { role: "assistant", content: response.content }]);
+      setLastAssistantMessage(response.content);
       credits.refetch(); // Atualiza saldo imediatamente após resposta
     }
   });

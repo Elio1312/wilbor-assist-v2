@@ -1,4 +1,3 @@
-import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
@@ -9,13 +8,15 @@ import { wilborMessages } from "../drizzle/schema";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { blogArticlesData } from "./blogArticles";
-import { simpleChatWithWilbor } from "./wilborChat";
+import { sanitizeChatMessages, simpleChatWithWilbor } from "./wilborChat";
 import { getAnonymousUsage, incrementAnonymousUsage, checkAnonymousLimit } from "./wilborDb";
 import { stripeRouter } from "./stripeRoutes";
 import { stripeMultiCurrencyRouter } from "./stripeMultiCurrency";
 import { whatsappRouter } from "./whatsappIntegration";
 import { instagramRouter } from "./instagramIntegration";
 import { shopRouter } from "./shopRoutes";
+import { adminRouter } from "./adminRouter";
+import { recipesRouter } from "./recipesRouter";
 import { detectEbookIntent, buildEbookOffer } from "./ebookOfferDetector";
 
 
@@ -26,6 +27,8 @@ export const appRouter = router({
   whatsapp: whatsappRouter,
   instagram: instagramRouter,
   shop: shopRouter,
+  admin: adminRouter,
+  recipes: recipesRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -163,6 +166,13 @@ export const appRouter = router({
         fingerprint: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
+        const sanitizedMessages = sanitizeChatMessages(input.messages);
+        const lastUserMsg = [...sanitizedMessages].reverse().find((m) => m.role === "user");
+
+        if (!lastUserMsg) {
+          throw new Error("EMPTY_CHAT_MESSAGES");
+        }
+
         const db = await getDb();
         if (!db) throw new Error("Database connection failed");
 
@@ -231,7 +241,7 @@ export const appRouter = router({
           userId = `anon-${input.fingerprint}`;
         }
 
-        const response = await simpleChatWithWilbor(String(userId), input.messages);
+        const response = await simpleChatWithWilbor(String(userId), sanitizedMessages);
         
         // Salvar mensagem da IA no banco para rastreamento de feedback
         let aiMessageId: number | null = null;
@@ -249,14 +259,13 @@ export const appRouter = router({
 
         // ─── OFERTA CONTEXTUAL DE EBOOK (Regra do Mentor: DEPOIS da resposta útil) ───
         // Detecta o idioma da conversa a partir do system prompt ou do último user message
-        const systemMsg = input.messages.find(m => m.role === "system");
+        const systemMsg = sanitizedMessages.find(m => m.role === "system");
         const langMatch = systemMsg?.content?.match(/idioma[:\s]+([a-z]{2})/i) ||
                           systemMsg?.content?.match(/language[:\s]+([a-z]{2})/i);
         const detectedLang = langMatch?.[1] || "pt";
 
         // Pega a última mensagem do usuário para detectar intent
-        const lastUserMsg = [...input.messages].reverse().find(m => m.role === "user");
-        const intent = lastUserMsg ? detectEbookIntent(lastUserMsg.content, detectedLang) : null;
+        const intent = detectEbookIntent(lastUserMsg.content, detectedLang);
 
         // Só oferece se o usuário ainda não comprou o ebook (verificação rápida)
         let ebookOffer = null;

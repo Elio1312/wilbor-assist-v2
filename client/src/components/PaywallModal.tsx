@@ -92,7 +92,7 @@ export function PaywallModal({ open, onClose }: PaywallModalProps) {
 
   const handleClose = () => {
     // 2. Registro de Hesitação para Remarketing (ROI)
-    trackEvent.mutate({ eventType: "paywall_closed" });
+    trackEvent.mutate({ eventType: "paywall_shown" });
     onClose();
   };
 

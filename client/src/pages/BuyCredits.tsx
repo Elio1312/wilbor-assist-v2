@@ -173,7 +173,7 @@ export default function BuyCredits() {
     setPaymentStatus("processing");
     setSelectedOption(amountReais.toString());
     try {
-      const result = await createCheckout.mutateAsync({ amountReais });
+      const result = await createCheckout.mutateAsync({ amount: amountReais, currency: "brl" });
       if (result.success && result.url) {
         window.location.href = result.url;
       } else {
