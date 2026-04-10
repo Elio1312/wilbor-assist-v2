@@ -209,13 +209,22 @@ const normalizeToolChoice = (
   return toolChoice;
 };
 
-const resolveApiUrl = () =>
-  ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0
-    ? `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions`
-    : "https://forge.manus.im/v1/chat/completions";
+const resolveApiUrl = () => {
+  // 1. Prioridade: BUILT_IN_FORGE_API_URL (ambiente Manus)
+  if (ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0) {
+    return `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions`;
+  }
+  // 2. Fallback: OpenAI diretamente (para Koyeb e outros deploys externos)
+  return "https://api.openai.com/v1/chat/completions";
+};
+
+const resolveApiKey = () => {
+  // Usa forgeApiKey se disponível, senão usa OPENAI_API_KEY
+  return ENV.forgeApiKey || ENV.openaiApiKey;
+};
 
 const assertApiKey = () => {
-  if (!ENV.forgeApiKey) {
+  if (!ENV.forgeApiKey && !ENV.openaiApiKey) {
     throw new Error("OPENAI_API_KEY is not configured");
   }
 };
@@ -280,7 +289,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   } = params;
 
   const payload: Record<string, unknown> = {
-    model: "gemini-2.5-flash",
+    model: ENV.forgeApiKey ? "gemini-2.5-flash" : "gpt-4o-mini",
     messages: messages.map(normalizeMessage),
   };
 
@@ -296,9 +305,12 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     payload.tool_choice = normalizedToolChoice;
   }
 
-  payload.max_tokens = 32768
-  payload.thinking = {
-    "budget_tokens": 128
+  // gemini-2.5-flash suporta thinking; gpt-4o-mini não
+  if (ENV.forgeApiKey) {
+    payload.max_tokens = 32768;
+    payload.thinking = { budget_tokens: 128 };
+  } else {
+    payload.max_tokens = 4096;
   }
 
   const normalizedResponseFormat = normalizeResponseFormat({
@@ -316,7 +328,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${ENV.forgeApiKey}`,
+      authorization: `Bearer ${resolveApiKey()}`,
     },
     body: JSON.stringify(payload),
   });
