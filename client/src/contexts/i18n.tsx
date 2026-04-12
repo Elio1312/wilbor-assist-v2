@@ -13,6 +13,7 @@ const I18nContext = createContext<I18nContextType | null>(null);
 
 // Detect locale from URL path prefix: /en/... /es/... /fr/... /de/... or default pt
 function detectLocaleFromPath(): Locale {
+  if (typeof window === "undefined") return "pt";
   const path = window.location.pathname;
   if (path.startsWith("/en")) return "en";
   if (path.startsWith("/es")) return "es";
@@ -1133,16 +1134,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
-    // Update URL to reflect locale
-    const currentPath = window.location.pathname;
-    let basePath = currentPath;
-    // Strip existing locale prefix
-    if (basePath.startsWith("/en")) basePath = basePath.slice(3) || "/";
-    if (basePath.startsWith("/es")) basePath = basePath.slice(3) || "/";
-    if (basePath.startsWith("/fr")) basePath = basePath.slice(3) || "/";
-    if (basePath.startsWith("/de")) basePath = basePath.slice(3) || "/";
-    
-    const newPath = newLocale === "pt" ? basePath : `/${newLocale}${basePath === "/" ? "" : basePath}`;
+    const basePath = window.location.pathname.replace(/^\/(en|es|fr|de)/, "") || "/";
+    const newPath = newLocale === "pt"
+      ? basePath
+      : `/${newLocale}${basePath === "/" ? "" : basePath}`;
     window.history.pushState({}, "", newPath);
   }, []);
 
@@ -1165,8 +1160,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   // Always use current locale from URL, not from state
   const localePath = useCallback((path: string): string => {
     const currentLocale = detectLocaleFromPath();
-    if (currentLocale === "pt") return path;
-    return `/${currentLocale}${path === "/" ? "" : path}`;
+    const cleanPath = path.startsWith("/") ? path : `/${path}`;
+    if (currentLocale === "pt") return cleanPath;
+    return `/${currentLocale}${cleanPath === "/" ? "" : cleanPath}`;
   }, []);
 
 

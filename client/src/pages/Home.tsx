@@ -168,20 +168,28 @@ export default function Home() {
             >
               {t("nav.blog")}
             </Button>
-            <Button 
-              className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
-              onClick={() => {
-                if (user) {
-                  setLocation(localePath("/dashboard"));
-                } else {
-                  // Anonymous session for non-logged-in users
-                  getAnonymousSessionId();
-                  setLocation(localePath("/chat"));
-                }
-              }}
-            >
-              {user ? t("nav.dashboard") : t("nav.enter")}
-            </Button>
+            {user ? (
+              <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
+                <a href={localePath("/dashboard")}>{t("nav.dashboard")}</a>
+              </Button>
+            ) : (
+              <>
+                <Button asChild variant="ghost" className="hidden sm:inline-flex">
+                  <a href={getLoginUrl()}>{t("nav.enter")}</a>
+                </Button>
+                <Button
+                  asChild
+                  className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
+                >
+                  <a
+                    href={localePath("/chat")}
+                    onClick={() => getAnonymousSessionId()}
+                  >
+                    {t("nav.try_free")}
+                  </a>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -201,16 +209,17 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
+              <Button
+                asChild
+                size="lg"
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
-                onClick={() => {
-                  // Anonymous session - no login required
-                  getAnonymousSessionId();
-                  setLocation(localePath("/chat"));
-                }}
               >
-                {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
+                <a
+                  href={localePath("/chat")}
+                  onClick={() => getAnonymousSessionId()}
+                >
+                  {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
+                </a>
               </Button>
               <WhatsAppButton 
                 phoneNumber="+55 12 997999971"

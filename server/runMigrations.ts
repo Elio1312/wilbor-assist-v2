@@ -9,22 +9,18 @@
 import { getDb } from "./db";
 import { sql } from "drizzle-orm";
 
-async function columnExists(db: any, table: string, column: string): Promise<boolean> {
-  try {
-    const result = await db.execute(sql`
-      SELECT COUNT(*) as cnt
-      FROM information_schema.COLUMNS
-      WHERE TABLE_SCHEMA = DATABASE()
-        AND TABLE_NAME = ${table}
-        AND COLUMN_NAME = ${column}
-    `);
-    // Drizzle retorna array de rows
-    const rows = Array.isArray(result) ? result[0] : result?.rows ?? [];
-    const count = Number(rows?.[0]?.cnt ?? rows?.[0]?.["COUNT(*)"] ?? 0);
-    return count > 0;
-  } catch {
-    return false;
-  }
+function isIgnorableMigrationError(err: any): boolean {
+  const message = String(err?.message || err || "").toLowerCase();
+
+  return (
+    message.includes("duplicate column") ||
+    message.includes("already exists") ||
+    message.includes("duplicate_column") ||
+    message.includes("doesn't exist") ||
+    message.includes("does not exist") ||
+    message.includes("unknown table") ||
+    message.includes("relation")
+  );
 }
 
 export async function runPendingMigrations() {
@@ -35,26 +31,27 @@ export async function runPendingMigrations() {
   }
 
   // Migration 1: Adicionar feedbackRating em wilborMessages
-  try {
-    const exists = await columnExists(db, "wilborMessages", "feedbackRating");
-    if (!exists) {
-      await db.execute(sql`
-        ALTER TABLE wilborMessages 
-        ADD COLUMN feedbackRating INT NULL
-      `);
-      console.log("[Migration] feedbackRating adicionado com sucesso");
-    } else {
-      console.log("[Migration] feedbackRating já existe, pulando...");
-    }
-  } catch (err: any) {
-    // Fallback: se a coluna já existir por qualquer razão, ignora
-    if (
-      err?.message?.includes("Duplicate column") ||
-      err?.message?.includes("already exists")
-    ) {
-      console.log("[Migration] feedbackRating já existe (fallback), pulando...");
-    } else {
-      console.error("[Migration] Erro ao adicionar feedbackRating:", err?.message);
+  const migrationStatements = [
+    `ALTER TABLE wilborMessages ADD COLUMN feedbackRating INT NULL`,
+    `ALTER TABLE "wilborMessages" ADD COLUMN "feedbackRating" integer`,
+    `ALTER TABLE "wilborMessages" ADD COLUMN IF NOT EXISTS "feedbackRating" integer`,
+  ];
+
+  for (const statement of migrationStatements) {
+    try {
+      await db.execute(sql.raw(statement));
+      console.log(`[Migration] feedbackRating garantido com sucesso via: ${statement}`);
+      return;
+    } catch (err: any) {
+      if (isIgnorableMigrationError(err)) {
+        console.warn(`[Migration] feedbackRating não aplicado com '${statement}': ${err?.message || err}`);
+        continue;
+      }
+
+      console.error("[Migration] Erro inesperado ao adicionar feedbackRating:", err?.message || err);
+      return;
     }
   }
+
+  console.warn("[Migration] feedbackRating não pôde ser garantido automaticamente. Execute o schema/migration do ambiente antes do deploy final.");
 }
