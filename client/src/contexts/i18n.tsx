@@ -6,7 +6,7 @@ interface I18nContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   t: (key: string) => string;
-  localePath: (path: string) => string;
+  localePath: (path?: string | null) => string;
 }
 
 const I18nContext = createContext<I18nContextType | null>(null);
@@ -1153,13 +1153,26 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     return translations[currentLocale]?.[key] || translations.pt[key] || key;
   }, []);
 
-  // CORREÇÃO CRÍTICA: Normalização forçada de caminhos para evitar botões mortos
-  const localePath = useCallback((path: string): string => {
+  // CORREÇÃO CRÍTICA: Blindagem total para nunca gerar href vazio, inválido ou com locale duplicado
+  const localePath = useCallback((path?: string | null): string => {
     const currentLocale = detectLocaleFromPath();
-    const safePath = path || "/";
-    const cleanPath = safePath.startsWith("/") ? safePath : `/${safePath}`;
-    if (currentLocale === "pt") return cleanPath;
-    return `/${currentLocale}${cleanPath === "/" ? "" : cleanPath}`;
+    const rawPath = typeof path === "string" ? path.trim() : "";
+
+    if (!rawPath || rawPath === "#") {
+      return currentLocale === "pt" ? "/" : `/${currentLocale}`;
+    }
+
+    const withLeadingSlash = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+    const withoutLocalePrefix = withLeadingSlash.replace(/^\/(en|es|fr|de)(?=\/|$)/, "");
+    const normalizedPath = withoutLocalePrefix || "/";
+
+    if (currentLocale === "pt") {
+      return normalizedPath;
+    }
+
+    return normalizedPath === "/"
+      ? `/${currentLocale}`
+      : `/${currentLocale}${normalizedPath}`;
   }, []);
 
 

@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Heart, ArrowRight, Check, ChevronDown, Brain, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Droplets, Apple, Shield, Mail } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useI18n } from "@/contexts/i18n";
 import { getLoginUrl } from "@/const";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
 
 // CDN Image URLs
@@ -23,6 +23,7 @@ const IMAGES = {
 export default function Home() {
   const { data: user } = trpc.auth.me.useQuery();
   const { t, locale, localePath } = useI18n();
+  const [, setLocation] = useLocation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   // 1. Otimização: FAQ carregado sob demanda por idioma (Performance)
@@ -177,15 +178,14 @@ export default function Home() {
                   <a href={getLoginUrl()}>{t("nav.enter")}</a>
                 </Button>
                 <Button
-                  asChild
                   className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getAnonymousSessionId();
+                    setLocation(localePath("/chat"));
+                  }}
                 >
-                  <a
-                    href={localePath("/chat")}
-                    onClick={() => getAnonymousSessionId()}
-                  >
-                    {t("nav.try_free")}
-                  </a>
+                  {t("nav.try_free")}
                 </Button>
               </>
             )}
@@ -209,16 +209,15 @@ export default function Home() {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
-                asChild
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
+                onClick={(e) => {
+                  e.preventDefault();
+                  getAnonymousSessionId();
+                  setLocation(localePath("/chat"));
+                }}
               >
-                <a
-                  href={localePath("/chat")}
-                  onClick={() => getAnonymousSessionId()}
-                >
-                  {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
-                </a>
+                {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <WhatsAppButton 
                 phoneNumber="+55 12 997999971"
@@ -287,10 +286,14 @@ export default function Home() {
                 ))}
               </div>
               <Button 
-                asChild
                 className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg"
+                onClick={(e) => {
+                  e.preventDefault();
+                  getAnonymousSessionId();
+                  setLocation(localePath("/chat"));
+                }}
               >
-                <a href={localePath("/chat")}>{t("mother.cta")}</a>
+                {t("mother.cta")}
               </Button>
             </div>
             <div className="relative">
@@ -334,12 +337,15 @@ export default function Home() {
                 </div>
                 <p className="text-gray-600 mb-8">{plan.desc}</p>
                 <Button 
-                  asChild
                   className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
                     plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
                   }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLocation(localePath("/checkout"));
+                  }}
                 >
-                  <a href={localePath("/checkout")}>{t("pricing.cta")}</a>
+                  {t("pricing.cta")}
                 </Button>
                 <ul className="space-y-4">
                   {plan.features.map((f, j) => (
