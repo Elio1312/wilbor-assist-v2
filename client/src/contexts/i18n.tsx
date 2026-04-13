@@ -15,6 +15,7 @@ const I18nContext = createContext<I18nContextType | null>(null);
 function detectLocaleFromPath(): Locale {
   if (typeof window === "undefined") return "pt";
   const path = window.location.pathname;
+  if (path === "/pt" || path.startsWith("/pt/")) return "pt";
   if (path.startsWith("/en")) return "en";
   if (path.startsWith("/es")) return "es";
   if (path.startsWith("/fr")) return "fr";
@@ -1134,9 +1135,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
-    const basePath = window.location.pathname.replace(/^\/(en|es|fr|de)/, "");
+    const basePath = window.location.pathname.replace(/^\/(pt|en|es|fr|de)(?=\/|$)/, "") || "/";
     const newPath = newLocale === "pt"
-      ? (basePath || "/")
+      ? basePath
       : `/${newLocale}${basePath === "/" ? "" : basePath}`;
     window.history.pushState({}, "", newPath);
   }, []);
@@ -1163,7 +1164,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     }
 
     const withLeadingSlash = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
-    const withoutLocalePrefix = withLeadingSlash.replace(/^\/(en|es|fr|de)(?=\/|$)/, "");
+    const withoutLocalePrefix = withLeadingSlash.replace(/^\/(pt|en|es|fr|de)(?=\/|$)/, "");
     const normalizedPath = withoutLocalePrefix || "/";
 
     if (currentLocale === "pt") {
