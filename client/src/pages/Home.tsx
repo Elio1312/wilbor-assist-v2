@@ -141,6 +141,17 @@ export default function Home() {
     },
   ];
 
+  const chatHref = localePath("/chat");
+  const checkoutHref = localePath("/checkout");
+
+  const warmAnonymousSession = () => {
+    try {
+      getAnonymousSessionId();
+    } catch (error) {
+      console.warn("Failed to initialize anonymous session before navigation", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* WhatsApp Floating Button */}
@@ -176,14 +187,8 @@ export default function Home() {
                 <Button asChild variant="ghost" className="hidden sm:inline-flex">
                   <a href={getLoginUrl()}>{t("nav.enter")}</a>
                 </Button>
-                <Button
-                  className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
-                  onClick={() => {
-                    getAnonymousSessionId();
-                    window.location.href = localePath("/chat");
-                  }}
-                >
-                  {t("nav.try_free")}
+                <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
+                  <a href={chatHref} onClick={warmAnonymousSession}>{t("nav.try_free")}</a>
                 </Button>
               </>
             )}
@@ -207,14 +212,13 @@ export default function Home() {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
+                asChild
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
-                onClick={() => {
-                  getAnonymousSessionId();
-                  window.location.href = localePath("/chat");
-                }}
               >
-                {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
+                <a href={chatHref} onClick={warmAnonymousSession}>
+                  {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
+                </a>
               </Button>
               <WhatsAppButton 
                 phoneNumber="+55 12 997999971"
@@ -282,14 +286,8 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <Button 
-                className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg"
-                onClick={() => {
-                  getAnonymousSessionId();
-                  window.location.href = localePath("/chat");
-                }}
-              >
-                {t("mother.cta")}
+              <Button asChild className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg">
+                <a href={chatHref} onClick={warmAnonymousSession}>{t("mother.cta")}</a>
               </Button>
             </div>
             <div className="relative">
@@ -332,15 +330,10 @@ export default function Home() {
                   {plan.period && <span className="text-gray-500 ml-2">{plan.period}</span>}
                 </div>
                 <p className="text-gray-600 mb-8">{plan.desc}</p>
-                <Button 
-                  className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
-                    plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
-                  }`}
-                  onClick={() => {
-                    window.location.href = localePath("/checkout");
-                  }}
-                >
-                  {t("pricing.cta")}
+                <Button asChild className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
+                  plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
+                }`}>
+                  <a href={checkoutHref}>{t("pricing.cta")}</a>
                 </Button>
                 <ul className="space-y-4">
                   {plan.features.map((f, j) => (
