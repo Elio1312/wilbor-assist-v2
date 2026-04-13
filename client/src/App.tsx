@@ -43,8 +43,12 @@ function Router() {
         Rotas Dinâmicas (Otimização Gemini): 
         O parâmetro :lang? permite que uma única rota atenda a todos os idiomas.
         Ex: /chat, /en/chat, /fr/chat agora usam o mesmo bloco de código.
+
+        Importante: a Home precisa vir depois das rotas específicas.
+        Caso contrário, caminhos curtos do PT sem prefixo, como /chat e /checkout,
+        são interpretados como se fossem apenas o parâmetro :lang e a aplicação
+        volta para a Home em vez de abrir a página correta.
       */}
-      <Route path="/:lang?/" component={Home} />
       <Route path="/:lang?/dashboard" component={Dashboard} />
       <Route path="/:lang?/buy-credits" component={BuyCredits} />
       <Route path="/:lang?/chat" component={Chat} />
@@ -58,6 +62,7 @@ function Router() {
       <Route path="/:lang?/my-ebooks" component={MyEbooks} />
       <Route path="/:lang?/shop/success" component={ShopSuccess} />
       <Route path="/admin-secret-panel" component={AdminDashboard} />
+      <Route path="/:lang?/" component={Home} />
 
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
