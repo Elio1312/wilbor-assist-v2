@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Heart, ArrowRight, Check, ChevronDown, Brain, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Droplets, Apple, Shield, Mail } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useI18n } from "@/contexts/i18n";
@@ -23,7 +23,6 @@ const IMAGES = {
 export default function Home() {
   const { data: user } = trpc.auth.me.useQuery();
   const { t, locale, localePath } = useI18n();
-  const [, setLocation] = useLocation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   // 1. Otimização: FAQ carregado sob demanda por idioma (Performance)
@@ -154,19 +153,19 @@ export default function Home() {
       {/* Header Blindado */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation(localePath("/"))}>
+          <a href={localePath("/")} className="flex items-center gap-2 cursor-pointer">
             <Heart className="w-8 h-8 text-purple-600 fill-purple-600" />
             <span className="text-xl font-bold text-gray-900">Wilbor</span>
-          </div>
+          </a>
           
           <div className="flex items-center gap-4">
             <LanguageSwitcher />
             <Button 
+              asChild
               variant="ghost" 
-              onClick={() => setLocation(localePath("/blog"))}
               className="hidden md:flex"
             >
-              {t("nav.blog")}
+              <a href={localePath("/blog")}>{t("nav.blog")}</a>
             </Button>
             {user ? (
               <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
@@ -288,10 +287,10 @@ export default function Home() {
                 ))}
               </div>
               <Button 
+                asChild
                 className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg"
-                onClick={() => setLocation(localePath("/chat"))}
               >
-                {t("mother.cta")}
+                <a href={localePath("/chat")}>{t("mother.cta")}</a>
               </Button>
             </div>
             <div className="relative">
@@ -335,12 +334,12 @@ export default function Home() {
                 </div>
                 <p className="text-gray-600 mb-8">{plan.desc}</p>
                 <Button 
+                  asChild
                   className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
                     plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
                   }`}
-                  onClick={() => setLocation(localePath("/checkout"))}
                 >
-                  {t("pricing.cta")}
+                  <a href={localePath("/checkout")}>{t("pricing.cta")}</a>
                 </Button>
                 <ul className="space-y-4">
                   {plan.features.map((f, j) => (

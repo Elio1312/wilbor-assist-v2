@@ -1134,9 +1134,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
-    const basePath = window.location.pathname.replace(/^\/(en|es|fr|de)/, "") || "/";
+    const basePath = window.location.pathname.replace(/^\/(en|es|fr|de)/, "");
     const newPath = newLocale === "pt"
-      ? basePath
+      ? (basePath || "/")
       : `/${newLocale}${basePath === "/" ? "" : basePath}`;
     window.history.pushState({}, "", newPath);
   }, []);
@@ -1150,17 +1150,14 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback((key: string): string => {
     const currentLocale = detectLocaleFromPath();
-    // 2. Lógica de Fallback Inteligente: Idioma -> Inglês -> Português -> Chave
-    return translations[currentLocale][key] || 
-           translations.en[key] || 
-           translations.pt[key] || 
-           key;
+    return translations[currentLocale]?.[key] || translations.pt[key] || key;
   }, []);
 
-  // Always use current locale from URL, not from state
+  // CORREÇÃO CRÍTICA: Normalização forçada de caminhos para evitar botões mortos
   const localePath = useCallback((path: string): string => {
     const currentLocale = detectLocaleFromPath();
-    const cleanPath = path.startsWith("/") ? path : `/${path}`;
+    const safePath = path || "/";
+    const cleanPath = safePath.startsWith("/") ? safePath : `/${safePath}`;
     if (currentLocale === "pt") return cleanPath;
     return `/${currentLocale}${cleanPath === "/" ? "" : cleanPath}`;
   }, []);

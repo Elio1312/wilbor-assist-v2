@@ -27,8 +27,8 @@ function Router() {
   // Redirecionamento Inteligente (ROI de Internacionalização)
   // Se a mãe cair na raiz "/" e o navegador dela for EN, ES, FR ou DE, redirecionamos automaticamente.
   useEffect(() => {
-    // Só redireciona se estiver na raiz exata e não houver um idioma já definido
-    if (window.location.pathname === "/") {
+    const currentPath = window.location.pathname;
+    if (currentPath === "/") {
       const browserLang = navigator.language.split('-')[0];
       const supportedLangs = ['en', 'es', 'fr', 'de'];
       if (supportedLangs.includes(browserLang)) {
