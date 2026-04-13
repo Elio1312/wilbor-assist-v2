@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Heart, ArrowRight, Check, ChevronDown, Brain, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Droplets, Apple, Shield, Mail } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useI18n } from "@/contexts/i18n";
@@ -23,7 +23,6 @@ const IMAGES = {
 export default function Home() {
   const { data: user } = trpc.auth.me.useQuery();
   const { t, locale, localePath } = useI18n();
-  const [, setLocation] = useLocation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   // 1. Otimização: FAQ carregado sob demanda por idioma (Performance)
@@ -179,10 +178,9 @@ export default function Home() {
                 </Button>
                 <Button
                   className="bg-purple-600 hover:bg-purple-700 rounded-full px-6"
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     getAnonymousSessionId();
-                    setLocation(localePath("/chat"));
+                    window.location.href = localePath("/chat");
                   }}
                 >
                   {t("nav.try_free")}
@@ -211,10 +209,9 @@ export default function Home() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   getAnonymousSessionId();
-                  setLocation(localePath("/chat"));
+                  window.location.href = localePath("/chat");
                 }}
               >
                 {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
@@ -287,10 +284,9 @@ export default function Home() {
               </div>
               <Button 
                 className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg"
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   getAnonymousSessionId();
-                  setLocation(localePath("/chat"));
+                  window.location.href = localePath("/chat");
                 }}
               >
                 {t("mother.cta")}
@@ -340,9 +336,8 @@ export default function Home() {
                   className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
                     plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
                   }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setLocation(localePath("/checkout"));
+                  onClick={() => {
+                    window.location.href = localePath("/checkout");
                   }}
                 >
                   {t("pricing.cta")}
