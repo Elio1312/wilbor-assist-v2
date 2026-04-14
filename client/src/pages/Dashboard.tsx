@@ -13,7 +13,7 @@ import { useI18n } from "@/contexts/i18n";
 export default function Dashboard() {
   const { t, localePath } = useI18n(); // Uso correto do motor de tradução
   const [, setLocation] = useLocation();
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
 
   // Prevent Google from indexing private/auth-required pages
   useEffect(() => {
@@ -45,6 +45,14 @@ export default function Dashboard() {
     setMessages(newMessages);
     chatMutation.mutate({ messages: newMessages });
   };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-500">
+        {t("common.loading")}
+      </div>
+    );
+  }
 
   if (!user) {
     setLocation(localePath("/")); // Redirecionamento limpo

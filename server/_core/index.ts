@@ -2,8 +2,12 @@ import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
+import { randomUUID } from "crypto";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { registerOAuthRoutes } from "./oauth";
+import { getSessionCookieOptions } from "./cookies";
+import { sdk } from "./sdk";
 import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
@@ -15,7 +19,7 @@ import { runPendingMigrations } from "../runMigrations";
 import { serveStatic, setupVite } from "./vite";
 import { registerStripeRoutes } from "../stripeWebhook";
 import sitemapRouter from "../routes/sitemap";
-import { getDb } from "../db";
+import { getDb, upsertUser } from "../db";
 import { wilborMilestoneContent } from "../../drizzle/schema";
 
 function isPortAvailable(port: number): Promise<boolean> {
@@ -78,6 +82,41 @@ async function startServer() {
   //     res.redirect("/chat");
   //   }
   // );
+  app.get("/api/auth/anonymous", async (req, res) => {
+    const redirect =
+      typeof req.query.redirect === "string" && req.query.redirect.startsWith("/")
+        ? req.query.redirect
+        : "/dashboard";
+
+    try {
+      const guestOpenId = `guest_${randomUUID()}`;
+      const guestName = "Guest";
+
+      await upsertUser({
+        openId: guestOpenId,
+        name: guestName,
+        loginMethod: "anonymous",
+        lastSignedIn: new Date(),
+      });
+
+      const sessionToken = await sdk.createSessionToken(guestOpenId, {
+        name: guestName,
+        expiresInMs: ONE_YEAR_MS,
+      });
+
+      const cookieOptions = getSessionCookieOptions(req);
+      res.cookie(COOKIE_NAME, sessionToken, {
+        ...cookieOptions,
+        maxAge: ONE_YEAR_MS,
+      });
+
+      res.redirect(302, redirect);
+    } catch (error) {
+      console.error("[Auth] Anonymous login failed", error);
+      res.status(500).json({ error: "Anonymous login failed" });
+    }
+  });
+
   app.get("/api/auth/logout", (req, res) => {
     req.logout(() => {
       res.redirect("/");

@@ -1,6 +1,8 @@
+const fallbackSessionSecret = process.env.SESSION_SECRET ?? "wilbor-session-secret";
+
 export const ENV = {
-  appId: process.env.VITE_APP_ID ?? "",
-  cookieSecret: process.env.JWT_SECRET ?? "",
+  appId: process.env.VITE_APP_ID ?? process.env.APP_ID ?? "wilbor-assist",
+  cookieSecret: process.env.JWT_SECRET ?? fallbackSessionSecret,
   databaseUrl: process.env.DATABASE_URL ?? "",
   oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
   ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
@@ -10,5 +12,5 @@ export const ENV = {
   openaiApiKey: process.env.OPENAI_API_KEY ?? "",
   googleClientId: process.env.GOOGLE_CLIENT_ID ?? "",
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-  sessionSecret: process.env.SESSION_SECRET ?? "wilbor-session-secret",
+  sessionSecret: fallbackSessionSecret,
 };
