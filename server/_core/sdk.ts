@@ -321,10 +321,17 @@ class SDKServer {
     }
 
     if (user.openId) {
-      await db.upsertUser({
-        openId: user.openId,
-        lastSignedIn: signedInAt,
-      });
+      try {
+        await db.upsertUser({
+          openId: user.openId,
+          lastSignedIn: signedInAt,
+        });
+      } catch (error) {
+        console.warn(
+          "[Auth] Failed to refresh authenticated session in database; continuing with session user",
+          error
+        );
+      }
     }
 
     return user;
