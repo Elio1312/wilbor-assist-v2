@@ -2,10 +2,11 @@
  * runMigrations.ts
  * Garante ajustes mínimos de schema automaticamente no startup do servidor.
  *
- * Estratégia econômica:
+ * Estratégia econômica e defensiva:
  * 1. Não depende de arquivos de migration gerados no deploy.
  * 2. Tolera ambientes parcialmente provisionados.
- * 3. Cria a tabela de milestones antes do auto-seed do startup.
+ * 3. Nunca derruba o startup do servidor por falha de bootstrap de banco.
+ * 4. Cria a tabela de milestones antes do auto-seed do startup quando o banco permite.
  */
 import { sql } from "drizzle-orm";
 import { getDb } from "./db";
@@ -19,8 +20,19 @@ function getRows(result: any): any[] {
   return Array.isArray(result) ? result : [];
 }
 
+function describeMigrationError(err: any): string {
+  const cause = err?.cause;
+  return String(
+    cause?.sqlMessage ||
+      cause?.message ||
+      err?.message ||
+      err ||
+      "unknown migration error",
+  );
+}
+
 function isIgnorableMigrationError(err: any): boolean {
-  const message = String(err?.message || err || "").toLowerCase();
+  const message = describeMigrationError(err).toLowerCase();
 
   return (
     message.includes("duplicate column") ||
@@ -29,28 +41,52 @@ function isIgnorableMigrationError(err: any): boolean {
     message.includes("doesn't exist") ||
     message.includes("does not exist") ||
     message.includes("unknown table") ||
-    message.includes("relation")
+    message.includes("relation") ||
+    message.includes("connection lost") ||
+    message.includes("server closed the connection")
   );
 }
 
-async function tableExists(db: any, tableName: string): Promise<boolean> {
-  const result = await db.execute(sql.raw(`SHOW TABLES LIKE '${tableName}'`));
-  return getRows(result).length > 0;
+async function tableExists(db: any, tableName: string): Promise<boolean | null> {
+  try {
+    const result = await db.execute(sql.raw(`SHOW TABLES LIKE '${tableName}'`));
+    return getRows(result).length > 0;
+  } catch (err: any) {
+    console.warn(`[Migration] Não foi possível verificar a tabela ${tableName}: ${describeMigrationError(err)}`);
+    return null;
+  }
 }
 
-async function columnExists(db: any, tableName: string, columnName: string): Promise<boolean> {
-  const result = await db.execute(sql.raw(`SHOW COLUMNS FROM \`${tableName}\` LIKE '${columnName}'`));
-  return getRows(result).length > 0;
+async function columnExists(db: any, tableName: string, columnName: string): Promise<boolean | null> {
+  try {
+    const result = await db.execute(sql.raw(`SHOW COLUMNS FROM \`${tableName}\` LIKE '${columnName}'`));
+    return getRows(result).length > 0;
+  } catch (err: any) {
+    console.warn(
+      `[Migration] Não foi possível verificar a coluna ${tableName}.${columnName}: ${describeMigrationError(err)}`,
+    );
+    return null;
+  }
 }
 
 async function ensureFeedbackRatingColumn(db: any) {
   const hasMessagesTable = await tableExists(db, "wilborMessages");
+  if (hasMessagesTable === null) {
+    console.warn("[Migration] Verificação de wilborMessages falhou; feedbackRating será pulado neste startup.");
+    return;
+  }
+
   if (!hasMessagesTable) {
     console.warn("[Migration] Tabela wilborMessages ausente; feedbackRating será ignorado por enquanto.");
     return;
   }
 
   const hasFeedbackRating = await columnExists(db, "wilborMessages", "feedbackRating");
+  if (hasFeedbackRating === null) {
+    console.warn("[Migration] Verificação de feedbackRating falhou; alteração será pulada neste startup.");
+    return;
+  }
+
   if (hasFeedbackRating) {
     console.log("[Migration] Coluna feedbackRating já existe em wilborMessages.");
     return;
@@ -61,11 +97,11 @@ async function ensureFeedbackRatingColumn(db: any) {
     console.log("[Migration] Coluna feedbackRating criada com sucesso em wilborMessages.");
   } catch (err: any) {
     if (isIgnorableMigrationError(err)) {
-      console.warn(`[Migration] feedbackRating não precisou ser aplicado: ${err?.message || err}`);
+      console.warn(`[Migration] feedbackRating não precisou ser aplicado: ${describeMigrationError(err)}`);
       return;
     }
 
-    console.error("[Migration] Erro inesperado ao adicionar feedbackRating:", err?.message || err);
+    console.error("[Migration] Erro inesperado ao adicionar feedbackRating:", describeMigrationError(err));
   }
 }
 
@@ -93,21 +129,25 @@ async function ensureMilestoneContentTable(db: any) {
     console.log("[Migration] Tabela wilborMilestoneContent garantida com sucesso.");
   } catch (err: any) {
     if (isIgnorableMigrationError(err)) {
-      console.warn(`[Migration] wilborMilestoneContent já existia ou foi ignorada: ${err?.message || err}`);
+      console.warn(`[Migration] wilborMilestoneContent já existia ou foi ignorada: ${describeMigrationError(err)}`);
       return;
     }
 
-    console.error("[Migration] Erro inesperado ao garantir wilborMilestoneContent:", err?.message || err);
+    console.error("[Migration] Erro inesperado ao garantir wilborMilestoneContent:", describeMigrationError(err));
   }
 }
 
 export async function runPendingMigrations() {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Migration] Database not available, skipping migrations");
-    return;
-  }
+  try {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Migration] Database not available, skipping migrations");
+      return;
+    }
 
-  await ensureFeedbackRatingColumn(db);
-  await ensureMilestoneContentTable(db);
+    await ensureFeedbackRatingColumn(db);
+    await ensureMilestoneContentTable(db);
+  } catch (err: any) {
+    console.error("[Migration] Bootstrap defensivo falhou, mas o servidor continuará subindo:", describeMigrationError(err));
+  }
 }
