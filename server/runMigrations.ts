@@ -155,10 +155,3 @@ export async function runPendingMigrations() {
     console.log(`[Migration] Bootstrap defensivo adiado, mas o servidor continuará subindo: ${describeMigrationError(err)}`);
   }
 }
-
-    await ensureFeedbackRatingColumn(db);
-    await ensureMilestoneContentTable(db);
-  } catch (err: any) {
-    console.error("[Migration] Bootstrap defensivo falhou, mas o servidor continuará subindo:", describeMigrationError(err));
-  }
-}
