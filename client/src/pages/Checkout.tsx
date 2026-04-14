@@ -11,6 +11,7 @@ export default function Checkout() {
   const { t, localePath } = useI18n();
   const [, setLocation] = useLocation();
   const [selectedPlan, setSelectedPlan] = useState<"basic" | "premium">("premium");
+  const { data: user } = trpc.auth.me.useQuery(undefined, { retry: false, refetchOnWindowFocus: false });
 
   // Prevent Google from indexing private/auth-required pages
   useEffect(() => {
@@ -34,6 +35,11 @@ export default function Checkout() {
   });
 
   const handleSubscribe = () => {
+    if (!user) {
+      setLocation(localePath("/chat"));
+      return;
+    }
+
     const amount = selectedPlan === "premium" ? 29 : 9.9;
     checkout.mutate({ amount, currency: "brl" });
   };
@@ -45,7 +51,7 @@ export default function Checkout() {
       <div className="max-w-3xl mx-auto">
         <Button 
           variant="ghost" 
-          onClick={() => setLocation(localePath("/dashboard"))}
+          onClick={() => setLocation(user ? localePath("/dashboard") : localePath("/"))}
           className="mb-8 gap-2 text-gray-500"
         >
           <ArrowLeft className="size-4" /> {t("common.back")}
