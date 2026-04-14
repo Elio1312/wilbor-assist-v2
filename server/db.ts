@@ -4,6 +4,12 @@ import { InsertUser, users, wilborUserCredits, wilborExtraCreditTransactions, wi
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let _startupDatabaseReachable: boolean | null = null;
+
+function describeDatabaseError(error: any): string {
+  const cause = error?.cause;
+  return String(cause?.sqlMessage || cause?.message || error?.message || error || "unknown database error");
+}
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
@@ -16,6 +22,28 @@ export async function getDb() {
     }
   }
   return _db;
+}
+
+export async function isStartupDatabaseReachable(): Promise<boolean> {
+  if (_startupDatabaseReachable !== null) {
+    return _startupDatabaseReachable;
+  }
+
+  const db = await getDb();
+  if (!db) {
+    _startupDatabaseReachable = false;
+    return false;
+  }
+
+  try {
+    await db.execute(sql`SELECT 1 AS ok`);
+    _startupDatabaseReachable = true;
+    return true;
+  } catch (error) {
+    console.log(`[Database] Startup probe ignorado: ${describeDatabaseError(error)}`);
+    _startupDatabaseReachable = false;
+    return false;
+  }
 }
 
 export async function upsertUser(user: InsertUser): Promise<void> {
