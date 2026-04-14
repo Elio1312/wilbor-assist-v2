@@ -19,7 +19,7 @@ import { runPendingMigrations } from "../runMigrations";
 import { serveStatic, setupVite } from "./vite";
 import { registerStripeRoutes } from "../stripeWebhook";
 import sitemapRouter from "../routes/sitemap";
-import { getDb, upsertUser } from "../db";
+import { getDb, isStartupDatabaseReachable, upsertUser } from "../db";
 import { wilborMilestoneContent } from "../../drizzle/schema";
 
 function isPortAvailable(port: number): Promise<boolean> {
@@ -221,6 +221,12 @@ async function startServer() {
     
     // Auto-seed milestones on startup
     try {
+      const databaseReachable = await isStartupDatabaseReachable();
+      if (!databaseReachable) {
+        console.log("[Seed] Auto-seed de milestones ignorado neste startup porque o banco não respondeu.");
+        return;
+      }
+
       const db = await getDb();
       
       if (db) {
@@ -248,13 +254,13 @@ async function startServer() {
     } catch (error: any) {
       // Tabela pode não existir ainda se db:push não foi rodado — não é crítico
       const msg = error?.message ?? String(error);
-      if (msg.includes("doesn't exist") || msg.includes("Table") || msg.includes("Failed query")) {
-        console.warn("[Seed] Tabela wilborMilestoneContent não encontrada — rode db:push para criar.");
+      if (msg.includes("Connection lost") || msg.includes("server closed the connection")) {
+        console.log("[Seed] Auto-seed de milestones ignorado porque o banco encerrou a conexão no startup.");
+      } else if (msg.includes("doesn't exist") || msg.includes("Table") || msg.includes("Failed query")) {
+        console.log("[Seed] Tabela wilborMilestoneContent ainda não está disponível; auto-seed opcional foi ignorado.");
       } else {
         console.error("❌ Error auto-seeding milestones:", msg);
       }
     }
   });
 }
-
-startServer().catch(console.error);
