@@ -92,11 +92,15 @@ async function startServer() {
       const guestOpenId = `guest_${randomUUID()}`;
       const guestName = "Guest";
 
-      await upsertUser({
-        openId: guestOpenId,
-        name: guestName,
-        lastSignedIn: new Date(),
-      });
+      try {
+        await upsertUser({
+          openId: guestOpenId,
+          name: guestName,
+          lastSignedIn: new Date(),
+        });
+      } catch (persistError) {
+        console.warn("[Auth] Guest user could not be persisted; continuing with local session", persistError);
+      }
 
       const sessionToken = await sdk.createSessionToken(guestOpenId, {
         name: guestName,
