@@ -95,7 +95,6 @@ async function startServer() {
       await upsertUser({
         openId: guestOpenId,
         name: guestName,
-        loginMethod: "anonymous",
         lastSignedIn: new Date(),
       });
 

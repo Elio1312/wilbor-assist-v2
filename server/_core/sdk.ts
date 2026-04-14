@@ -18,6 +18,8 @@ import type {
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.length > 0;
 
+const isAnonymousOpenId = (value: string) => value.startsWith("guest_");
+
 export type SessionPayload = {
   openId: string;
   appId: string;
@@ -270,8 +272,27 @@ class SDKServer {
     const signedInAt = new Date();
     let user = await db.getUserByOpenId(sessionUserId);
 
-    // If user not in DB, sync from OAuth server automatically when configured.
-    if (!user && ENV.oAuthServerUrl) {
+    if (isAnonymousOpenId(sessionUserId)) {
+      if (!user) {
+        try {
+          await db.upsertUser({
+            openId: sessionUserId,
+            name: session.name,
+            lastSignedIn: signedInAt,
+          });
+          user = await db.getUserByOpenId(sessionUserId);
+        } catch (error) {
+          console.warn("[Auth] Anonymous session could not be persisted:", error);
+        }
+      }
+
+      if (!user) {
+        user = {
+          openId: session.openId,
+          name: session.name,
+        } as User;
+      }
+    } else if (!user && ENV.oAuthServerUrl) {
       try {
         const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
         await db.upsertUser({
@@ -299,10 +320,12 @@ class SDKServer {
       throw ForbiddenError("User not found");
     }
 
-    await db.upsertUser({
-      openId: user.openId,
-      lastSignedIn: signedInAt,
-    });
+    if (user.openId) {
+      await db.upsertUser({
+        openId: user.openId,
+        lastSignedIn: signedInAt,
+      });
+    }
 
     return user;
   }
