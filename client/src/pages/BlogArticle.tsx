@@ -28,21 +28,22 @@ export default function BlogArticle() {
   const { article, redirectSlug } = findBlogArticle(blogLocale, slug);
 
   useEffect(() => {
-    if (redirectSlug && slug && redirectSlug !== slug) {
-      setLocation(localePath(buildBlogPath(blogLocale, redirectSlug)));
-      return;
-    }
-
-    if (!article) {
+    // Only redirect if article is not found (404 case)
+    if (!article && !redirectSlug) {
       toast.error(t("common.not_found"));
       setLocation(localePath("/blog"));
       return;
     }
 
-    applyBlogDocumentSeo(getBlogArticleSeo(blogLocale, article));
-  }, [article, blogLocale, localePath, redirectSlug, setLocation, slug, t]);
+    // Apply SEO data if we have an article
+    if (article) {
+      applyBlogDocumentSeo(getBlogArticleSeo(blogLocale, article));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [article, blogLocale, localePath, setLocation, t]);
 
-  if (!article || (redirectSlug && slug && redirectSlug !== slug)) {
+  // Show loading state while redirecting, or if article truly doesn't exist
+  if (!article) {
     return null;
   }
 

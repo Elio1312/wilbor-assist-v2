@@ -33,14 +33,34 @@ export interface BlogSeoPayload {
   ogType: "website" | "article";
   htmlLang: string;
   ogLocale: string;
+  ogImage: string;
   alternates: Array<{ hreflang: string; href: string }>;
   staticContentHtml: string;
 }
 
 const SITE_NAME = "Wilbor-Assist";
 const BASE_URL = "https://www.wilbor-assist.com";
-const OG_IMAGE =
+const OG_IMAGE_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png";
+
+// Dynamic OG images per category for better social sharing
+const OG_IMAGES_BY_CATEGORY: Record<string, string> = {
+  sono: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  colica: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  alimentacao: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  febre: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  vacinas: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  seguranca: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  saltos: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  higiene: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  saude: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  geral: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+};
+
+function getOgImageForCategory(category: string): string {
+  return OG_IMAGES_BY_CATEGORY[category.toLowerCase()] || OG_IMAGE_DEFAULT;
+}
+
 const BLOG_LOCALES: BlogLocale[] = ["pt", "en", "es", "fr", "de"];
 
 const LISTING_SEO: Record<BlogLocale, { title: string; description: string; keywords: string[] }> = {
@@ -306,16 +326,26 @@ export function findBlogArticle(locale: BlogLocale, slug?: string | null): { art
 }
 
 function buildAlternateLinksFromSlugMap(slugMap: Partial<Record<BlogLocale, string>>): Array<{ hreflang: string; href: string }> {
-  const alternates = BLOG_LOCALES.filter((locale) => slugMap[locale]).map((locale) => ({
-    hreflang: getHtmlLang(locale),
-    href: `${BASE_URL}${buildBlogPath(locale, slugMap[locale])}`,
-  }));
+  const alternates: Array<{ hreflang: string; href: string }> = [];
 
-  const xDefaultSlug = slugMap.en || slugMap.pt;
+  // Only include locales that have valid slugs
+  BLOG_LOCALES.forEach((locale) => {
+    const slug = slugMap[locale];
+    if (slug) {
+      alternates.push({
+        hreflang: getHtmlLang(locale),
+        href: `${BASE_URL}${buildBlogPath(locale, slug)}`,
+      });
+    }
+  });
+
+  // Add x-default pointing to EN if available, otherwise PT
+  const xDefaultLocale = slugMap.en ? "en" : "pt";
+  const xDefaultSlug = slugMap[xDefaultLocale];
   if (xDefaultSlug) {
     alternates.push({
       hreflang: "x-default",
-      href: `${BASE_URL}${buildBlogPath(slugMap.en ? "en" : "pt", xDefaultSlug)}`,
+      href: `${BASE_URL}${buildBlogPath(xDefaultLocale, xDefaultSlug)}`,
     });
   }
 
@@ -346,6 +376,7 @@ export function getBlogListingSeo(locale: BlogLocale): BlogSeoPayload {
     ogType: "website",
     htmlLang: getHtmlLang(locale),
     ogLocale: getOgLocale(locale),
+    ogImage: OG_IMAGE_DEFAULT,
     alternates: buildListingAlternateLinks(),
     staticContentHtml: `<h1>${escapeHtml(listing.title)}</h1><p>${escapeHtml(listing.description)}</p><ul>${items}</ul>`,
   };
@@ -355,6 +386,7 @@ export function getBlogArticleSeo(locale: BlogLocale, article: LocalizedBlogArti
   const summary = summarizeMarkdown(article.content);
   const canonicalUrl = `${BASE_URL}${buildBlogPath(locale, article.slug)}`;
   const alternateLinks = buildAlternateLinksFromSlugMap(article.alternates);
+  const ogImage = getOgImageForCategory(article.category);
 
   return {
     title: article.seoTitle,
@@ -364,6 +396,7 @@ export function getBlogArticleSeo(locale: BlogLocale, article: LocalizedBlogArti
     ogType: "article",
     htmlLang: getHtmlLang(locale),
     ogLocale: getOgLocale(locale),
+    ogImage,
     alternates: alternateLinks,
     staticContentHtml: `<article><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.description)}</p><p>${escapeHtml(summary)}</p><p><a href="${escapeHtml(canonicalUrl)}">${escapeHtml(canonicalUrl)}</a></p></article>`,
   };
@@ -417,14 +450,14 @@ export function applyBlogDocumentSeo(seo: BlogSeoPayload) {
   setMetaTag("property", "og:url", seo.canonicalUrl);
   setMetaTag("property", "og:title", seo.title);
   setMetaTag("property", "og:description", seo.description);
-  setMetaTag("property", "og:image", OG_IMAGE);
+  setMetaTag("property", "og:image", seo.ogImage);
   setMetaTag("property", "og:site_name", SITE_NAME);
   setMetaTag("property", "og:locale", seo.ogLocale);
   setMetaTag("name", "twitter:card", "summary_large_image");
   setMetaTag("name", "twitter:url", seo.canonicalUrl);
   setMetaTag("name", "twitter:title", seo.title);
   setMetaTag("name", "twitter:description", seo.description);
-  setMetaTag("name", "twitter:image", OG_IMAGE);
+  setMetaTag("name", "twitter:image", seo.ogImage);
   setCanonical(seo.canonicalUrl);
   setAlternateLinks(seo.alternates);
 }

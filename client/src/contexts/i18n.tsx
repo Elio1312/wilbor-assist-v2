@@ -1177,11 +1177,16 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, []);
 
 
-  // Sync locale state with URL on every render
-  const currentLocale = detectLocaleFromPath();
-  if (currentLocale !== locale) {
-    setLocaleState(currentLocale);
-  }
+  // Sync locale state with URL on mount only (not during render)
+  useEffect(() => {
+    const currentLocale = detectLocaleFromPath();
+    if (currentLocale !== locale) {
+      setLocaleState(currentLocale);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
+
+  const currentLocale = locale;
 
   return (
     <I18nContext.Provider value={{ locale: currentLocale, setLocale, t, localePath }}>
