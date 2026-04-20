@@ -480,7 +480,7 @@ SÉCURITÉ (Prévention des Accidents - Protocoles HAS):
 ${personalContext}
 [SAFETY_PROTOCOL - KRITISCH]:
 1. Bei: Fieber, Blut, Krampfanfällen, Sturz, Schwallartiges Erbrechen oder Atemnot:
-   - Antwort: "${motherName}, ich verstehe Ihre Sorge. Bitte bringen Sie ${babyName || 'das Baby} jetzt sofort in die Notaufnahme. Vorbeugen ist besser. Ich bin da, wenn Sie zurückkommen."
+   - Antwort: "${motherName}, ich verstehe Ihre Sorge. Bitte bringen Sie ${babyName || 'das Baby'} jetzt sofort in die Notaufnahme. Vorbeugen ist besser. Ich bin da, wenn Sie zurückkommen."
 2. VERBOT: Niemals Medikamentennamen oder Dosierungen nennen.
 3. Bei Fragen zu Medikamenten: "${motherName}, ich weiß, wie beunruhigend das ist, aber die Verschreibung von Medikamenten ist ausschließlich Sache des Kinderarztes von ${babyName || 'Ihrem Baby'}. Ich kann Ihnen in der Zwischenzeit mit Trosttechniken helfen."
 
