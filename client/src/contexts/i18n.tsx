@@ -11,15 +11,55 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | null>(null);
 
+const LOCALE_STORAGE_KEY = "wilbor_locale";
+const SUPPORTED_LOCALES: Locale[] = ["pt", "en", "es", "fr", "de"];
+
+// Safe localStorage access with SSR guard
+function getStoredLocale(): Locale | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
+    if (stored && SUPPORTED_LOCALES.includes(stored as Locale)) {
+      return stored as Locale;
+    }
+  } catch {
+    // localStorage not available
+  }
+  return null;
+}
+
+function storeLocale(locale: Locale): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+  } catch {
+    // localStorage not available
+  }
+}
+
 // Detect locale from URL path prefix: /en/... /es/... /fr/... /de/... or default pt
+// Priority: URL > localStorage > browser language > default pt
 function detectLocaleFromPath(): Locale {
   if (typeof window === "undefined") return "pt";
+
+  // 1. Check URL path first (highest priority)
   const path = window.location.pathname;
   if (path === "/pt" || path.startsWith("/pt/")) return "pt";
   if (path.startsWith("/en")) return "en";
   if (path.startsWith("/es")) return "es";
   if (path.startsWith("/fr")) return "fr";
   if (path.startsWith("/de")) return "de";
+
+  // 2. Check stored preference
+  const stored = getStoredLocale();
+  if (stored) return stored;
+
+  // 3. Check browser language as fallback
+  const browserLang = navigator.language.split("-")[0];
+  if (SUPPORTED_LOCALES.includes(browserLang as Locale)) {
+    return browserLang as Locale;
+  }
+
   return "pt";
 }
 
@@ -1135,6 +1175,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
+    storeLocale(newLocale); // Persist to localStorage
     const basePath = window.location.pathname.replace(/^\/(pt|en|es|fr|de)(?=\/|$)/, "") || "/";
     const newPath = newLocale === "pt"
       ? basePath
