@@ -250,27 +250,68 @@ export async function getWilborMessages(conversationId: number) {
 
 // 2. Previsão de Sono com Precisão Neonatal (Regra dos 95% de Acerto)
 export function predictNextNap(sleepLogs: any[], babyAgeDays: number): { suggestedTime: Date | null; confidence: string } {
+  // Wake Windows expandidos (em minutos) - baseados em protocolos SBP/AAP/OMS
   const wakeWindows: Record<string, number> = {
-    "0-7": 45,    // Recém-nascido (dias) - SBP/AAP
-    "7-30": 60,   // 1 mês
-    "30-60": 75,  // 2 meses
-    "60-90": 90,  // 3 meses
-    // ... faixas estendidas conforme wilborPrompt.ts
+    // Recém-nascido (0-6 semanas)
+    "0-1": 45,     // 0-1 semana: 30-45 min
+    "1-2": 45,     // 1-2 semanas: 45-60 min
+    "2-4": 60,     // 2-4 semanas: 45-60 min
+
+    // 1-3 meses
+    "4-6": 60,     // 4-6 semanas: 60-75 min
+    "6-8": 75,     // 6-8 semanas: 75-90 min
+    "8-12": 75,    // 8-12 semanas: 75-90 min
+
+    // 3-4 meses
+    "12-16": 90,   // 3-4 meses: 75-120 min
+    "16-20": 90,   // Peak of fussiness
+
+    // 4-6 meses
+    "20-24": 105,  // 4-5 meses: 100-120 min
+    "24-28": 120,  // 5-6 meses: 120-150 min
+    "28-32": 120,  // 6+ meses
+
+    // 6-9 meses
+    "32-36": 150,  // 6-7 meses: 150-180 min
+    "36-40": 165,  // 7-8 meses: 165-195 min
+    "40-44": 180,  // 8-9 meses: 180-210 min
+
+    // 9-12 meses
+    "44-48": 180,  // 9-10 meses: 180-210 min
+    "48-52": 195,  // 10-11 meses: 195-225 min
+    "52-56": 210,  // 11-12 meses: 210-240 min
+    "56+": 240,    // 12+ meses: 240-300 min (até 5h)
   };
 
-  let window = 60;
-  if (babyAgeDays <= 7) window = wakeWindows["0-7"];
-  else if (babyAgeDays <= 30) window = wakeWindows["7-30"];
-  else if (babyAgeDays <= 60) window = wakeWindows["30-60"];
-  else window = 120; // Fallback seguro
+  // Selecionar wake window baseado na idade em dias
+  let window = 60; // fallback padrão
+
+  if (babyAgeDays <= 7) window = wakeWindows["0-1"];
+  else if (babyAgeDays <= 14) window = wakeWindows["1-2"];
+  else if (babyAgeDays <= 28) window = wakeWindows["2-4"];
+  else if (babyAgeDays <= 42) window = wakeWindows["4-6"];
+  else if (babyAgeDays <= 56) window = wakeWindows["6-8"];
+  else if (babyAgeDays <= 84) window = wakeWindows["8-12"];
+  else if (babyAgeDays <= 112) window = wakeWindows["12-16"];
+  else if (babyAgeDays <= 140) window = wakeWindows["16-20"];
+  else if (babyAgeDays <= 168) window = wakeWindows["20-24"];
+  else if (babyAgeDays <= 196) window = wakeWindows["24-28"];
+  else if (babyAgeDays <= 224) window = wakeWindows["28-32"];
+  else if (babyAgeDays <= 252) window = wakeWindows["32-36"];
+  else if (babyAgeDays <= 280) window = wakeWindows["36-40"];
+  else if (babyAgeDays <= 308) window = wakeWindows["40-44"];
+  else if (babyAgeDays <= 336) window = wakeWindows["44-48"];
+  else if (babyAgeDays <= 364) window = wakeWindows["48-52"];
+  else if (babyAgeDays <= 392) window = wakeWindows["52-56"];
+  else window = wakeWindows["56+"];
 
   const lastLog = sleepLogs.filter(l => l.sleepEnd).sort((a, b) => b.sleepEnd - a.sleepEnd)[0];
-  
+
   if (lastLog?.sleepEnd) {
     const suggestedTime = new Date(new Date(lastLog.sleepEnd).getTime() + window * 60000);
-    return { suggestedTime, confidence: sleepLogs.length > 3 ? "high" : "low" };
+    return { suggestedTime, confidence: sleepLogs.length > 3 ? "high" : "medium" };
   }
-  
+
   return { suggestedTime: null, confidence: "none" };
 }
 

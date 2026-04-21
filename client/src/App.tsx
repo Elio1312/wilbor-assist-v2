@@ -20,6 +20,7 @@ import { Route, Switch, useLocation } from "wouter";
 import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import MeuCorpo from "./pages/MeuCorpo";
 
 function Router() {
   const [location, setLocation] = useLocation();
@@ -61,6 +62,7 @@ function Router() {
       <Route path="/:lang?/shop" component={ShopPage} />
       <Route path="/:lang?/my-ebooks" component={MyEbooks} />
       <Route path="/:lang?/shop/success" component={ShopSuccess} />
+      <Route path="/:lang?/meu-corpo" component={MeuCorpo} />
       <Route path="/admin-secret-panel" component={AdminDashboard} />
       <Route path="/:lang?/" component={Home} />
 

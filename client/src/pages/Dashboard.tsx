@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { AIChatBox, type Message } from "@/components/AIChatBox";
 import { FeedbackButton } from "@/components/FeedbackButton";
 import { SOSButton } from "@/components/SOSButton";
+import { SleepTracker } from "@/components/SleepTracker";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Heart, LogOut, Baby, Utensils, BookOpen, BarChart3 } from "lucide-react";
+import { Heart, LogOut, Baby, Utensils, BookOpen, BarChart3, User } from "lucide-react";
 import { useLocation } from "wouter";
 import { useI18n } from "@/contexts/i18n";
 
@@ -39,12 +40,18 @@ export default function Dashboard() {
     }
   });
 
+  // 3. Busca de Babies para Sleep Tracker
+  const babiesQuery = trpc.wilbor.getBabies.useQuery();
+
   const handleSendMessage = (content: string) => {
     setLastUserQuestion(content);
     const newMessages = [...messages, { role: "user" as const, content }];
     setMessages(newMessages);
     chatMutation.mutate({ messages: newMessages });
   };
+
+  // Primeiro baby para o Sleep Tracker (pode ser expandido depois)
+  const activeBaby = babiesQuery.data?.[0];
 
   if (loading) {
     return (
@@ -134,7 +141,20 @@ export default function Dashboard() {
             <Button variant="outline" className="justify-start gap-3 h-12 border-gray-200 hover:border-purple-200" onClick={() => setLocation(localePath("/blog"))}>
               <BookOpen className="size-5 text-blue-500" /> {t("nav.blog")}
             </Button>
+            <Button variant="outline" className="justify-start gap-3 h-12 border-gray-200 hover:border-purple-200" onClick={() => setLocation(localePath("/meu-corpo"))}>
+              <User className="size-5 text-purple-500" /> Meu Corpo
+            </Button>
           </nav>
+
+          {/* Sleep Tracker Card */}
+          {activeBaby && (
+            <SleepTracker
+              babyId={activeBaby.id}
+              babyAgeDays={Math.floor((Date.now() - new Date(activeBaby.birthDate).getTime()) / (1000 * 60 * 60 * 24))}
+              babyName={activeBaby.name || "Bebê"}
+              compact
+            />
+          )}
         </aside>
       </main>
     </div>

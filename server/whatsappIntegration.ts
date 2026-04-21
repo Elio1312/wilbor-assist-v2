@@ -111,7 +111,7 @@ export const whatsappRouter = router({
       }
     }),
 
-  // Enviar mensagem de texto via WhatsApp
+  // Enviar mensagem de texto via WhatsApp (INTEGRAÇÃO REAL)
   sendTextMessage: protectedProcedure
     .input(z.object({
       phoneNumber: z.string(),
@@ -119,14 +119,58 @@ export const whatsappRouter = router({
     }))
     .mutation(async ({ input }) => {
       try {
-        // Aqui você integraria com WhatsApp API
-        // Por enquanto, retornamos um mock
+        const accessToken = process.env.WHATSAPP_ACCESS_TOKEN;
+        const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+
+        if (!accessToken || !phoneNumberId) {
+          // Fallback para desenvolvimento
+          console.warn("[WhatsApp] API credentials not configured, using mock mode");
+          return {
+            success: true,
+            messageId: `msg_mock_${Date.now()}`,
+            to: input.phoneNumber,
+            text: input.message,
+            timestamp: new Date().toISOString(),
+            mode: "mock",
+          };
+        }
+
+        // Enviar via WhatsApp Business API
+        const response = await fetch(
+          `https://graph.facebook.com/v18.0/${phoneNumberId}/messages`,
+          {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messaging_product: "whatsapp",
+              recipient_type: "individual",
+              to: input.phoneNumber,
+              type: "text",
+              text: {
+                preview_url: false,
+                body: input.message,
+              },
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.text();
+          throw new Error(`WhatsApp API error: ${errorData}`);
+        }
+
+        const result = await response.json();
+
         return {
           success: true,
-          messageId: `msg_${Date.now()}`,
+          messageId: result.messages?.[0]?.id || `msg_${Date.now()}`,
           to: input.phoneNumber,
           text: input.message,
           timestamp: new Date().toISOString(),
+          mode: "production",
         };
       } catch (error) {
         console.error("[WhatsApp] Send message error:", error);
@@ -134,20 +178,56 @@ export const whatsappRouter = router({
       }
     }),
 
-  // Transcrever áudio via WhatsApp
+  // Transcrever áudio via WhatsApp (Whisper API Real)
   transcribeAudio: protectedProcedure
     .input(z.object({
       mediaId: z.string(),
-      language: z.enum(["pt", "en", "es"]).default("pt"),
+      language: z.enum(["pt", "en", "es", "fr", "de"]).default("pt"),
     }))
     .mutation(async ({ input }) => {
       try {
-        // Aqui você integraria com Whisper API ou similar
-        // Por enquanto, retornamos um mock
+        const accessToken = process.env.WHATSAPP_ACCESS_TOKEN;
+        if (!accessToken) {
+          throw new Error("WHATSAPP_ACCESS_TOKEN not configured");
+        }
+
+        // 1. Baixar áudio do WhatsApp
+        const mediaUrl = `https://graph.facebook.com/v18.0/${input.mediaId}`;
+        const mediaResponse = await fetch(`${mediaUrl}?access_token=${accessToken}`);
+
+        if (!mediaResponse.ok) {
+          throw new Error("Failed to download audio from WhatsApp");
+        }
+
+        // 2. Transcrever usando OpenAI Whisper API
+        const whisperApiKey = process.env.OPENAI_API_KEY;
+        if (!whisperApiKey) {
+          throw new Error("OPENAI_API_KEY not configured for transcription");
+        }
+
+        const formData = new FormData();
+        formData.append("file", await mediaResponse.blob(), "audio.ogg");
+        formData.append("model", "whisper-1");
+        formData.append("language", input.language === "en" ? "english" : input.language);
+
+        const whisperResponse = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${whisperApiKey}`,
+          },
+          body: formData,
+        });
+
+        if (!whisperResponse.ok) {
+          throw new Error("Whisper API transcription failed");
+        }
+
+        const transcriptionResult = await whisperResponse.json();
+
         return {
           success: true,
           mediaId: input.mediaId,
-          transcription: "Transcrição do áudio do WhatsApp",
+          transcription: transcriptionResult.text,
           language: input.language,
           confidence: 0.95,
         };
@@ -157,44 +237,55 @@ export const whatsappRouter = router({
       }
     }),
 
-  // Processar mensagem e gerar resposta IA
+  // Processar mensagem e gerar resposta IA (INTEGRAÇÃO REAL)
   processMessage: protectedProcedure
     .input(z.object({
       phoneNumber: z.string(),
       message: z.string(),
       messageType: z.enum(["text", "audio_transcription"]).default("text"),
+      userId: z.number().optional(),
+      babyId: z.number().optional(),
+      language: z.enum(["pt", "en", "es", "fr", "de"]).default("pt"),
     }))
     .mutation(async ({ input }) => {
       try {
-        // Aqui você integraria com LLM (GPT, Gemini, etc)
-        // Por enquanto, retornamos um mock
-        const responses: Record<string, string> = {
-          "meu bebê não dorme": "Seu bebê não dorme? Use o Sleep Tracker do Wilbor para registrar as sonecas e receber alertas personalizados!",
-          "cólica": "Seu bebê tem cólica? Use o Panic Button do Wilbor para respostas instantâneas sobre técnicas de alívio.",
-          "quanto leite": "Use o Feeding Tracker do Wilbor para registrar cada mamada e saber quando é a próxima.",
-          "default": "Olá! Sou o Wilbor, seu assistente inteligente para cuidados com bebê. Como posso ajudar?",
-        };
+        const { simpleChatWithWilbor } = await import("./wilborChat");
 
-        const lowerMessage = input.message.toLowerCase();
-        let response = responses.default;
+        // Preparar mensagens para o chat do Wilbor
+        const messages = [
+          { role: "user" as const, content: input.message }
+        ];
 
-        for (const [key, value] of Object.entries(responses)) {
-          if (key !== "default" && lowerMessage.includes(key)) {
-            response = value;
-            break;
-          }
-        }
+        // Obter contexto do usuário (baby info, language, etc)
+        const userId = input.userId || 0;
+        const babyId = input.babyId || null;
+
+        // Chamar o chat real do Wilbor
+        const response = await simpleChatWithWilbor({
+          userId,
+          babyId,
+          messages,
+          language: input.language,
+        });
 
         return {
           success: true,
           phoneNumber: input.phoneNumber,
           userMessage: input.message,
-          aiResponse: response,
+          aiResponse: response.content,
           timestamp: new Date().toISOString(),
         };
       } catch (error) {
         console.error("[WhatsApp] Process message error:", error);
-        throw new Error("Failed to process message");
+        // Fallback graceful se IA falhar
+        return {
+          success: false,
+          phoneNumber: input.phoneNumber,
+          userMessage: input.message,
+          aiResponse: "Desculpe, estou tendo dificuldades para responder agora. Tente novamente em alguns momentos! 💙",
+          timestamp: new Date().toISOString(),
+          error: "AI processing failed",
+        };
       }
     }),
 

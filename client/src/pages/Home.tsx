@@ -6,6 +6,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useI18n } from "@/contexts/i18n";
 import { getLoginUrl } from "@/const";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { Seo, SEO_PRESETS } from "@/components/Seo";
 import { useState, useMemo } from "react";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
 
@@ -30,7 +31,7 @@ export default function Home() {
     const items: Record<string, any[]> = {
       pt: [
         { q: "O Wilbor substitui o pediatra?", a: "Não. O Wilbor é um apoio neonatal digital baseado em SBP/OMS. Em emergências, procure o PS." },
-        { q: "Como funcionam os planos do Wilbor?", a: "Temos 3 planos: VISITA LIVRE (Grátis): 5 consultas com IA/mês. PREMIUM (R$ 29,00/mês): 500 créditos IA/mês. MANUAL (R$ 45,00): Conteúdo completo sem IA." },
+        { q: "Como funcionam os planos do Wilbor?", a: "Temos 2 planos: VISITA LIVRE (Grátis): 5 consultas IA/mês. PREMIUM (R$ 29,00/mês): IA ilimitada 24h + Manual (R$ 59,00 único): Acesso vitalício ao conteúdo completo." },
         { q: "É gratuito? Precisa de cartão?", a: "Sim, comece com 5 consultas grátis no plano Visita Livre. Sem cartão necessário." },
         { q: "Para qual idade é indicado?", a: "O Wilbor é indicado para bebês de 0 a 12 meses." },
         { q: "É baseado em protocolos confiáveis?", a: "Sim, todas as orientações seguem as recomendações oficiais da SBP, OMS e AAP." },
@@ -40,7 +41,7 @@ export default function Home() {
       ],
       en: [
         { q: "Does Wilbor replace a pediatrician?", a: "No. Wilbor is digital neonatal support based on AAP/WHO. In case of emergency, seek in-person care." },
-        { q: "How do Wilbor plans work?", a: "We have 3 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($9.00/mo): 500 AI credits/month. MANUAL ($14.00): Full content without AI." },
+        { q: "How do Wilbor plans work?", a: "We have 2 plans: FREE VISIT: 5 AI consultations/month. PREMIUM ($5.99/mo): Unlimited AI 24h + MANUAL ($12.99 one-time): Lifetime access to all content." },
         { q: "Is it free? Do I need a credit card?", a: "Yes, start with 5 free consultations on the Free Visit plan. No credit card required." },
         { q: "What age range is it for?", a: "Wilbor is designed for babies from 0 to 12 months." },
         { q: "Is it based on reliable protocols?", a: "Yes, all guidance follows official recommendations from AAP, WHO, and SBP." },
@@ -50,7 +51,7 @@ export default function Home() {
       ],
       es: [
         { q: "¿Wilbor reemplaza al pediatra?", a: "No. Wilbor es apoyo neonatal digital. En caso de emergencia, busque atención presencial." },
-        { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 3 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($9.00/mes): 500 créditos IA/mes. MANUAL ($14.00): Contenido completo sin IA." },
+        { q: "¿Cómo funcionan los planes de Wilbor?", a: "Tenemos 2 planes: VISITA LIBRE (Gratis): 5 consultas IA/mes. PREMIUM ($5.99/mes): IA ilimitada 24h + MANUAL ($12.99 único): Acceso de por vida a todo el contenido." },
         { q: "¿Es gratis? ¿Necesito tarjeta?", a: "Sí, empieza con 5 consultas gratis en el plan Visita Libre. Sin tarjeta necesaria." },
         { q: "¿Para qué edad está indicado?", a: "Wilbor está diseñado para bebés de 0 a 12 meses." },
         { q: "¿Está basado en protocolos confiables?", a: "Sí, todas las orientaciones siguen las recomendaciones oficiales de AAP, OMS y SBP." },
@@ -60,7 +61,7 @@ export default function Home() {
       ],
       fr: [
         { q: "Wilbor remplace-t-il le pédiatre ?", a: "Non. Wilbor est un soutien néonatal numérique. En cas d'urgence, consultez un médecin en personne." },
-        { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 3 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (9,00€/mois) : 500 réponses IA/mois. MANUEL (14,00€) : Contenu complet sans IA." },
+        { q: "Comment fonctionnent les abonnements Wilbor ?", a: "Nous avons 2 plans : VISITE LIBRE (Gratuit) : 5 consultations IA/mois. PREMIUM (£4.99/mois) : IA illimitée 24h + MANUEL (£10.99 unique) : Accès à vie à tout le contenu." },
         { q: "Est-ce gratuit ? Ai-je besoin d'une carte bancaire ?", a: "Oui, commencez avec 5 consultations gratuites. Aucune carte bancaire requise." },
         { q: "Pour quelle tranche d'âge est-il indiqué ?", a: "Wilbor est conçu pour les bébés de 0 à 12 mois." },
         { q: "Est-il basé sur des protocoles fiables ?", a: "Oui, toutes les recommandations suivent les directives officielles de l'AAP, de l'OMS et de la SFP." },
@@ -70,7 +71,7 @@ export default function Home() {
       ],
       de: [
         { q: "Ersetzt Wilbor den Kinderarzt?", a: "Nein. Wilbor ist digitale neonatale Unterstützung. Im Notfall suchen Sie bitte einen Arzt auf." },
-        { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 3 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (9,00€/Monat): 500 Antworten/Monat. HANDBUCH (14,00€): Vollständiger Inhalt ohne KI." },
+        { q: "Wie funktionieren die Wilbor-Pläne?", a: "Wir haben 2 Pläne: FREIER BESUCH (Kostenlos): 5 KI-Beratungen/Monat. PREMIUM (£4.99/Monat): Unbegrenzte KI rund um die Uhr + HANDBUCH (£10.99 einmalig): Lebenslanger Zugang zu allen Inhalten." },
         { q: "Ist es kostenlos? Brauche ich eine Kreditkarte?", a: "Ja, starten Sie mit 5 kostenlosen Beratungen. Keine Kreditkarte erforderlich." },
         { q: "Für welche Altersgruppe ist es geeignet?", a: "Wilbor ist für Babys von 0 bis 12 Monaten konzipiert." },
         { q: "Basiert es auf zuverlässigen Protokollen?", a: "Ja, alle Empfehlungen folgen den offiziellen Richtlinien der AAP, WHO und DGKJ." },
@@ -153,7 +154,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <Seo />
+      <div className="min-h-screen bg-white">
       {/* WhatsApp Floating Button */}
       <WhatsAppButton 
         phoneNumber="+55 12 997999971"
@@ -420,5 +423,6 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

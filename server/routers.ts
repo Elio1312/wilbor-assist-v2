@@ -119,6 +119,12 @@ export const appRouter = router({
         return { success: true, plan: input.plan };
       }),
 
+    // Buscar babies do usuário logado
+    getBabies: protectedProcedure.query(async ({ ctx }) => {
+      const { getBabiesByUser } = await import("./wilborDb");
+      return await getBabiesByUser(ctx.user.id);
+    }),
+
     trackEvent: protectedProcedure
       .input(z.object({
         eventType: z.enum(["hit_limit", "paywall_shown", "upgrade_clicked", "plans_clicked", "checkout_started", "payment_success", "payment_failed"]),
@@ -378,44 +384,63 @@ export const appRouter = router({
     // ==========================================
     // SLEEP TRACKING
     // ==========================================
-    startSleep: publicProcedure
-      .input(z.object({ userId: z.number(), babyId: z.number() }))
-      .mutation(async ({ input }) => {
-        return { id: 1, sleepStart: new Date().toISOString() };
+    startSleep: protectedProcedure
+      .input(z.object({ babyId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const { startSleep } = await import("./wilborDb");
+        return await startSleep(ctx.user.id, input.babyId);
       }),
 
-    endSleep: publicProcedure
+    endSleep: protectedProcedure
       .input(z.object({ sleepLogId: z.number() }))
       .mutation(async ({ input }) => {
-        return { success: true, durationMinutes: 45 };
+        const { endSleep } = await import("./wilborDb");
+        return await endSleep(input.sleepLogId);
       }),
 
-    updateSleepQuality: publicProcedure
+    getActiveSleep: protectedProcedure
+      .input(z.object({ babyId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const { getActiveSleep } = await import("./wilborDb");
+        return await getActiveSleep(ctx.user.id, input.babyId);
+      }),
+
+    getRecentSleepLogs: protectedProcedure
+      .input(z.object({ babyId: z.number(), limit: z.number().default(10) }))
+      .query(async ({ ctx, input }) => {
+        const { getRecentSleepLogs } = await import("./wilborDb");
+        return await getRecentSleepLogs(ctx.user.id, input.babyId, input.limit);
+      }),
+
+    updateSleepQuality: protectedProcedure
       .input(z.object({
         sleepLogId: z.number(),
         quality: z.enum(["good", "restless", "bad"]),
         notes: z.string().optional()
       }))
       .mutation(async ({ input }) => {
-        return { success: true };
+        const { updateSleepQuality } = await import("./wilborDb");
+        return await updateSleepQuality(input.sleepLogId, input.quality, input.notes);
       }),
 
-    getActiveSleep: publicProcedure
-      .input(z.object({ userId: z.number(), babyId: z.number() }))
-      .query(async ({ input }) => {
-        return null;
-      }),
+    predictNap: protectedProcedure
+      .input(z.object({ babyId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const { getBabyById } = await import("./wilborDb");
+        const { getRecentSleepLogs, predictNextNap } = await import("./wilborDb");
+        const { getWilborConversation } = await import("./wilborDb");
 
-    getSleepLogs: publicProcedure
-      .input(z.object({ userId: z.number(), babyId: z.number(), limit: z.number().optional() }))
-      .query(async ({ input }) => {
-        return [];
-      }),
+        const baby = await getBabyById(input.babyId);
+        if (!baby?.birthDate) {
+          return { suggestedTime: null, confidence: "none" };
+        }
 
-    predictNap: publicProcedure
-      .input(z.object({ userId: z.number(), babyId: z.number() }))
-      .query(async ({ input }) => {
-        return { suggestedTime: null, confidence: "none" };
+        const babyAgeDays = Math.floor(
+          (Date.now() - new Date(baby.birthDate).getTime()) / (1000 * 60 * 60 * 24)
+        );
+
+        const recentLogs = await getRecentSleepLogs(ctx.user.id, input.babyId, 10);
+        return predictNextNap(recentLogs, babyAgeDays);
       }),
 
     // ==========================================
