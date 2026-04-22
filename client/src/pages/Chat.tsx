@@ -108,7 +108,13 @@ export function Chat() {
     }
   }, [credits?.isOverLimit]);
 
-  // Analytics: Chat Started (once when user is loaded)
+  // Analytics: Chat Entry (início do interesse real)
+  useEffect(() => {
+    // Fire once when user enters chat
+    AnalyticsEvents.chatEntry(user?.id);
+  }, [user]);
+
+  // Analytics: Chat Started (apenas para usuários autenticados, uma vez por sessão)
   useEffect(() => {
     if (user && fingerprint) {
       AnalyticsEvents.chatStarted(user.id);

@@ -9,6 +9,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Seo, SEO_PRESETS } from "@/components/Seo";
 import { useState, useMemo } from "react";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
+import { AnalyticsEvents } from "@/lib/analytics";
 
 // CDN Image URLs
 const IMAGES = {
@@ -153,6 +154,11 @@ export default function Home() {
     }
   };
 
+  // Analytics: CTA Click tracking
+  const handleCTAClick = (ctaName: string) => {
+    AnalyticsEvents.ctaClick(ctaName, 'homepage');
+  };
+
   return (
     <>
       <Seo />
@@ -191,7 +197,7 @@ export default function Home() {
                   <a href={getLoginUrl()}>{t("nav.enter")}</a>
                 </Button>
                 <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
-                  <a href={chatHref} onClick={warmAnonymousSession}>{t("nav.try_free")}</a>
+                  <a href={chatHref} onClick={() => { warmAnonymousSession(); handleCTAClick('header_try_free'); }}>{t("nav.try_free")}</a>
                 </Button>
               </>
             )}
@@ -219,7 +225,7 @@ export default function Home() {
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-pink-600 h-16 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-transform"
               >
-                <a href={chatHref} onClick={warmAnonymousSession}>
+                <a href={chatHref} onClick={() => { warmAnonymousSession(); handleCTAClick('hero_cta'); }}>
                   {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
                 </a>
               </Button>
@@ -290,7 +296,7 @@ export default function Home() {
                 ))}
               </div>
               <Button asChild className="mt-12 bg-pink-500 hover:bg-pink-600 h-14 px-8 rounded-full text-lg">
-                <a href={chatHref} onClick={warmAnonymousSession}>{t("mother.cta")}</a>
+                <a href={chatHref} onClick={() => { warmAnonymousSession(); handleCTAClick('mother_cta'); }}>{t("mother.cta")}</a>
               </Button>
             </div>
             <div className="relative">
