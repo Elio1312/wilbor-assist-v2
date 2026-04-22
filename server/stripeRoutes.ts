@@ -10,7 +10,7 @@ export const stripeRouter = router({
   createCheckout: protectedProcedure
     .input(z.object({
       amount: z.number().min(5), // Mínimo de 5 na moeda local
-      currency: z.enum(["brl", "usd", "eur"]).default("brl"),
+      currency: z.enum(["brl", "usd", "eur", "gbp"]).default("brl"),
     }))
     .mutation(async ({ ctx, input }) => {
       try {

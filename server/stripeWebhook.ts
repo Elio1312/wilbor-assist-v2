@@ -316,14 +316,14 @@ export async function createCheckoutSession(
       line_items: [
         {
           price_data: {
-            currency: PRODUCTS.PREMIUM.price.currency,
+            currency: "usd",
             product_data: {
-              name: PRODUCTS.PREMIUM.name,
-              description: PRODUCTS.PREMIUM.description,
+              name: "Wilbor Premium",
+              description: "Assinatura mensal de IA para pais - ilimitada 24/7",
             },
-            unit_amount: PRODUCTS.PREMIUM.price.amount,
+            unit_amount: 599,
             recurring: {
-              interval: PRODUCTS.PREMIUM.price.interval,
+              interval: "month",
             },
           },
           quantity: 1,

@@ -239,9 +239,11 @@ export const AAP_CONTENT = {
 };
 
 // Helper to get content based on locale and context
-export function getAAPContent(locale: string, context: keyof typeof AAP_CONTENT) {
+export function getAAPContent(locale: string, context: string) {
   const lang = locale === 'en' ? 'en' : 'pt'; // Default to pt for ES/FR/DE
-  return AAP_CONTENT[context]?.[lang] || AAP_CONTENT[context]?.pt;
+  const content = (AAP_CONTENT as Record<string, Record<string, unknown>>)[context];
+  if (!content) return null;
+  return (content[lang] as Record<string, unknown>) || content['pt'] as Record<string, unknown>;
 }
 
 // Format temperature based on locale

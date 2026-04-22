@@ -15,8 +15,9 @@ export const recipesRouter = router({
       })
     )
     .query(({ input }) => {
-      const filtered = input.ageMonths
-        ? recipesData.filter(recipe => recipe.minAgeMonths <= input.ageMonths && recipe.maxAgeMonths >= input.ageMonths)
+      const ageMonths = input.ageMonths;
+      const filtered = ageMonths !== undefined
+        ? recipesData.filter(recipe => recipe.minAgeMonths <= ageMonths && recipe.maxAgeMonths >= ageMonths)
         : recipesData;
 
       return filtered.map(shapeRecipe);

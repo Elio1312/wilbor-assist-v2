@@ -261,12 +261,10 @@ export const whatsappRouter = router({
         const babyId = input.babyId || null;
 
         // Chamar o chat real do Wilbor
-        const response = await simpleChatWithWilbor({
-          userId,
-          babyId,
-          messages,
-          language: input.language,
-        });
+        const response = await simpleChatWithWilbor(
+          userId.toString(),
+          messages
+        );
 
         return {
           success: true,

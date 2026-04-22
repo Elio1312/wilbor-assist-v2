@@ -182,7 +182,7 @@ export function Chat() {
     }
   };
 
-  const isPremium = user && credits?.plan !== "free";
+  const isPremium = user && credits && "plan" in credits && credits.plan !== "free";
   const remaining = credits?.remaining ?? 0;
   const monthlyLimit = credits
     ? ("limit" in credits ? credits.limit : "monthlyLimit" in credits ? credits.monthlyLimit : 5)

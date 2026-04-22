@@ -151,7 +151,7 @@ export default function Dashboard() {
           </nav>
 
           {/* Sleep Tracker Card */}
-          {activeBaby && (
+          {activeBaby && activeBaby.birthDate && (
             <SleepTracker
               babyId={activeBaby.id}
               babyAgeDays={Math.floor((Date.now() - new Date(activeBaby.birthDate).getTime()) / (1000 * 60 * 60 * 24))}

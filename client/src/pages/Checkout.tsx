@@ -15,7 +15,7 @@ import { Seo, SEO_PRESETS } from "@/components/Seo";
 // 🇺🇸 EUA (USD): Premium $5.99/mês, Manual $12.99 único
 // 🇬🇧 UK (GBP): Premium £4.99/mês, Manual £10.99 único
 
-type Currency = "brl" | "usd" | "gbp";
+type Currency = "brl" | "usd" | "gbp" | "eur";
 type PlanType = "premium" | "manual";
 
 interface PriceInfo {
@@ -38,6 +38,10 @@ const PRICING: Record<Currency, Record<PlanType, PriceInfo>> = {
     premium: { amount: 499, display: "£ 4.99", period: "/month" },
     manual: { amount: 1099, display: "£ 10.99", period: " (one-time)" },
   },
+  eur: {
+    premium: { amount: 599, display: "€ 5.99", period: "/month" },
+    manual: { amount: 1299, display: "€ 12.99", period: " (one-time)" },
+  },
 };
 
 // Moedas disponíveis com labels por idioma
@@ -45,6 +49,7 @@ const CURRENCIES: Record<string, { code: Currency; symbol: string; label: Record
   brl: { code: "brl", symbol: "R$", label: { pt: "Brasil (R$)", en: "Brazil (R$)", es: "Brasil (R$)", fr: "Brésil (R$)", de: "Brasilien (R$)" } },
   usd: { code: "usd", symbol: "$", label: { pt: "Estados Unidos ($)", en: "United States ($)", es: "Estados Unidos ($)", fr: "États-Unis ($)", de: "USA ($)" } },
   gbp: { code: "gbp", symbol: "£", label: { pt: "Reino Unido (£)", en: "United Kingdom (£)", es: "Reino Unido (£)", fr: "Royaume-Uni (£)", de: "Großbritannien (£)" } },
+  eur: { code: "eur", symbol: "€", label: { pt: "Europa (€)", en: "Europe (€)", es: "Europa (€)", fr: "Europe (€)", de: "Europa (€)" } },
 };
 
 // Detecta moeda baseada no locale

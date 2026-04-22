@@ -5,8 +5,45 @@
 
 import { router, publicProcedure, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
-import { Currency, CURRENCIES, getPricingByCurrency, convertPrice, formatPrice, isValidCurrency } from "./currency";
+import { Currency, CURRENCIES, formatPrice, isValidCurrency } from "./currency";
 import { createExtraCreditsCheckout } from "./stripeIntegration";
+import { PRODUCTS } from "./stripeProducts";
+
+// Preços por moeda para todos os planos (em centavos)
+const PLAN_PRICES: Record<Currency, Record<string, number>> = {
+  BRL: {
+    growth_crises_monthly: 2900,
+    growth_crises_annual: 5900,
+    sleep_tracker_monthly: 1900,
+    sleep_tracker_annual: 3900,
+    full_suite_monthly: 4900,
+    full_suite_annual: 8900,
+  },
+  USD: {
+    growth_crises_monthly: 990,
+    growth_crises_annual: 1299,
+    sleep_tracker_monthly: 599,
+    sleep_tracker_annual: 899,
+    full_suite_monthly: 1499,
+    full_suite_annual: 1999,
+  },
+  GBP: {
+    growth_crises_monthly: 799,
+    growth_crises_annual: 1099,
+    sleep_tracker_monthly: 499,
+    sleep_tracker_annual: 799,
+    full_suite_monthly: 1299,
+    full_suite_annual: 1699,
+  },
+  EUR: {
+    growth_crises_monthly: 990,
+    growth_crises_annual: 1299,
+    sleep_tracker_monthly: 599,
+    sleep_tracker_annual: 899,
+    full_suite_monthly: 1499,
+    full_suite_annual: 1999,
+  },
+};
 
 export const stripeMultiCurrencyRouter = router({
   // Get available currencies
@@ -28,8 +65,9 @@ export const stripeMultiCurrencyRouter = router({
         return null;
       }
 
-      const pricing = getPricingByCurrency(input.currency as Currency);
-      const config = CURRENCIES[input.currency as Currency];
+      const currency = input.currency as Currency;
+      const config = CURRENCIES[currency];
+      const prices = PLAN_PRICES[currency];
 
       return {
         currency: input.currency,
@@ -37,28 +75,28 @@ export const stripeMultiCurrencyRouter = router({
         locale: config.locale,
         prices: {
           growthCrisesMonthly: {
-            amount: pricing.growth_crises_monthly,
-            formatted: formatPrice(pricing.growth_crises_monthly, input.currency as Currency),
+            amount: prices.growth_crises_monthly,
+            formatted: formatPrice(prices.growth_crises_monthly, currency),
           },
           growthCrisesAnnual: {
-            amount: pricing.growth_crises_annual,
-            formatted: formatPrice(pricing.growth_crises_annual, input.currency as Currency),
+            amount: prices.growth_crises_annual,
+            formatted: formatPrice(prices.growth_crises_annual, currency),
           },
           sleepTrackerMonthly: {
-            amount: pricing.sleep_tracker_monthly,
-            formatted: formatPrice(pricing.sleep_tracker_monthly, input.currency as Currency),
+            amount: prices.sleep_tracker_monthly,
+            formatted: formatPrice(prices.sleep_tracker_monthly, currency),
           },
           sleepTrackerAnnual: {
-            amount: pricing.sleep_tracker_annual,
-            formatted: formatPrice(pricing.sleep_tracker_annual, input.currency as Currency),
+            amount: prices.sleep_tracker_annual,
+            formatted: formatPrice(prices.sleep_tracker_annual, currency),
           },
           fullSuiteMonthly: {
-            amount: pricing.full_suite_monthly,
-            formatted: formatPrice(pricing.full_suite_monthly, input.currency as Currency),
+            amount: prices.full_suite_monthly,
+            formatted: formatPrice(prices.full_suite_monthly, currency),
           },
           fullSuiteAnnual: {
-            amount: pricing.full_suite_annual,
-            formatted: formatPrice(pricing.full_suite_annual, input.currency as Currency),
+            amount: prices.full_suite_annual,
+            formatted: formatPrice(prices.full_suite_annual, currency),
           },
         },
       };
@@ -82,9 +120,9 @@ export const stripeMultiCurrencyRouter = router({
         throw new Error("Invalid currency");
       }
 
-      const pricing = getPricingByCurrency(input.currency as Currency);
-      const amount = pricing[input.planId as keyof typeof pricing];
-      const config = CURRENCIES[input.currency as Currency];
+      const currency = input.currency as Currency;
+      const config = CURRENCIES[currency];
+      const amount = PLAN_PRICES[currency][input.planId];
 
       // Mapear planId para nomes de produtos internacionalizados
       const productNames: Record<string, Record<string, string>> = {
@@ -139,7 +177,7 @@ export const stripeMultiCurrencyRouter = router({
         const session = await createExtraCreditsCheckout(
           ctx.user.id,
           amount,
-          input.currency.toLowerCase(),
+          currency.toLowerCase() as 'brl' | 'usd' | 'eur' | 'gbp',
           lang
         );
 
@@ -149,7 +187,7 @@ export const stripeMultiCurrencyRouter = router({
           url: session.url,
           currency: input.currency,
           amount: amount,
-          formatted: formatPrice(amount, input.currency as Currency),
+          formatted: formatPrice(amount, currency),
           planId: input.planId,
           productName: productNames[input.planId]?.[lang] || productNames[input.planId]?.en,
           message: `Checkout ${config.name} criado com sucesso!`,
@@ -178,12 +216,12 @@ export const stripeMultiCurrencyRouter = router({
     );
   }),
 
-  // Convert price between currencies
+  // Convert price between currencies (including GBP)
   convertPrice: publicProcedure
     .input(z.object({
       amount: z.number(),
-      fromCurrency: z.enum(["USD", "EUR", "BRL"]).default("USD"),
-      toCurrency: z.enum(["USD", "EUR", "BRL"]).default("USD"),
+      fromCurrency: z.enum(["USD", "EUR", "BRL", "GBP"]).default("USD"),
+      toCurrency: z.enum(["USD", "EUR", "BRL", "GBP"]).default("USD"),
     }))
     .query(({ input }) => {
       if (!isValidCurrency(input.fromCurrency) || !isValidCurrency(input.toCurrency)) {

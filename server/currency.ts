@@ -15,9 +15,11 @@ export interface CurrencyConfig {
   stripeCode: string;
   locale: string;
   region: "br" | "us" | "uk" | "eu";
+  exchangeRate: number; // Taxa de câmbio para USD (1 USD = X moeda)
 }
 
 // Configuração de moedas
+// exchangeRate: 1 USD = X moeda (aproximado abril 2026)
 export const CURRENCIES: Record<Currency, CurrencyConfig> = {
   BRL: {
     code: "BRL",
@@ -26,6 +28,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
     stripeCode: "brl",
     locale: "pt-BR",
     region: "br",
+    exchangeRate: 5.00, // R$ 5,00 por USD
   },
   USD: {
     code: "USD",
@@ -34,6 +37,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
     stripeCode: "usd",
     locale: "en-US",
     region: "us",
+    exchangeRate: 1.00, // Base
   },
   GBP: {
     code: "GBP",
@@ -42,6 +46,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
     stripeCode: "gbp",
     locale: "en-GB",
     region: "uk",
+    exchangeRate: 0.79, // £0.79 por USD
   },
   EUR: {
     code: "EUR",
@@ -50,6 +55,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
     stripeCode: "eur",
     locale: "de-DE",
     region: "eu",
+    exchangeRate: 0.92, // €0.92 por USD
   },
 };
 

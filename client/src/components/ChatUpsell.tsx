@@ -1,22 +1,38 @@
-import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, ArrowRight, Star } from "lucide-react";
 import { useI18n } from "@/contexts/i18n";
 import { useLocation } from "wouter";
 
+interface Ebook {
+  titlePt: string;
+  titleEn: string;
+  titleEs: string;
+  description: string;
+  imageUrl: string;
+}
+
 export function ChatUpsell({ assistantMessage }: { assistantMessage: string }) {
   const { localePath, locale } = useI18n();
   const [, setLocation] = useLocation();
 
-  const { data: ebook, isLoading } = trpc.wilbor.getRecommendedEbook.useQuery(
-    { lastAssistantMessage: assistantMessage },
-    { enabled: !!assistantMessage, staleTime: 1000 * 60 * 5 } // Cache de 5min
-  );
+  // TODO: Implementar getRecommendedEbook no servidor quando necessário
+  // const { data: ebook, isLoading } = trpc.wilbor.getRecommendedEbook.useQuery(...)
 
-  if (isLoading || !ebook) return null;
+  // Mock ebook para demonstração (remover quando API estiver pronta)
+  const ebook: Ebook | undefined = undefined;
 
-  const title = locale === 'en' ? (ebook.titleEn || ebook.titlePt) : locale === 'es' ? (ebook.titleEs || ebook.titlePt) : ebook.titlePt;
+  // Render null if no ebook (disabled for now)
+  if (!ebook) {
+    return null;
+  }
+
+  const ebookData = ebook as Ebook;
+  const title = locale === 'en'
+    ? (ebookData.titleEn || ebookData.titlePt)
+    : locale === 'es'
+    ? (ebookData.titleEs || ebookData.titlePt)
+    : ebookData.titlePt;
 
   return (
     <div className="px-4 py-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -27,28 +43,27 @@ export function ChatUpsell({ assistantMessage }: { assistantMessage: string }) {
         </div>
 
         <div className="flex gap-4 items-center">
-          <img 
-            src={ebook.coverImage} 
-            className="w-16 h-20 object-cover rounded shadow-md border border-white"
+          <img
+            src={ebookData.imageUrl}
             alt={title}
+            className="w-16 h-16 object-cover rounded-lg shadow-sm"
           />
-          <div className="flex-1 space-y-1">
-            <div className="flex items-center gap-1 text-[10px] font-bold text-purple-600 uppercase tracking-tighter">
-              <Star className="size-3 fill-purple-600" /> Recomendação Wilbor
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1 mb-1">
+              <Star className="size-3 text-yellow-500 fill-yellow-500" />
+              <span className="text-xs text-purple-600 font-medium">Recomendado para você</span>
             </div>
-            <h4 className="text-sm font-bold text-slate-900 leading-tight">
-              Aprofunde este assunto com o guia: {title}
-            </h4>
-            <p className="text-xs text-slate-500 line-clamp-1">
-              Soluções práticas para sua paz e o bem-estar do seu bebê.
-            </p>
+            <h4 className="font-semibold text-sm text-gray-900 truncate">{title}</h4>
+            <p className="text-xs text-gray-500 line-clamp-2">{ebookData.description}</p>
           </div>
-          <Button 
-            size="sm" 
-            onClick={() => setLocation(localePath(`/shop`))}
-            className="bg-purple-600 hover:bg-purple-700 rounded-full shrink-0 gap-1"
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 shrink-0"
+            onClick={() => setLocation("/buy-credits")}
           >
-            Conhecer <ArrowRight className="size-3" />
+            Ver mais
+            <ArrowRight className="size-3 ml-1" />
           </Button>
         </div>
       </Card>

@@ -284,7 +284,7 @@ export function SleepTracker({ babyId, babyAgeDays, babyName, compact = false }:
             <p className="text-sm text-purple-700 mb-1">Dormindo há</p>
             <p className="text-4xl font-bold text-purple-900">{formatDuration(activeSleepDuration)}</p>
             <p className="text-xs text-purple-600 mt-1">
-              Iniciado às {new Date(activeSleep.data.sleepStart).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
+              Iniciado às {activeSleep.data && new Date(activeSleep.data.sleepStart).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
             </p>
           </div>
         )}

@@ -20,8 +20,8 @@ export default function AdminDashboard() {
   // 1. Busca de Dados Reais do Cérebro de Gestão
   const { data: metrics, isLoading, error } = trpc.admin.getBusinessMetrics.useQuery();
 
-  if (isLoading) return <AdminSkeleton />;
-  
+  if (isLoading || !metrics) return <AdminSkeleton />;
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white">
