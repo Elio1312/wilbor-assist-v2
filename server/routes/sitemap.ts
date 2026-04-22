@@ -149,12 +149,16 @@ const LANG_SLUGS: Record<string, string[]> = {
   }
 
   // Blog articles — each language has its own set of slugs
+  // CRITICAL: Each localized version MUST list all language variants (Google requirement)
   for (const lang of LANGS) {
     const slugs = LANG_SLUGS[lang.prefix] ?? BLOG_SLUGS_PT;
     for (const slug of slugs) {
       const loc = `${baseUrl}${lang.prefix}/blog/${slug}`;
       sitemap += `\n  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>`;
-      sitemap += `\n    <xhtml:link rel="alternate" hreflang="${lang.hreflang}" href="${loc}" />`;
+      // Add ALL language variants for this article (Google SEO requirement)
+      for (const alt of LANGS) {
+        sitemap += `\n    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${baseUrl}${alt.prefix}/blog/${slug}" />`;
+      }
       sitemap += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/en/blog/${slug}" />\n  </url>`;
     }
   }
