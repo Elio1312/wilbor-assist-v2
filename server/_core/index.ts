@@ -19,6 +19,7 @@ import { runPendingMigrations } from "../runMigrations";
 import { serveStatic, setupVite } from "./vite";
 import { registerStripeRoutes } from "../stripeWebhook";
 import sitemapRouter from "../routes/sitemap";
+import robotsRouter from "../routes/robots";
 import { getDb, isStartupDatabaseReachable, upsertUser } from "../db";
 import { wilborMilestoneContent } from "../../drizzle/schema";
 
@@ -189,8 +190,9 @@ async function startServer() {
     }
   });
 
-  // Sitemap routes
+  // Sitemap and robots routes
   app.use(sitemapRouter);
+  app.use(robotsRouter);
   
   // tRPC API
   app.use(
