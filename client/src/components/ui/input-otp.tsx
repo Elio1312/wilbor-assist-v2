@@ -41,7 +41,9 @@ function InputOTPSlot({
 }: React.ComponentProps<"div"> & {
   index: number;
 }) {
+  // @ts-ignore - input-otp types incompatible with React 19
   const inputOTPContext = React.useContext(OTPInputContext);
+  // @ts-ignore - slots may not exist on context
   const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
 
   return (

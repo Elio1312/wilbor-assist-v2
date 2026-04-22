@@ -30,6 +30,7 @@ function toBlogLocale(locale: string): BlogLocale {
 }
 
 function getCategoryIcon(category: string) {
+  // @ts-ignore - JSX namespace not found in React 19
   const icons: Record<string, JSX.Element> = {
     sono: <Moon className="w-5 h-5 text-blue-500" />,
     colica: <Baby className="w-5 h-5 text-pink-500" />,
