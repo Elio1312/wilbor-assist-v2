@@ -10,6 +10,7 @@ import { Sparkles, LogIn } from "lucide-react";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { EbookOfferCard } from "@/components/EbookOfferCard";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
+import { CaptchaChallenge, useCaptchaVerification } from "@/components/CaptchaChallenge";
 
 const CREDIT_TEXTS: Record<string, {
   remaining: (n: number, total: number) => string;
@@ -55,6 +56,11 @@ export function Chat() {
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [ebookOffer, setEbookOffer] = useState<any>(null);
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [anonMessageCount, setAnonMessageCount] = useState(0);
+
+  // CAPTCHA verification for anonymous users
+  const captchaVerification = useCaptchaVerification();
 
   // Initialize fingerprint or use anonymous session ID as fallback
   useEffect(() => {
@@ -108,6 +114,13 @@ export function Chat() {
       return;
     }
 
+    // CAPTCHA check for anonymous users after 3 messages
+    const isAnon = !user;
+    if (isAnon && anonMessageCount >= 3 && !captchaVerification.isVerified) {
+      setShowCaptcha(true);
+      return;
+    }
+
     // Add user message optimistically
     const newMessages: Message[] = [
       ...messages,
@@ -137,6 +150,11 @@ export function Chat() {
         ...prev,
         { role: "assistant", content: responseText, messageId },
       ]);
+
+      // Incrementar contador de mensagens anônimas (para CAPTCHA)
+      if (isAnon) {
+        setAnonMessageCount(prev => prev + 1);
+      }
 
       // Refresh credits after each message
       if (user) {
@@ -281,6 +299,16 @@ export function Chat() {
 
       {/* Paywall Modal */}
       <PaywallModal open={paywallOpen} onClose={() => setPaywallOpen(false)} />
+
+      {/* CAPTCHA Challenge Modal */}
+      {showCaptcha && (
+        <CaptchaChallenge
+          onVerified={() => setShowCaptcha(false)}
+          onCancel={() => {
+            setShowCaptcha(false);
+          }}
+        />
+      )}
     </div>
   );
 }
