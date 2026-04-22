@@ -422,6 +422,9 @@ const milestones = [
   }
 ];
 
+// Export milestones for use in server startup
+export { milestones as COMPLETE_MILESTONES };
+
 async function seed() {
   console.log("🌱 Starting complete milestone seed...");
   console.log(`📊 Total milestones to insert: ${milestones.length}`);

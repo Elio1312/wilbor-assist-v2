@@ -5,7 +5,7 @@
  */
 
 // Tipos de moeda suportada
-export type Currency = "USD" | "GBP" | "BRL";
+export type Currency = "USD" | "GBP" | "BRL" | "EUR";
 
 // Interface de configuração de moeda
 export interface CurrencyConfig {
@@ -14,7 +14,7 @@ export interface CurrencyConfig {
   name: string;
   stripeCode: string;
   locale: string;
-  region: "br" | "us" | "uk";
+  region: "br" | "us" | "uk" | "eu";
 }
 
 // Configuração de moedas
@@ -43,6 +43,14 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
     locale: "en-GB",
     region: "uk",
   },
+  EUR: {
+    code: "EUR",
+    symbol: "€",
+    name: "Euro",
+    stripeCode: "eur",
+    locale: "de-DE",
+    region: "eu",
+  },
 };
 
 // ==========================================
@@ -51,6 +59,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
 // 🇧🇷 BRASIL: Premium R$29/mês, Manual R$59 único
 // 🇺🇸 EUA (USD): Premium $5.99/mês, Manual $12.99 único
 // 🇬🇧 UK (GBP): Premium £4.99/mês, Manual £10.99 único
+// 🇪🇺 EUROPA (EUR): Premium €5.99/mês, Manual €12.99 único
 
 export const WILBOR_PRICING = {
   // BRASIL (BRL) - centavos
@@ -68,6 +77,11 @@ export const WILBOR_PRICING = {
     premium_monthly: 499,      // £4.99/mês
     manual_one_time: 1099,      // £10.99 pagamento único
   },
+  // EUROPA (EUR) - centavos
+  eu: {
+    premium_monthly: 599,      // €5.99/mês
+    manual_one_time: 1299,      // €12.99 pagamento único
+  },
 };
 
 // Função para obter preço formatado
@@ -83,7 +97,7 @@ export function getRegionConfig(currency: Currency): CurrencyConfig {
 }
 
 // Detecta região baseado no locale
-export function detectRegion(locale?: string): "br" | "us" | "uk" {
+export function detectRegion(locale?: string): "br" | "us" | "uk" | "eu" {
   if (!locale) return "us";
 
   if (locale.includes("pt") || locale.includes("br") || locale.includes("BR")) {
@@ -92,6 +106,10 @@ export function detectRegion(locale?: string): "br" | "us" | "uk" {
 
   if (locale.includes("gb") || locale.includes("uk")) {
     return "uk";
+  }
+
+  if (locale.includes("de") || locale.includes("fr") || locale.includes("es") || locale.includes("it") || locale.includes("eu")) {
+    return "eu";
   }
 
   return "us";
@@ -104,6 +122,7 @@ export function detectCurrency(locale?: string): Currency {
   switch (region) {
     case "br": return "BRL";
     case "uk": return "GBP";
+    case "eu": return "EUR";
     default: return "USD";
   }
 }

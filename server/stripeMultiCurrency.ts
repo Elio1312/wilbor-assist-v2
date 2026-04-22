@@ -21,7 +21,7 @@ export const stripeMultiCurrencyRouter = router({
   // Get pricing in specific currency
   getPricing: publicProcedure
     .input(z.object({
-      currency: z.enum(["USD", "EUR", "BRL"]).default("USD"),
+      currency: z.enum(["USD", "EUR", "BRL", "GBP"]).default("USD"),
     }))
     .query(({ input }) => {
       if (!isValidCurrency(input.currency)) {
