@@ -324,6 +324,34 @@ Todas as pendências identificadas foram resolvidas:
 | Blog/SEO: correção de slugs e metadados | ✅ Resolvido |
 | Autenticação: fluxo completo login | ✅ Validado (fluxo anônimo intencional) |
 | Seed milestones: rodar em produção | ✅ Auto-seed configurado |
+| Sitemap hreflang: blog multilíngue | ✅ Corrigido (todas as variantes por idioma) |
+
+---
+
+## 8. Sitemap Hreflang Corrigido (Blog Multilíngue)
+
+### ⚠️ ANTES (Incompleto)
+```xml
+<!-- Cada idioma listava apenas si mesmo -->
+<xhtml:link rel="alternate" hreflang="pt-BR" href=".../blog/bebe-nao-dorme" />
+```
+Google SEO exige que TODAS as variantes de idioma sejam listadas em cada URL.
+
+### ✅ DEPOIS (Correção SEO)
+```xml
+<!-- Cada artigo agora lista TODAS as 6 variantes linguísticas -->
+<xhtml:link rel="alternate" hreflang="pt-BR" href=".../pt/blog/bebe-nao-dorme" />
+<xhtml:link rel="alternate" hreflang="en" href=".../en/blog/bebe-nao-dorme" />
+<xhtml:link rel="alternate" hreflang="es" href=".../es/blog/bebe-nao-dorme" />
+<xhtml:link rel="alternate" hreflang="fr" href=".../fr/blog/bebe-nao-dorme" />
+<xhtml:link rel="alternate" hreflang="de" href=".../de/blog/bebe-nao-dorme" />
+<xhtml:link rel="alternate" hreflang="x-default" href=".../en/blog/bebe-nao-dorme" />
+```
+
+### Arquivo Modificado
+| Arquivo | Alteração |
+|---------|-----------|
+| `server/routes/sitemap.ts` | Loop para adicionar TODAS as variantes hreflang |
 
 ---
 
@@ -345,6 +373,7 @@ Todas as pendências identificadas foram resolvidas:
 ✅ Repositório: Elio1312/wilbor-assist-v2
 
 Commits implementados:
+- a912ccd: fix: sitemap hreflang for blog articles (all language variants)
 - 39c9111: feat: Add robots.txt, sitemap improvements, and full milestone seed script
 - 1a0c055: feat: Implement GDPR/LGPD consent, AAP content, and milestones gaps
 - 210657c: feat: Implement CAPTCHA anti-abuse for anonymous users
@@ -366,7 +395,7 @@ Commits implementados:
 | `server/stripeMultiCurrency.ts` | Modificado | Stripe real multi-moeda |
 | `server/stripeIntegration.ts` | Modificado | Metadata e multi-moeda |
 | `server/_core/aapContentAdapter.ts` | Novo | Conteúdo AAP/CDC |
-| `server/routes/sitemap.ts` | Modificado | Sitemap dinâmico |
+| `server/routes/sitemap.ts` | Modificado | Sitemap dinâmico + hreflang correto |
 | `server/routes/robots.ts` | Novo | robots.txt dinâmico |
 | `server/_core/index.ts` | Modificado | Registro routers + auto-seed |
 | `drizzle/seed_milestones_complete.ts` | Novo | Script seed completo |
@@ -380,3 +409,4 @@ Commits implementados:
 *Wilbor v2 - Inteligência artificial a serviço da maternidade*
 *Score de Implementação: 92/100*
 *Status: PRONTO PARA DEPLOY ✅*
+*Última atualização: 22/04/2026 12:45*
