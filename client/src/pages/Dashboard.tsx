@@ -10,11 +10,15 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Heart, LogOut, Baby, Utensils, BookOpen, BarChart3, User } from "lucide-react";
 import { useLocation } from "wouter";
 import { useI18n } from "@/contexts/i18n";
+import { ParentalConsentModal, useParentalConsent } from "@/components/ParentalConsentModal";
 
 export default function Dashboard() {
   const { t, localePath } = useI18n(); // Uso correto do motor de tradução
   const [, setLocation] = useLocation();
   const { user, logout, loading } = useAuth();
+
+  // GDPR/LGPD Parental Consent Hook
+  const { showConsent, hasConsented, handleAccept, handleDecline } = useParentalConsent();
 
   // Prevent Google from indexing private/auth-required pages
   useEffect(() => {
@@ -157,6 +161,15 @@ export default function Dashboard() {
           )}
         </aside>
       </main>
+
+      {/* GDPR/LGPD Parental Consent Modal */}
+      {showConsent && (
+        <ParentalConsentModal
+          open={showConsent}
+          onAccept={handleAccept}
+          onDecline={handleDecline}
+        />
+      )}
     </div>
   );
 }
