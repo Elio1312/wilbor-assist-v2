@@ -7,6 +7,7 @@ import { useI18n } from "@/contexts/i18n";
 import { Heart, Check, Loader2, ShieldCheck, ArrowLeft, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { Seo, SEO_PRESETS } from "@/components/Seo";
+import { AnalyticsEvents } from "@/lib/analytics";
 
 // ==========================================
 // PREÇOS WILBOR - TABELA FINAL 2026
@@ -99,7 +100,13 @@ export default function Checkout() {
       return;
     }
 
+    // Analytics: Plan Selected
     const price = PRICING[selectedCurrency][selectedPlan];
+    AnalyticsEvents.planSelected(selectedPlan, price.amount / 100, selectedCurrency);
+
+    // Analytics: Checkout Started
+    AnalyticsEvents.checkoutStarted(selectedPlan, selectedCurrency);
+
     checkout.mutate({ amount: price.amount, currency: selectedCurrency });
   };
 

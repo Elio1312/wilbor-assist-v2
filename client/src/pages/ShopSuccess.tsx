@@ -4,6 +4,7 @@ import { useI18n } from "@/contexts/i18n";
 import { CheckCircle2, BookOpen, PartyPopper, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AnalyticsEvents } from "@/lib/analytics";
 
 // Utilitário leve de confetti sem dependência externa
 function launchConfetti() {
@@ -47,11 +48,21 @@ export default function ShopSuccess() {
   const search = useSearch();
   const params = new URLSearchParams(search);
   // session_id enviado pelo Stripe no redirect de sucesso
-  const _sessionId = params.get("session_id");
+  const sessionId = params.get("session_id");
 
   useEffect(() => {
     launchConfetti();
-  }, []);
+
+    // Analytics: Purchase Success
+    if (sessionId) {
+      AnalyticsEvents.checkoutSuccess(
+        sessionId,
+        0, // Valor será preenchido pela verificação do servidor
+        "BRL",
+        0 // Créditos serão calculados
+      );
+    }
+  }, [sessionId]);
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">

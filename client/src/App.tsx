@@ -21,6 +21,8 @@ import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import MeuCorpo from "./pages/MeuCorpo";
+import { AnalyticsProvider } from "./components/AnalyticsProvider";
+import { AnalyticsEvents } from "./lib/analytics";
 
 function Router() {
   const [location, setLocation] = useLocation();
@@ -37,6 +39,12 @@ function Router() {
       }
     }
   }, [location, setLocation]);
+
+  // Page View Tracking
+  useEffect(() => {
+    const pageTitle = document.title || 'Wilbor-Assist';
+    AnalyticsEvents.pageView(window.location.pathname, pageTitle);
+  }, [location]);
 
   return (
     <Switch>
@@ -76,12 +84,14 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light">
-        <TooltipProvider>
-          <Toaster position="top-center" richColors />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <AnalyticsProvider>
+        <ThemeProvider defaultTheme="light">
+          <TooltipProvider>
+            <Toaster position="top-center" richColors />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </AnalyticsProvider>
     </ErrorBoundary>
   );
 }

@@ -11,6 +11,7 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { EbookOfferCard } from "@/components/EbookOfferCard";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
 import { CaptchaChallenge, useCaptchaVerification } from "@/components/CaptchaChallenge";
+import { AnalyticsEvents } from "@/lib/analytics";
 
 const CREDIT_TEXTS: Record<string, {
   remaining: (n: number, total: number) => string;
@@ -106,6 +107,13 @@ export function Chat() {
       setPaywallOpen(true);
     }
   }, [credits?.isOverLimit]);
+
+  // Analytics: Chat Started (once when user is loaded)
+  useEffect(() => {
+    if (user && fingerprint) {
+      AnalyticsEvents.chatStarted(user.id);
+    }
+  }, [user, fingerprint]);
 
   const handleSendMessage = async (userMessage: string) => {
     // Block if over limit
