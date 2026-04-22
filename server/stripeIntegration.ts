@@ -18,17 +18,18 @@ function getStripe(): Stripe {
 
 /**
  * Criar sessão de checkout Multi-Moeda (ROI Máximo)
+ * Suporta: BRL, USD, EUR, GBP
  */
 export async function createExtraCreditsCheckout(
-  userId: number, 
-  amount: number, 
+  userId: number,
+  amount: number,
   currency: string = "brl",
   lang: string = "pt"
 ) {
   try {
     const stripe = getStripe();
     const frontendUrl = process.env.VITE_FRONTEND_URL || "https://www.wilbor-assist.com";
-    
+
     // Ajusta a URL de retorno com base no idioma (UX Profissional)
     // Se o idioma for PT, vai para a raiz, senão vai para a subpasta do idioma
     const baseUrl = lang === "pt" ? frontendUrl : `${frontendUrl}/${lang}`;
@@ -50,12 +51,19 @@ export async function createExtraCreditsCheckout(
       de: "Unbegrenzte intelligente neonatale Unterstützung"
     };
 
+    // Mapear GBP para USD já que GBP não é suportado diretamente pelo Stripe em alguns países
+    // O Stripe automaticamente convierte usando a conta principal
+    let stripeCurrency = currency.toLowerCase();
+
+    // Se for GBP, usamos GBP diretamente (Stripe suporta GBP)
+    // Para outras moedas, usamos o código ISO padrão
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: currency.toLowerCase(),
+            currency: stripeCurrency,
             product_data: {
               name: productNames[lang] || productNames.en,
               description: productDescriptions[lang] || productDescriptions.en,
@@ -71,8 +79,9 @@ export async function createExtraCreditsCheckout(
       metadata: {
         userId: String(userId),
         amount: String(amount),
-        currency: currency.toUpperCase(),
+        currency: stripeCurrency.toUpperCase(),
         type: "extra_credits",
+        lang: lang,
       },
     });
 

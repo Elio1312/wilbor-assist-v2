@@ -1,11 +1,12 @@
 /**
  * Stripe Multi-Currency Routes
- * Suporte para pagamentos em USD, EUR, BRL
+ * Suporte para pagamentos em USD, EUR, BRL, GBP
  */
 
 import { router, publicProcedure, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
 import { Currency, CURRENCIES, getPricingByCurrency, convertPrice, formatPrice, isValidCurrency } from "./currency";
+import { createExtraCreditsCheckout } from "./stripeIntegration";
 
 export const stripeMultiCurrencyRouter = router({
   // Get available currencies
@@ -63,7 +64,7 @@ export const stripeMultiCurrencyRouter = router({
       };
     }),
 
-  // Create checkout session with currency
+  // Create checkout session with currency (INTEGRAÇÃO REAL)
   createCheckoutSession: protectedProcedure
     .input(z.object({
       planId: z.enum([
@@ -74,7 +75,7 @@ export const stripeMultiCurrencyRouter = router({
         "full_suite_monthly",
         "full_suite_annual",
       ]),
-      currency: z.enum(["USD", "EUR", "BRL"]).default("USD"),
+      currency: z.enum(["USD", "EUR", "BRL", "GBP"]).default("USD"),
     }))
     .mutation(async ({ ctx, input }) => {
       if (!isValidCurrency(input.currency)) {
@@ -85,17 +86,81 @@ export const stripeMultiCurrencyRouter = router({
       const amount = pricing[input.planId as keyof typeof pricing];
       const config = CURRENCIES[input.currency as Currency];
 
-      // Aqui você integraria com Stripe API
-      // Por enquanto, retornamos um mock
-      return {
-        success: true,
-        sessionId: `session_${Date.now()}`,
-        currency: input.currency,
-        amount: amount,
-        formatted: formatPrice(amount, input.currency as Currency),
-        planId: input.planId,
-        message: `Checkout session criada para ${input.planId} em ${config.name}`,
+      // Mapear planId para nomes de produtos internacionalizados
+      const productNames: Record<string, Record<string, string>> = {
+        growth_crises_monthly: {
+          pt: "Crises de Crescimento - Mensal",
+          en: "Growth Crises - Monthly",
+          es: "Crisis de Crecimiento - Mensual",
+          fr: "Crises de Croissance - Mensuel",
+          de: "Wachstumskrisen - Monatlich",
+        },
+        growth_crises_annual: {
+          pt: "Crises de Crescimento - Anual",
+          en: "Growth Crises - Annual",
+          es: "Crisis de Crecimiento - Anual",
+          fr: "Crises de Croissance - Annuel",
+          de: "Wachstumskrisen - Jährlich",
+        },
+        sleep_tracker_monthly: {
+          pt: "Rastreador de Sono - Mensal",
+          en: "Sleep Tracker - Monthly",
+          es: "Rastreador de Sueño - Mensual",
+          fr: "Suivi du Sommeil - Mensuel",
+          de: "Schlaf-Tracker - Monatlich",
+        },
+        sleep_tracker_annual: {
+          pt: "Rastreador de Sono - Anual",
+          en: "Sleep Tracker - Annual",
+          es: "Rastreador de Sueño - Anual",
+          fr: "Suivi du Sommeil - Annuel",
+          de: "Schlaf-Tracker - Jährlich",
+        },
+        full_suite_monthly: {
+          pt: "Wilbor Premium - Mensal",
+          en: "Wilbor Premium - Monthly",
+          es: "Wilbor Premium - Mensual",
+          fr: "Wilbor Premium - Mensuel",
+          de: "Wilbor Premium - Monatlich",
+        },
+        full_suite_annual: {
+          pt: "Wilbor Premium - Anual",
+          en: "Wilbor Premium - Annual",
+          es: "Wilbor Premium - Anual",
+          fr: "Wilbor Premium - Annuel",
+          de: "Wilbor Premium - Jährlich",
+        },
       };
+
+      const lang = (ctx.user as any).language || "pt";
+
+      // Criar sessão real no Stripe
+      try {
+        const session = await createExtraCreditsCheckout(
+          ctx.user.id,
+          amount,
+          input.currency.toLowerCase(),
+          lang
+        );
+
+        return {
+          success: true,
+          sessionId: session.id,
+          url: session.url,
+          currency: input.currency,
+          amount: amount,
+          formatted: formatPrice(amount, input.currency as Currency),
+          planId: input.planId,
+          productName: productNames[input.planId]?.[lang] || productNames[input.planId]?.en,
+          message: `Checkout ${config.name} criado com sucesso!`,
+        };
+      } catch (error) {
+        console.error("[Stripe MultiCurrency] Failed to create session:", error);
+        return {
+          success: false,
+          error: "Erro ao criar sessão de checkout. Tente novamente.",
+        };
+      }
     }),
 
   // Get exchange rates
