@@ -170,4 +170,3 @@ router.get("/sitemap-index.xml", (req, res) => {
 });
 
 export default router;
-
