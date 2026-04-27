@@ -2,19 +2,24 @@ import { Router } from "express";
 
 const router = Router();
 
-const BASE_URL = "https://www.wilbor-assist.com";
+// ─── URL canônica SEM www ────────────────────────────────────────────────────
+const BASE_URL = "https://wilbor-assist.com";
 
 router.get("/robots.txt", (req, res) => {
-  const host = req.hostname || '';
-  const isProduction = host.includes('wilbor-assist.com');
+  const host = req.hostname || "";
 
-  // Different robots.txt for production vs other environments
+  // ─── CORREÇÃO: detecção de produção corrigida ────────────────────────────
+  // Antes: host.includes('[wilbor-assist.com](http://wilbor-assist.com)')
+  // que nunca era verdadeiro porque incluía markdown no texto.
+  // Agora: checa corretamente se é o domínio de produção (com ou sem www).
+  const isProduction =
+    host === "wilbor-assist.com" || host === "www.wilbor-assist.com";
+
+  res.type("text/plain");
+
   if (isProduction) {
-    // Production: Allow all crawlers
-    res.type("text/plain");
     res.send(`# Wilbor Assist - robots.txt
-# https://www.wilbor-assist.com
-
+# ${BASE_URL}
 User-agent: *
 Allow: /
 
@@ -35,11 +40,9 @@ Disallow: /*.json$
 Disallow: /*.js$
 `);
   } else {
-    // Staging/Development: Block all crawlers
-    res.type("text/plain");
+    // Staging/Development: bloqueia todos os crawlers
     res.send(`# Wilbor Assist - robots.txt (Staging)
-# Access blocked
-
+# Acesso bloqueado
 User-agent: *
 Disallow: /
 
@@ -50,3 +53,4 @@ Sitemap: ${BASE_URL}/sitemap.xml
 });
 
 export default router;
+
