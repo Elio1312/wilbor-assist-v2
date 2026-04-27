@@ -2,16 +2,49 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { Loader2, Send, User, Sparkles } from "lucide-react";
+import { Loader2, Send, User, Sparkles, Lock } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Streamdown } from "streamdown";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
-/**
- * RatingWidget — Sistema de 5 estrelas para medir assertividade da IA
- * Alarme CEO automático quando rating <= 2
- */
+// ─── Modal de Paywall ────────────────────────────────────────────────────────
+function PaywallModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="absolute inset-0 z-50 flex items-center justify-center rounded-lg"
+      style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
+    >
+      <div className="mx-4 w-full max-w-sm rounded-2xl bg-card p-6 shadow-xl border border-border text-center">
+        <div className="mb-3 flex justify-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+            <Lock className="size-7 text-primary" />
+          </div>
+        </div>
+        <h2 className="mb-1 text-lg font-semibold text-foreground">
+          Suas consultas gratuitas acabaram 💜
+        </h2>
+        <p className="mb-5 text-sm text-muted-foreground">
+          Você usou suas 2 consultas grátis. Continue com o Wilbor Premium e tenha acesso ilimitado 24h por dia.
+        </p>
+        <Button
+          className="w-full"
+          onClick={() => { window.location.href = "/checkout"; }}
+        >
+          Ver planos →
+        </Button>
+        <button
+          onClick={onClose}
+          className="mt-3 text-xs text-muted-foreground underline-offset-2 hover:underline"
+        >
+          Fechar
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── RatingWidget ────────────────────────────────────────────────────────────
 function RatingWidget({ messageId }: { messageId: number }) {
   const [rated, setRated] = useState(false);
   const [hovered, setHovered] = useState(0);
@@ -20,13 +53,16 @@ function RatingWidget({ messageId }: { messageId: number }) {
       toast.success("Obrigada! Seu feedback ajuda o Wilbor a melhorar. 💜");
       setRated(true);
     },
+    onError: () => {
+      toast.error("Não foi possível enviar o feedback. Tente novamente.");
+    },
   });
   if (rated) return <p className="text-[10px] text-green-600 mt-2 italic">✓ Obrigada pelo feedback!</p>;
   return (
     <div className="mt-2 pt-2 border-t border-purple-100 flex items-center justify-between gap-2">
       <span className="text-[10px] text-purple-500">Esta resposta foi útil?</span>
       <div className="flex gap-0.5">
-        {[1,2,3,4,5].map(star => (
+        {[1, 2, 3, 4, 5].map(star => (
           <button
             key={star}
             onClick={() => submitFeedback.mutate({ messageId, rating: star })}
@@ -43,161 +79,92 @@ function RatingWidget({ messageId }: { messageId: number }) {
   );
 }
 
-/**
- * Message type matching server-side LLM Message interface
- */
+// ─── Tipos ───────────────────────────────────────────────────────────────────
 export type Message = {
   role: "system" | "user" | "assistant";
   content: string;
 };
 
 export type AIChatBoxProps = {
-  /**
-   * Messages array to display in the chat.
-   * Should match the format used by invokeLLM on the server.
-   */
   messages: Message[];
-
-  /**
-   * Callback when user sends a message.
-   * Typically you'll call a tRPC mutation here to invoke the LLM.
-   */
   onSendMessage: (content: string) => void;
-
-  /**
-   * Whether the AI is currently generating a response
-   */
   isLoading?: boolean;
-
-  /**
-   * Placeholder text for the input field
-   */
   placeholder?: string;
-
-  /**
-   * Custom className for the container
-   */
   className?: string;
-
-  /**
-   * Height of the chat box (default: 600px)
-   */
   height?: string | number;
-
-  /**
-   * Empty state message to display when no messages
-   */
   emptyStateMessage?: string;
-
-  /**
-   * Suggested prompts to display in empty state
-   * Click to send directly
-   */
   suggestedPrompts?: string[];
+  /** Erro retornado pelo servidor (ex: "CREDIT_LIMIT_REACHED", "ANONYMOUS_LIMIT_REACHED") */
+  serverError?: string | null;
+  /** Callback para limpar o erro após o modal ser fechado */
+  onErrorCleared?: () => void;
 };
 
-/**
- * A ready-to-use AI chat box component that integrates with the LLM system.
- *
- * Features:
- * - Matches server-side Message interface for seamless integration
- * - Markdown rendering with Streamdown
- * - Auto-scrolls to latest message
- * - Loading states
- * - Uses global theme colors from index.css
- *
- * @example
- * ```tsx
- * const ChatPage = () => {
- *   const [messages, setMessages] = useState<Message[]>([
- *     { role: "system", content: "You are a helpful assistant." }
- *   ]);
- *
- *   const chatMutation = trpc.ai.chat.useMutation({
- *     onSuccess: (response) => {
- *       // Assuming your tRPC endpoint returns the AI response as a string
- *       setMessages(prev => [...prev, {
- *         role: "assistant",
- *         content: response
- *       }]);
- *     },
- *     onError: (error) => {
- *       console.error("Chat error:", error);
- *       // Optionally show error message to user
- *     }
- *   });
- *
- *   const handleSend = (content: string) => {
- *     const newMessages = [...messages, { role: "user", content }];
- *     setMessages(newMessages);
- *     chatMutation.mutate({ messages: newMessages });
- *   };
- *
- *   return (
- *     <AIChatBox
- *       messages={messages}
- *       onSendMessage={handleSend}
- *       isLoading={chatMutation.isPending}
- *       suggestedPrompts={[
- *         "Explain quantum computing",
- *         "Write a hello world in Python"
- *       ]}
- *     />
- *   );
- * };
- * ```
- */
+// ─── Erros que disparam o paywall ────────────────────────────────────────────
+const PAYWALL_ERRORS = new Set([
+  "CREDIT_LIMIT_REACHED",
+  "ANONYMOUS_LIMIT_REACHED",
+]);
+
+// ─── Mensagens de erro amigáveis para outros casos ───────────────────────────
+function friendlyError(code: string): string {
+  if (code === "RATE_LIMIT_EXCEEDED") return "Muitas mensagens em pouco tempo. Aguarde um momento. ⏳";
+  if (code === "FINGERPRINT_REQUIRED") return "Não foi possível identificar seu dispositivo. Tente recarregar a página.";
+  if (code === "EMPTY_CHAT_MESSAGES") return "Por favor, escreva uma mensagem antes de enviar.";
+  return "Algo deu errado. Tente novamente em instantes.";
+}
+
+// ─── AIChatBox ───────────────────────────────────────────────────────────────
 export function AIChatBox({
   messages,
   onSendMessage,
   isLoading = false,
-  placeholder = "Type your message...",
+  placeholder = "Digite sua mensagem...",
   className,
   height = "600px",
-  emptyStateMessage = "Start a conversation with AI",
+  emptyStateMessage = "Olá! Como posso ajudar hoje?",
   suggestedPrompts,
+  serverError,
+  onErrorCleared,
 }: AIChatBoxProps) {
   const [input, setInput] = useState("");
+  const [showPaywall, setShowPaywall] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputAreaRef = useRef<HTMLFormElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Filter out system messages
-  const displayMessages = messages.filter((msg) => msg.role !== "system");
-
-  // Calculate min-height for last assistant message to push user message to top
   const [minHeightForLastMessage, setMinHeightForLastMessage] = useState(0);
+
+  // Reage a erros do servidor
+  useEffect(() => {
+    if (!serverError) return;
+    if (PAYWALL_ERRORS.has(serverError)) {
+      setShowPaywall(true);
+    } else {
+      toast.error(friendlyError(serverError));
+    }
+  }, [serverError]);
+
+  const displayMessages = messages.filter((msg) => msg.role !== "system");
 
   useEffect(() => {
     if (containerRef.current && inputAreaRef.current) {
       const containerHeight = containerRef.current.offsetHeight;
       const inputHeight = inputAreaRef.current.offsetHeight;
       const scrollAreaHeight = containerHeight - inputHeight;
-
-      // Reserve space for:
-      // - padding (p-4 = 32px top+bottom)
-      // - user message: 40px (item height) + 16px (margin-top from space-y-4) = 56px
-      // Note: margin-bottom is not counted because it naturally pushes the assistant message down
       const userMessageReservedHeight = 56;
       const calculatedHeight = scrollAreaHeight - 32 - userMessageReservedHeight;
-
       setMinHeightForLastMessage(Math.max(0, calculatedHeight));
     }
   }, []);
 
-  // Scroll to bottom helper function with smooth animation
   const scrollToBottom = () => {
     const viewport = scrollAreaRef.current?.querySelector(
-      '[data-radix-scroll-area-viewport]'
+      "[data-radix-scroll-area-viewport]"
     ) as HTMLDivElement;
-
     if (viewport) {
       requestAnimationFrame(() => {
-        viewport.scrollTo({
-          top: viewport.scrollHeight,
-          behavior: 'smooth'
-        });
+        viewport.scrollTo({ top: viewport.scrollHeight, behavior: "smooth" });
       });
     }
   };
@@ -206,14 +173,9 @@ export function AIChatBox({
     e.preventDefault();
     const trimmedInput = input.trim();
     if (!trimmedInput || isLoading) return;
-
     onSendMessage(trimmedInput);
     setInput("");
-
-    // Scroll immediately after sending
     scrollToBottom();
-
-    // Keep focus on input
     textareaRef.current?.focus();
   };
 
@@ -228,12 +190,22 @@ export function AIChatBox({
     <div
       ref={containerRef}
       className={cn(
-        "flex flex-col bg-card text-card-foreground rounded-lg border shadow-sm",
+        "relative flex flex-col bg-card text-card-foreground rounded-lg border shadow-sm",
         className
       )}
       style={{ height }}
     >
-      {/* Messages Area */}
+      {/* Modal de Paywall */}
+      {showPaywall && (
+        <PaywallModal
+          onClose={() => {
+            setShowPaywall(false);
+            onErrorCleared?.();
+          }}
+        />
+      )}
+
+      {/* Área de Mensagens */}
       <div ref={scrollAreaRef} className="flex-1 overflow-hidden">
         {displayMessages.length === 0 ? (
           <div className="flex h-full flex-col p-4">
@@ -242,7 +214,6 @@ export function AIChatBox({
                 <Sparkles className="size-12 opacity-20" />
                 <p className="text-sm">{emptyStateMessage}</p>
               </div>
-
               {suggestedPrompts && suggestedPrompts.length > 0 && (
                 <div className="flex max-w-2xl flex-wrap justify-center gap-2">
                   {suggestedPrompts.map((prompt, index) => (
@@ -263,7 +234,6 @@ export function AIChatBox({
           <ScrollArea className="h-full">
             <div className="flex flex-col space-y-4 p-4">
               {displayMessages.map((message, index) => {
-                // Apply min-height to last message only if NOT loading (when loading, the loading indicator gets it)
                 const isLastMessage = index === displayMessages.length - 1;
                 const shouldApplyMinHeight =
                   isLastMessage && !isLoading && minHeightForLastMessage > 0;
@@ -277,18 +247,13 @@ export function AIChatBox({
                         ? "justify-end items-start"
                         : "justify-start items-start"
                     )}
-                    style={
-                      shouldApplyMinHeight
-                        ? { minHeight: `${minHeightForLastMessage}px` }
-                        : undefined
-                    }
+                    style={shouldApplyMinHeight ? { minHeight: `${minHeightForLastMessage}px` } : undefined}
                   >
                     {message.role === "assistant" && (
                       <div className="size-8 shrink-0 mt-1 rounded-full bg-primary/10 flex items-center justify-center">
                         <Sparkles className="size-4 text-primary" />
                       </div>
                     )}
-
                     <div
                       className={cn(
                         "max-w-[80%] rounded-lg px-4 py-2.5",
@@ -302,18 +267,14 @@ export function AIChatBox({
                           <div className="prose prose-sm dark:prose-invert max-w-none">
                             <Streamdown>{message.content}</Streamdown>
                           </div>
-                          {/* ⭐ Rating de feedback - apenas para mensagens com messageId */}
                           {(message as any).messageId && (
                             <RatingWidget messageId={(message as any).messageId} />
                           )}
                         </>
                       ) : (
-                        <p className="whitespace-pre-wrap text-sm">
-                          {message.content}
-                        </p>
+                        <p className="whitespace-pre-wrap text-sm">{message.content}</p>
                       )}
                     </div>
-
                     {message.role === "user" && (
                       <div className="size-8 shrink-0 mt-1 rounded-full bg-secondary flex items-center justify-center">
                         <User className="size-4 text-secondary-foreground" />
@@ -326,11 +287,7 @@ export function AIChatBox({
               {isLoading && (
                 <div
                   className="flex items-start gap-3"
-                  style={
-                    minHeightForLastMessage > 0
-                      ? { minHeight: `${minHeightForLastMessage}px` }
-                      : undefined
-                  }
+                  style={minHeightForLastMessage > 0 ? { minHeight: `${minHeightForLastMessage}px` } : undefined}
                 >
                   <div className="size-8 shrink-0 mt-1 rounded-full bg-primary/10 flex items-center justify-center">
                     <Sparkles className="size-4 text-primary" />
@@ -345,7 +302,7 @@ export function AIChatBox({
         )}
       </div>
 
-      {/* Input Area */}
+      {/* Input */}
       <form
         ref={inputAreaRef}
         onSubmit={handleSubmit}
@@ -359,6 +316,7 @@ export function AIChatBox({
           placeholder={placeholder}
           className="flex-1 max-h-32 resize-none min-h-9"
           rows={1}
+          maxLength={4000}
         />
         <Button
           type="submit"

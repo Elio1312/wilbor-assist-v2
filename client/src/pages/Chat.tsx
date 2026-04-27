@@ -59,6 +59,7 @@ export function Chat() {
   const [ebookOffer, setEbookOffer] = useState<any>(null);
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [anonMessageCount, setAnonMessageCount] = useState(0);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   // CAPTCHA verification for anonymous users
   const captchaVerification = useCaptchaVerification();
@@ -81,7 +82,18 @@ export function Chat() {
     setFp();
   }, []);
 
-  const chatMutation = trpc.wilbor.chat.useMutation();
+  const chatMutation = trpc.wilbor.chat.useMutation({
+    onError: (error) => {
+      // Extrai o código de erro do servidor (ex: "CREDIT_LIMIT_REACHED")
+      const errorMessage = error?.message || "";
+      // Procura pelo código de erro conhecido
+      const knownErrors = ["CREDIT_LIMIT_REACHED", "ANONYMOUS_LIMIT_REACHED", "RATE_LIMIT_EXCEEDED", "FINGERPRINT_REQUIRED"];
+      const foundError = knownErrors.find(e => errorMessage.includes(e)) || errorMessage;
+      setServerError(foundError);
+      // Remove mensagem otimista do usuário se houve erro
+      setMessages((prev) => prev.slice(0, -1));
+    }
+  });
   
   // Credits for authenticated users
   const creditsQuery = trpc.wilbor.getCredits.useQuery(undefined, {
@@ -177,22 +189,20 @@ export function Chat() {
         anonCreditsQuery.refetch();
       }
     } catch (error: any) {
+      // Erros já são tratados pelo onError do mutation
+      // Apenas logamos erros não esperados
       const errorMessage = error?.message || "";
-      if (errorMessage.includes("CREDIT_LIMIT_REACHED") || errorMessage.includes("ANONYMOUS_LIMIT_REACHED")) {
-        // Remove the optimistic user message
-        setMessages((prev) => prev.slice(0, -1));
-        setPaywallOpen(true);
-        if (user) creditsQuery.refetch(); else anonCreditsQuery.refetch();
-        return;
+      const knownErrors = ["CREDIT_LIMIT_REACHED", "ANONYMOUS_LIMIT_REACHED", "RATE_LIMIT_EXCEEDED", "FINGERPRINT_REQUIRED"];
+      if (!knownErrors.some(e => errorMessage.includes(e))) {
+        console.error("Error calling Wilbor chat:", error);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: t("chat.error") || "Desculpe, houve um erro. Tente novamente.",
+          },
+        ]);
       }
-      console.error("Error calling Wilbor chat:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: t("chat.error") || "Desculpe, houve um erro. Tente novamente.",
-        },
-      ]);
     }
   };
 
@@ -282,6 +292,8 @@ export function Chat() {
             messages={messages}
             onSendMessage={handleSendMessage}
             isLoading={chatMutation.isPending}
+            serverError={serverError}
+            onErrorCleared={() => setServerError(null)}
           />
         </div>
 

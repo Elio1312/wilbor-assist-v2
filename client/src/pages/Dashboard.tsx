@@ -33,6 +33,7 @@ export default function Dashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [lastAssistantMessage, setLastAssistantMessage] = useState<string | null>(null);
   const [lastUserQuestion, setLastUserQuestion] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   // 2. Busca de Créditos e Status (ROI de Vendas)
   const credits = trpc.wilbor.getCredits.useQuery();
@@ -41,6 +42,16 @@ export default function Dashboard() {
       setMessages((prev) => [...prev, { role: "assistant", content: response.content }]);
       setLastAssistantMessage(response.content);
       credits.refetch(); // Atualiza saldo imediatamente após resposta
+    },
+    onError: (error) => {
+      // Extrai o código de erro do servidor (ex: "CREDIT_LIMIT_REACHED")
+      const errorMessage = error?.message || "";
+      // Procura pelo código de erro conhecido
+      const knownErrors = ["CREDIT_LIMIT_REACHED", "ANONYMOUS_LIMIT_REACHED", "RATE_LIMIT_EXCEEDED", "FINGERPRINT_REQUIRED"];
+      const foundError = knownErrors.find(e => errorMessage.includes(e)) || errorMessage;
+      setServerError(foundError);
+      // Remove mensagem otimista do usuário se houve erro
+      setMessages((prev) => prev.slice(0, -1));
     }
   });
 
@@ -105,6 +116,8 @@ export default function Dashboard() {
             onSendMessage={handleSendMessage}
             isLoading={chatMutation.isPending}
             height="100%"
+            serverError={serverError}
+            onErrorCleared={() => setServerError(null)}
           />
           {lastAssistantMessage && lastUserQuestion && (
             <FeedbackButton userQuestion={lastUserQuestion} aiResponse={lastAssistantMessage} />
