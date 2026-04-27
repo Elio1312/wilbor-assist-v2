@@ -25,7 +25,7 @@ function PaywallModal({ onClose }: { onClose: () => void }) {
           Suas consultas gratuitas acabaram 💜
         </h2>
         <p className="mb-5 text-sm text-muted-foreground">
-          Você usou suas 2 consultas grátis. Continue com o Wilbor Premium e tenha acesso ilimitado 24h por dia.
+          Você usou suas 5 consultas grátis. Continue com o Wilbor Premium e tenha acesso ilimitado 24h por dia.
         </p>
         <Button
           className="w-full"

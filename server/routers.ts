@@ -21,7 +21,7 @@ import { detectEbookIntent, buildEbookOffer } from "./ebookOfferDetector";
 
 // ─── CORREÇÃO 1: Limite gratuito centralizado ────────────────────────────────
 // Altere aqui para mudar o número de consultas gratuitas globalmente.
-const FREE_CHAT_LIMIT = 2;          // Plano free: 2 consultas gratuitas
+const FREE_CHAT_LIMIT = 5;          // Plano free: 5 consultas gratuitas
 const PREMIUM_MONTHLY_LIMIT = 500;  // Plano premium: 500 mensagens/mês
 
 // ─── CORREÇÃO 2: Rate limiting por IP para prevenir abuso ────────────────────
