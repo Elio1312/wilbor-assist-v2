@@ -11,7 +11,6 @@ import { sdk } from "./sdk";
 import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
-// import { setupGoogleOAuth } from "./googleOAuth"; // Removed: using anonymous login instead
 import { ENV } from "./env";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
@@ -23,6 +22,9 @@ import robotsRouter from "../routes/robots";
 import { getDb, isStartupDatabaseReachable, upsertUser } from "../db";
 import { wilborMilestoneContent } from "../../drizzle/schema";
 import { COMPLETE_MILESTONES } from "./milestonesData";
+
+// ─── URL canônica SEM www — usada em todos os redirects e logs ───────────────
+const CANONICAL_URL = "https://wilbor-assist.com";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -44,22 +46,18 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  // Rodar migrations pendentes automaticamente
   await runPendingMigrations();
 
   const app = express();
   const server = createServer(app);
-  
-  // Stripe webhook MUST be registered BEFORE express.json() middleware
-  // This is done in registerStripeRoutes() which uses express.raw() for webhook
+
+  // Stripe webhook ANTES do express.json() — obrigatório
   registerStripeRoutes(app);
-  
-  // Configure body parser with larger size limit for file uploads
+
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   app.use(cookieParser(ENV.sessionSecret));
 
-  // Setup Session and Passport
   app.use(
     session({
       secret: ENV.sessionSecret,
@@ -67,23 +65,27 @@ async function startServer() {
       saveUninitialized: false,
       cookie: {
         secure: ENV.isProduction,
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 dias
       },
     })
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  // setupGoogleOAuth(); // Removed: using anonymous login instead
 
-  // Google OAuth Routes (Removed - using anonymous login)
-  // app.get("/api/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-  // app.get(
-  //   "/api/auth/google/callback",
-  //   passport.authenticate("google", { failureRedirect: "/login?error=google_failed" }),
-  //   (req, res) => {
-  //     res.redirect("/chat");
-  //   }
-  // );
+  // ─── CORREÇÃO 1: Redirect 301 www → sem-www ────────────────────────────────
+  // Qualquer acesso a www.wilbor-assist.com é redirecionado permanentemente
+  // para wilbor-assist.com, preservando o path e query string completos.
+  // Isso resolve os 12 "Erros de redirecionamento" no Google Search Console.
+  app.use((req, res, next) => {
+    if (req.hostname && req.hostname.startsWith("www.")) {
+      const newHost = req.hostname.slice(4); // remove "www."
+      const redirectUrl = `https://${newHost}${req.originalUrl}`;
+      console.log(`[www→canonical] 301 ${req.hostname}${req.originalUrl} → ${redirectUrl}`);
+      return res.redirect(301, redirectUrl);
+    }
+    next();
+  });
+
   app.get("/api/auth/anonymous", async (req, res) => {
     const redirect =
       typeof req.query.redirect === "string" && req.query.redirect.startsWith("/")
@@ -128,8 +130,9 @@ async function startServer() {
     });
   });
 
-  // 301 Redirects from old domain (wilborassist-ljucsyxh.manus.space) to new domain (www.wilbor-assist.com)
-  // This preserves SEO ranking and prevents duplicate content penalties
+  // ─── CORREÇÃO 2: Redirect domínio antigo → canônico SEM www ────────────────
+  // Corrigido: apontava para https://www.wilbor-assist.com (com www)
+  // Agora aponta para https://wilbor-assist.com (sem www) — URL canônica
   const redirectMappings: Record<string, string> = {
     '/': '/',
     '/blog': '/blog',
@@ -147,30 +150,26 @@ async function startServer() {
     '/blog/banho-do-recem-nascido': '/blog/banho-do-recem-nascido',
   };
 
-  // Middleware to handle 301 redirects (only when coming from old domain)
   app.use((req, res, next) => {
     const host = req.hostname || '';
     const path = req.path;
-    // Only redirect if coming from old Manus domain, not from health checks or direct access
     if (host === 'wilborassist-ljucsyxh.manus.space' && redirectMappings[path]) {
-      const newUrl = `https://www.wilbor-assist.com${redirectMappings[path]}`;
+      // CORREÇÃO: era https://www.wilbor-assist.com — agora usa CANONICAL_URL (sem www)
+      const newUrl = `${CANONICAL_URL}${redirectMappings[path]}`;
       res.redirect(301, newUrl);
       return;
     }
     next();
   });
 
-  // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
-  
-  // Secret route to seed milestones (using COMPLETE milestones from milestonesData.ts)
+
   app.get("/api/seed-milestones-secret", async (req, res) => {
     try {
       const db = await getDb();
       if (!db) {
         return res.status(500).json({ error: "Database connection failed" });
       }
-      // Use COMPLETE milestones (34 milestones, 0-24 months)
       await db.insert(wilborMilestoneContent).values(COMPLETE_MILESTONES as any);
       res.json({ success: true, message: `Successfully inserted ${COMPLETE_MILESTONES.length} milestones!` });
     } catch (error: any) {
@@ -178,12 +177,9 @@ async function startServer() {
     }
   });
 
-
-  // Sitemap and robots routes
   app.use(sitemapRouter);
   app.use(robotsRouter);
-  
-  // tRPC API
+
   app.use(
     "/api/trpc",
     createExpressMiddleware({
@@ -191,7 +187,7 @@ async function startServer() {
       createContext,
     })
   );
-  // development mode uses Vite, production mode uses static files
+
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
@@ -207,46 +203,41 @@ async function startServer() {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
-  // Listen on 0.0.0.0 to accept connections from all network interfaces
-  // This is required for Koyeb and other cloud platforms
   server.listen(port, "0.0.0.0", async () => {
-    console.log(`Server running on http://0.0.0.0:${port}/`);
-    
-    // Auto-seed milestones on startup
+    console.log(`Server running on ${CANONICAL_URL} (port ${port})`);
+
     try {
       const databaseReachable = await isStartupDatabaseReachable();
       if (!databaseReachable) {
-        console.log("[Seed] Auto-seed de milestones ignorado neste startup porque o banco não respondeu.");
+        console.log("[Seed] Auto-seed ignorado — banco não respondeu no startup.");
         return;
       }
 
       const db = await getDb();
-      
       if (db) {
-        // Check if milestones already exist to avoid duplicates
         const existing = await db.select().from(wilborMilestoneContent).limit(1);
         if (existing.length === 0) {
-          console.log("🌱 Auto-seeding COMPLETE milestones on startup (34 milestones, 0-24 months)...");
-          // Use COMPLETE milestones from milestonesData.ts
+          console.log("🌱 Auto-seeding milestones (34 marcos, 0-24 meses)...");
           await db.insert(wilborMilestoneContent).values(COMPLETE_MILESTONES as any);
-          console.log(`✅ Successfully auto-seeded ${COMPLETE_MILESTONES.length} milestones!`);
+          console.log(`✅ ${COMPLETE_MILESTONES.length} milestones inseridos.`);
         } else {
-          console.log("✅ Milestones already exist, skipping auto-seed.");
+          console.log("✅ Milestones já existem, seed ignorado.");
         }
       }
     } catch (error: any) {
-      // Tabela pode não existir ainda se db:push não foi rodado — não é crítico
       const msg = error?.message ?? String(error);
       if (msg.includes("Connection lost") || msg.includes("server closed the connection")) {
-        console.log("[Seed] Auto-seed de milestones ignorado porque o banco encerrou a conexão no startup.");
+        console.log("[Seed] Banco encerrou a conexão no startup — seed ignorado.");
       } else if (msg.includes("doesn't exist") || msg.includes("Table") || msg.includes("Failed query")) {
-        console.log("[Seed] Tabela wilborMilestoneContent ainda não está disponível; auto-seed opcional foi ignorado.");
+        console.log("[Seed] Tabela wilborMilestoneContent ainda não disponível — seed ignorado.");
       } else {
-        console.error("❌ Error auto-seeding milestones:", msg);
+        console.error("❌ Erro no auto-seed de milestones:", msg);
       }
     }
   });
 }
 
-
-startServer().catch(console.error);
+startServer().catch(err => {
+  console.error("❌ Falha crítica ao iniciar o servidor:", err);
+  process.exit(1);
+});
