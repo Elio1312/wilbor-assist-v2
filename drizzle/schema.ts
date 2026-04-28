@@ -313,7 +313,7 @@ export type InsertWilborResponseFeedback = typeof wilborResponseFeedback.$inferI
 export const wilborUserCredits = mysqlTable("wilborUserCredits", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
-  plan: mysqlEnum("plan", ["free", "premium", "manual"]).default("free").notNull(),
+  plan: mysqlEnum("plan", ["free", "premium",  "annual"]).default("free").notNull(),
   monthlyLimit: int("monthlyLimit").default(5).notNull(),
   messagesUsed: int("messagesUsed").default(0).notNull(),
   ragMessagesUsed: int("ragMessagesUsed").default(0).notNull(),
