@@ -2,8 +2,8 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb, upsertUser, getUserByOpenId } from "./db";
-import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback } from "../drizzle/schema";
-import { eq, and, gt, sql } from "drizzle-orm";
+import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback, wilborDiaryEntries } from "../drizzle/schema";
+import { eq, and, gt, sql, desc } from "drizzle-orm";
 import { wilborMessages } from "../drizzle/schema";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
@@ -19,29 +19,31 @@ import { adminRouter } from "./adminRouter";
 import { recipesRouter } from "./recipesRouter";
 import { detectEbookIntent, buildEbookOffer } from "./ebookOfferDetector";
 
-// ─── CORREÇÃO 1: Limite gratuito centralizado ────────────────────────────────
-// Altere aqui para mudar o número de consultas gratuitas globalmente.
-const FREE_CHAT_LIMIT = 5;          // Plano free: 5 consultas gratuitas
-const PREMIUM_MONTHLY_LIMIT = 500;  // Plano premium: 500 mensagens/mês
+// ─── Limites por plano ────────────────────────────────────────────────────────
+const FREE_CHAT_LIMIT     = 5;          // Free: 5 msgs/mês
+const PREMIUM_MONTHLY_LIMIT = 500;      // Premium mensal: 500 msgs/mês
+const ANNUAL_CHAT_LIMIT   = 999999;     // Premium anual: ilimitado (número alto = sem barreira prática)
 
-// ─── CORREÇÃO 2: Rate limiting por IP para prevenir abuso ────────────────────
-// Memória em processo — redefine com cada deploy (suficiente para frear bots).
-// Para persistência, substitua por Redis.
+function getLimitForPlan(plan: "free" | "premium" | "annual"): number {
+  if (plan === "annual")  return ANNUAL_CHAT_LIMIT;
+  if (plan === "premium") return PREMIUM_MONTHLY_LIMIT;
+  return FREE_CHAT_LIMIT;
+}
+
+// ─── Rate limiting por IP ─────────────────────────────────────────────────────
 const ipRateLimit = new Map<string, { count: number; resetAt: number }>();
-const IP_RATE_LIMIT_PER_MINUTE = 15; // máx 15 requisições/minuto por IP
+const IP_RATE_LIMIT_PER_MINUTE = 15;
 
 function checkIpRateLimit(ip: string): boolean {
   const now = Date.now();
   const entry = ipRateLimit.get(ip);
   if (!entry || now > entry.resetAt) {
     ipRateLimit.set(ip, { count: 1, resetAt: now + 60_000 });
-    return true; // permitido
+    return true;
   }
-  if (entry.count >= IP_RATE_LIMIT_PER_MINUTE) {
-    return false; // bloqueado
-  }
+  if (entry.count >= IP_RATE_LIMIT_PER_MINUTE) return false;
   entry.count++;
-  return true; // permitido
+  return true;
 }
 
 export const appRouter = router({
@@ -53,7 +55,7 @@ export const appRouter = router({
   shop: shopRouter,
   admin: adminRouter,
   recipes: recipesRouter,
-  
+
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -64,6 +66,7 @@ export const appRouter = router({
   }),
 
   wilbor: router({
+
     getCredits: protectedProcedure.query(async ({ ctx }) => {
       const db = await getDb();
       if (!db) throw new Error("Database connection failed");
@@ -94,42 +97,26 @@ export const appRouter = router({
           monthlyLimit: FREE_CHAT_LIMIT,
           remaining: FREE_CHAT_LIMIT,
           isOverLimit: false,
+          isAnnual: false,
         };
       }
 
       const credit = credits[0];
-      const remaining = Math.max(0, credit.monthlyLimit - credit.messagesUsed);
+      const isAnnual = credit.plan === "annual";
+      const remaining = isAnnual ? 999999 : Math.max(0, credit.monthlyLimit - credit.messagesUsed);
       return {
         plan: credit.plan,
         messagesUsed: credit.messagesUsed,
         monthlyLimit: credit.monthlyLimit,
         remaining,
-        isOverLimit: remaining === 0,
+        isOverLimit: !isAnnual && remaining === 0,
+        isAnnual,
       };
     }),
 
-    updatePlan: protectedProcedure
-      .input(z.object({ plan: z.enum(["free", "premium", "manual"]) }))
-      .mutation(async ({ ctx, input }) => {
-        const db = await getDb();
-        if (!db) throw new Error("Database connection failed");
-
-        const newLimit = input.plan === "free" ? FREE_CHAT_LIMIT : PREMIUM_MONTHLY_LIMIT;
-        const periodStart = new Date();
-        const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
-
-        await db
-          .update(wilborUserCredits)
-          .set({ plan: input.plan, monthlyLimit: newLimit, messagesUsed: 0, periodStart, periodEnd })
-          .where(eq(wilborUserCredits.userId, ctx.user.id));
-
-        await db.insert(wilborConversionEvents).values({
-          userId: ctx.user.id,
-          eventType: "payment_success",
-        });
-
-        return { success: true, plan: input.plan };
-      }),
+    // updatePlan REMOVIDO do router público.
+    // Upgrade só acontece via webhook Stripe (stripeWebhook.ts).
+    // Para admin: adicionar verificação role==="admin" se necessário.
 
     getBabies: protectedProcedure.query(async ({ ctx }) => {
       const { getBabiesByUser } = await import("./wilborDb");
@@ -153,7 +140,7 @@ export const appRouter = router({
     getStatus: publicProcedure.query(async () => {
       return {
         status: "Wilbor-Assist v2 is ready!",
-        version: "2.0.0",
+        version: "2.1.0",
         features: ["Chat IA", "Bebês", "Receitas", "Trilha", "Meu Corpo", "Sono", "Diário"]
       };
     }),
@@ -161,7 +148,6 @@ export const appRouter = router({
     getAnonymousCredits: publicProcedure
       .input(z.object({ fingerprint: z.string() }))
       .query(async ({ input }) => {
-        // ─── CORREÇÃO 3: Validação de fingerprint ────────────────────────────
         if (!input.fingerprint || input.fingerprint.length < 8) {
           return { used: 0, limit: FREE_CHAT_LIMIT, remaining: FREE_CHAT_LIMIT, isOverLimit: false };
         }
@@ -175,32 +161,24 @@ export const appRouter = router({
         };
       }),
 
-    // ─── CHAT — Principal endpoint com todas as correções ────────────────────
     chat: publicProcedure
       .input(z.object({
         messages: z.array(z.object({
           role: z.enum(["system", "user", "assistant"]),
-          // CORREÇÃO 4: Limita tamanho de cada mensagem (previne prompt injection / abuso)
           content: z.string().max(4000),
-        })).max(50), // máx 50 mensagens por chamada
+        })).max(50),
         fingerprint: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
 
-        // ─── CORREÇÃO 5: Rate limiting por IP ────────────────────────────────
         const clientIp = ctx.req.headers["x-forwarded-for"]?.toString().split(",")[0].trim()
           ?? ctx.req.socket.remoteAddress
           ?? "unknown";
-        if (!checkIpRateLimit(clientIp)) {
-          throw new Error("RATE_LIMIT_EXCEEDED");
-        }
+        if (!checkIpRateLimit(clientIp)) throw new Error("RATE_LIMIT_EXCEEDED");
 
         const sanitizedMessages = sanitizeChatMessages(input.messages);
         const lastUserMsg = [...sanitizedMessages].reverse().find((m) => m.role === "user");
-
-        if (!lastUserMsg) {
-          throw new Error("EMPTY_CHAT_MESSAGES");
-        }
+        if (!lastUserMsg) throw new Error("EMPTY_CHAT_MESSAGES");
 
         const db = await getDb();
         if (!db) throw new Error("Database connection failed");
@@ -208,7 +186,6 @@ export const appRouter = router({
         let userId: string | number;
 
         if (ctx.user?.id) {
-          // ─── USUÁRIO AUTENTICADO ──────────────────────────────────────────
           userId = ctx.user.id;
           const credits = await db
             .select()
@@ -217,7 +194,6 @@ export const appRouter = router({
             .limit(1);
 
           if (credits.length === 0) {
-            // Primeiro acesso: cria registro com FREE_CHAT_LIMIT
             const periodStart = new Date();
             const periodEnd = new Date(periodStart.getTime() + 30 * 24 * 60 * 60 * 1000);
             await db.insert(wilborUserCredits).values({
@@ -233,53 +209,53 @@ export const appRouter = router({
             });
           } else {
             const credit = credits[0];
-            if (credit.messagesUsed >= credit.monthlyLimit) {
-              // ─── CORREÇÃO 6: Registra evento de paywall sem silenciar erro ─
-              try {
-                await db.insert(wilborConversionEvents).values({
-                  userId: ctx.user.id,
-                  eventType: "hit_limit",
-                });
-              } catch (dbErr) {
-                console.error("[wilbor.chat] Erro ao registrar hit_limit:", dbErr);
+            const isAnnual = credit.plan === "annual";
+
+            // Anual: nunca bloqueia — só incrementa o contador para métricas
+            if (!isAnnual) {
+              if (credit.messagesUsed >= credit.monthlyLimit) {
+                try {
+                  await db.insert(wilborConversionEvents).values({
+                    userId: ctx.user.id,
+                    eventType: "hit_limit",
+                  });
+                } catch (dbErr) {
+                  console.error("[wilbor.chat] Erro ao registrar hit_limit:", dbErr);
+                }
+                throw new Error("CREDIT_LIMIT_REACHED");
               }
-              throw new Error("CREDIT_LIMIT_REACHED");
-            }
 
-            // Dedução atômica — previne race condition (double-spend)
-            const updateResult = await db
-              .update(wilborUserCredits)
-              .set({ messagesUsed: sql`${wilborUserCredits.messagesUsed} + 1` })
-              .where(
-                and(
-                  eq(wilborUserCredits.userId, ctx.user.id),
-                  gt(wilborUserCredits.monthlyLimit, wilborUserCredits.messagesUsed)
-                )
-              );
-
-            if ((updateResult as any)[0]?.affectedRows === 0) {
-              throw new Error("CREDIT_LIMIT_REACHED");
+              // Dedução atômica — previne race condition
+              const updateResult = await db
+                .update(wilborUserCredits)
+                .set({ messagesUsed: sql`${wilborUserCredits.messagesUsed} + 1` })
+                .where(
+                  and(
+                    eq(wilborUserCredits.userId, ctx.user.id),
+                    gt(wilborUserCredits.monthlyLimit, wilborUserCredits.messagesUsed)
+                  )
+                );
+              if ((updateResult as any)[0]?.affectedRows === 0) {
+                throw new Error("CREDIT_LIMIT_REACHED");
+              }
+            } else {
+              // Anual: incrementa só para métricas, sem bloquear
+              await db
+                .update(wilborUserCredits)
+                .set({ messagesUsed: sql`${wilborUserCredits.messagesUsed} + 1` })
+                .where(eq(wilborUserCredits.userId, ctx.user.id));
             }
           }
         } else {
-          // ─── USUÁRIO ANÔNIMO ──────────────────────────────────────────────
-          if (!input.fingerprint || input.fingerprint.length < 8) {
-            throw new Error("FINGERPRINT_REQUIRED");
-          }
-
+          if (!input.fingerprint || input.fingerprint.length < 8) throw new Error("FINGERPRINT_REQUIRED");
           const canChat = await checkAnonymousLimit(input.fingerprint);
-          if (!canChat) {
-            throw new Error("ANONYMOUS_LIMIT_REACHED");
-          }
-
+          if (!canChat) throw new Error("ANONYMOUS_LIMIT_REACHED");
           await incrementAnonymousUsage(input.fingerprint);
           userId = `anon-${input.fingerprint}`;
         }
 
-        // ─── Chama a IA ──────────────────────────────────────────────────────
         const response = await simpleChatWithWilbor(String(userId), sanitizedMessages);
 
-        // ─── Persiste mensagem para feedback ─────────────────────────────────
         let aiMessageId: number | null = null;
         if (ctx.user?.id && response?.content) {
           try {
@@ -293,12 +269,10 @@ export const appRouter = router({
             });
             aiMessageId = (insertedMsg as any)?.insertId ?? null;
           } catch (insertErr) {
-            // CORREÇÃO 7: Loga erros que antes eram silenciados
             console.error("[wilbor.chat] Erro ao salvar mensagem IA:", insertErr);
           }
         }
 
-        // ─── Oferta contextual de ebook ──────────────────────────────────────
         const systemMsg = sanitizedMessages.find(m => m.role === "system");
         const langMatch = systemMsg?.content?.match(/idioma[:\s]+([a-z]{2})/i)
           ?? systemMsg?.content?.match(/language[:\s]+([a-z]{2})/i);
@@ -319,11 +293,8 @@ export const appRouter = router({
                 eqOp(wilborEbookPurchases.ebookId, ebookIdForLang)
               ))
               .limit(1);
-            if (existing.length === 0) {
-              ebookOffer = buildEbookOffer(intent, detectedLang);
-            }
+            if (existing.length === 0) ebookOffer = buildEbookOffer(intent, detectedLang);
           } catch (ebookErr) {
-            // CORREÇÃO 7: Nunca silencia erros sem log
             console.error("[wilbor.chat] Erro ao verificar ebook purchase:", ebookErr);
           }
         } else if (intent && !ctx.user?.id) {
@@ -341,45 +312,35 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database connection failed");
-
-        await db
-          .update(wilborMessages)
+        await db.update(wilborMessages)
           .set({ feedbackRating: input.rating })
           .where(eq(wilborMessages.id, input.messageId));
-
         if (input.rating <= 2) {
           try {
             const { notifyOwner } = await import("./_core/notification");
             await notifyOwner({
               title: `⚠️ Wilbor: Resposta com Nota Baixa (${input.rating}/5)`,
-              content: `Uma mãe avaliou uma resposta do Wilbor com ${input.rating} estrela(s). Verifique o painel de feedback.`,
+              content: `Uma mãe avaliou uma resposta com ${input.rating} estrela(s). Verifique o painel de feedback.`,
             });
           } catch (notifyErr) {
             console.error("[wilbor.submitFeedback] Erro ao notificar owner:", notifyErr);
           }
         }
-
         return { success: true };
       }),
 
     getQualityStats: protectedProcedure.query(async () => {
       const db = await getDb();
       if (!db) throw new Error("Database connection failed");
-
-      const stats = await db
-        .select({
-          avgRating: sql<number>`AVG(${wilborMessages.feedbackRating})`,
-          totalRated: sql<number>`COUNT(CASE WHEN ${wilborMessages.feedbackRating} IS NOT NULL THEN 1 END)`,
-          totalMessages: sql<number>`COUNT(*)`,
-          lowRatings: sql<number>`COUNT(CASE WHEN ${wilborMessages.feedbackRating} <= 2 THEN 1 END)`,
-        })
-        .from(wilborMessages)
-        .where(eq(wilborMessages.role, "assistant"));
-
+      const stats = await db.select({
+        avgRating: sql<number>`AVG(${wilborMessages.feedbackRating})`,
+        totalRated: sql<number>`COUNT(CASE WHEN ${wilborMessages.feedbackRating} IS NOT NULL THEN 1 END)`,
+        totalMessages: sql<number>`COUNT(*)`,
+        lowRatings: sql<number>`COUNT(CASE WHEN ${wilborMessages.feedbackRating} <= 2 THEN 1 END)`,
+      }).from(wilborMessages).where(eq(wilborMessages.role, "assistant"));
       const result = stats[0];
       const avgRating = Number(result?.avgRating ?? 0);
       const alertCEO = avgRating > 0 && avgRating < 4.5;
-
       return {
         avgRating: avgRating.toFixed(2),
         totalRated: Number(result?.totalRated ?? 0),
@@ -413,9 +374,7 @@ export const appRouter = router({
       return status;
     }),
 
-    // ==========================================
-    // SLEEP TRACKING
-    // ==========================================
+    // ── SLEEP TRACKING ────────────────────────────────────────────────────────
     startSleep: protectedProcedure
       .input(z.object({ babyId: z.number() }))
       .mutation(async ({ ctx, input }) => {
@@ -460,9 +419,7 @@ export const appRouter = router({
       .query(async ({ ctx, input }) => {
         const { getBabyById, getRecentSleepLogs, predictNextNap } = await import("./wilborDb");
         const baby = await getBabyById(input.babyId);
-        if (!baby?.birthDate) {
-          return { suggestedTime: null, confidence: "none" };
-        }
+        if (!baby?.birthDate) return { suggestedTime: null, confidence: "none" };
         const babyAgeDays = Math.floor(
           (Date.now() - new Date(baby.birthDate).getTime()) / (1000 * 60 * 60 * 24)
         );
@@ -470,43 +427,79 @@ export const appRouter = router({
         return predictNextNap(recentLogs, babyAgeDays);
       }),
 
-    // ==========================================
-    // DIARY
-    // ==========================================
-    createDiaryEntry: publicProcedure
+    // ── DIARY (corrigido — salva no banco real) ───────────────────────────────
+    createDiaryEntry: protectedProcedure
       .input(z.object({
-        userId: z.number(),
         babyId: z.number(),
         entryDate: z.string(),
         category: z.enum(["feeding", "sleep", "diaper", "milestone", "health", "mood", "general"]).optional(),
-        title: z.string().optional(),
-        content: z.string().optional(),
+        title: z.string().max(255).optional(),
+        content: z.string().max(2000).optional(),
         mood: z.enum(["happy", "calm", "fussy", "crying", "sick"]).optional(),
       }))
-      .mutation(async () => {
-        return { id: 1, success: true };
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        const [result] = await db.insert(wilborDiaryEntries).values({
+          userId: ctx.user.id,
+          babyId: input.babyId,
+          entryDate: new Date(input.entryDate),
+          category: input.category ?? "general",
+          title: input.title,
+          content: input.content,
+          mood: input.mood,
+        });
+        return { id: (result as any).insertId, success: true };
       }),
 
-    getDiaryEntries: publicProcedure
-      .input(z.object({ userId: z.number(), babyId: z.number(), limit: z.number().optional() }))
-      .query(async () => {
-        return [];
+    getDiaryEntries: protectedProcedure
+      .input(z.object({
+        babyId: z.number(),
+        limit: z.number().min(1).max(100).default(30),
+      }))
+      .query(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        return await db
+          .select()
+          .from(wilborDiaryEntries)
+          .where(and(
+            eq(wilborDiaryEntries.userId, ctx.user.id),
+            eq(wilborDiaryEntries.babyId, input.babyId)
+          ))
+          .orderBy(desc(wilborDiaryEntries.entryDate))
+          .limit(input.limit);
       }),
 
-    updateDiaryEntry: publicProcedure
+    updateDiaryEntry: protectedProcedure
       .input(z.object({
         entryId: z.number(),
-        title: z.string().optional(),
-        content: z.string().optional(),
+        title: z.string().max(255).optional(),
+        content: z.string().max(2000).optional(),
         mood: z.enum(["happy", "calm", "fussy", "crying", "sick"]).optional(),
       }))
-      .mutation(async () => {
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        await db.update(wilborDiaryEntries)
+          .set({ title: input.title, content: input.content, mood: input.mood })
+          .where(and(
+            eq(wilborDiaryEntries.id, input.entryId),
+            eq(wilborDiaryEntries.userId, ctx.user.id)
+          ));
         return { success: true };
       }),
 
-    deleteDiaryEntry: publicProcedure
+    deleteDiaryEntry: protectedProcedure
       .input(z.object({ entryId: z.number() }))
-      .mutation(async () => {
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+        await db.delete(wilborDiaryEntries)
+          .where(and(
+            eq(wilborDiaryEntries.id, input.entryId),
+            eq(wilborDiaryEntries.userId, ctx.user.id)
+          ));
         return { success: true };
       }),
   }),
@@ -540,9 +533,7 @@ export const appRouter = router({
     getStats: protectedProcedure.query(async ({ ctx }) => {
       const db = await getDb();
       if (!db) throw new Error("Database connection failed");
-      const feedbacks = await db
-        .select()
-        .from(wilborResponseFeedback)
+      const feedbacks = await db.select().from(wilborResponseFeedback)
         .where(eq(wilborResponseFeedback.userId, ctx.user.id));
       const helpful = feedbacks.filter(f => f.helpfulness === "helpful" || f.helpfulness === "very_helpful").length;
       return {
@@ -558,16 +549,11 @@ export const appRouter = router({
   blog: router({
     getArticles: publicProcedure.query(async () => {
       return blogArticlesData.map(article => ({
-        id: article.slug,
-        slug: article.slug,
-        title: article.title,
-        description: article.description,
-        category: article.category,
-        readTimeMinutes: article.readTimeMinutes,
-        seoKeywords: article.seoKeywords,
+        id: article.slug, slug: article.slug, title: article.title,
+        description: article.description, category: article.category,
+        readTimeMinutes: article.readTimeMinutes, seoKeywords: article.seoKeywords,
       }));
     }),
-
     getArticle: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {
@@ -575,18 +561,14 @@ export const appRouter = router({
         if (!article) throw new Error("Article not found");
         return article;
       }),
-
     getByCategory: publicProcedure
       .input(z.object({ category: z.string() }))
       .query(async ({ input }) => {
         return blogArticlesData
           .filter(a => a.category === input.category)
           .map(article => ({
-            id: article.slug,
-            slug: article.slug,
-            title: article.title,
-            description: article.description,
-            readTimeMinutes: article.readTimeMinutes,
+            id: article.slug, slug: article.slug, title: article.title,
+            description: article.description, readTimeMinutes: article.readTimeMinutes,
           }));
       }),
   }),
