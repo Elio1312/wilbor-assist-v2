@@ -41,4 +41,8 @@ ENV PORT=8000
 
 EXPOSE 8000
 
+# ANTES:
 CMD ["node", "dist/index.js"]
+
+# DEPOIS:
+CMD ["sh", "-c", "npx drizzle-kit push && node dist/index.js"]
