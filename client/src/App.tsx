@@ -15,7 +15,6 @@ import ShopPage from "@/pages/ShopPage";
 import MyEbooks from "@/pages/MyEbooks";
 import AdminDashboard from "@/pages/AdminDashboard";
 import ShopSuccess from "@/pages/ShopSuccess";
-
 import { Route, Switch, useLocation } from "wouter";
 import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -28,7 +27,7 @@ function Router() {
   const [location, setLocation] = useLocation();
 
   // Redirecionamento Inteligente (ROI de Internacionalização)
-  // Se a mãe cair na raiz "/" e o navegador dela for EN, ES, FR ou DE, redirecionamos automaticamente.
+  // Roda só uma vez no mount — evita loop infinito
   useEffect(() => {
     const currentPath = window.location.pathname;
     if (currentPath === "/") {
@@ -38,7 +37,7 @@ function Router() {
         setLocation(`/${browserLang}`);
       }
     }
-  }, [location, setLocation]);
+  }, []); // <- dependências vazias: roda só uma vez
 
   // Page View Tracking
   useEffect(() => {
@@ -48,16 +47,6 @@ function Router() {
 
   return (
     <Switch>
-      {/* 
-        Rotas Dinâmicas (Otimização Gemini): 
-        O parâmetro :lang? permite que uma única rota atenda a todos os idiomas.
-        Ex: /chat, /en/chat, /fr/chat agora usam o mesmo bloco de código.
-
-        Importante: a Home precisa vir depois das rotas específicas.
-        Caso contrário, caminhos curtos do PT sem prefixo, como /chat e /checkout,
-        são interpretados como se fossem apenas o parâmetro :lang e a aplicação
-        volta para a Home em vez de abrir a página correta.
-      */}
       <Route path="/:lang?/dashboard" component={Dashboard} />
       <Route path="/:lang?/buy-credits" component={BuyCredits} />
       <Route path="/:lang?/chat" component={Chat} />
@@ -73,9 +62,7 @@ function Router() {
       <Route path="/:lang?/meu-corpo" component={MeuCorpo} />
       <Route path="/admin-secret-panel" component={AdminDashboard} />
       <Route path="/:lang?/" component={Home} />
-
       <Route path="/404" component={NotFound} />
-      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );
@@ -97,3 +84,4 @@ function App() {
 }
 
 export default App;
+
