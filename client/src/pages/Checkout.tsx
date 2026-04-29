@@ -4,76 +4,89 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useI18n } from "@/contexts/i18n";
-import { Heart, Check, Loader2, ShieldCheck, ArrowLeft, Globe } from "lucide-react";
+import { Heart, Check, Loader2, ShieldCheck, ArrowLeft, Globe, Zap, Star } from "lucide-react";
 import { toast } from "sonner";
-import { Seo, SEO_PRESETS } from "@/components/Seo";
+import { Seo } from "@/components/Seo";
 import { AnalyticsEvents } from "@/lib/analytics";
 
 // ==========================================
-// PREÇOS WILBOR - TABELA FINAL 2026
+// PREÇOS WILBOR - TABELA 2026
 // ==========================================
-// 🇧🇷 BRASIL: Premium R$29/mês, Manual R$59 único
-// 🇺🇸 EUA (USD): Premium $5.99/mês, Manual $12.99 único
-// 🇬🇧 UK (GBP): Premium £4.99/mês, Manual £10.99 único
+// Premium Mensal: BRL R$19,90 | USD $5,99 | EUR €5,49 | GBP £4,99
+// Premium Anual:  BRL R$149   | USD $44   | EUR €39   | GBP £34
 
 type Currency = "brl" | "usd" | "gbp" | "eur";
-type PlanType = "premium" | "manual";
+type PlanType = "premium" | "annual";
 
 interface PriceInfo {
-  amount: number; // em centavos
+  amount: number;   // centavos
   display: string;
   period: string;
+  equiv?: string;   // equivalente mensal (só no anual)
+  discount?: string;
 }
 
-// Preços fixos por região (não conversão)
 const PRICING: Record<Currency, Record<PlanType, PriceInfo>> = {
   brl: {
-    premium: { amount: 2900, display: "R$ 29,00", period: "/mês" },
-    manual: { amount: 5900, display: "R$ 59,00", period: " (único)" },
+    premium: { amount: 1990,  display: "R$ 19,90", period: "/mês" },
+    annual:  { amount: 14900, display: "R$ 149",   period: "/ano", equiv: "R$ 12,42/mês", discount: "37% off" },
   },
   usd: {
-    premium: { amount: 599, display: "$ 5.99", period: "/month" },
-    manual: { amount: 1299, display: "$ 12.99", period: " (one-time)" },
-  },
-  gbp: {
-    premium: { amount: 499, display: "£ 4.99", period: "/month" },
-    manual: { amount: 1099, display: "£ 10.99", period: " (one-time)" },
+    premium: { amount: 599,  display: "$ 5,99", period: "/month" },
+    annual:  { amount: 4400, display: "$ 44",   period: "/year",  equiv: "$ 3,67/month", discount: "39% off" },
   },
   eur: {
-    premium: { amount: 599, display: "€ 5.99", period: "/month" },
-    manual: { amount: 1299, display: "€ 12.99", period: " (one-time)" },
+    premium: { amount: 549,  display: "€ 5,49", period: "/month" },
+    annual:  { amount: 3900, display: "€ 39",   period: "/year",  equiv: "€ 3,25/month", discount: "41% off" },
+  },
+  gbp: {
+    premium: { amount: 499,  display: "£ 4,99", period: "/month" },
+    annual:  { amount: 3400, display: "£ 34",   period: "/year",  equiv: "£ 2,83/month", discount: "43% off" },
   },
 };
 
-// Moedas disponíveis com labels por idioma
 const CURRENCIES: Record<string, { code: Currency; symbol: string; label: Record<string, string> }> = {
   brl: { code: "brl", symbol: "R$", label: { pt: "Brasil (R$)", en: "Brazil (R$)", es: "Brasil (R$)", fr: "Brésil (R$)", de: "Brasilien (R$)" } },
-  usd: { code: "usd", symbol: "$", label: { pt: "Estados Unidos ($)", en: "United States ($)", es: "Estados Unidos ($)", fr: "États-Unis ($)", de: "USA ($)" } },
-  gbp: { code: "gbp", symbol: "£", label: { pt: "Reino Unido (£)", en: "United Kingdom (£)", es: "Reino Unido (£)", fr: "Royaume-Uni (£)", de: "Großbritannien (£)" } },
-  eur: { code: "eur", symbol: "€", label: { pt: "Europa (€)", en: "Europe (€)", es: "Europa (€)", fr: "Europe (€)", de: "Europa (€)" } },
+  usd: { code: "usd", symbol: "$",  label: { pt: "Estados Unidos ($)", en: "United States ($)", es: "Estados Unidos ($)", fr: "États-Unis ($)", de: "USA ($)" } },
+  gbp: { code: "gbp", symbol: "£",  label: { pt: "Reino Unido (£)", en: "United Kingdom (£)", es: "Reino Unido (£)", fr: "Royaume-Uni (£)", de: "Großbritannien (£)" } },
+  eur: { code: "eur", symbol: "€",  label: { pt: "Europa (€)", en: "Europe (€)", es: "Europa (€)", fr: "Europe (€)", de: "Europa (€)" } },
 };
 
-// Detecta moeda baseada no locale
 function detectCurrencyFromLocale(locale: string): Currency {
   if (locale === "pt") return "brl";
-  if (locale === "en") return "usd";
-  if (locale === "es") return "usd";
   if (locale === "fr") return "eur";
   if (locale === "de") return "eur";
+  if (locale === "en") return "usd";
   return "usd";
 }
+
+// Labels dos planos por idioma
+const PLAN_LABELS: Record<PlanType, Record<string, { name: string; badge: string; msgLimit: string }>> = {
+  premium: {
+    pt: { name: "Premium Mensal", badge: "Popular",        msgLimit: "500 msgs/mês com IA" },
+    en: { name: "Monthly Premium", badge: "Popular",       msgLimit: "500 AI msgs/month" },
+    es: { name: "Premium Mensual", badge: "Popular",       msgLimit: "500 msgs IA/mes" },
+    fr: { name: "Premium Mensuel", badge: "Populaire",     msgLimit: "500 msgs IA/mois" },
+    de: { name: "Monatlich Premium", badge: "Beliebt",     msgLimit: "500 KI-Nachrichten/Monat" },
+  },
+  annual: {
+    pt: { name: "Premium Anual",   badge: "Melhor valor",  msgLimit: "Msgs ilimitadas com IA" },
+    en: { name: "Annual Premium",  badge: "Best value",    msgLimit: "Unlimited AI messages" },
+    es: { name: "Premium Anual",   badge: "Mejor valor",   msgLimit: "Msgs ilimitadas con IA" },
+    fr: { name: "Premium Annuel",  badge: "Meilleur prix", msgLimit: "Messages IA illimités" },
+    de: { name: "Jährlich Premium", badge: "Bestes Angebot", msgLimit: "Unbegrenzte KI-Nachrichten" },
+  },
+};
 
 export default function Checkout() {
   const { t, localePath, locale } = useI18n();
   const [, setLocation] = useLocation();
 
-  // Estado dos planos
-  const [selectedPlan, setSelectedPlan] = useState<PlanType>("premium");
+  const [selectedPlan, setSelectedPlan] = useState<PlanType>("annual"); // anual selecionado por padrão
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(() => detectCurrencyFromLocale(locale));
 
   const { data: user } = trpc.auth.me.useQuery(undefined, { retry: false, refetchOnWindowFocus: false });
 
-  // Previne indexação do Google em páginas privadas
   useEffect(() => {
     const meta = document.createElement('meta');
     meta.name = 'robots';
@@ -82,15 +95,12 @@ export default function Checkout() {
     return () => { document.head.removeChild(meta); };
   }, []);
 
-  // Mutação para checkout
   const checkout = trpc.stripe.createCheckout.useMutation({
     onSuccess: (data) => {
-      if (data.url) {
-        window.location.href = data.url;
-      }
+      if (data.url) window.location.href = data.url;
     },
     onError: () => {
-      toast.error(t("checkout.error"));
+      toast.error(t("checkout.error") || "Erro ao processar. Tente novamente.");
     }
   });
 
@@ -100,138 +110,206 @@ export default function Checkout() {
       return;
     }
 
-    // Analytics: Plan Selected
     const price = PRICING[selectedCurrency][selectedPlan];
     AnalyticsEvents.planSelected(selectedPlan, price.amount / 100, selectedCurrency);
-
-    // Analytics: Checkout Started
     AnalyticsEvents.checkoutStarted(selectedPlan, selectedCurrency);
 
-    checkout.mutate({ amount: price.amount, currency: selectedCurrency });
+    // Passa planType para o backend distinguir mensal x anual
+    checkout.mutate({
+      amount: price.amount,
+      currency: selectedCurrency,
+      planType: selectedPlan,
+    } as any);
   };
 
-  // Features para display
-  const features = t("paywall.features").split(",");
-
-  // Labels dos planos por idioma
-  const planLabels = {
-    premium: {
-      name: t("pricing.premium_name"),
-      popular: t("pricing.premium_popular"),
-    },
-    manual: {
-      name: t("pricing.manual_name") || "Manual",
-      popular: "",
-    },
-  };
+  const lang = locale || "pt";
+  const features = t("paywall.features")?.split(",") || [
+    "Chat IA 24/7",
+    "Diário do bebê",
+    "Trilha de desenvolvimento",
+    "Alertas de vacinas",
+    "Suporte prioritário",
+  ];
 
   return (
     <>
       <Seo />
       <div className="min-h-screen bg-gray-50 py-12 px-6">
-      <div className="max-w-3xl mx-auto">
-        <Button
-          variant="ghost"
-          onClick={() => setLocation(user ? localePath("/dashboard") : localePath("/"))}
-          className="mb-8 gap-2 text-gray-500"
-        >
-          <ArrowLeft className="size-4" /> {t("common.back")}
-        </Button>
-
-        <div className="text-center mb-12">
-          <Heart className="size-12 text-purple-600 mx-auto mb-4" />
-          <h1 className="text-3xl font-extrabold text-gray-900">{t("checkout.title")}</h1>
-          <p className="text-gray-600 mt-2 whitespace-pre-line">{t("checkout.subtitle")}</p>
-        </div>
-
-        {/* Seletor de Moeda */}
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <Globe className="size-4 text-gray-500" />
-          <select
-            value={selectedCurrency}
-            onChange={(e) => setSelectedCurrency(e.target.value as Currency)}
-            className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
-          >
-            {Object.values(CURRENCIES).map((curr) => (
-              <option key={curr.code} value={curr.code}>
-                {curr.label[locale] || curr.label.en}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Cards de Planos */}
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
-          {(["premium", "manual"] as PlanType[]).map((plan) => {
-            const price = PRICING[selectedCurrency][plan];
-            return (
-              <Card
-                key={plan}
-                onClick={() => setSelectedPlan(plan)}
-                className={`p-6 cursor-pointer transition-all border-2 flex flex-col ${
-                  selectedPlan === plan ? "border-purple-600 shadow-md" : "border-transparent hover:border-gray-200"
-                }`}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-sm font-bold uppercase tracking-wider text-purple-600">
-                    {planLabels[plan].popular || (plan === "premium" ? "Popular" : "")}
-                  </span>
-                  {selectedPlan === plan && <Check className="size-5 text-purple-600" />}
-                </div>
-                <h2 className="text-xl font-bold mb-2">
-                  {planLabels[plan].name}
-                </h2>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-gray-900">{price.display}</span>
-                  <span className="text-gray-500 text-sm">{price.period}</span>
-                </div>
-                <ul className="space-y-3 flex-1">
-                  {features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                      <Check className="size-4 text-green-500 shrink-0" /> {f}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* CTA Principal */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div className="max-w-3xl mx-auto">
           <Button
-            onClick={handleSubscribe}
-            disabled={checkout.isPending}
-            className="w-full max-w-md h-16 text-lg font-bold rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-[1.02] transition-transform"
+            variant="ghost"
+            onClick={() => setLocation(user ? localePath("/dashboard") : localePath("/"))}
+            className="mb-8 gap-2 text-gray-500"
           >
-            {checkout.isPending ? (
-              <Loader2 className="size-5 animate-spin mr-2" />
-            ) : (
-              t("checkout.cta")
-            )}
+            <ArrowLeft className="size-4" /> {t("common.back") || "Voltar"}
           </Button>
 
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-400 text-xs">
-            <div className="flex items-center gap-1">
-              <ShieldCheck className="size-4 text-green-500" />
-              {locale === "pt" ? "Pagamento Seguro via Stripe" :
-               locale === "es" ? "Pago Seguro vía Stripe" :
-               locale === "fr" ? "Paiement Sécurisé via Stripe" :
-               locale === "de" ? "Sichere Zahlung über Stripe" :
-               "Secure Payment via Stripe"}
-            </div>
-            <span className="hidden sm:inline">•</span>
-            <div>
-              {locale === "pt" ? "Cancelamento fácil a qualquer momento" :
-               locale === "es" ? "Cancelación fácil en cualquier momento" :
-               locale === "fr" ? "Annulation facile à tout moment" :
-               locale === "de" ? "Einfache Stornierung jederzeit" :
-               "Easy cancellation anytime"}
+          <div className="text-center mb-12">
+            <Heart className="size-12 text-purple-600 mx-auto mb-4" />
+            <h1 className="text-3xl font-extrabold text-gray-900">
+              {t("checkout.title") || "Escolha seu plano"}
+            </h1>
+            <p className="text-gray-600 mt-2">
+              {t("checkout.subtitle") || "Acesso completo ao Wilbor para cuidar do seu bebê com segurança"}
+            </p>
+          </div>
+
+          {/* Seletor de Moeda */}
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <Globe className="size-4 text-gray-500" />
+            <select
+              value={selectedCurrency}
+              onChange={(e) => setSelectedCurrency(e.target.value as Currency)}
+              className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+            >
+              {Object.values(CURRENCIES).map((curr) => (
+                <option key={curr.code} value={curr.code}>
+                  {curr.label[lang] || curr.label.en}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Cards de Planos */}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+
+            {/* CARD MENSAL */}
+            <Card
+              onClick={() => setSelectedPlan("premium")}
+              className={`p-6 cursor-pointer transition-all border-2 flex flex-col ${
+                selectedPlan === "premium"
+                  ? "border-purple-600 shadow-md"
+                  : "border-transparent hover:border-gray-200"
+              }`}
+            >
+              <div className="flex justify-between items-start mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
+                  {PLAN_LABELS.premium[lang]?.badge || "Popular"}
+                </span>
+                {selectedPlan === "premium" && <Check className="size-5 text-purple-600" />}
+              </div>
+              <h2 className="text-xl font-bold mb-2">
+                {PLAN_LABELS.premium[lang]?.name || "Premium Mensal"}
+              </h2>
+              <div className="mb-1">
+                <span className="text-3xl font-bold text-gray-900">
+                  {PRICING[selectedCurrency].premium.display}
+                </span>
+                <span className="text-gray-500 text-sm">
+                  {PRICING[selectedCurrency].premium.period}
+                </span>
+              </div>
+              <p className="text-sm text-purple-600 font-semibold mb-4">
+                {PLAN_LABELS.premium[lang]?.msgLimit}
+              </p>
+              <ul className="space-y-2 flex-1">
+                {features.map((f, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                    <Check className="size-4 text-green-500 shrink-0" /> {f.trim()}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            {/* CARD ANUAL — destaque */}
+            <Card
+              onClick={() => setSelectedPlan("annual")}
+              className={`p-6 cursor-pointer transition-all border-2 flex flex-col relative overflow-hidden ${
+                selectedPlan === "annual"
+                  ? "border-purple-600 shadow-xl"
+                  : "border-purple-200 hover:border-purple-400"
+              }`}
+            >
+              {/* Faixa de desconto */}
+              <div className="absolute top-4 right-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold px-3 py-1 rounded-l-full shadow">
+                {PRICING[selectedCurrency].annual.discount}
+              </div>
+
+              <div className="flex justify-between items-start mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-2 py-1 rounded-full flex items-center gap-1">
+                  <Star className="size-3 fill-pink-600" />
+                  {PLAN_LABELS.annual[lang]?.badge || "Melhor valor"}
+                </span>
+                {selectedPlan === "annual" && <Check className="size-5 text-purple-600" />}
+              </div>
+
+              <h2 className="text-xl font-bold mb-2">
+                {PLAN_LABELS.annual[lang]?.name || "Premium Anual"}
+              </h2>
+
+              <div className="mb-1">
+                <span className="text-3xl font-bold text-gray-900">
+                  {PRICING[selectedCurrency].annual.display}
+                </span>
+                <span className="text-gray-500 text-sm">
+                  {PRICING[selectedCurrency].annual.period}
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-400 mb-1">
+                = {PRICING[selectedCurrency].annual.equiv}
+              </p>
+
+              <p className="text-sm text-purple-600 font-semibold mb-4 flex items-center gap-1">
+                <Zap className="size-3" />
+                {PLAN_LABELS.annual[lang]?.msgLimit}
+              </p>
+
+              <ul className="space-y-2 flex-1">
+                {features.map((f, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                    <Check className="size-4 text-green-500 shrink-0" /> {f.trim()}
+                  </li>
+                ))}
+                {/* Benefício exclusivo do anual */}
+                <li className="flex items-center gap-2 text-sm font-semibold text-purple-700">
+                  <Check className="size-4 text-purple-500 shrink-0" />
+                  {lang === "pt" ? "Msgs ilimitadas (sem teto mensal)" :
+                   lang === "es" ? "Msgs ilimitadas (sin tope mensual)" :
+                   lang === "fr" ? "Messages illimités (sans plafond)" :
+                   lang === "de" ? "Unbegrenzte Nachrichten" :
+                   "Unlimited messages (no monthly cap)"}
+                </li>
+              </ul>
+            </Card>
+          </div>
+
+          {/* CTA */}
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+            <Button
+              onClick={handleSubscribe}
+              disabled={checkout.isPending}
+              className="w-full max-w-md h-16 text-lg font-bold rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-[1.02] transition-transform"
+            >
+              {checkout.isPending ? (
+                <Loader2 className="size-5 animate-spin mr-2" />
+              ) : (
+                t("checkout.cta") || "Assinar agora"
+              )}
+            </Button>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-400 text-xs">
+              <div className="flex items-center gap-1">
+                <ShieldCheck className="size-4 text-green-500" />
+                {lang === "pt" ? "Pagamento Seguro via Stripe" :
+                 lang === "es" ? "Pago Seguro vía Stripe" :
+                 lang === "fr" ? "Paiement Sécurisé via Stripe" :
+                 lang === "de" ? "Sichere Zahlung über Stripe" :
+                 "Secure Payment via Stripe"}
+              </div>
+              <span className="hidden sm:inline">•</span>
+              <div>
+                {lang === "pt" ? "Cancelamento fácil a qualquer momento" :
+                 lang === "es" ? "Cancelación fácil en cualquier momento" :
+                 lang === "fr" ? "Annulation facile à tout moment" :
+                 lang === "de" ? "Einfache Stornierung jederzeit" :
+                 "Easy cancellation anytime"}
+              </div>
             </div>
           </div>
+
         </div>
       </div>
-    </div>
     </>
   );
 }
