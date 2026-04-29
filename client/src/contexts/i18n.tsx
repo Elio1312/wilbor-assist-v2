@@ -1191,9 +1191,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const t = useCallback((key: string): string => {
-    const currentLocale = detectLocaleFromPath();
-    return translations[currentLocale]?.[key] || translations.pt[key] || key;
-  }, []);
+  return translations[locale]?.[key] || translations.pt[key] || key;
+}, [locale]);
 
   // CORREÇÃO CRÍTICA: Blindagem total para nunca gerar href vazio, inválido ou com locale duplicado
   const localePath = useCallback((path?: string | null): string => {
