@@ -123,6 +123,22 @@ export function initMetaPixel() {
   if (!ANALYTICS_CONFIG.ENABLE_META_PIXEL || !ANALYTICS_CONFIG.META_PIXEL_ID) {
     return;
   }
+  if (window.fbq) return;
+
+  // Carrega o script oficial do Facebook diretamente — sem wrapper manual
+  const script = document.createElement('script');
+  script.innerHTML = `
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '${ANALYTICS_CONFIG.META_PIXEL_ID}');
+  `;
+  document.head.appendChild(script);
+
+  logEvent({ event_name: 'fbq_initialized' }, 'Meta');
+}
 
   // Prevent double initialization
   if (window.fbq) return;
