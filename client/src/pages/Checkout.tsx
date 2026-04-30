@@ -116,10 +116,10 @@ export default function Checkout() {
 
     // Passa planType para o backend distinguir mensal x anual
     checkout.mutate({
-      amount: price.amount,
-      currency: selectedCurrency,
-      planType: selectedPlan,
-    } as any);
+  amount: price.amount,
+  currency: selectedCurrency.toUpperCase(), // garante BRL, USD, EUR, GBP
+  planType: selectedPlan,
+} as any);
   };
 
   const lang = locale || "pt";
