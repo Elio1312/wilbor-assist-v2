@@ -225,8 +225,9 @@ export function Chat() {
                 </div>
               )}
 
-              {!user ? (
-                
+             
+                  {!user ? (
+                 <a  
                   href={getLoginUrl()}
                   className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
                 >
@@ -239,8 +240,7 @@ export function Chat() {
                 </div>
               )}
             </div>
-          )}
-        </div>
+      
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
