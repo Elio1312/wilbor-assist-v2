@@ -4,7 +4,7 @@ import express from "express";
 import { getDb, addExtraCreditTransaction } from "./db";
 import { wilborUserCredits, wilborConversionEvents, wilborUsers, wilborEbookPurchases } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
-import { PRODUCTS } from "./stripeProducts";
+import { STRIPE_PRICES, CurrencyType } from "./stripeProducts";
 
 function getStripe(): Stripe | null {
   const key = process.env.STRIPE_SECRET_KEY_CUSTOM || process.env.STRIPE_SECRET_KEY;
@@ -126,7 +126,7 @@ export function registerStripeRoutes(app: Express) {
               break;
             }
 
-            // ── ASSINATURA MENSAL (subscription) ─────────────────────────────
+            // ── ASSINATURA MENSAL ─────────────────────────────────────────────
             if (session.mode === "subscription" && paymentType !== "annual") {
               if (userId) {
                 await db.update(wilborUsers)
@@ -164,10 +164,10 @@ export function registerStripeRoutes(app: Express) {
                 await db.update(wilborUserCredits)
                   .set({
                     plan: "annual",
-                    monthlyLimit: 999999,   // ilimitado na prática
+                    monthlyLimit: 999999,
                     messagesUsed: 0,
                     periodStart: new Date(),
-                    periodEnd: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 ano
+                    periodEnd: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
                     stripeCustomerId: session.customer as string,
                     stripeSubscriptionId: (session as any).subscription as string,
                   })
@@ -196,7 +196,7 @@ export function registerStripeRoutes(app: Express) {
             break;
           }
 
-          // ── CANCELAMENTO ─────────────────────────────────────────────────────
+          // ── CANCELAMENTO ──────────────────────────────────────────────────────
           case "customer.subscription.deleted": {
             const subscription = event.data.object as Stripe.Subscription;
             const userId = Number(subscription.metadata?.user_id);
@@ -249,10 +249,13 @@ export async function createCheckoutSession(
   userEmail: string,
   userName: string,
   origin: string,
-  manychatSubscriberId?: string
+  manychatSubscriberId?: string,
+  currency: CurrencyType = "BRL"
 ): Promise<{ url: string } | { error: string }> {
   const stripe = getStripe();
   if (!stripe) return { error: "Stripe not configured." };
+
+  const priceId = STRIPE_PRICES.monthly[currency];
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -264,7 +267,6 @@ export async function createCheckoutSession(
       metadata: {
         user_id: userId.toString(),
         manychat_subscriber_id: manychatSubscriberId ?? "",
-        // SEM planType = mensal por padrão
       },
       subscription_data: {
         metadata: {
@@ -272,18 +274,7 @@ export async function createCheckoutSession(
           manychat_subscriber_id: manychatSubscriberId ?? "",
         },
       },
-      line_items: [{
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Wilbor Premium Mensal",
-            description: "500 msgs/mês com IA — cancelamento a qualquer hora",
-          },
-          unit_amount: 599,   // $5,99
-          recurring: { interval: "month" },
-        },
-        quantity: 1,
-      }],
+      line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${origin}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/shop?payment=cancelled`,
     });
@@ -299,19 +290,12 @@ export async function createAnnualCheckoutSession(
   userId: number,
   userEmail: string,
   origin: string,
-  currency: "brl" | "usd" | "eur" | "gbp" = "brl"
+  currency: CurrencyType = "BRL"
 ): Promise<{ url: string } | { error: string }> {
   const stripe = getStripe();
   if (!stripe) return { error: "Stripe not configured." };
 
-  // Preços por moeda (centavos)
-  const prices: Record<string, { amount: number; currency: string; name: string }> = {
-    brl: { amount: 14900, currency: "brl", name: "R$ 149" },
-    usd: { amount: 4400,  currency: "usd", name: "$ 44"  },
-    eur: { amount: 3900,  currency: "eur", name: "€ 39"  },
-    gbp: { amount: 3400,  currency: "gbp", name: "£ 34"  },
-  };
-  const priceData = prices[currency];
+  const priceId = STRIPE_PRICES.annual[currency];
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -322,7 +306,7 @@ export async function createAnnualCheckoutSession(
       client_reference_id: userId.toString(),
       metadata: {
         user_id: userId.toString(),
-        planType: "annual",   // FLAG que o webhook usa para identificar plano anual
+        planType: "annual",
         type: "annual",
       },
       subscription_data: {
@@ -331,18 +315,7 @@ export async function createAnnualCheckoutSession(
           planType: "annual",
         },
       },
-      line_items: [{
-        price_data: {
-          currency: priceData.currency,
-          product_data: {
-            name: "Wilbor Premium Anual",
-            description: `Msgs ilimitadas com IA por 1 ano — ${priceData.name}/ano (37% de desconto)`,
-          },
-          unit_amount: priceData.amount,
-          recurring: { interval: "year" },
-        },
-        quantity: 1,
-      }],
+      line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${origin}/shop/success?session_id={CHECKOUT_SESSION_ID}&plan=annual`,
       cancel_url: `${origin}/shop?payment=cancelled`,
     });
