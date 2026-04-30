@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useI18n } from "@/contexts/i18n";
 import { AIChatBox } from "@/components/AIChatBox";
@@ -10,7 +11,6 @@ import { Sparkles, LogIn } from "lucide-react";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { EbookOfferCard } from "@/components/EbookOfferCard";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
-import { CaptchaChallenge, useCaptchaVerification } from "@/components/CaptchaChallenge";
 import { AnalyticsEvents } from "@/lib/analytics";
 
 const CREDIT_TEXTS: Record<string, {
@@ -46,7 +46,6 @@ const CREDIT_TEXTS: Record<string, {
 export function Chat() {
   const { t, locale } = useI18n();
   const { user, loading: authLoading } = useAuth();
-  // Tipo estendido para incluir messageId do backend
   type WilborMsg = Message & { messageId?: number | null };
   const [messages, setMessages] = useState<WilborMsg[]>([
     {
@@ -57,14 +56,8 @@ export function Chat() {
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [ebookOffer, setEbookOffer] = useState<any>(null);
-  const [showCaptcha, setShowCaptcha] = useState(false);
-  const [anonMessageCount, setAnonMessageCount] = useState(0);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  // CAPTCHA verification for anonymous users
-  const captchaVerification = useCaptchaVerification();
-
-  // Initialize fingerprint or use anonymous session ID as fallback
   useEffect(() => {
     const setFp = async () => {
       try {
@@ -74,7 +67,6 @@ export function Chat() {
         setFingerprint(result.visitorId);
       } catch (error) {
         console.warn('[Chat] FingerprintJS failed, using anonymous session ID:', error);
-        // Fallback to anonymous session ID
         const anonId = getAnonymousSessionId();
         setFingerprint(anonId);
       }
@@ -84,24 +76,19 @@ export function Chat() {
 
   const chatMutation = trpc.wilbor.chat.useMutation({
     onError: (error) => {
-      // Extrai o código de erro do servidor (ex: "CREDIT_LIMIT_REACHED")
       const errorMessage = error?.message || "";
-      // Procura pelo código de erro conhecido
       const knownErrors = ["CREDIT_LIMIT_REACHED", "ANONYMOUS_LIMIT_REACHED", "RATE_LIMIT_EXCEEDED", "FINGERPRINT_REQUIRED"];
       const foundError = knownErrors.find(e => errorMessage.includes(e)) || errorMessage;
       setServerError(foundError);
-      // Remove mensagem otimista do usuário se houve erro
       setMessages((prev) => prev.slice(0, -1));
     }
   });
-  
-  // Credits for authenticated users
+
   const creditsQuery = trpc.wilbor.getCredits.useQuery(undefined, {
     enabled: !!user,
     refetchOnWindowFocus: false,
   });
 
-  // Credits for anonymous users
   const anonCreditsQuery = trpc.wilbor.getAnonymousCredits.useQuery(
     { fingerprint: fingerprint || "" },
     {
@@ -113,20 +100,16 @@ export function Chat() {
   const credits = user ? creditsQuery.data : anonCreditsQuery.data;
   const ctexts = CREDIT_TEXTS[locale] ?? CREDIT_TEXTS.pt;
 
-  // Show paywall if user hits limit
   useEffect(() => {
     if (credits?.isOverLimit) {
       setPaywallOpen(true);
     }
   }, [credits?.isOverLimit]);
 
-  // Analytics: Chat Entry (início do interesse real)
   useEffect(() => {
-    // Fire once when user enters chat
     AnalyticsEvents.chatEntry(user?.id);
   }, [user]);
 
-  // Analytics: Chat Started (apenas para usuários autenticados, uma vez por sessão)
   useEffect(() => {
     if (user && fingerprint) {
       AnalyticsEvents.chatStarted(user.id);
@@ -134,20 +117,11 @@ export function Chat() {
   }, [user, fingerprint]);
 
   const handleSendMessage = async (userMessage: string) => {
-    // Block if over limit
     if (credits?.isOverLimit) {
       setPaywallOpen(true);
       return;
     }
 
-    // CAPTCHA check for anonymous users after 3 messages
-    const isAnon = !user;
-    if (isAnon && anonMessageCount >= 3 && !captchaVerification.isVerified) {
-      setShowCaptcha(true);
-      return;
-    }
-
-    // Add user message optimistically
     const newMessages: Message[] = [
       ...messages,
       { role: "user", content: userMessage },
@@ -164,11 +138,8 @@ export function Chat() {
         typeof response === "string"
           ? response
           : (response as any).content || (response as any).message || "Desculpe, não consegui processar sua pergunta.";
-      
-      // Capturar messageId para o sistema de rating
-      const messageId = (response as any)?.messageId ?? null;
 
-      // Capturar oferta contextual de ebook (Regra do Mentor: DEPOIS da resposta)
+      const messageId = (response as any)?.messageId ?? null;
       const offer = (response as any)?.ebookOffer ?? null;
       if (offer) setEbookOffer(offer);
 
@@ -177,20 +148,12 @@ export function Chat() {
         { role: "assistant", content: responseText, messageId },
       ]);
 
-      // Incrementar contador de mensagens anônimas (para CAPTCHA)
-      if (isAnon) {
-        setAnonMessageCount(prev => prev + 1);
-      }
-
-      // Refresh credits after each message
       if (user) {
         creditsQuery.refetch();
       } else {
         anonCreditsQuery.refetch();
       }
     } catch (error: any) {
-      // Erros já são tratados pelo onError do mutation
-      // Apenas logamos erros não esperados
       const errorMessage = error?.message || "";
       const knownErrors = ["CREDIT_LIMIT_REACHED", "ANONYMOUS_LIMIT_REACHED", "RATE_LIMIT_EXCEEDED", "FINGERPRINT_REQUIRED"];
       if (!knownErrors.some(e => errorMessage.includes(e))) {
@@ -214,7 +177,6 @@ export function Chat() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-white">
-      {/* Header */}
       <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -227,7 +189,6 @@ export function Chat() {
             </div>
           </div>
 
-          {/* Credit counter */}
           {!authLoading && credits && (
             <div className="flex items-center gap-4">
               {isPremium ? (
@@ -245,9 +206,7 @@ export function Chat() {
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}
                   onClick={() => remaining === 0 && setPaywallOpen(true)}
-                  title={remaining === 0 ? "Limite atingido — clique para fazer upgrade" : undefined}
                 >
-                  {/* Mini progress dots */}
                   <div className="flex gap-0.5">
                     {Array.from({ length: monthlyLimit }).map((_, i) => (
                       <div
@@ -266,9 +225,8 @@ export function Chat() {
                 </div>
               )}
 
-              {/* Login button if not authenticated */}
               {!user ? (
-                <a
+                
                   href={getLoginUrl()}
                   className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
                 >
@@ -285,7 +243,6 @@ export function Chat() {
         </div>
       </header>
 
-      {/* Chat Container */}
       <main className="max-w-4xl mx-auto px-4 py-8">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <AIChatBox
@@ -297,7 +254,6 @@ export function Chat() {
           />
         </div>
 
-        {/* Oferta Contextual de Ebook (Regra do Mentor: DEPOIS da resposta útil) */}
         {ebookOffer && (
           <EbookOfferCard
             key={ebookOffer.ebookId}
@@ -305,36 +261,7 @@ export function Chat() {
           />
         )}
 
-        {/* Upgrade nudge bar when 1-2 remaining */}
         {credits && !isPremium && remaining > 0 && remaining <= 2 && (
           <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
             <p className="text-amber-800 text-sm">
-              {locale === "pt" && `Você tem apenas ${remaining} consulta${remaining > 1 ? "s" : ""} gratuita${remaining > 1 ? "s" : ""} restante${remaining > 1 ? "s" : ""}.`}
-              {locale === "en" && `You have only ${remaining} free consultation${remaining > 1 ? "s" : ""} left.`}
-              {locale === "es" && `Solo te quedan ${remaining} consulta${remaining > 1 ? "s" : ""} gratuita${remaining > 1 ? "s" : ""}.`}
-            </p>
-            <button
-              onClick={() => setPaywallOpen(true)}
-              className="flex-shrink-0 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
-            >
-              {locale === "pt" ? "Ver planos" : locale === "en" ? "View plans" : "Ver planes"}
-            </button>
-          </div>
-        )}
-      </main>
-
-      {/* Paywall Modal */}
-      <PaywallModal open={paywallOpen} onClose={() => setPaywallOpen(false)} />
-
-      {/* CAPTCHA Challenge Modal */}
-      {showCaptcha && (
-        <CaptchaChallenge
-          onVerified={() => setShowCaptcha(false)}
-          onCancel={() => {
-            setShowCaptcha(false);
-          }}
-        />
-      )}
-    </div>
-  );
-}
+              {locale === "pt" && `Você tem ap
