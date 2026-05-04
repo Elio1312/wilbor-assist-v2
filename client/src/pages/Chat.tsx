@@ -286,4 +286,39 @@ export function Chat() {
         {credits && !isPremium && remaining > 0 && remaining <= 2 && (
           <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
             <p className="text-amber-800 text-sm">
-              {locale === "pt" && `Você tem ap
+              {locale === "pt" && `Você tem apenas ${remaining} consulta${remaining === 1 ? "" : "s"} gratuita${remaining === 1 ? "" : "s"} restante${remaining === 1 ? "" : "s"}.`}
+              {locale === "en" && `You have only ${remaining} free consultation${remaining === 1 ? "" : "s"} remaining.`}
+              {locale === "es" && `Te quedan solo ${remaining} consulta${remaining === 1 ? "" : "s"} gratuita${remaining === 1 ? "" : "s"}.`}
+            </p>
+            <button
+              onClick={() => setPaywallOpen(true)}
+              className="text-sm font-semibold text-amber-700 hover:text-amber-900 underline whitespace-nowrap"
+            >
+              {locale === "pt" && "Ver planos"}
+              {locale === "en" && "See plans"}
+              {locale === "es" && "Ver planes"}
+            </button>
+          </div>
+        )}
+
+        {credits?.isOverLimit && !user && (
+          <div className="mt-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+            <p className="text-red-800 text-sm">{ctexts.anon_limit_reached}</p>
+            <a
+              href={getLoginUrl()}
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm whitespace-nowrap"
+            >
+              <LogIn className="w-4 h-4" />
+              {ctexts.login_cta}
+            </a>
+          </div>
+        )}
+      </main>
+
+      <PaywallModal
+        isOpen={paywallOpen}
+        onClose={() => setPaywallOpen(false)}
+      />
+    </div>
+  );
+}
