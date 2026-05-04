@@ -161,9 +161,12 @@ export function Chat() {
       const offer = (response as any)?.ebookOffer ?? null;
       if (offer) setEbookOffer(offer);
 
+      // Capturar imageUrl do RAG (imagem de exercício/ilustração)
+      const responseImageUrl = (response as any)?.imageUrl ?? null;
+
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: responseText, messageId },
+        { role: "assistant", content: responseText, messageId, imageUrl: responseImageUrl },
       ]);
 
       if (user) {

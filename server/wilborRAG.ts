@@ -22,6 +22,7 @@ export type RAGResult = {
   tokensEstimated: number;
   knowledgeUsed?: string; // which KB entry was used
   source?: string;
+  imageUrl?: string | null; // exercise/illustration image to show in chat
 };
 
 export type CreditStatus = {
@@ -649,6 +650,7 @@ export async function routeMessage(
         tokensEstimated: 300, // ~200 system + ~100 response (vs ~3000 full)
         knowledgeUsed: `KB#${bestEntry.id}: ${bestEntry.question}`,
         source: bestEntry.source,
+        imageUrl: bestEntry.imageUrl ?? null,
       };
     } catch (error) {
       console.error("[RAG] Error formatting response, falling through to full LLM:", error);

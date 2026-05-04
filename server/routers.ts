@@ -299,7 +299,7 @@ export const appRouter = router({
         } else if (intent && !ctx.user?.id) {
           ebookOffer = buildEbookOffer(intent, detectedLang);
         }
-        return { content: responseText, messageId: aiMessageId, ebookOffer, imageUrl: responseImageUrl ?? null };)
+        return { content: responseText, messageId: aiMessageId, ebookOffer, imageUrl: responseImageUrl ?? null };
       }),
 
     submitFeedback: protectedProcedure

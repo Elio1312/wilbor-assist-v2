@@ -210,16 +210,29 @@ export async function generateWilborResponse(
 
 /**
  * Simple chat endpoint for Dashboard
- * Processes message and returns response
+ * Processes message and returns response + imageUrl from RAG when available
  */
 export async function simpleChatWithWilbor(
   userId: string,
   messages: Array<{ role: "system" | "user" | "assistant"; content: string }>
-): Promise<SimpleChatResponse> {
+): Promise<{ content: string; imageUrl: string | null }> {
   try {
+    // Try to extract imageUrl from RAG knowledge base
+    let imageUrl: string | null = null;
+    try {
+      const { searchKnowledgeBase } = await import("./wilborRAG");
+      const lastUserMsg = [...messages].reverse().find(m => m.role === "user");
+      if (lastUserMsg) {
+        const entries = await searchKnowledgeBase(lastUserMsg.content, "geral", undefined);
+        if (entries.length > 0 && entries[0].imageUrl) {
+          imageUrl = entries[0].imageUrl;
+        }
+      }
+    } catch (_) {
+      // RAG search failed, continue without imageUrl
+    }
     const sanitizedMessages = sanitizeChatMessages(messages);
     const hasUserMessage = sanitizedMessages.some((message) => message.role === "user");
-
     if (!hasUserMessage) {
       throw new Error("EMPTY_CHAT_MESSAGES");
     }
@@ -230,7 +243,7 @@ export async function simpleChatWithWilbor(
 
     const assistantMessage = extractAssistantText(response);
 
-    return { content: assistantMessage };
+    return { content: assistantMessage, imageUrl };
   } catch (error) {
     console.error(`Chat error for user ${userId}:`, error);
     throw error;

@@ -83,6 +83,7 @@ function RatingWidget({ messageId }: { messageId: number }) {
 export type Message = {
   role: "system" | "user" | "assistant";
   content: string;
+  imageUrl?: string | null; // exercise/illustration image from RAG
 };
 
 export type AIChatBoxProps = {
@@ -267,6 +268,18 @@ export function AIChatBox({
                           <div className="prose prose-sm dark:prose-invert max-w-none">
                             <Streamdown>{message.content}</Streamdown>
                           </div>
+                          {/* 🖼️ Imagem de exercício/ilustração do RAG */}
+                          {message.imageUrl && (
+                            <div className="mt-3 rounded-lg overflow-hidden border border-purple-100">
+                              <img
+                                src={message.imageUrl}
+                                alt="Ilustração de exercício"
+                                className="w-full max-w-xs object-contain rounded-lg"
+                                loading="lazy"
+                              />
+                            </div>
+                          )}
+                          {/* ⭐ Rating de feedback - apenas para mensagens com messageId */}
                           {(message as any).messageId && (
                             <RatingWidget messageId={(message as any).messageId} />
                           )}
