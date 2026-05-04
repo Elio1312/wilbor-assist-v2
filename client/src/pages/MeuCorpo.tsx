@@ -56,6 +56,7 @@ interface Exercise {
   difficulty: "gentle" | "moderate" | "强度适中";
   duration: number;
   benefits: string[];
+  imageUrl?: string;
 }
 
 // ==========================================
@@ -77,7 +78,8 @@ const EXERCISES: Exercise[] = [
     phase: ["immediate", "resguardo", "transitional", "recovery"],
     difficulty: "gentle",
     duration: 10,
-    benefits: ["Previne incontinência", "Auxilia recuperação", "Melhora circulação"]
+    benefits: ["Previne incontinência", "Auxilia recuperação", "Melhora circulação"],
+    imageUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/jYzpBMSwTlrzBBjM.png"
   },
   {
     id: "walking",
@@ -86,7 +88,8 @@ const EXERCISES: Exercise[] = [
     phase: ["resguardo", "transitional", "recovery"],
     difficulty: "gentle",
     duration: 15,
-    benefits: ["Auxilia circulação", "Reduz inchaço", "Bem-estar mental"]
+    benefits: ["Auxilia circulação", "Reduz inchaço", "Bem-estar mental"],
+    imageUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/HMGyxkstmlsRfbDP.png"
   },
   {
     id: "postpartum-yoga",
@@ -95,7 +98,8 @@ const EXERCISES: Exercise[] = [
     phase: ["transitional", "recovery"],
     difficulty: "moderate",
     duration: 30,
-    benefits: ["Flexibilidade", "Força", "Redução de estresse"]
+    benefits: ["Flexibilidade", "Força", "Redução de estresse"],
+    imageUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/ZVxMtNJiDMzVMQcG.png"
   },
   {
     id: "pilates",
@@ -104,7 +108,8 @@ const EXERCISES: Exercise[] = [
     phase: ["recovery"],
     difficulty: "moderate",
     duration: 30,
-    benefits: ["Fortalece core", "Postura", "Tônus muscular"]
+    benefits: ["Fortalece core", "Postura", "Tônus muscular"],
+    imageUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/DrEbEXlncUgqhOjR.png"
   },
   {
     id: "postnatal-fitness",
@@ -113,7 +118,8 @@ const EXERCISES: Exercise[] = [
     phase: ["recovery"],
     difficulty: "强度适中",
     duration: 45,
-    benefits: ["Condicionamento físico", "Perda de peso gradual", "Energia"]
+    benefits: ["Condicionamento físico", "Perda de peso gradual", "Energia"],
+    imageUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/OVSiLfihWSHtoMmz.png"
   }
 ];
 
@@ -272,29 +278,41 @@ function ExercisesByPhase({ phase }: { phase: string }) {
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {exercises.map((exercise) => (
-          <div key={exercise.id} className="p-4 bg-gray-50 rounded-xl">
-            <div className="flex items-start justify-between">
-              <div>
-                <h4 className="font-medium">{exercise.name}</h4>
-                <p className="text-sm text-gray-600 mt-1">{exercise.description}</p>
-                <div className="flex items-center gap-4 mt-2">
-                  <span className="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">
-                    {exercise.duration} min
-                  </span>
-                  <span className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full capitalize">
-                    {exercise.difficulty}
-                  </span>
+          <div key={exercise.id} className="rounded-xl overflow-hidden border border-gray-100 bg-gray-50">
+            {exercise.imageUrl && (
+              <div className="w-full h-48 bg-gray-100 overflow-hidden">
+                <img
+                  src={exercise.imageUrl}
+                  alt={exercise.name}
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div className="p-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h4 className="font-medium">{exercise.name}</h4>
+                  <p className="text-sm text-gray-600 mt-1">{exercise.description}</p>
+                  <div className="flex items-center gap-4 mt-2">
+                    <span className="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">
+                      {exercise.duration} min
+                    </span>
+                    <span className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full capitalize">
+                      {exercise.difficulty}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {exercise.benefits.map((benefit, idx) => (
-                <span key={idx} className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded-full">
-                  {benefit}
-                </span>
-              ))}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {exercise.benefits.map((benefit, idx) => (
+                  <span key={idx} className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded-full">
+                    {benefit}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         ))}
