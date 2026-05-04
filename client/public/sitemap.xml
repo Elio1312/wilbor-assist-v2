@@ -1,369 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
-  <!-- ===== HOMEPAGE ===== -->
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── Páginas principais ─────────────────────────────────────── -->
   <url>
     <loc>https://www.wilbor-assist.com/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/en" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png</image:loc>
-      <image:title>Wilbor - AI Neonatal Assistant</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/en" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/en" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- ===== BLOG INDEX ===== -->
   <url>
     <loc>https://www.wilbor-assist.com/blog</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- ===== ARTIGO 1: SONO ===== -->
   <url>
-    <loc>https://www.wilbor-assist.com/blog/bebe-nao-dorme</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/bebe-nao-dorme" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-wont-sleep" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/bebe-no-duerme" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-wont-sleep</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/bebe-nao-dorme" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-wont-sleep" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/bebe-no-duerme" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/bebe-no-duerme</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/bebe-nao-dorme" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-wont-sleep" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/bebe-no-duerme" />
-    <lastmod>2026-03-24</lastmod>
+    <loc>https://www.wilbor-assist.com/chat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== ARTIGO 2: CÓLICA ===== -->
+  <!-- ── Blog PT (canônico) ─────────────────────────────────────── -->
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/sono-do-bebe</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/sono-do-bebe"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-wont-sleep"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/bebe-no-duerme"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/sono-do-bebe"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <url>
     <loc>https://www.wilbor-assist.com/blog/colica-do-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/colica-do-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-colic-relief" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/colico-del-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-colic-relief</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/colica-do-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-colic-relief" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/colico-del-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/colico-del-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/colica-do-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-colic-relief" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/colico-del-bebe" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/colica-do-bebe"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-colic-relief"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/colico-del-bebe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/colica-do-bebe"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== ARTIGO 3: FEBRE ===== -->
   <url>
     <loc>https://www.wilbor-assist.com/blog/febre-no-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/febre-no-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-fever-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/fiebre-en-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-fever-guide</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/febre-no-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-fever-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/fiebre-en-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/fiebre-en-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/febre-no-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-fever-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/fiebre-en-bebe" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/febre-no-bebe"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-fever-guide"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/fiebre-en-bebes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/febre-no-bebe"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== ARTIGO 4: INTRODUÇÃO ALIMENTAR ===== -->
-  <url>
-    <loc>https://www.wilbor-assist.com/blog/introducao-alimentar</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/introducao-alimentar" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-food-introduction" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/introduccion-alimentaria" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-food-introduction</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/introducao-alimentar" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-food-introduction" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/introduccion-alimentaria" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/introduccion-alimentaria</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/introducao-alimentar" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-food-introduction" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/introduccion-alimentaria" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ===== ARTIGO 5: DEPRESSÃO PÓS-PARTO ===== -->
-  <url>
-    <loc>https://www.wilbor-assist.com/blog/depressao-pos-parto</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/depressao-pos-parto" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/postpartum-depression" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/depresion-posparto" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/postpartum-depression</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/depressao-pos-parto" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/postpartum-depression" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/depresion-posparto" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/depresion-posparto</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/depressao-pos-parto" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/postpartum-depression" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/depresion-posparto" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ===== ARTIGO 6: VACINAS ===== -->
-  <url>
-    <loc>https://www.wilbor-assist.com/blog/vacinas-do-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/vacinas-do-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-vaccination-schedule" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/vacunas-del-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-vaccination-schedule</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/vacinas-do-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-vaccination-schedule" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/vacunas-del-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/vacunas-del-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/vacinas-do-bebe" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-vaccination-schedule" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/vacunas-del-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ===== ARTIGO 7: AMAMENTAÇÃO ===== -->
   <url>
     <loc>https://www.wilbor-assist.com/blog/amamentacao-pega-correta</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/amamentacao-pega-correta" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/breastfeeding-latch-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/lactancia-agarre-correcto" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/breastfeeding-latch-guide</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/amamentacao-pega-correta" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/breastfeeding-latch-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/lactancia-agarre-correcto" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/lactancia-agarre-correcto</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/amamentacao-pega-correta" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/breastfeeding-latch-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/lactancia-agarre-correcto" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/amamentacao-pega-correta"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/breastfeeding-latch"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/lactancia-agarre-correcto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/amamentacao-pega-correta"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== ARTIGO 8: SEGURANÇA ===== -->
-  <url>
-    <loc>https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-safety-home" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/seguridad-bebe-hogar" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-safety-home</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-safety-home" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/seguridad-bebe-hogar" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/seguridad-bebe-hogar</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-safety-home" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/seguridad-bebe-hogar" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ===== ARTIGO 9: DESENVOLVIMENTO ===== -->
   <url>
     <loc>https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-developmental-leaps" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/saltos-desarrollo-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/baby-developmental-leaps</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-developmental-leaps" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/saltos-desarrollo-bebe" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/saltos-desarrollo-bebe</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/baby-developmental-leaps" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/saltos-desarrollo-bebe" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-developmental-leaps"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/baby-growth-spurts-signs-and-what-to-do"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/saltos-de-desenvolvimento"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== ARTIGO 10: BANHO ===== -->
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/vacinas-do-bebe</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/vacinas-do-bebe"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-vaccination-schedule"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/vacunas-bebe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/vacinas-do-bebe"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-safety-home"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/seguridad-bebe-hogar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/seguranca-bebe-em-casa"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/introducao-alimentar</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/introducao-alimentar"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-food-introduction"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/introduccion-alimentos-bebe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/introducao-alimentar"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <url>
     <loc>https://www.wilbor-assist.com/blog/banho-do-recem-nascido</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/banho-do-recem-nascido" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/newborn-bath-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/bano-recien-nacido" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/en/blog/newborn-bath-guide</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/banho-do-recem-nascido" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/newborn-bath-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/bano-recien-nacido" />
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.wilbor-assist.com/es/blog/bano-recien-nacido</loc>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/banho-do-recem-nascido" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.wilbor-assist.com/en/blog/newborn-bath-guide" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.wilbor-assist.com/es/blog/bano-recien-nacido" />
-    <lastmod>2026-03-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/banho-do-recem-nascido"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/newborn-bath-guide"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/bano-recien-nacido"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/banho-do-recem-nascido"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== DASHBOARD ===== -->
   <url>
-    <loc>https://www.wilbor-assist.com/dashboard</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://www.wilbor-assist.com/blog/surtos-de-crescimento-do-bebe</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/surtos-de-crescimento-do-bebe"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-growth-spurts"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/brotes-crecimiento-bebe"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/surtos-de-crescimento-do-bebe"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/ictericia-neonatal-causas-e-tratamento</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/ictericia-neonatal-causas-e-tratamento"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/newborn-jaundice-causes-and-treatment"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/ictericia-neonatal-causas-y-tratamiento"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/ictericia-neonatal-causas-e-tratamento"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/depressao-pos-parto</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/depressao-pos-parto"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/postpartum-depression"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/depresion-posparto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/depressao-pos-parto"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wilbor-assist.com/blog/dentição-do-bebe-sintomas-e-alivio</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.wilbor-assist.com/blog/dentição-do-bebe-sintomas-e-alivio"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.wilbor-assist.com/en/blog/baby-teething-symptoms-relief"/>
+    <xhtml:link rel="alternate" hreflang="es"    href="https://www.wilbor-assist.com/es/blog/denticion-bebe-sintomas-alivio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.wilbor-assist.com/blog/dentição-do-bebe-sintomas-e-alivio"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

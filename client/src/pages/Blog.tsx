@@ -61,6 +61,33 @@ export default function Blog() {
 
   useEffect(() => {
     applyBlogDocumentSeo(seo);
+
+    // ── Canonical tag para a listagem do blog ────────────────────────────────
+    // URL canônica sempre sem prefixo de idioma
+    const canonicalUrl = "https://www.wilbor-assist.com/blog";
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+
+    // ── hreflang para listagem ────────────────────────────────────────────────
+    document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(el => el.remove());
+    const hreflangs = [
+      { lang: "pt-BR",    path: "/blog" },
+      { lang: "en",       path: "/en/blog" },
+      { lang: "es",       path: "/es/blog" },
+      { lang: "x-default", path: "/blog" },
+    ];
+    hreflangs.forEach(({ lang, path }) => {
+      const link = document.createElement("link");
+      link.rel = "alternate";
+      link.setAttribute("hreflang", lang);
+      link.href = `https://www.wilbor-assist.com${path}`;
+      document.head.appendChild(link);
+    });
   }, [seo]);
 
   return (

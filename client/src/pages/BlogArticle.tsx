@@ -38,6 +38,38 @@ export default function BlogArticle() {
     // Apply SEO data if we have an article
     if (article) {
       applyBlogDocumentSeo(getBlogArticleSeo(blogLocale, article));
+
+      // ── Canonical tag ────────────────────────────────────────────────────
+      // Sempre aponta para a URL canônica sem prefixo de idioma (PT como base)
+      // Isso resolve "Erro de redirecionamento" e conteúdo duplicado no Google
+      const canonicalUrl = `https://www.wilbor-assist.com/blog/${article.slug}`;
+      let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement("link");
+        canonical.rel = "canonical";
+        document.head.appendChild(canonical);
+      }
+      canonical.href = canonicalUrl;
+
+      // ── hreflang tags ─────────────────────────────────────────────────────
+      // Indica ao Google as versões em outros idiomas — evita conteúdo duplicado
+      const hreflangs: Array<{ lang: string; path: string }> = [
+        { lang: "pt-BR", path: `/blog/${article.slug}` },
+        { lang: "en",    path: `/en/blog/${article.slug}` },
+        { lang: "es",    path: `/es/blog/${article.slug}` },
+        { lang: "x-default", path: `/blog/${article.slug}` },
+      ];
+
+      // Remove hreflangs antigos antes de recriar
+      document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(el => el.remove());
+
+      hreflangs.forEach(({ lang, path }) => {
+        const link = document.createElement("link");
+        link.rel = "alternate";
+        link.setAttribute("hreflang", lang);
+        link.href = `https://www.wilbor-assist.com${path}`;
+        document.head.appendChild(link);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [article, blogLocale, localePath, setLocation, t]);
