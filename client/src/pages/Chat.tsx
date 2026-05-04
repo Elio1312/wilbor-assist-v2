@@ -261,7 +261,8 @@ export function Chat() {
                 </div>
               )}
             </div>
-      
+          )}
+        </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
