@@ -358,6 +358,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-24 px-6 bg-gradient-to-br from-purple-50 via-pink-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-bold mb-4">
+              ⭐⭐⭐⭐⭐ {locale === 'pt' ? 'O que as mães dizem' : locale === 'es' ? 'Lo que dicen las mamás' : locale === 'fr' ? 'Ce que disent les mamans' : locale === 'de' ? 'Was Mütter sagen' : 'What mothers say'}
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900">
+              {locale === 'pt' ? 'Mães reais. Resultados reais.' : locale === 'es' ? 'Mamás reales. Resultados reales.' : locale === 'fr' ? 'Vraies mamans. Vrais résultats.' : locale === 'de' ? 'Echte Mütter. Echte Ergebnisse.' : 'Real mothers. Real results.'}
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Depoimento 1 */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-purple-100 flex flex-col gap-6">
+              <div className="flex gap-1 text-yellow-400 text-lg">{'★★★★★'}</div>
+              <p className="text-gray-700 leading-relaxed text-base italic">
+                {locale === 'pt' ? '"Eram 2h da manhã, o Enzo chorava sem parar e eu não sabia se era cólica ou fome. Perguntei pro Wilbor e em 30 segundos ele me disse exatamente o que fazer. Funcionou na hora."' :
+                 locale === 'es' ? '"Eran las 2 de la madrugada, mi bebé lloraba sin parar. Le pregunté a Wilbor y en 30 segundos me dijo exactamente qué hacer. Funcionó de inmediato."' :
+                 locale === 'fr' ? '"Il était 2h du matin, mon bébé pleurait sans arrêt. J\'ai demandé à Wilbor et en 30 secondes il m\'a dit exactement quoi faire. Ça a marché."' :
+                 locale === 'de' ? '"Es war 2 Uhr morgens, mein Baby weinte ohne Aufhören. Ich fragte Wilbor und in 30 Sekunden wusste ich genau was zu tun war. Es hat sofort funktioniert."' :
+                 '"It was 2am, Ethan wouldn\'t stop crying and I had no idea if it was colic or hunger. I asked Wilbor and in 30 seconds it told me exactly what to do. It worked immediately."'}
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/PGVjkdaKvMTBINPE.png" alt="Juliana" className="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">{locale === 'pt' ? 'Juliana M.' : locale === 'es' ? 'Juliana M.' : 'Juliana M.'}</p>
+                  <p className="text-gray-500 text-xs">{locale === 'pt' ? 'Mãe do Enzo, 6 semanas — São Paulo' : locale === 'es' ? 'Mamá de Enzo, 6 semanas — São Paulo' : locale === 'fr' ? 'Maman d\'Enzo, 6 semaines — São Paulo' : locale === 'de' ? 'Mutter von Enzo, 6 Wochen — São Paulo' : 'Mother of Ethan, 6 weeks — São Paulo'}</p>
+                </div>
+              </div>
+            </div>
+            {/* Depoimento 2 */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-purple-100 flex flex-col gap-6">
+              <div className="flex gap-1 text-yellow-400 text-lg">{'★★★★★'}</div>
+              <p className="text-gray-700 leading-relaxed text-base italic">
+                {locale === 'pt' ? '"Já tive dois filhos antes sem o Wilbor. Com o terceiro foi completamente diferente — é como ter uma pediatra de plantão no bolso 24 horas por dia."' :
+                 locale === 'es' ? '"Ya tuve dos hijos antes sin Wilbor. Con el tercero fue completamente diferente — es como tener una pediatra de guardia en el bolsillo las 24 horas."' :
+                 locale === 'fr' ? '"J\'ai eu deux enfants avant Wilbor. Avec le troisième c\'était complètement différent — c\'est comme avoir une pédiatre de garde dans ma poche 24h/24."' :
+                 locale === 'de' ? '"Ich hatte zwei Kinder vor Wilbor. Mit dem dritten war es völlig anders — es ist wie eine Kinderärztin rund um die Uhr in der Tasche zu haben."' :
+                 '"I had two kids before Wilbor. With the third it was completely different — it\'s like having a pediatrician on call in my pocket 24 hours a day."'}
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/jlUIgsEOudOlliwm.png" alt="Fernanda" className="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">Fernanda C.</p>
+                  <p className="text-gray-500 text-xs">{locale === 'pt' ? 'Mãe de 3 filhos — Curitiba' : locale === 'es' ? 'Mamá de 3 hijos — Curitiba' : locale === 'fr' ? 'Maman de 3 enfants — Curitiba' : locale === 'de' ? 'Mutter von 3 Kindern — Curitiba' : 'Mother of 3 — Curitiba'}</p>
+                </div>
+              </div>
+            </div>
+            {/* Depoimento 3 */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-purple-100 flex flex-col gap-6">
+              <div className="flex gap-1 text-yellow-400 text-lg">{'★★★★★'}</div>
+              <p className="text-gray-700 leading-relaxed text-base italic">
+                {locale === 'pt' ? '"Perguntei sobre a cólica da Sofia e o Wilbor me ensinou a técnica I-L-U com instruções passo a passo. Funcionou na primeira tentativa. Chorei de alívio."' :
+                 locale === 'es' ? '"Le pregunté sobre los cólicos de Sofía y Wilbor me enseñó la técnica I-L-U paso a paso. Funcionó en el primer intento. Lloré de alivio."' :
+                 locale === 'fr' ? '"J\'ai demandé à propos des coliques de Sofia et Wilbor m\'a appris la technique I-L-U étape par étape. Ça a marché du premier coup. J\'ai pleuré de soulagement."' :
+                 locale === 'de' ? '"Ich fragte nach Sofias Koliken und Wilbor lehrte mir die I-L-U-Technik Schritt für Schritt. Es funktionierte beim ersten Versuch. Ich weinte vor Erleichterung."' :
+                 '"I asked about Sofia\'s colic and Wilbor taught me the I-L-U technique step by step. It worked on the first try. I cried with relief."'}
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663323996241/OFCmCrGseirhncuu.png" alt="Ana Beatriz" className="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">Ana Beatriz S.</p>
+                  <p className="text-gray-500 text-xs">{locale === 'pt' ? 'Mãe da Sofia, 2 meses — Belo Horizonte' : locale === 'es' ? 'Mamá de Sofía, 2 meses — Belo Horizonte' : locale === 'fr' ? 'Maman de Sofia, 2 mois — Belo Horizonte' : locale === 'de' ? 'Mutter von Sofia, 2 Monate — Belo Horizonte' : 'Mother of Sofia, 2 months — Belo Horizonte'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section Otimizada */}
       <section className="py-24 px-6 bg-white">
         <div className="max-w-3xl mx-auto">
