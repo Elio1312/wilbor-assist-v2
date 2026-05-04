@@ -2,7 +2,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getDb, upsertUser, getUserByOpenId } from "./db";
-import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback, wilborDiaryEntries } from "../drizzle/schema";
+import { wilborUserCredits, wilborConversionEvents, wilborResponseFeedback, wilborDiaryEntries, wilborDevMilestones, wilborMilestoneContent } from "../drizzle/schema";
 import { eq, and, gt, sql, desc } from "drizzle-orm";
 import { wilborMessages } from "../drizzle/schema";
 import { COOKIE_NAME } from "@shared/const";
@@ -499,6 +499,162 @@ export const appRouter = router({
             eq(wilborDiaryEntries.userId, ctx.user.id)
           ));
         return { success: true };
+      }),
+
+    // ── TRILHA DE DESENVOLVIMENTO (Marcos) ───────────────────────────────────
+
+    // Busca todos os marcos de conteúdo filtrados pelo idioma e mês do bebê
+    getMilestoneContent: protectedProcedure
+      .input(z.object({
+        babyAgeMonths: z.number().min(0).max(24),
+        language: z.enum(["pt", "en", "es"]).default("pt"),
+      }))
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        // Busca marcos do mês atual ±1 para contexto
+        const minMonth = Math.max(0, input.babyAgeMonths - 1);
+        const maxMonth = Math.min(24, input.babyAgeMonths + 1);
+
+        const content = await db
+          .select()
+          .from(wilborMilestoneContent)
+          .where(
+            and(
+              sql`${wilborMilestoneContent.month} >= ${minMonth}`,
+              sql`${wilborMilestoneContent.month} <= ${maxMonth}`
+            )
+          )
+          .orderBy(wilborMilestoneContent.month, wilborMilestoneContent.order);
+
+        return content.map(m => ({
+          id: m.id,
+          month: m.month,
+          category: m.category,
+          title: input.language === "en" ? (m.titleEn ?? m.titlePt)
+               : input.language === "es" ? (m.titleEs ?? m.titlePt)
+               : m.titlePt,
+          description: input.language === "en" ? (m.descriptionEn ?? m.descriptionPt)
+                     : input.language === "es" ? (m.descriptionEs ?? m.descriptionPt)
+                     : m.descriptionPt,
+          order: m.order,
+        }));
+      }),
+
+    // Busca marcos registrados do bebê (com anotações)
+    getBabyMilestones: protectedProcedure
+      .input(z.object({ babyId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        return await db
+          .select()
+          .from(wilborDevMilestones)
+          .where(and(
+            eq(wilborDevMilestones.userId, ctx.user.id),
+            eq(wilborDevMilestones.babyId, input.babyId)
+          ))
+          .orderBy(desc(wilborDevMilestones.achievedAt));
+      }),
+
+    // Registra ou atualiza um marco atingido
+    saveMilestone: protectedProcedure
+      .input(z.object({
+        babyId: z.number(),
+        contentId: z.number(),
+        achieved: z.enum(["yes", "no", "partial"]),
+        achievedAt: z.string().optional(),
+        notes: z.string().max(500).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        // Verificar se já existe registro para este marco/bebê
+        const existing = await db
+          .select()
+          .from(wilborDevMilestones)
+          .where(and(
+            eq(wilborDevMilestones.userId, ctx.user.id),
+            eq(wilborDevMilestones.babyId, input.babyId),
+            eq(wilborDevMilestones.contentId, input.contentId)
+          ))
+          .limit(1);
+
+        const achievedAt = input.achievedAt ? new Date(input.achievedAt) : new Date();
+
+        if (existing.length > 0) {
+          await db.update(wilborDevMilestones)
+            .set({
+              achieved: input.achieved,
+              achievedAt: input.achieved === "yes" ? achievedAt : null,
+              notes: input.notes ?? null,
+            })
+            .where(eq(wilborDevMilestones.id, existing[0].id));
+          return { id: existing[0].id, updated: true };
+        }
+
+        const [inserted] = await db.insert(wilborDevMilestones).values({
+          userId: ctx.user.id,
+          babyId: input.babyId,
+          contentId: input.contentId,
+          achieved: input.achieved,
+          achievedAt: input.achieved === "yes" ? achievedAt : null,
+          notes: input.notes ?? null,
+        });
+        return { id: (inserted as any).insertId, updated: false };
+      }),
+
+    // Busca timeline completa de marcos atingidos (para visualização de evolução)
+    getMilestoneTimeline: protectedProcedure
+      .input(z.object({
+        babyId: z.number(),
+        language: z.enum(["pt", "en", "es"]).default("pt"),
+      }))
+      .query(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database connection failed");
+
+        // JOIN: marcos registrados + conteúdo
+        const achieved = await db
+          .select({
+            milestoneId: wilborDevMilestones.id,
+            contentId: wilborDevMilestones.contentId,
+            achieved: wilborDevMilestones.achieved,
+            achievedAt: wilborDevMilestones.achievedAt,
+            notes: wilborDevMilestones.notes,
+            month: wilborMilestoneContent.month,
+            category: wilborMilestoneContent.category,
+            titlePt: wilborMilestoneContent.titlePt,
+            titleEn: wilborMilestoneContent.titleEn,
+            titleEs: wilborMilestoneContent.titleEs,
+          })
+          .from(wilborDevMilestones)
+          .innerJoin(
+            wilborMilestoneContent,
+            eq(wilborDevMilestones.contentId, wilborMilestoneContent.id)
+          )
+          .where(and(
+            eq(wilborDevMilestones.userId, ctx.user.id),
+            eq(wilborDevMilestones.babyId, input.babyId),
+            eq(wilborDevMilestones.achieved, "yes")
+          ))
+          .orderBy(wilborDevMilestones.achievedAt);
+
+        return achieved.map(m => ({
+          milestoneId: m.milestoneId,
+          contentId: m.contentId,
+          achieved: m.achieved,
+          achievedAt: m.achievedAt,
+          notes: m.notes,
+          month: m.month,
+          category: m.category,
+          title: input.language === "en" ? (m.titleEn ?? m.titlePt)
+               : input.language === "es" ? (m.titleEs ?? m.titlePt)
+               : m.titlePt,
+        }));
       }),
   }),
 
