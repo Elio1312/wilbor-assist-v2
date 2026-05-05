@@ -271,6 +271,74 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Competitive Differentials Section */}
+      <section className="py-16 px-6 bg-purple-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">
+              {locale === 'pt' ? 'Por que o Wilbor é diferente?' :
+               locale === 'es' ? '¿Por qué Wilbor es diferente?' :
+               locale === 'fr' ? 'Pourquoi Wilbor est différent ?' :
+               locale === 'de' ? 'Warum ist Wilbor anders?' :
+               'Why is Wilbor different?'}
+            </h2>
+            <p className="text-gray-500 text-lg">
+              {locale === 'pt' ? 'O que os outros apps não fazem — e o Wilbor faz.' :
+               locale === 'es' ? 'Lo que otras apps no hacen — y Wilbor sí.' :
+               locale === 'fr' ? 'Ce que les autres apps ne font pas — et que Wilbor fait.' :
+               locale === 'de' ? 'Was andere Apps nicht tun — und Wilbor tut.' :
+               "What other apps don't do \u2014 and Wilbor does."}
+            </p>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+            <div className="grid grid-cols-2 bg-gray-800 text-white text-sm font-bold">
+              <div className="px-5 py-3 text-gray-400">
+                {locale === 'pt' ? 'Outros apps' : locale === 'es' ? 'Otras apps' : locale === 'fr' ? 'Autres apps' : locale === 'de' ? 'Andere Apps' : 'Other apps'}
+              </div>
+              <div className="px-5 py-3 text-purple-300">Wilbor ✅</div>
+            </div>
+            {[
+              {
+                icon: '\uD83E\uDD16',
+                painText: locale === 'pt' ? 'IA genérica — mesma resposta para qualquer bebê' : locale === 'es' ? 'IA genérica — misma respuesta para cualquier bebé' : locale === 'fr' ? 'IA générique — même réponse pour n\'importe quel bébé' : locale === 'de' ? 'Generische KI — gleiche Antwort für jedes Baby' : 'Generic AI — same answer for any baby',
+                wilborText: locale === 'pt' ? 'Responde sobre o SEU bebê, com a idade e rotina dele' : locale === 'es' ? 'Responde sobre TU bebé, con su edad y rutina' : locale === 'fr' ? 'Répond sur VOTRE bébé, avec son âge et sa routine' : locale === 'de' ? 'Antwortet über IHR Baby, mit Alter und Tagesablauf' : 'Answers about YOUR baby, with their age and routine',
+              },
+              {
+                icon: '\uD83D\uDCB0',
+                painText: locale === 'pt' ? 'Paywall agressivo — 3 perguntas e bate no muro' : locale === 'es' ? 'Paywall agresivo — 3 preguntas y muro' : locale === 'fr' ? 'Paywall agressif — 3 questions et blocage' : locale === 'de' ? 'Aggressiver Paywall — 3 Fragen und Schluss' : 'Aggressive paywall — 3 questions and you hit a wall',
+                wilborText: locale === 'pt' ? 'Acesso completo por R$29,90 — sem limite de perguntas' : locale === 'es' ? 'Acceso completo — sin límite de preguntas' : locale === 'fr' ? 'Accès complet — questions illimitées' : locale === 'de' ? 'Vollzugang — unbegrenzte Fragen' : 'Full access — unlimited questions',
+              },
+              {
+                icon: '\uD83D\uDD12',
+                painText: locale === 'pt' ? 'Vendem dados do seu filho para terceiros' : locale === 'es' ? 'Venden datos de tu hijo a terceros' : locale === 'fr' ? 'Vendent les données de votre enfant' : locale === 'de' ? 'Verkaufen Daten Ihres Kindes' : "Sell your child's data to third parties",
+                wilborText: locale === 'pt' ? 'Seus dados não são vendidos para ninguém' : locale === 'es' ? 'Tus datos no se venden a nadie' : locale === 'fr' ? 'Vos données ne sont vendues à personne' : locale === 'de' ? 'Ihre Daten werden an niemanden verkauft' : 'Your data is never sold to anyone',
+              },
+              {
+                icon: '\uD83D\uDC68\u200D\u2695\uFE0F',
+                painText: locale === 'pt' ? '"Consulte um médico" em qualquer pergunta' : locale === 'es' ? '"Consulta al médico" para todo' : locale === 'fr' ? '"Consultez un médecin" pour tout' : locale === 'de' ? '"Arzt aufsuchen" bei jeder Frage' : '"See a doctor" for every question',
+                wilborText: locale === 'pt' ? 'Respostas práticas, não respostas com medo' : locale === 'es' ? 'Respuestas prácticas, no con miedo' : locale === 'fr' ? 'Réponses pratiques, pas par peur' : locale === 'de' ? 'Praktische Antworten, keine Angstantworten' : 'Practical answers, not fear-driven answers',
+              },
+              {
+                icon: '\uD83D\uDCF2',
+                painText: locale === 'pt' ? 'Só iOS ou só Android — precisa baixar app' : locale === 'es' ? 'Solo iOS o Android — hay que descargar' : locale === 'fr' ? 'Seulement iOS ou Android — téléchargement requis' : locale === 'de' ? 'Nur iOS oder Android — Download nötig' : 'iOS only or Android only — requires download',
+                wilborText: locale === 'pt' ? 'Funciona agora no seu celular, sem baixar nada' : locale === 'es' ? 'Funciona en tu celular, sin descargar nada' : locale === 'fr' ? 'Fonctionne sur votre téléphone, sans télécharger' : locale === 'de' ? 'Funktioniert auf Ihrem Handy, kein Download' : 'Works now on your phone, no download needed',
+              },
+            ].map((row, i) => (
+              <div key={i} className={`grid grid-cols-2 ${i < 4 ? 'border-b border-gray-100' : ''}`}>
+                <div className="bg-gray-50 px-5 py-4 flex items-start gap-3">
+                  <span className="text-lg flex-shrink-0">{row.icon}</span>
+                  <p className="text-sm text-gray-400 line-through leading-snug">{row.painText}</p>
+                </div>
+                <div className="bg-white px-5 py-4 flex items-start gap-3">
+                  <span className="text-lg flex-shrink-0">\u2705</span>
+                  <p className="text-sm text-gray-900 font-semibold leading-snug">{row.wilborText}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Mother Care Section */}
       <section className="py-24 px-6 bg-purple-900 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-pink-500/10 to-transparent" />
