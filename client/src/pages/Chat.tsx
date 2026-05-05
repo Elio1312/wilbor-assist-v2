@@ -7,11 +7,238 @@ import { trpc } from "@/lib/trpc";
 import { PaywallModal } from "@/components/PaywallModal";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
-import { Sparkles, LogIn } from "lucide-react";
+import { Sparkles, LogIn, Baby, X } from "lucide-react";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { EbookOfferCard } from "@/components/EbookOfferCard";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
 import { AnalyticsEvents } from "@/lib/analytics";
+
+// ─── Onboarding anônimo ────────────────────────────────────────────────────────
+const STORAGE_KEY = "wilbor_anon_baby";
+
+interface AnonBabyContext {
+  babyName?: string;
+  ageMonths?: number;   // null = recém-nascido / semanas
+  ageWeeks?: number;    // usado se < 2 meses
+  ageLabel: string;     // texto amigável: "3 meses", "6 semanas"
+}
+
+function loadAnonBaby(): AnonBabyContext | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function saveAnonBaby(ctx: AnonBabyContext) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ctx)); } catch {}
+}
+
+function buildAnonSystemPrompt(locale: string, baby: AnonBabyContext): string {
+  const bases: Record<string, string> = {
+    pt: `Você é o Wilbor, assistente neonatal IA. Base: SBP, OMS, AAP. Seja empático e prático.`,
+    en: `You are Wilbor, an AI neonatal assistant. Base: AAP, WHO. Be empathetic and practical.`,
+    es: `Eres Wilbor, asistente neonatal IA. Base: OMS, AAP. Sé empático y práctico.`,
+  };
+  const base = bases[locale] ?? bases.pt;
+
+  const ctx: Record<string, string> = {
+    pt: `\n\nCONTEXTO DO BEBÊ: ${baby.babyName ? `Nome: ${baby.babyName}.` : ""} Idade: ${baby.ageLabel}. Personalize TODAS as respostas para essa faixa etária específica. Não dê respostas genéricas — leve em conta o desenvolvimento, sono, alimentação e necessidades típicas de um bebê de ${baby.ageLabel}.`,
+    en: `\n\nBABY CONTEXT: ${baby.babyName ? `Name: ${baby.babyName}.` : ""} Age: ${baby.ageLabel}. Personalize ALL responses for this specific age. Do not give generic answers — consider the development, sleep, feeding and typical needs of a ${baby.ageLabel} old baby.`,
+    es: `\n\nCONTEXTO DEL BEBÉ: ${baby.babyName ? `Nombre: ${baby.babyName}.` : ""} Edad: ${baby.ageLabel}. Personaliza TODAS las respuestas para esta edad específica. No des respuestas genéricas — considera el desarrollo, sueño, alimentación y necesidades típicas de un bebé de ${baby.ageLabel}.`,
+  };
+
+  return base + (ctx[locale] ?? ctx.pt);
+}
+
+// ─── Modal de onboarding ───────────────────────────────────────────────────────
+const AGE_OPTIONS: Record<string, Array<{ label: string; months: number; weeks?: number }>> = {
+  pt: [
+    { label: "Recém-nascido (0-4 sem)", months: 0, weeks: 2 },
+    { label: "1 mês", months: 1 },
+    { label: "2 meses", months: 2 },
+    { label: "3 meses", months: 3 },
+    { label: "4 meses", months: 4 },
+    { label: "5 meses", months: 5 },
+    { label: "6 meses", months: 6 },
+    { label: "7 meses", months: 7 },
+    { label: "8 meses", months: 8 },
+    { label: "9 meses", months: 9 },
+    { label: "10 meses", months: 10 },
+    { label: "11 meses", months: 11 },
+    { label: "12 meses", months: 12 },
+  ],
+  en: [
+    { label: "Newborn (0-4 wks)", months: 0, weeks: 2 },
+    { label: "1 month", months: 1 },
+    { label: "2 months", months: 2 },
+    { label: "3 months", months: 3 },
+    { label: "4 months", months: 4 },
+    { label: "5 months", months: 5 },
+    { label: "6 months", months: 6 },
+    { label: "7 months", months: 7 },
+    { label: "8 months", months: 8 },
+    { label: "9 months", months: 9 },
+    { label: "10 months", months: 10 },
+    { label: "11 months", months: 11 },
+    { label: "12 months", months: 12 },
+  ],
+  es: [
+    { label: "Recién nacido (0-4 sem)", months: 0, weeks: 2 },
+    { label: "1 mes", months: 1 },
+    { label: "2 meses", months: 2 },
+    { label: "3 meses", months: 3 },
+    { label: "4 meses", months: 4 },
+    { label: "5 meses", months: 5 },
+    { label: "6 meses", months: 6 },
+    { label: "7 meses", months: 7 },
+    { label: "8 meses", months: 8 },
+    { label: "9 meses", months: 9 },
+    { label: "10 meses", months: 10 },
+    { label: "11 meses", months: 11 },
+    { label: "12 meses", months: 12 },
+  ],
+};
+
+const ONBOARDING_TEXTS: Record<string, {
+  title: string; subtitle: string; name_label: string;
+  name_placeholder: string; age_label: string;
+  skip: string; start: string;
+}> = {
+  pt: {
+    title: "Antes de começar 💜",
+    subtitle: "Para dar respostas personalizadas para o seu bebê",
+    name_label: "Nome do bebê (opcional)",
+    name_placeholder: "Ex: Sofia, Miguel...",
+    age_label: "Quantos meses tem o bebê?",
+    skip: "Pular",
+    start: "Começar",
+  },
+  en: {
+    title: "Before we start 💜",
+    subtitle: "To give personalized answers for your baby",
+    name_label: "Baby's name (optional)",
+    name_placeholder: "E.g.: Emma, Liam...",
+    age_label: "How old is your baby?",
+    skip: "Skip",
+    start: "Start",
+  },
+  es: {
+    title: "Antes de empezar 💜",
+    subtitle: "Para dar respuestas personalizadas para tu bebé",
+    name_label: "Nombre del bebé (opcional)",
+    name_placeholder: "Ej: Sofía, Mateo...",
+    age_label: "¿Cuántos meses tiene el bebé?",
+    skip: "Omitir",
+    start: "Empezar",
+  },
+};
+
+function OnboardingModal({
+  locale,
+  onComplete,
+  onSkip,
+}: {
+  locale: string;
+  onComplete: (ctx: AnonBabyContext) => void;
+  onSkip: () => void;
+}) {
+  const txt = ONBOARDING_TEXTS[locale] ?? ONBOARDING_TEXTS.pt;
+  const ages = AGE_OPTIONS[locale] ?? AGE_OPTIONS.pt;
+  const [babyName, setBabyName] = useState("");
+  const [selectedAge, setSelectedAge] = useState<typeof ages[0] | null>(null);
+
+  const handleStart = () => {
+    if (!selectedAge) { onSkip(); return; }
+    const ctx: AnonBabyContext = {
+      babyName: babyName.trim() || undefined,
+      ageMonths: selectedAge.months,
+      ageWeeks: selectedAge.weeks,
+      ageLabel: selectedAge.label,
+    };
+    saveAnonBaby(ctx);
+    onComplete(ctx);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="bg-white w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-br from-purple-600 to-pink-500 px-6 pt-6 pb-8 text-white relative">
+          <button
+            onClick={onSkip}
+            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+              <Baby className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-xl font-bold">{txt.title}</h2>
+          </div>
+          <p className="text-purple-100 text-sm">{txt.subtitle}</p>
+        </div>
+
+        <div className="px-6 py-5 space-y-5 -mt-4 bg-white rounded-t-3xl relative">
+          {/* Nome */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              {txt.name_label}
+            </label>
+            <input
+              type="text"
+              value={babyName}
+              onChange={e => setBabyName(e.target.value)}
+              placeholder={txt.name_placeholder}
+              maxLength={30}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-800"
+            />
+          </div>
+
+          {/* Idade */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              {txt.age_label}
+            </label>
+            <div className="grid grid-cols-3 gap-2 max-h-52 overflow-y-auto pr-1">
+              {ages.map(age => (
+                <button
+                  key={age.label}
+                  onClick={() => setSelectedAge(age)}
+                  className={`py-2 px-2 rounded-xl text-xs font-medium transition-all border ${
+                    selectedAge?.label === age.label
+                      ? "bg-purple-600 text-white border-purple-600 shadow-sm"
+                      : "bg-gray-50 text-gray-700 border-gray-200 hover:border-purple-300 hover:bg-purple-50"
+                  }`}
+                >
+                  {age.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Botões */}
+          <div className="flex gap-3 pt-1">
+            <button
+              onClick={onSkip}
+              className="flex-1 py-3 text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors"
+            >
+              {txt.skip}
+            </button>
+            <button
+              onClick={handleStart}
+              disabled={!selectedAge}
+              className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white rounded-xl text-sm font-semibold transition-all shadow-sm"
+            >
+              {txt.start}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const CREDIT_TEXTS: Record<string, {
   remaining: (n: number, total: number) => string;
@@ -57,6 +284,24 @@ export function Chat() {
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [ebookOffer, setEbookOffer] = useState<any>(null);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // ── Onboarding anônimo ──────────────────────────────────────────────────────
+  const [anonBaby, setAnonBaby] = useState<AnonBabyContext | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    // Só mostra onboarding para usuárias não logadas
+    if (!user && !authLoading) {
+      const saved = loadAnonBaby();
+      if (saved) {
+        setAnonBaby(saved);
+      } else {
+        // Pequeno delay para não assustar quem acabou de chegar
+        const timer = setTimeout(() => setShowOnboarding(true), 800);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [user, authLoading]);
 
   useEffect(() => {
     const setFp = async () => {
@@ -130,9 +375,14 @@ export function Chat() {
 
     try {
       // Build messages array with system prompt for the backend
+      // Se usuária anônima com contexto de bebê → personaliza o system prompt
+      const systemPromptContent = (!user && anonBaby)
+        ? buildAnonSystemPrompt(locale, anonBaby)
+        : "Você é o Wilbor, um assistente neonatal IA especializado em cuidados com recém-nascidos. Responda em português, com base em protocolos SBP, OMS e AAP. Seja empático, prático e sempre priorize a segurança do bebê.";
+
       const systemPrompt = {
         role: "system" as const,
-        content: "Você é o Wilbor, um assistente neonatal IA especializado em cuidados com recém-nascidos. Responda em português, com base em protocolos SBP, OMS e AAP. Seja empático, prático e sempre priorize a segurança do bebê."
+        content: systemPromptContent,
       };
       
       // Filter out the welcome message (assistant role) from the display messages
@@ -319,6 +569,18 @@ export function Chat() {
         isOpen={paywallOpen}
         onClose={() => setPaywallOpen(false)}
       />
+
+      {/* Onboarding anônimo */}
+      {showOnboarding && !user && (
+        <OnboardingModal
+          locale={locale}
+          onComplete={(ctx) => {
+            setAnonBaby(ctx);
+            setShowOnboarding(false);
+          }}
+          onSkip={() => setShowOnboarding(false)}
+        />
+      )}
     </div>
   );
 }
