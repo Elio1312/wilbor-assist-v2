@@ -460,6 +460,77 @@ export function applyBlogDocumentSeo(seo: BlogSeoPayload) {
   setMetaTag("name", "twitter:image", seo.ogImage);
   setCanonical(seo.canonicalUrl);
   setAlternateLinks(seo.alternates);
+
+  // ── Schema.org JSON-LD ──────────────────────────────────────────────────────
+  // Injeta marcação estruturada para rich snippets no Google
+  // Remove schema anterior antes de injetar o novo
+  const existingSchema = document.getElementById("wilbor-schema-jsonld");
+  if (existingSchema) existingSchema.remove();
+
+  if (seo.ogType === "article" && seo.staticContentHtml) {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": seo.title,
+      "description": seo.description,
+      "image": seo.ogImage,
+      "url": seo.canonicalUrl,
+      "inLanguage": seo.htmlLang,
+      "datePublished": new Date().toISOString().split("T")[0],
+      "dateModified": new Date().toISOString().split("T")[0],
+      "author": {
+        "@type": "Organization",
+        "name": "Wilbor",
+        "url": "https://www.wilbor-assist.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.wilbor-assist.com/logo.png"
+        }
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Wilbor",
+        "url": "https://www.wilbor-assist.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.wilbor-assist.com/logo.png",
+          "width": 200,
+          "height": 200
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": seo.canonicalUrl
+      }
+    };
+
+    const script = document.createElement("script");
+    script.id = "wilbor-schema-jsonld";
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(schema, null, 2);
+    document.head.appendChild(script);
+  } else if (seo.ogType === "website") {
+    // Schema para página de listagem do blog
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Wilbor Blog",
+      "description": seo.description,
+      "url": seo.canonicalUrl,
+      "inLanguage": seo.htmlLang,
+      "publisher": {
+        "@type": "Organization",
+        "name": "Wilbor",
+        "url": "https://www.wilbor-assist.com"
+      }
+    };
+
+    const script = document.createElement("script");
+    script.id = "wilbor-schema-jsonld";
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(schema, null, 2);
+    document.head.appendChild(script);
+  }
 }
 
 export function getBlogSeoFromPath(pathname: string): BlogSeoPayload | null {
