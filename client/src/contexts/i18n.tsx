@@ -94,14 +94,14 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.back": "Voltar",
 
     // Hero
-    "hero.badge": "Apoio real para mães de verdade",
-    "hero.h1": "Saiba o que fazer com seu bebê, em qualquer momento do dia.",
-    "hero.desc": "O Wilbor lembra de cada detalhe do seu bebê e te dá orientação confiável com carinho, sem julgamentos — baseado nos protocolos da SBP, OMS e AAP.",
+    "hero.badge": "Sem paywall. Sem respostas genéricas. Seus dados nunca são vendidos.",
+    "hero.h1": "A IA que conhece o SEU bebê — e responde de verdade.",
+    "hero.desc": "O Wilbor usa a idade, rotina e histórico do seu bebê para dar respostas práticas — não o famoso \"consulte um médico\". Acesso completo por R$29,90/mês, perguntas ilimitadas.",
     "hero.cta": "Testar grátis agora",
     "hero.whatsapp": "Fale no WhatsApp",
-    "hero.trust_1": "Sem cadastro obrigatório",
+    "hero.trust_1": "Sem paywall — acesso completo",
     "hero.trust_2": "Resposta em segundos",
-    "hero.trust_3": "Baseado em SBP/OMS/AAP",
+    "hero.trust_3": "Seus dados nunca são vendidos",
 
     // Hero Mockup Dinâmico
     "hero.mockup_alt": "Wilbor - Orientação confiável para mães 24h",
@@ -128,9 +128,9 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Features
     "features.h2": "Para o seu bebê",
-    "features.subtitle": "Tudo funciona junto para organizar a rotina do seu bebê de forma simples e previsível.",
+    "features.subtitle": "Diferente dos outros apps, o Wilbor responde com base na idade e rotina do seu bebê — não respostas genéricas para qualquer criança.",
     "features.chat": "Chat 24h",
-    "features.chat_desc": "Tire dúvidas em segundos",
+    "features.chat_desc": "Respostas práticas, sem \"consulte o médico\" em tudo",
     "features.emergency": "Alertas de Emergência",
     "features.emergency_desc": "Detecta sinais de alerta",
     "features.recipes": "Receitas por Idade",
@@ -142,7 +142,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "features.diary": "Diário do Bebê",
     "features.diary_desc": "Registre momentos especiais",
     "features.profile": "Perfil do Bebê",
-    "features.profile_desc": "Respostas personalizadas",
+    "features.profile_desc": "IA que conhece seu bebê pelo nome e idade",
     "features.colic": "Técnicas de Cólica",
     "features.colic_desc": "Shantala, swaddle, I-L-U",
 
@@ -315,14 +315,14 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.back": "Back",
 
     // Hero
-    "hero.badge": "Real support for real mothers",
-    "hero.h1": "Know what to do with your baby, at any moment of the day.",
-    "hero.desc": "Wilbor remembers every detail about your baby and gives you reliable guidance with care, without judgment — based on SBP, WHO and AAP protocols.",
+    "hero.badge": "No paywall. No generic answers. Your data is never sold.",
+    "hero.h1": "The AI that actually knows YOUR baby — and gives real answers.",
+    "hero.desc": "Wilbor uses your baby's age, routine and history to give practical answers — not the usual \"consult a doctor\". Full access, unlimited questions.",
     "hero.cta": "Start free now",
     "hero.whatsapp": "Talk on WhatsApp",
-    "hero.trust_1": "No mandatory registration",
+    "hero.trust_1": "No paywall — full access",
     "hero.trust_2": "Response in seconds",
-    "hero.trust_3": "Based on SBP/WHO/AAP",
+    "hero.trust_3": "Your data is never sold",
 
     // Hero Mockup Dinâmico EN
     "hero.mockup_alt": "Wilbor - Reliable guidance for mothers 24/7",
@@ -349,9 +349,9 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Features
     "features.h2": "For your baby",
-    "features.subtitle": "Everything works together to organize your baby's routine in a simple and predictable way.",
+    "features.subtitle": "Unlike other apps, Wilbor answers based on your baby's actual age and routine — not generic advice for any child.",
     "features.chat": "24h Chat",
-    "features.chat_desc": "Get answers in seconds",
+    "features.chat_desc": "Practical answers, not \"see a doctor\" for everything",
     "features.emergency": "Emergency Alerts",
     "features.emergency_desc": "Detects warning signs",
     "features.recipes": "Recipes by Age",
@@ -363,7 +363,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "features.diary": "Baby Diary",
     "features.diary_desc": "Record special moments",
     "features.profile": "Baby Profile",
-    "features.profile_desc": "Personalized answers",
+    "features.profile_desc": "AI that knows your baby by name and age",
     "features.colic": "Colic Techniques",
     "features.colic_desc": "Shantala, swaddle, I-L-U",
 
@@ -535,14 +535,14 @@ const translations: Record<Locale, Record<string, string>> = {
     "paywall.features": "Chat IA 24h,Hasta 3 bebés,Hitos de desarrollo,Recetas por edad",
     "common.back": "Volver",
     // Hero
-    "hero.badge": "Apoyo real para madres reales",
-    "hero.h1": "Sabe qué hacer con tu bebé, en cualquier momento del día.",
-    "hero.desc": "Wilbor recuerda cada detalle de tu bebé y te da orientación confiable con cariño, sin juicios — basado en los protocolos de la SBP, OMS y AAP.",
+    "hero.badge": "Sin paywall. Sin respuestas genéricas. Tus datos nunca se venden.",
+    "hero.h1": "La IA que conoce a TU bebé — y responde de verdad.",
+    "hero.desc": "Wilbor usa la edad, rutina e historial de tu bebé para darte respuestas prácticas — no el típico \"consulta al médico\". Acceso completo, preguntas ilimitadas.",
     "hero.cta": "Probar gratis ahora",
     "hero.whatsapp": "Hablar por WhatsApp",
-    "hero.trust_1": "Sin registro obligatorio",
+    "hero.trust_1": "Sin paywall — acceso completo",
     "hero.trust_2": "Respuesta en segundos",
-    "hero.trust_3": "Basado en SBP/OMS/AAP",
+    "hero.trust_3": "Tus datos nunca se venden",
 
     // Hero Mockup Dinâmico ES
     "hero.mockup_alt": "Wilbor - Orientación confiable para madres 24h",
@@ -569,9 +569,9 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Features
     "features.h2": "Para tu bebé",
-    "features.subtitle": "Todo funciona en conjunto para organizar la rutina de tu bebé de forma simple y predecible.",
+    "features.subtitle": "A diferencia de otras apps, Wilbor responde según la edad y rutina real de tu bebé — no consejos genéricos para cualquier niño.",
     "features.chat": "Chat 24h",
-    "features.chat_desc": "Resuelve dudas en segundos",
+    "features.chat_desc": "Respuestas prácticas, no \"consulta al médico\" para todo",
     "features.emergency": "Alertas de Emergencia",
     "features.emergency_desc": "Detecta señales de alerta",
     "features.recipes": "Recetas por Edad",
@@ -583,7 +583,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "features.diary": "Diario del Bebé",
     "features.diary_desc": "Registra momentos especiales",
     "features.profile": "Perfil del Bebé",
-    "features.profile_desc": "Respuestas personalizadas",
+    "features.profile_desc": "IA que conoce a tu bebé por nombre y edad",
     "features.colic": "Técnicas para Cólico",
     "features.colic_desc": "Shantala, swaddle, I-L-U",
 
@@ -756,14 +756,14 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.back": "Retour",
 
     // Hero
-    "hero.badge": "Un soutien réel pour de vraies mères",
-    "hero.h1": "Sachez quoi faire avec votre bébé, à tout moment de la journée.",
-    "hero.desc": "Wilbor se souvient de chaque détail de votre bébé et vous offre des conseils fiables avec bienveillance, sans jugement — basés sur les protocoles SBP, OMS et AAP.",
+    "hero.badge": "Sans paywall. Sans réponses génériques. Vos données ne sont jamais vendues.",
+    "hero.h1": "L'IA qui connaît VOTRE bébé — et répond vraiment.",
+    "hero.desc": "Wilbor utilise l'âge, la routine et l'historique de votre bébé pour des réponses pratiques — pas le classique \"consultez un médecin\". Accès complet, questions illimitées.",
     "hero.cta": "Essayer gratuitement maintenant",
     "hero.whatsapp": "Parler sur WhatsApp",
-    "hero.trust_1": "Sans inscription obligatoire",
+    "hero.trust_1": "Sans paywall — accès complet",
     "hero.trust_2": "Réponse en quelques secondes",
-    "hero.trust_3": "Basé sur SBP/OMS/AAP",
+    "hero.trust_3": "Vos données ne sont jamais vendues",
 
     // Hero Mockup Dinâmico FR
     "hero.mockup_alt": "Wilbor - Conseils fiables pour les mères 24h/24",
@@ -790,9 +790,9 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Features
     "features.h2": "Pour votre bébé",
-    "features.subtitle": "Tout fonctionne ensemble pour organiser la routine de votre bébé de manière simple et prévisible.",
+    "features.subtitle": "Contrairement aux autres apps, Wilbor répond en fonction de l'âge et de la routine réelle de votre bébé — pas des conseils génériques.",
     "features.chat": "Chat 24h/24",
-    "features.chat_desc": "Obtenez des réponses en quelques secondes",
+    "features.chat_desc": "Réponses pratiques, pas \"consultez un médecin\" pour tout",
     "features.emergency": "Alertes d'Urgence",
     "features.emergency_desc": "Détecte les signes d'alerte",
     "features.recipes": "Recettes par Âge",
@@ -804,7 +804,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "features.diary": "Journal du Bébé",
     "features.diary_desc": "Enregistrez les moments spéciaux",
     "features.profile": "Profil du Bébé",
-    "features.profile_desc": "Réponses personnalisées",
+    "features.profile_desc": "IA qui connaît votre bébé par son nom et son âge",
     "features.colic": "Techniques contre les Coliques",
     "features.colic_desc": "Shantala, swaddle, I-L-U",
 
@@ -977,14 +977,14 @@ const translations: Record<Locale, Record<string, string>> = {
     "common.back": "Zurück",
 
     // Hero
-    "hero.badge": "Echte Unterstützung für echte Mütter",
-    "hero.h1": "Wissen Sie, was Sie mit Ihrem Baby tun können — jederzeit.",
-    "hero.desc": "Wilbor merkt sich jedes Detail Ihres Babys und gibt Ihnen verlässliche Orientierung mit Fürsorge, ohne Bewertung — basierend auf SBP-, WHO- und AAP-Protokollen.",
+    "hero.badge": "Kein Paywall. Keine generischen Antworten. Ihre Daten werden nie verkauft.",
+    "hero.h1": "Die KI, die IHR Baby kennt — und wirklich antwortet.",
+    "hero.desc": "Wilbor nutzt Alter, Routine und Verlauf Ihres Babys für praktische Antworten — kein ewiges \"Arzt aufsuchen\". Vollzugang zum Festpreis, unbegrenzte Fragen.",
     "hero.cta": "Jetzt kostenlos testen",
     "hero.whatsapp": "Auf WhatsApp sprechen",
-    "hero.trust_1": "Keine Registrierung erforderlich",
+    "hero.trust_1": "Kein Paywall — voller Zugang",
     "hero.trust_2": "Antwort in Sekunden",
-    "hero.trust_3": "Basierend auf SBP/WHO/AAP",
+    "hero.trust_3": "Ihre Daten werden nie verkauft",
 
     // Hero Mockup Dinâmico DE
     "hero.mockup_alt": "Wilbor - Zuverlässige Unterstützung für Mütter 24/7",
@@ -1011,9 +1011,9 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Features
     "features.h2": "Für Ihr Baby",
-    "features.subtitle": "Alles arbeitet zusammen, um die Routine Ihres Babys einfach und vorhersehbar zu organisieren.",
+    "features.subtitle": "Anders als andere Apps antwortet Wilbor basierend auf dem tatsächlichen Alter und der Routine Ihres Babys — keine generischen Ratschläge.",
     "features.chat": "24h Chat",
-    "features.chat_desc": "Fragen in Sekunden klären",
+    "features.chat_desc": "Praktische Antworten, nicht \"Arzt aufsuchen\" für alles",
     "features.emergency": "Notfallwarnungen",
     "features.emergency_desc": "Erkennt Warnsignale",
     "features.recipes": "Rezepte nach Alter",
@@ -1025,7 +1025,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "features.diary": "Baby-Tagebuch",
     "features.diary_desc": "Besondere Momente festhalten",
     "features.profile": "Baby-Profil",
-    "features.profile_desc": "Personalisierte Antworten",
+    "features.profile_desc": "KI, die Ihr Baby beim Namen und Alter kennt",
     "features.colic": "Kolik-Techniken",
     "features.colic_desc": "Shantala, Pucken, I-L-U",
 
