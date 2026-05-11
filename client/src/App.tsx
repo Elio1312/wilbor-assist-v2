@@ -64,20 +64,7 @@ function MilestoneTrackerPage() {
 }
 
 function Router() {
-  const [location, setLocation] = useLocation();
-
-  // Redirecionamento Inteligente (ROI de Internacionalização)
-  // Roda só uma vez no mount — evita loop infinito
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (currentPath === "/") {
-      const browserLang = navigator.language.split('-')[0];
-      const supportedLangs = ['en', 'es', 'fr', 'de'];
-      if (supportedLangs.includes(browserLang)) {
-        setLocation(`/${browserLang}`);
-      }
-    }
-  }, []); // <- dependências vazias: roda só uma vez
+  const [location] = useLocation();
 
   // Page View Tracking
   useEffect(() => {
@@ -125,4 +112,3 @@ function App() {
 }
 
 export default App;
-
