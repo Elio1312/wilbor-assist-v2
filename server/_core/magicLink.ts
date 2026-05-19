@@ -28,7 +28,7 @@ export async function generateMagicLink(email: string): Promise<string> {
 
   // Return the magic link URL
   const baseUrl = ENV.isProduction 
-    ? "https://www.wilbor-assist.com" 
+    ? "https://wilbor-assist.com" 
     : "http://localhost:3000";
   
   return `${baseUrl}/auth/magic-link?token=${token}`;

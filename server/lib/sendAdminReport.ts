@@ -89,7 +89,7 @@ export async function sendAdminReport(feedbacks: FeedbackItem[]): Promise<void> 
 
   report += `━━━━━━━━━━━━━━━━━━━━\n`;
   report += `🚀 Acesse o Admin Dashboard para ajustar os prompts:\n`;
-  report += `https://www.wilbor-assist.com/admin-secret-panel`;
+  report += `https://wilbor-assist.com/admin-secret-panel`;
 
   // WhatsApp tem limite de 4096 caracteres por mensagem
   if (report.length > 4096) {

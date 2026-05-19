@@ -15,7 +15,7 @@ interface SeoProps {
   type?: "website" | "article";
 }
 
-const BASE_URL = "https://www.wilbor-assist.com";
+const BASE_URL = "https://wilbor-assist.com";
 const DEFAULT_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png";
 
 // SEO presets por idioma

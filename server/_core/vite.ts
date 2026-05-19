@@ -34,7 +34,7 @@ function replaceAlternateLinks(html: string, alternates: Array<{ hreflang: strin
 }
 
 function injectBlogSeo(html: string, requestUrl: string): string {
-  const pathname = requestUrl.startsWith("http") ? new URL(requestUrl).pathname : new URL(requestUrl, "https://www.wilbor-assist.com").pathname;
+  const pathname = requestUrl.startsWith("http") ? new URL(requestUrl).pathname : new URL(requestUrl, "https://wilbor-assist.com").pathname;
   const seo = getBlogSeoFromPath(pathname);
 
   if (!seo) {

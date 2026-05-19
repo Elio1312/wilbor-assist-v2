@@ -26,15 +26,15 @@ export function generateMetaTags(config: SEOConfig) {
     og: {
       title: config.title,
       description: config.description,
-      image: config.image || "https://www.wilbor-assist.com/og-image.png",
-      url: config.url || "https://www.wilbor-assist.com",
+      image: config.image || "https://wilbor-assist.com/og-image.png",
+      url: config.url || "https://wilbor-assist.com",
       type: config.type || "website",
     },
     twitter: {
       card: "summary_large_image",
       title: config.title,
       description: config.description,
-      image: config.image || "https://www.wilbor-assist.com/og-image.png",
+      image: config.image || "https://wilbor-assist.com/og-image.png",
     },
   };
 }
@@ -56,20 +56,20 @@ export function generateArticleSchema(config: {
     "@type": "Article",
     headline: config.headline,
     description: config.description,
-    image: config.image || "https://www.wilbor-assist.com/og-image.png",
+    image: config.image || "https://wilbor-assist.com/og-image.png",
     datePublished: config.datePublished,
     dateModified: config.dateModified || config.datePublished,
     author: {
       "@type": "Organization",
       name: "Wilbor-Assist",
-      url: "https://www.wilbor-assist.com",
+      url: "https://wilbor-assist.com",
     },
     publisher: {
       "@type": "Organization",
       name: "Wilbor-Assist",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.wilbor-assist.com/logo.png",
+        url: "https://wilbor-assist.com/logo.png",
       },
     },
     url: config.url,
@@ -100,8 +100,8 @@ export function generateOrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Wilbor-Assist",
-    url: "https://www.wilbor-assist.com",
-    logo: "https://www.wilbor-assist.com/logo.png",
+    url: "https://wilbor-assist.com",
+    logo: "https://wilbor-assist.com/logo.png",
     description: "Assistente neonatal inteligente baseado em protocolos científicos (SBP, OMS, AAP)",
     sameAs: [
       "https://www.instagram.com/wilborassist",
@@ -140,7 +140,7 @@ export function generateFAQSchema(faqs: Array<{ question: string; answer: string
  * Generate hreflang links for multilingual content
  */
 export function generateHreflang(slug: string, languages: string[] = ["pt-BR", "en-US", "es-ES"]) {
-  const baseUrl = "https://www.wilbor-assist.com";
+  const baseUrl = "https://wilbor-assist.com";
   return languages.map((lang) => ({
     rel: "alternate",
     hreflang: lang,
@@ -176,12 +176,12 @@ export const BLOG_SEO: SEOConfig = {
  * Generate canonical URL
  */
 export function generateCanonical(path: string): string {
-  return `https://www.wilbor-assist.com${path}`;
+  return `https://wilbor-assist.com${path}`;
 }
 
 /**
  * Generate Open Graph image URL
  */
 export function generateOGImage(title: string): string {
-  return `https://www.wilbor-assist.com/og-image.png?title=${encodeURIComponent(title)}`;
+  return `https://wilbor-assist.com/og-image.png?title=${encodeURIComponent(title)}`;
 }

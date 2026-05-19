@@ -352,12 +352,12 @@ export function Chat() {
   }, [credits?.isOverLimit]);
 
   useEffect(() => {
-    AnalyticsEvents.chatEntry(user?.id);
+    AnalyticsEvents.chatEntry(user?.id != null ? String(user.id) : undefined);
   }, [user]);
 
   useEffect(() => {
     if (user && fingerprint) {
-      AnalyticsEvents.chatStarted(user.id);
+      AnalyticsEvents.chatStarted(String(user.id));
     }
   }, [user, fingerprint]);
 
@@ -566,7 +566,7 @@ export function Chat() {
       </main>
 
       <PaywallModal
-        isOpen={paywallOpen}
+        open={paywallOpen}
         onClose={() => setPaywallOpen(false)}
       />
 

@@ -18,10 +18,10 @@ interface MilestoneContentItem {
 }
 
 interface BabyMilestone {
-  milestoneId: number;
+  id: number;
   contentId: number;
   achieved: AchievedStatus;
-  achievedAt: string | null;
+  achievedAt: string | Date | null;
   notes: string | null;
 }
 
@@ -402,7 +402,7 @@ export function MilestoneTracker({ babyId, babyName, babyAgeMonths }: MilestoneT
   // ── Derived state ──────────────────────────────────────────────────────────
   const babyMilestonesMap = useMemo(() => {
     const map = new Map<number, BabyMilestone>();
-    babyMilestonesQuery.data?.forEach(m => map.set(m.contentId, m as BabyMilestone));
+    babyMilestonesQuery.data?.forEach(m => map.set(m.contentId, m));
     return map;
   }, [babyMilestonesQuery.data]);
 

@@ -31,4 +31,4 @@ Disallow: /shop/success
 Disallow: /404
 
 # Sitemap
-Sitemap: https://www.wilbor-assist.com/sitemap.xml
+Sitemap: https://wilbor-assist.com/sitemap.xml

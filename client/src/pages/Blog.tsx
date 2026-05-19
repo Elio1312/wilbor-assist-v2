@@ -64,7 +64,7 @@ export default function Blog() {
 
     // ── Canonical tag para a listagem do blog ────────────────────────────────
     // URL canônica sempre sem prefixo de idioma
-    const canonicalUrl = "https://www.wilbor-assist.com/blog";
+    const canonicalUrl = "https://wilbor-assist.com/blog";
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
@@ -85,7 +85,7 @@ export default function Blog() {
       const link = document.createElement("link");
       link.rel = "alternate";
       link.setAttribute("hreflang", lang);
-      link.href = `https://www.wilbor-assist.com${path}`;
+      link.href = `https://wilbor-assist.com${path}`;
       document.head.appendChild(link);
     });
   }, [seo]);

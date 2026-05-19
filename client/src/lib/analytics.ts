@@ -94,8 +94,9 @@ export function initMetaPixel() {
   document.head.appendChild(script);
 
   // Init separado — sem interpolação dentro de innerHTML
-  if (window.fbq) {
-    window.fbq('init', ANALYTICS_CONFIG.META_PIXEL_ID);
+  const fbq = window.fbq as ((...args: any[]) => void) | undefined;
+  if (fbq) {
+    fbq('init', ANALYTICS_CONFIG.META_PIXEL_ID);
   }
 
   logEvent({ event_name: 'fbq_initialized' }, 'Meta');
@@ -228,7 +229,12 @@ export function trackGoogleAdsConversion(conversionId: string, conversionLabel: 
     value: value || 0,
     currency: 'BRL',
   });
-  logEvent({ event_name: 'google_ads_conversion', params: { conversionId, conversionLabel, value } }, 'GoogleAds');
+  const params: Record<string, string | number | boolean> = {
+    conversionId,
+    conversionLabel,
+    ...(value !== undefined ? { value } : {}),
+  };
+  logEvent({ event_name: 'google_ads_conversion', params }, 'GoogleAds');
 }
 
 export function initAllAnalytics() {

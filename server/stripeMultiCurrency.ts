@@ -7,7 +7,6 @@ import { router, publicProcedure, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
 import { Currency, CURRENCIES, formatPrice, isValidCurrency } from "./currency";
 import { createExtraCreditsCheckout } from "./stripeIntegration";
-import { PRODUCTS } from "./stripeProducts";
 
 // Preços por moeda para todos os planos (em centavos)
 const PLAN_PRICES: Record<Currency, Record<string, number>> = {

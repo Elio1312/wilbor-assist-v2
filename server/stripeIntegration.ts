@@ -28,7 +28,7 @@ export async function createExtraCreditsCheckout(
 ) {
   try {
     const stripe = getStripe();
-    const frontendUrl = process.env.VITE_FRONTEND_URL || "https://www.wilbor-assist.com";
+    const frontendUrl = process.env.VITE_FRONTEND_URL || "https://wilbor-assist.com";
 
     // Ajusta a URL de retorno com base no idioma (UX Profissional)
     // Se o idioma for PT, vai para a raiz, senão vai para a subpasta do idioma

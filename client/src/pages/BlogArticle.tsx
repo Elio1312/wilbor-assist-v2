@@ -42,7 +42,7 @@ export default function BlogArticle() {
       // ── Canonical tag ────────────────────────────────────────────────────
       // Sempre aponta para a URL canônica sem prefixo de idioma (PT como base)
       // Isso resolve "Erro de redirecionamento" e conteúdo duplicado no Google
-      const canonicalUrl = `https://www.wilbor-assist.com/blog/${article.slug}`;
+      const canonicalUrl = `https://wilbor-assist.com/blog/${article.slug}`;
       let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
       if (!canonical) {
         canonical = document.createElement("link");
@@ -67,7 +67,7 @@ export default function BlogArticle() {
         const link = document.createElement("link");
         link.rel = "alternate";
         link.setAttribute("hreflang", lang);
-        link.href = `https://www.wilbor-assist.com${path}`;
+        link.href = `https://wilbor-assist.com${path}`;
         document.head.appendChild(link);
       });
     }

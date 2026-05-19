@@ -39,7 +39,7 @@ export interface BlogSeoPayload {
 }
 
 const SITE_NAME = "Wilbor-Assist";
-const BASE_URL = "https://www.wilbor-assist.com";
+const BASE_URL = "https://wilbor-assist.com";
 const OG_IMAGE_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png";
 
@@ -481,19 +481,19 @@ export function applyBlogDocumentSeo(seo: BlogSeoPayload) {
       "author": {
         "@type": "Organization",
         "name": "Wilbor",
-        "url": "https://www.wilbor-assist.com",
+        "url": "https://wilbor-assist.com",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.wilbor-assist.com/logo.png"
+          "url": "https://wilbor-assist.com/logo.png"
         }
       },
       "publisher": {
         "@type": "Organization",
         "name": "Wilbor",
-        "url": "https://www.wilbor-assist.com",
+        "url": "https://wilbor-assist.com",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.wilbor-assist.com/logo.png",
+          "url": "https://wilbor-assist.com/logo.png",
           "width": 200,
           "height": 200
         }
@@ -521,7 +521,7 @@ export function applyBlogDocumentSeo(seo: BlogSeoPayload) {
       "publisher": {
         "@type": "Organization",
         "name": "Wilbor",
-        "url": "https://www.wilbor-assist.com"
+        "url": "https://wilbor-assist.com"
       }
     };
 
