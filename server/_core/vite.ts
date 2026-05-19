@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { getBlogSeoFromPath } from "../../client/src/lib/blogContent";
+import { getPublicPageSeoFromPath } from "../../client/src/lib/publicPageSeo";
 import viteConfig from "../../vite.config";
 
 function replaceTag(html: string, pattern: RegExp, replacement: string): string {
@@ -33,9 +34,9 @@ function replaceAlternateLinks(html: string, alternates: Array<{ hreflang: strin
   return cleaned.replace("</head>", `${block}\n  </head>`);
 }
 
-function injectBlogSeo(html: string, requestUrl: string): string {
+function injectRouteSeo(html: string, requestUrl: string): string {
   const pathname = requestUrl.startsWith("http") ? new URL(requestUrl).pathname : new URL(requestUrl, "https://wilbor-assist.com").pathname;
-  const seo = getBlogSeoFromPath(pathname);
+  const seo = getBlogSeoFromPath(pathname) || getPublicPageSeoFromPath(pathname);
 
   if (!seo) {
     return html.replace(
@@ -97,7 +98,7 @@ export async function setupVite(app: Express, server: Server) {
 
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(`src="/src/main.tsx"`, `src="/src/main.tsx?v=${nanoid()}"`);
-      template = injectBlogSeo(template, url);
+      template = injectRouteSeo(template, url);
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
@@ -122,7 +123,7 @@ export function serveStatic(app: Express) {
     const indexPath = path.resolve(distPath, "index.html");
     try {
       let html = fs.readFileSync(indexPath, "utf-8");
-      html = injectBlogSeo(html, req.originalUrl);
+      html = injectRouteSeo(html, req.originalUrl);
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch {
       res.sendFile(indexPath);
