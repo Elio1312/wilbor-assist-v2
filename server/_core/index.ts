@@ -51,6 +51,10 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
+  // O Koyeb termina TLS no proxy; o Express precisa confiar nele
+  // para reconhecer corretamente o protocolo original da requisição.
+  app.set("trust proxy", true);
+
   // Stripe webhook ANTES do express.json() — obrigatório
   registerStripeRoutes(app);
 
@@ -72,17 +76,31 @@ async function startServer() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  // ─── CORREÇÃO 1: Redirect 301 www → sem-www ────────────────────────────────
-  // Qualquer acesso a www.wilbor-assist.com é redirecionado permanentemente
-  // para wilbor-assist.com, preservando o path e query string completos.
-  // Isso resolve os 12 "Erros de redirecionamento" no Google Search Console.
+  // ─── CORREÇÃO 1: Redirect 301 para host canônico + HTTPS ───────────────────
+  // Em produção, toda requisição pública deve convergir para:
+  //   https://wilbor-assist.com
+  // Isso cobre tanto www → sem-www quanto http → https atrás do proxy do Koyeb.
   app.use((req, res, next) => {
-    if (req.hostname && req.hostname.startsWith("www.")) {
-      const newHost = req.hostname.slice(4); // remove "www."
-      const redirectUrl = `https://${newHost}${req.originalUrl}`;
-      console.log(`[www→canonical] 301 ${req.hostname}${req.originalUrl} → ${redirectUrl}`);
+    if (!ENV.isProduction) {
+      return next();
+    }
+
+    const host = req.hostname || "";
+    const forwardedProtoHeader = req.headers["x-forwarded-proto"];
+    const forwardedProto = Array.isArray(forwardedProtoHeader)
+      ? forwardedProtoHeader[0]
+      : String(forwardedProtoHeader || "").split(",")[0].trim().toLowerCase();
+
+    const isCanonicalHost = host === "wilbor-assist.com";
+    const isWwwHost = host === "www.wilbor-assist.com";
+    const isHttps = req.secure || forwardedProto === "https";
+
+    if (isWwwHost || (isCanonicalHost && !isHttps)) {
+      const redirectUrl = `${CANONICAL_URL}${req.originalUrl}`;
+      console.log(`[canonical+https] 301 ${host}${req.originalUrl} → ${redirectUrl}`);
       return res.redirect(301, redirectUrl);
     }
+
     next();
   });
 
