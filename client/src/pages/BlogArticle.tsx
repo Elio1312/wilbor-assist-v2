@@ -124,13 +124,23 @@ export default function BlogArticle() {
         <div className="mt-16 p-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl text-white text-center shadow-xl">
           <h3 className="text-2xl font-bold mb-4">{t("blog.article_cta_h3")}</h3>
           <p className="mb-8 text-purple-100">{t("blog.article_cta_desc")}</p>
-          <Button
-            size="lg"
-            onClick={() => setLocation(localePath("/chat"))}
-            className="bg-white text-purple-600 hover:bg-purple-50 font-bold rounded-full px-8 h-14"
-          >
-            {t("nav.try_free")}
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button
+              size="lg"
+              onClick={() => setLocation(localePath("/chat"))}
+              className="bg-white text-purple-600 hover:bg-purple-50 font-bold rounded-full px-8 h-14"
+            >
+              {t("nav.try_free")}
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => setLocation(localePath("/premium"))}
+              className="border-white text-white hover:bg-white/10 font-bold rounded-full px-8 h-14"
+            >
+              {locale === 'pt' ? 'Ver planos' : locale === 'es' ? 'Ver planes' : locale === 'fr' ? 'Voir les forfaits' : locale === 'de' ? 'Tarife ansehen' : 'See plans'}
+            </Button>
+          </div>
         </div>
       </main>
     </div>

@@ -14,9 +14,13 @@ const LANGS = [
 ];
 
 const STATIC_PAGES = [
-  { path: "",      priority: "1.0", changefreq: "weekly" },
-  { path: "/blog", priority: "0.9", changefreq: "daily"  },
-  { path: "/chat", priority: "0.8", changefreq: "weekly" },
+  { path: "",                priority: "1.0", changefreq: "weekly" },
+  { path: "/premium",        priority: "0.9", changefreq: "weekly" },
+  { path: "/bebe-nao-dorme", priority: "0.9", changefreq: "weekly" },
+  { path: "/colica-bebe",    priority: "0.9", changefreq: "weekly" },
+  { path: "/febre-bebe",     priority: "0.9", changefreq: "weekly" },
+  { path: "/blog",           priority: "0.9", changefreq: "daily"  },
+  { path: "/chat",           priority: "0.8", changefreq: "weekly" },
 ];
 
 const BLOG_SLUGS_PT = [

@@ -10,6 +10,8 @@ import { FeedbackDashboard } from "@/pages/FeedbackDashboard";
 import Dashboard from "@/pages/Dashboard";
 import BuyCredits from "@/pages/BuyCredits";
 import Checkout from "@/pages/Checkout";
+import Premium from "@/pages/Premium";
+import { BabySleepLanding, ColicLanding, FeverLanding } from "@/pages/IntentLanding";
 import { Chat } from "@/pages/Chat";
 import ShopPage from "@/pages/ShopPage";
 import MyEbooks from "@/pages/MyEbooks";
@@ -77,6 +79,10 @@ function Router() {
       <Route path="/:lang?/dashboard" component={Dashboard} />
       <Route path="/:lang?/buy-credits" component={BuyCredits} />
       <Route path="/:lang?/chat" component={Chat} />
+      <Route path="/:lang?/premium" component={Premium} />
+      <Route path="/:lang?/bebe-nao-dorme" component={BabySleepLanding} />
+      <Route path="/:lang?/colica-bebe" component={ColicLanding} />
+      <Route path="/:lang?/febre-bebe" component={FeverLanding} />
       <Route path="/:lang?/blog" component={Blog} />
       <Route path="/:lang?/blog/:slug" component={BlogArticle} />
       <Route path="/:lang?/recipes" component={Recipes} />

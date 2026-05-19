@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowRight, Check, ChevronDown, Brain, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Droplets, Apple, Shield, Mail } from "lucide-react";
+import { Heart, ArrowRight, Check, ChevronDown, Brain, Bell, Utensils, TrendingUp, Moon, BookOpen, Smile, Wind, Droplets, Apple, Shield, Mail, Sparkles, Baby, ShieldCheck } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -144,7 +144,19 @@ export default function Home() {
   ];
 
   const chatHref = localePath("/chat");
-  const checkoutHref = localePath("/checkout");
+  const premiumHref = localePath("/premium");
+
+  const heroTrustItems = locale === "pt"
+    ? [
+        "Apoio 24h para dúvidas reais do dia a dia",
+        "Baseado em protocolos confiáveis",
+        "Comece grátis e avance só se fizer sentido",
+      ]
+    : [
+        "24/7 support for real daily questions",
+        "Based on trusted protocols",
+        "Start free and upgrade only if it makes sense",
+      ];
 
   const warmAnonymousSession = () => {
     try {
@@ -187,6 +199,11 @@ export default function Home() {
             >
               <a href={localePath("/blog")}>{t("nav.blog")}</a>
             </Button>
+            <Button asChild variant="ghost" className="hidden md:flex text-purple-700 hover:text-purple-800 hover:bg-purple-50">
+              <a href={premiumHref}>
+                {locale === 'pt' ? 'Planos' : locale === 'es' ? 'Planes' : locale === 'fr' ? 'Forfaits' : locale === 'de' ? 'Tarife' : 'Plans'}
+              </a>
+            </Button>
             {user ? (
               <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
                 <a href={localePath("/dashboard")}>{t("nav.dashboard")}</a>
@@ -206,18 +223,29 @@ export default function Home() {
       </header>
 
       {/* Hero Section Otimizada para Conversão */}
-      <section className="bg-gradient-to-br from-purple-50 via-pink-50 to-white py-20 px-6">
+      <section className="bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 py-20 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-bold">
-              <Check className="w-4 h-4" /> {t("hero.badge")}
+            <div className="inline-flex items-center gap-2 bg-rose-100 text-rose-700 px-4 py-2 rounded-full text-sm font-bold">
+              <Sparkles className="w-4 h-4" /> {t("hero.badge")}
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight">
               {t("hero.h1")}
             </h1>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+            <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
               {t("hero.desc")}
             </p>
+
+            <div className="grid sm:grid-cols-3 gap-3 max-w-2xl">
+              {heroTrustItems.map((item) => (
+                <div key={item} className="rounded-2xl border border-rose-100 bg-white/90 px-4 py-3 text-sm text-slate-700 shadow-sm">
+                  <div className="flex items-start gap-2">
+                    <ShieldCheck className="w-4 h-4 text-rose-500 mt-0.5 shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
@@ -229,25 +257,66 @@ export default function Home() {
                   {t("hero.cta")} <ArrowRight className="ml-2 w-5 h-5" />
                 </a>
               </Button>
-              <WhatsAppButton 
-                phoneNumber="+55 12 997999971"
-                message="Olá! Gostaria de conhecer o Wilbor"
-                variant="fixed" 
-                className="h-16 border-2 border-purple-200 text-purple-700 hover:bg-purple-50" 
-              />
+              <Button asChild size="lg" variant="outline" className="h-16 rounded-full border-rose-200 text-rose-700 hover:bg-rose-50">
+                <a href={premiumHref} onClick={() => handleCTAClick('hero_view_plans')}>
+                  {locale === 'pt' ? 'Ver planos' : locale === 'es' ? 'Ver planes' : locale === 'fr' ? 'Voir les forfaits' : locale === 'de' ? 'Tarife ansehen' : 'See plans'}
+                </a>
+              </Button>
             </div>
           </div>
 
           <div className="relative group">
-            <div className="absolute inset-0 bg-purple-200 blur-3xl opacity-30 rounded-full group-hover:opacity-50 transition-opacity" />
-            <img 
-              src={IMAGES.hero} 
-              alt={t("hero.mockup_alt")}
-              className="relative rounded-3xl shadow-2xl border-8 border-white"
-              loading="eager"
-              width="1200"
-              height="800"
-            />
+            <div className="absolute -inset-6 bg-gradient-to-br from-rose-200/40 via-pink-200/30 to-purple-200/40 blur-3xl rounded-[3rem]" />
+            <div className="relative rounded-[2rem] bg-white border border-rose-100 shadow-2xl p-4 md:p-5">
+              <div className="grid gap-4">
+                <div className="rounded-[1.75rem] bg-gradient-to-br from-rose-100 via-pink-50 to-white p-6 md:p-8 border border-rose-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-rose-200 flex items-center justify-center text-rose-700">
+                      <Baby className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-rose-700">
+                        {locale === 'pt' ? 'Mais acolhimento para a mãe' : 'More care-centered support'}
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {locale === 'pt' ? 'Menos ruído, mais clareza prática' : 'Less noise, more practical clarity'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight mb-3">
+                    {locale === 'pt'
+                      ? 'Um apoio que combina acolhimento humano com orientação prática.'
+                      : 'Support that combines emotional warmth with practical guidance.'}
+                  </h2>
+                  <p className="text-slate-600 leading-relaxed mb-6">
+                    {locale === 'pt'
+                      ? 'O Wilbor ajuda a mãe a decidir melhor em momentos de dúvida sobre sono, cólica, febre, alimentação e rotina do bebê.'
+                      : 'Wilbor helps mothers make better decisions around sleep, colic, fever, feeding and baby routine.'}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm text-slate-700 border border-rose-100 shadow-sm"><Moon className="w-4 h-4 text-purple-500" /> {locale === 'pt' ? 'Sono' : 'Sleep'}</span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm text-slate-700 border border-rose-100 shadow-sm"><Wind className="w-4 h-4 text-pink-500" /> {locale === 'pt' ? 'Cólica' : 'Colic'}</span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm text-slate-700 border border-rose-100 shadow-sm"><Bell className="w-4 h-4 text-rose-500" /> {locale === 'pt' ? 'Alertas' : 'Alerts'}</span>
+                  </div>
+                </div>
+
+                <div className="rounded-[1.5rem] bg-slate-900 text-white p-4 md:p-5 shadow-lg">
+                  <div className="text-xs uppercase tracking-[0.18em] text-purple-200 mb-3">
+                    {locale === 'pt' ? 'Prova de produto' : 'Product proof'}
+                  </div>
+                  <img 
+                    src={IMAGES.hero} 
+                    alt={t("hero.mockup_alt")}
+                    className="rounded-2xl shadow-xl border border-white/10"
+                    loading="eager"
+                    width="1200"
+                    height="800"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -410,7 +479,7 @@ export default function Home() {
                 <Button asChild className={`w-full h-14 rounded-full text-lg font-bold mb-8 ${
                   plan.popular ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-900 hover:bg-black"
                 }`}>
-                  <a href={checkoutHref}>{t("pricing.cta")}</a>
+                  <a href={premiumHref}>{t("pricing.cta")}</a>
                 </Button>
                 <ul className="space-y-4">
                   {plan.features.map((f, j) => (
