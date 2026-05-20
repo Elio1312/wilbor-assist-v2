@@ -333,7 +333,7 @@ const COPY: Record<DashboardLocale, DashboardCopy> = {
     askAnything: "Ich habe eine Frage...",
     askAnythingSubtitle: "Freies Gespräch öffnen",
     sos: "SOS Weinendes Baby",
-    sosSubtitle: "Schnelle Hilfe עכשיו",
+    sosSubtitle: "Schnelle Hilfe jetzt",
     emptyState: "Schreiben Sie Ihre Frage oder gehen Sie zurück und wählen Sie ein Thema.",
     placeholder: "Schreiben Sie Ihre Nachricht...",
     quickPrompts: [
@@ -414,6 +414,37 @@ const TOPIC_STYLES: Record<TopicKey, { card: string; icon: string; iconComponent
     iconComponent: UserRound,
   },
 };
+
+const TOPIC_ILLUSTRATIONS: Partial<Record<TopicKey, string>> = {
+  sleep: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-03-sleep-tracker_26c55d8b.png",
+  milestones: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-02-growth-crises_133ac9d8.png",
+  feeding: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-04-feeding-tracker_0aced0af.png",
+  mother: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-05-postpartum-exercises_3d66de4d.png",
+};
+
+function buildTopicWelcome(locale: DashboardLocale, topic: TopicItem): string {
+  const templates: Record<DashboardLocale, string> = {
+    pt: `Olá. Você entrou em **${topic.title}**.\n\nPode me contar com calma o que está acontecendo ou qual é sua dúvida agora.`,
+    en: `Hello. You are now in **${topic.title}**.\n\nTell me calmly what is happening or what you would like help with right now.`,
+    es: `Hola. Acabas de entrar en **${topic.title}**.\n\nCuéntame con calma qué está pasando o cuál es tu duda ahora.`,
+    fr: `Bonjour. Vous êtes maintenant dans **${topic.title}**.\n\nDites-moi tranquillement ce qui se passe ou ce dont vous avez besoin maintenant.`,
+    de: `Hallo. Sie sind jetzt in **${topic.title}**.\n\nBeschreiben Sie mir bitte in Ruhe, was gerade passiert oder wobei Sie jetzt Hilfe brauchen.`,
+  };
+
+  return templates[locale] ?? templates.pt;
+}
+
+function buildFreeChatWelcome(locale: DashboardLocale): string {
+  const templates: Record<DashboardLocale, string> = {
+    pt: "Olá. Estou aqui para ajudar com seu bebê e também com você, mãe.\n\nPode me escrever sua dúvida do jeito que for mais fácil.",
+    en: "Hello. I am here to help with your baby and with you as a mother too.\n\nWrite your question in the way that feels easiest.",
+    es: "Hola. Estoy aquí para ayudarte con tu bebé y también contigo, mamá.\n\nEscribe tu duda como te resulte más fácil.",
+    fr: "Bonjour. Je suis là pour vous aider avec votre bébé et aussi avec vous, maman.\n\nÉcrivez votre question de la façon la plus simple pour vous.",
+    de: "Hallo. Ich bin hier, um Ihnen mit Ihrem Baby und auch Ihnen als Mutter zu helfen.\n\nSchreiben Sie Ihre Frage einfach so, wie es für Sie am leichtesten ist.",
+  };
+
+  return templates[locale] ?? templates.pt;
+}
 
 function toDashboardLocale(locale: string): DashboardLocale {
   return ["pt", "en", "es", "fr", "de"].includes(locale) ? (locale as DashboardLocale) : "pt";
@@ -573,10 +604,15 @@ export default function Dashboard() {
       return;
     }
 
-    const newMessages: Message[] = [...baseMessages, { role: "user", content }];
+    const visibleMessages: Message[] = [...baseMessages, { role: "user", content }];
+    const apiMessages = [
+      ...baseMessages.filter((message) => !message.localOnly),
+      { role: "user" as const, content },
+    ];
+
     setLastUserQuestion(content);
     setServerError(null);
-    setMessages(newMessages);
+    setMessages(visibleMessages);
 
     try {
       const response = await chatMutation.mutateAsync({
@@ -585,7 +621,7 @@ export default function Dashboard() {
             role: "system" as const,
             content: buildBaseSystemPrompt(dashboardLocale),
           },
-          ...newMessages.map((message) => ({
+          ...apiMessages.map((message) => ({
             role: message.role as "system" | "user" | "assistant",
             content: message.content,
           })),
@@ -614,19 +650,32 @@ export default function Dashboard() {
     }
   };
 
-  const openTopicChat = async (topic: TopicItem) => {
+  const openTopicChat = (topic: TopicItem) => {
     setActiveTopicKey(topic.key);
     setIsChatOpen(true);
-    setMessages([]);
+    setMessages([
+      {
+        role: "assistant",
+        content: buildTopicWelcome(dashboardLocale, topic),
+        imageUrl: TOPIC_ILLUSTRATIONS[topic.key] ?? null,
+        localOnly: true,
+      },
+    ]);
     setLastUserQuestion(null);
     setLastAssistantMessage(null);
-    await sendChatMessage(topic.prompt, []);
+    setServerError(null);
   };
 
   const openFreeChat = () => {
     setActiveTopicKey(null);
     setIsChatOpen(true);
-    setMessages([]);
+    setMessages([
+      {
+        role: "assistant",
+        content: buildFreeChatWelcome(dashboardLocale),
+        localOnly: true,
+      },
+    ]);
     setLastUserQuestion(null);
     setLastAssistantMessage(null);
     setServerError(null);

@@ -84,6 +84,7 @@ export type Message = {
   role: "system" | "user" | "assistant";
   content: string;
   imageUrl?: string | null; // exercise/illustration image from RAG
+  localOnly?: boolean;
 };
 
 export type AIChatBoxProps = {
