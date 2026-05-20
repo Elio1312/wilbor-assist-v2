@@ -1,12 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { AIChatBox, type Message } from "@/components/AIChatBox";
-import { FeedbackButton } from "@/components/FeedbackButton";
-import { SOSButton } from "@/components/SOSButton";
-import { SleepTracker } from "@/components/SleepTracker";
 import { ParentalConsentModal, useParentalConsent } from "@/components/ParentalConsentModal";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { getAnonymousSessionId } from "@/lib/anonymousSession";
 import { getLoginUrl } from "@/const";
@@ -14,430 +10,408 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useI18n } from "@/contexts/i18n";
 import { useLocation } from "wouter";
 import {
-  Heart,
-  LogOut,
-  LogIn,
-  Wind,
-  Moon,
-  Utensils,
-  TrendingUp,
-  Thermometer,
-  Sparkles,
-  ArrowRight,
-  BarChart3,
+  ArrowLeft,
   BookOpen,
-  User,
-  ShieldCheck,
+  Heart,
+  LogIn,
+  LogOut,
+  Moon,
+  Shield,
+  Sparkles,
+  Thermometer,
+  TrendingUp,
+  UserRound,
+  Utensils,
+  Waves,
 } from "lucide-react";
 
 type DashboardLocale = "pt" | "en" | "es" | "fr" | "de";
+type TopicKey = "sleep" | "colic" | "milestones" | "feeding" | "fever" | "mother";
 
-type DashboardCopy = {
-  badge: string;
+type TopicItem = {
+  key: TopicKey;
   title: string;
   subtitle: string;
-  chooseTitle: string;
-  chooseSubtitle: string;
-  noCard: string;
-  usageTitle: string;
-  freeTrialNote: string;
-  saveHistory: string;
-  seePlans: string;
-  continueWithLogin: string;
-  logoutLabel: string;
-  emptyState: string;
-  quickPrompts: string[];
-  topicButton: string;
-  resourcesTitle: string;
-  blogLabel: string;
-  recipesLabel: string;
-  bodyLabel: string;
-  milestonesLabel: string;
-  topicCards: Array<{
-    key: string;
-    title: string;
-    description: string;
-    prompt: string;
-    routeKey?: "recipes" | "body" | "milestones" | "blog";
-    routeLabel?: string;
-  }>;
+  prompt: string;
 };
 
-const DASHBOARD_COPY: Record<DashboardLocale, DashboardCopy> = {
+type DashboardCopy = {
+  guestName: string;
+  loading: string;
+  login: string;
+  logout: string;
+  back: string;
+  freePlan: string;
+  premiumPlan: string;
+  activatePremium: string;
+  plans: string;
+  remaining: string;
+  premiumActive: string;
+  recipes: string;
+  recipesSubtitle: string;
+  askAnything: string;
+  askAnythingSubtitle: string;
+  sos: string;
+  sosSubtitle: string;
+  emptyState: string;
+  placeholder: string;
+  quickPrompts: string[];
+  topics: TopicItem[];
+};
+
+const COPY: Record<DashboardLocale, DashboardCopy> = {
   pt: {
-    badge: "Teste grátis no dashboard real",
-    title: "Comece pelo coração do Wilbor e use suas 5 consultas grátis do jeito certo.",
-    subtitle:
-      "A mãe entra, escolhe o tema principal e navega pelo produto real. Sem cartão no teste grátis. O upgrade aparece só depois do uso.",
-    chooseTitle: "Escolha por onde começar",
-    chooseSubtitle:
-      "Cada botão já abre uma orientação prática dentro do Wilbor. Você pode começar por cólica, sono, alimentação, febre, saltos ou apoio para a mãe.",
-    noCard: "Sem cartão no teste grátis",
-    usageTitle: "Seu acesso agora",
-    freeTrialNote: "Você começa com 5 consultas gratuitas e decide quando faz sentido assinar.",
-    saveHistory: "Faça login depois para salvar histórico, continuar no celular e manter a experiência organizada.",
-    seePlans: "Ver planos",
-    continueWithLogin: "Fazer login",
-    logoutLabel: "Sair",
-    emptyState: "Escolha um cartão acima ou escreva o que está acontecendo com seu bebê agora.",
+    guestName: "Teste",
+    loading: "Carregando...",
+    login: "Entrar",
+    logout: "Sair",
+    back: "Voltar",
+    freePlan: "Plano gratuito",
+    premiumPlan: "Wilbor Premium",
+    activatePremium: "Ativar Premium",
+    plans: "Planos",
+    remaining: "consultas restantes",
+    premiumActive: "Premium ativo",
+    recipes: "Receitas",
+    recipesSubtitle: "Refeições por idade",
+    askAnything: "Tenho uma dúvida...",
+    askAnythingSubtitle: "Abrir conversa livre",
+    sos: "SOS Bebê chorando",
+    sosSubtitle: "Ajuda rápida agora",
+    emptyState: "Escreva sua dúvida ou volte para escolher um tema.",
+    placeholder: "Digite sua mensagem...",
     quickPrompts: [
-      "Meu bebê está com cólica. O que posso fazer agora?",
-      "Meu bebê não dorme bem. Por onde começo?",
-      "Como organizar a alimentação do bebê hoje?",
-      "Estou em dúvida se essa febre exige urgência.",
+      "Meu bebê chora mais no fim da tarde. O que pode ser?",
+      "Quero ajuda para entender a rotina de sono de hoje.",
+      "Preciso organizar a alimentação do bebê.",
     ],
-    topicButton: "Usar consulta agora",
-    resourcesTitle: "Outros recursos do Wilbor",
-    blogLabel: "Blog",
-    recipesLabel: "Receitas",
-    bodyLabel: "Meu corpo",
-    milestonesLabel: "Desenvolvimento",
-    topicCards: [
-      {
-        key: "colic",
-        title: "Cólica",
-        description: "Abra uma orientação rápida para crise, gases, massagens e sinais de alerta.",
-        prompt: "Meu bebê está com cólica. Faça perguntas rápidas e me diga o que tentar agora e quando devo procurar ajuda.",
-      },
+    topics: [
       {
         key: "sleep",
         title: "Sono",
-        description: "Entenda despertares, janelas de sono, rotina e o próximo ajuste mais provável.",
-        prompt: "Meu bebê está com dificuldade para dormir. Faça perguntas rápidas e me oriente pelo próximo passo mais provável.",
-        routeKey: "milestones",
-        routeLabel: "Ver desenvolvimento",
+        subtitle: "Janelas e rotina",
+        prompt: "Meu bebê está com dificuldade para dormir. Faça perguntas rápidas e me diga o que ajustar primeiro hoje.",
+      },
+      {
+        key: "colic",
+        title: "Cólica",
+        subtitle: "Técnicas de alívio",
+        prompt: "Meu bebê está com cólica. Faça perguntas rápidas e me diga o que tentar agora e quando devo procurar ajuda.",
+      },
+      {
+        key: "milestones",
+        title: "Saltos",
+        subtitle: "Desenvolvimento mental",
+        prompt: "Quero entender se meu bebê está em salto de desenvolvimento. Faça perguntas e me explique os sinais mais prováveis.",
       },
       {
         key: "feeding",
         title: "Alimentação",
-        description: "Comece pelo tema de mamadas, introdução alimentar, dúvidas de rotina e sinais de recusa.",
+        subtitle: "Mamadas e pega",
         prompt: "Preciso de ajuda com a alimentação do meu bebê. Faça perguntas rápidas e me oriente com clareza.",
-        routeKey: "recipes",
-        routeLabel: "Abrir receitas",
       },
       {
         key: "fever",
-        title: "Febre",
-        description: "Organize temperatura, idade, sinais de alerta e o que observar antes de correr para a emergência.",
-        prompt: "Meu bebê está com febre. Faça perguntas rápidas para avaliar urgência e me diga o que observar agora.",
-      },
-      {
-        key: "milestones",
-        title: "Saltos e desenvolvimento",
-        description: "Veja se o comportamento combina com fase de desenvolvimento, irritação, regressão ou salto.",
-        prompt: "Quero entender se meu bebê está em salto de desenvolvimento. Faça perguntas e me explique os sinais mais prováveis.",
-        routeKey: "milestones",
-        routeLabel: "Abrir trilha",
+        title: "Segurança",
+        subtitle: "Febre e sinais de alerta",
+        prompt: "Meu bebê está com febre ou sinais que me preocupam. Faça perguntas rápidas para avaliar urgência e me diga o que observar agora.",
       },
       {
         key: "mother",
-        title: "Exercícios e apoio para a mãe",
-        description: "Use o Wilbor também para recuperação, autocuidado e orientação prática no pós-parto.",
+        title: "Mamãe",
+        subtitle: "Exercícios e apoio",
         prompt: "Quero orientação prática para meu corpo e minha recuperação no pós-parto. Por onde começo hoje?",
-        routeKey: "body",
-        routeLabel: "Abrir Meu Corpo",
       },
     ],
   },
   en: {
-    badge: "Free trial in the real dashboard",
-    title: "Start from the heart of Wilbor and use your 5 free consultations the right way.",
-    subtitle:
-      "Mothers should enter the real product, choose the main topic and navigate from there. No card required for the free trial. Upgrade only comes after usage.",
-    chooseTitle: "Choose where to start",
-    chooseSubtitle:
-      "Each button opens practical guidance inside Wilbor. You can start with colic, sleep, feeding, fever, milestones or support for the mother.",
-    noCard: "No card required for the free trial",
-    usageTitle: "Your access now",
-    freeTrialNote: "You start with 5 free consultations and upgrade only when it makes sense.",
-    saveHistory: "Sign in later to save history, continue on mobile and keep everything organized.",
-    seePlans: "See plans",
-    continueWithLogin: "Sign in",
-    logoutLabel: "Log out",
-    emptyState: "Choose a card above or type what is happening with your baby right now.",
+    guestName: "Trial",
+    loading: "Loading...",
+    login: "Sign in",
+    logout: "Log out",
+    back: "Back",
+    freePlan: "Free plan",
+    premiumPlan: "Wilbor Premium",
+    activatePremium: "Go Premium",
+    plans: "Plans",
+    remaining: "consultations left",
+    premiumActive: "Premium active",
+    recipes: "Recipes",
+    recipesSubtitle: "Meals by age",
+    askAnything: "I have a question...",
+    askAnythingSubtitle: "Open free conversation",
+    sos: "SOS Crying baby",
+    sosSubtitle: "Fast help now",
+    emptyState: "Type your question or go back and choose a topic.",
+    placeholder: "Type your message...",
     quickPrompts: [
-      "My baby has colic. What can I do now?",
-      "My baby is not sleeping well. Where should I start?",
-      "How should I organize feeding today?",
-      "I am unsure whether this fever is urgent.",
+      "My baby cries more in the late afternoon. What could it be?",
+      "I need help understanding today's sleep routine.",
+      "I need to organize my baby's feeding.",
     ],
-    topicButton: "Use consultation now",
-    resourcesTitle: "Other Wilbor resources",
-    blogLabel: "Blog",
-    recipesLabel: "Recipes",
-    bodyLabel: "My body",
-    milestonesLabel: "Development",
-    topicCards: [
-      {
-        key: "colic",
-        title: "Colic",
-        description: "Open quick guidance for gas, massage, soothing positions and warning signs.",
-        prompt: "My baby has colic. Ask quick questions and tell me what to try now and when I should seek help.",
-      },
+    topics: [
       {
         key: "sleep",
         title: "Sleep",
-        description: "Understand wake-ups, wake windows, routine and the most likely next adjustment.",
-        prompt: "My baby is having trouble sleeping. Ask quick questions and guide me to the most likely next step.",
-        routeKey: "milestones",
-        routeLabel: "See development",
+        subtitle: "Wake windows and routine",
+        prompt: "My baby is having trouble sleeping. Ask quick questions and tell me what to adjust first today.",
       },
       {
-        key: "feeding",
-        title: "Feeding",
-        description: "Start with bottles, breastfeeding, solids, routine doubts and refusal signs.",
-        prompt: "I need help with my baby's feeding. Ask quick questions and guide me clearly.",
-        routeKey: "recipes",
-        routeLabel: "Open recipes",
-      },
-      {
-        key: "fever",
-        title: "Fever",
-        description: "Organize temperature, age, warning signs and what to monitor before rushing out.",
-        prompt: "My baby has a fever. Ask quick questions to assess urgency and tell me what to watch right now.",
+        key: "colic",
+        title: "Colic",
+        subtitle: "Relief techniques",
+        prompt: "My baby has colic. Ask quick questions and tell me what to try now and when I should seek help.",
       },
       {
         key: "milestones",
         title: "Milestones",
-        description: "Check whether behavior matches a leap, irritability, regression or a new phase.",
+        subtitle: "Mental development",
         prompt: "I want to understand whether my baby is in a developmental leap. Ask questions and explain the most likely signs.",
-        routeKey: "milestones",
-        routeLabel: "Open tracker",
+      },
+      {
+        key: "feeding",
+        title: "Feeding",
+        subtitle: "Feeds and latch",
+        prompt: "I need help with my baby's feeding. Ask quick questions and guide me clearly.",
+      },
+      {
+        key: "fever",
+        title: "Safety",
+        subtitle: "Fever and warning signs",
+        prompt: "My baby has fever or signs that worry me. Ask quick questions to assess urgency and tell me what to watch right now.",
       },
       {
         key: "mother",
-        title: "Mother support",
-        description: "Use Wilbor for postpartum recovery, self-care and practical guidance for the mother too.",
+        title: "Mother",
+        subtitle: "Exercises and support",
         prompt: "I want practical guidance for my body and postpartum recovery. Where should I start today?",
-        routeKey: "body",
-        routeLabel: "Open My Body",
       },
     ],
   },
   es: {
-    badge: "Prueba gratis en el dashboard real",
-    title: "Empieza por el corazón de Wilbor y usa tus 5 consultas gratis de la manera correcta.",
-    subtitle:
-      "La madre debe entrar en el producto real, elegir el tema principal y navegar desde allí. Sin tarjeta en la prueba gratis. El upgrade aparece después del uso.",
-    chooseTitle: "Elige por dónde empezar",
-    chooseSubtitle:
-      "Cada botón abre orientación práctica dentro de Wilbor. Puedes empezar por cólico, sueño, alimentación, fiebre, saltos o apoyo para la madre.",
-    noCard: "Sin tarjeta en la prueba gratis",
-    usageTitle: "Tu acceso ahora",
-    freeTrialNote: "Empiezas con 5 consultas gratuitas y decides luego si quieres suscribirte.",
-    saveHistory: "Inicia sesión después para guardar historial, seguir en el móvil y mantener todo organizado.",
-    seePlans: "Ver planes",
-    continueWithLogin: "Iniciar sesión",
-    logoutLabel: "Salir",
-    emptyState: "Elige una tarjeta arriba o escribe qué está pasando con tu bebé ahora.",
+    guestName: "Prueba",
+    loading: "Cargando...",
+    login: "Iniciar sesión",
+    logout: "Salir",
+    back: "Volver",
+    freePlan: "Plan gratuito",
+    premiumPlan: "Wilbor Premium",
+    activatePremium: "Activar Premium",
+    plans: "Planes",
+    remaining: "consultas restantes",
+    premiumActive: "Premium activo",
+    recipes: "Recetas",
+    recipesSubtitle: "Comidas por edad",
+    askAnything: "Tengo una duda...",
+    askAnythingSubtitle: "Abrir conversación libre",
+    sos: "SOS Bebé llorando",
+    sosSubtitle: "Ayuda rápida ahora",
+    emptyState: "Escribe tu duda o vuelve para elegir un tema.",
+    placeholder: "Escribe tu mensaje...",
     quickPrompts: [
-      "Mi bebé tiene cólico. ¿Qué puedo hacer ahora?",
-      "Mi bebé no duerme bien. ¿Por dónde empiezo?",
-      "¿Cómo organizo la alimentación hoy?",
-      "No sé si esta fiebre es urgente.",
+      "Mi bebé llora más al final de la tarde. ¿Qué puede ser?",
+      "Quiero entender la rutina de sueño de hoy.",
+      "Necesito organizar la alimentación del bebé.",
     ],
-    topicButton: "Usar consulta ahora",
-    resourcesTitle: "Otros recursos de Wilbor",
-    blogLabel: "Blog",
-    recipesLabel: "Recetas",
-    bodyLabel: "Mi cuerpo",
-    milestonesLabel: "Desarrollo",
-    topicCards: [
-      {
-        key: "colic",
-        title: "Cólico",
-        description: "Abre orientación rápida para gases, masajes, posiciones y señales de alerta.",
-        prompt: "Mi bebé tiene cólico. Haz preguntas rápidas y dime qué probar ahora y cuándo debo buscar ayuda.",
-      },
+    topics: [
       {
         key: "sleep",
         title: "Sueño",
-        description: "Entiende despertares, ventanas de sueño, rutina y el siguiente ajuste más probable.",
-        prompt: "Mi bebé tiene dificultades para dormir. Haz preguntas rápidas y oriéntame hacia el siguiente paso más probable.",
-        routeKey: "milestones",
-        routeLabel: "Ver desarrollo",
+        subtitle: "Ventanas y rutina",
+        prompt: "Mi bebé tiene dificultades para dormir. Haz preguntas rápidas y dime qué ajustar primero hoy.",
+      },
+      {
+        key: "colic",
+        title: "Cólico",
+        subtitle: "Técnicas de alivio",
+        prompt: "Mi bebé tiene cólico. Haz preguntas rápidas y dime qué probar ahora y cuándo debo buscar ayuda.",
+      },
+      {
+        key: "milestones",
+        title: "Saltos",
+        subtitle: "Desarrollo mental",
+        prompt: "Quiero entender si mi bebé está en un salto del desarrollo. Haz preguntas y explícame las señales más probables.",
       },
       {
         key: "feeding",
         title: "Alimentación",
-        description: "Empieza por tomas, lactancia, sólidos, dudas de rutina y rechazo.",
+        subtitle: "Tomas y agarre",
         prompt: "Necesito ayuda con la alimentación de mi bebé. Haz preguntas rápidas y oriéntame con claridad.",
-        routeKey: "recipes",
-        routeLabel: "Abrir recetas",
       },
       {
         key: "fever",
-        title: "Fiebre",
-        description: "Ordena temperatura, edad, señales de alerta y lo que debes observar ahora.",
-        prompt: "Mi bebé tiene fiebre. Haz preguntas rápidas para evaluar la urgencia y dime qué observar ahora.",
-      },
-      {
-        key: "milestones",
-        title: "Saltos y desarrollo",
-        description: "Comprueba si el comportamiento coincide con un salto o una nueva fase.",
-        prompt: "Quiero entender si mi bebé está en un salto del desarrollo. Haz preguntas y explícame las señales más probables.",
-        routeKey: "milestones",
-        routeLabel: "Abrir seguimiento",
+        title: "Seguridad",
+        subtitle: "Fiebre y alertas",
+        prompt: "Mi bebé tiene fiebre o señales que me preocupan. Haz preguntas rápidas para evaluar la urgencia y dime qué observar ahora.",
       },
       {
         key: "mother",
-        title: "Apoyo para la madre",
-        description: "Usa Wilbor también para recuperación posparto, autocuidado y orientación práctica.",
+        title: "Mamá",
+        subtitle: "Ejercicios y apoyo",
         prompt: "Quiero orientación práctica para mi cuerpo y mi recuperación posparto. ¿Por dónde empiezo hoy?",
-        routeKey: "body",
-        routeLabel: "Abrir Mi Cuerpo",
       },
     ],
   },
   fr: {
-    badge: "Essai gratuit dans le vrai tableau de bord",
-    title: "Commencez par le cœur de Wilbor et utilisez vos 5 consultations gratuites comme il faut.",
-    subtitle:
-      "La mère doit entrer dans le vrai produit, choisir le sujet principal et naviguer à partir de là. Aucune carte bancaire pour l'essai gratuit. L'offre payante vient après l'usage.",
-    chooseTitle: "Choisissez par où commencer",
-    chooseSubtitle:
-      "Chaque bouton ouvre une orientation pratique dans Wilbor. Vous pouvez commencer par les coliques, le sommeil, l'alimentation, la fièvre, les étapes de développement ou le soutien maternel.",
-    noCard: "Aucune carte bancaire pour l'essai gratuit",
-    usageTitle: "Votre accès maintenant",
-    freeTrialNote: "Vous commencez avec 5 consultations gratuites et vous choisissez ensuite si l'abonnement a du sens.",
-    saveHistory: "Connectez-vous ensuite pour sauvegarder l'historique, continuer sur mobile et garder tout organisé.",
-    seePlans: "Voir les forfaits",
-    continueWithLogin: "Se connecter",
-    logoutLabel: "Se déconnecter",
-    emptyState: "Choisissez une carte ci-dessus ou décrivez ce qui se passe avec votre bébé maintenant.",
+    guestName: "Essai",
+    loading: "Chargement...",
+    login: "Se connecter",
+    logout: "Se déconnecter",
+    back: "Retour",
+    freePlan: "Offre gratuite",
+    premiumPlan: "Wilbor Premium",
+    activatePremium: "Activer Premium",
+    plans: "Forfaits",
+    remaining: "consultations restantes",
+    premiumActive: "Premium actif",
+    recipes: "Recettes",
+    recipesSubtitle: "Repas par âge",
+    askAnything: "J'ai une question...",
+    askAnythingSubtitle: "Ouvrir une conversation libre",
+    sos: "SOS Bébé qui pleure",
+    sosSubtitle: "Aide rapide maintenant",
+    emptyState: "Écrivez votre question ou revenez pour choisir un thème.",
+    placeholder: "Écrivez votre message...",
     quickPrompts: [
-      "Mon bébé a des coliques. Que puis-je faire maintenant ?",
-      "Mon bébé dort mal. Par où commencer ?",
-      "Comment organiser l'alimentation aujourd'hui ?",
-      "Je ne sais pas si cette fièvre est urgente.",
+      "Mon bébé pleure davantage en fin de journée. Qu'est-ce que cela peut être ?",
+      "Je veux comprendre la routine de sommeil d'aujourd'hui.",
+      "J'ai besoin d'organiser l'alimentation du bébé.",
     ],
-    topicButton: "Utiliser la consultation",
-    resourcesTitle: "Autres ressources Wilbor",
-    blogLabel: "Blog",
-    recipesLabel: "Recettes",
-    bodyLabel: "Mon corps",
-    milestonesLabel: "Développement",
-    topicCards: [
-      {
-        key: "colic",
-        title: "Coliques",
-        description: "Ouvrez une aide rapide pour les gaz, massages, positions utiles et signes d'alerte.",
-        prompt: "Mon bébé a des coliques. Posez des questions rapides et dites-moi quoi essayer maintenant et quand demander de l'aide.",
-      },
+    topics: [
       {
         key: "sleep",
         title: "Sommeil",
-        description: "Comprenez les réveils, les fenêtres d'éveil, la routine et le prochain ajustement probable.",
-        prompt: "Mon bébé dort mal. Posez des questions rapides et guidez-moi vers la prochaine étape la plus probable.",
-        routeKey: "milestones",
-        routeLabel: "Voir le développement",
+        subtitle: "Fenêtres et routine",
+        prompt: "Mon bébé dort mal. Posez des questions rapides et dites-moi quoi ajuster d'abord aujourd'hui.",
+      },
+      {
+        key: "colic",
+        title: "Coliques",
+        subtitle: "Techniques d'apaisement",
+        prompt: "Mon bébé a des coliques. Posez des questions rapides et dites-moi quoi essayer maintenant et quand demander de l'aide.",
+      },
+      {
+        key: "milestones",
+        title: "Étapes",
+        subtitle: "Développement mental",
+        prompt: "Je veux comprendre si mon bébé traverse un saut de développement. Posez des questions et expliquez-moi les signes probables.",
       },
       {
         key: "feeding",
         title: "Alimentation",
-        description: "Commencez par les tétées, les solides, la routine et les signes de refus.",
+        subtitle: "Tétées et prise",
         prompt: "J'ai besoin d'aide pour l'alimentation de mon bébé. Posez des questions rapides et guidez-moi clairement.",
-        routeKey: "recipes",
-        routeLabel: "Ouvrir les recettes",
       },
       {
         key: "fever",
-        title: "Fièvre",
-        description: "Organisez la température, l'âge, les signes d'alerte et ce qu'il faut surveiller.",
-        prompt: "Mon bébé a de la fièvre. Posez des questions rapides pour évaluer l'urgence et dites-moi quoi surveiller maintenant.",
-      },
-      {
-        key: "milestones",
-        title: "Étapes et développement",
-        description: "Vérifiez si le comportement correspond à un saut ou à une nouvelle phase.",
-        prompt: "Je veux comprendre si mon bébé traverse une étape de développement. Posez des questions et expliquez-moi les signes probables.",
-        routeKey: "milestones",
-        routeLabel: "Ouvrir le suivi",
+        title: "Sécurité",
+        subtitle: "Fièvre et alertes",
+        prompt: "Mon bébé a de la fièvre ou des signes inquiétants. Posez des questions rapides pour évaluer l'urgence et dites-moi quoi surveiller maintenant.",
       },
       {
         key: "mother",
-        title: "Soutien pour la mère",
-        description: "Utilisez Wilbor aussi pour la récupération post-partum, l'autosoins et le soutien pratique.",
+        title: "Maman",
+        subtitle: "Exercices et soutien",
         prompt: "Je veux des conseils pratiques pour mon corps et ma récupération post-partum. Par où commencer aujourd'hui ?",
-        routeKey: "body",
-        routeLabel: "Ouvrir Mon corps",
       },
     ],
   },
   de: {
-    badge: "Kostenlos testen im echten Dashboard",
-    title: "Starten Sie im Herzen von Wilbor und nutzen Sie Ihre 5 kostenlosen Beratungen auf die richtige Weise.",
-    subtitle:
-      "Die Mutter sollte direkt ins echte Produkt gelangen, das Hauptthema wählen und von dort navigieren. Keine Karte für den Gratis-Test. Das Upgrade kommt erst nach der Nutzung.",
-    chooseTitle: "Womit möchten Sie beginnen?",
-    chooseSubtitle:
-      "Jede Schaltfläche öffnet eine praktische Orientierung in Wilbor. Sie können mit Koliken, Schlaf, Ernährung, Fieber, Entwicklung oder Unterstützung für die Mutter beginnen.",
-    noCard: "Keine Karte für den Gratis-Test",
-    usageTitle: "Ihr Zugriff jetzt",
-    freeTrialNote: "Sie starten mit 5 kostenlosen Beratungen und entscheiden später, ob sich ein Abo lohnt.",
-    saveHistory: "Melden Sie sich später an, um den Verlauf zu speichern und mobil weiterzumachen.",
-    seePlans: "Tarife ansehen",
-    continueWithLogin: "Anmelden",
-    logoutLabel: "Abmelden",
-    emptyState: "Wählen Sie oben eine Karte oder beschreiben Sie, was mit Ihrem Baby gerade passiert.",
+    guestName: "Test",
+    loading: "Wird geladen...",
+    login: "Anmelden",
+    logout: "Abmelden",
+    back: "Zurück",
+    freePlan: "Kostenloser Plan",
+    premiumPlan: "Wilbor Premium",
+    activatePremium: "Premium aktivieren",
+    plans: "Tarife",
+    remaining: "Beratungen übrig",
+    premiumActive: "Premium aktiv",
+    recipes: "Rezepte",
+    recipesSubtitle: "Mahlzeiten nach Alter",
+    askAnything: "Ich habe eine Frage...",
+    askAnythingSubtitle: "Freies Gespräch öffnen",
+    sos: "SOS Weinendes Baby",
+    sosSubtitle: "Schnelle Hilfe עכשיו",
+    emptyState: "Schreiben Sie Ihre Frage oder gehen Sie zurück und wählen Sie ein Thema.",
+    placeholder: "Schreiben Sie Ihre Nachricht...",
     quickPrompts: [
-      "Mein Baby hat Koliken. Was kann ich jetzt tun?",
-      "Mein Baby schläft schlecht. Wo fange ich an?",
-      "Wie organisiere ich die Ernährung heute?",
-      "Ich weiß nicht, ob dieses Fieber dringend ist.",
+      "Mein Baby weint am späten Nachmittag mehr. Woran kann das liegen?",
+      "Ich möchte den Schlafrhythmus von heute verstehen.",
+      "Ich muss die Ernährung meines Babys ordnen.",
     ],
-    topicButton: "Beratung jetzt nutzen",
-    resourcesTitle: "Weitere Wilbor-Ressourcen",
-    blogLabel: "Blog",
-    recipesLabel: "Rezepte",
-    bodyLabel: "Mein Körper",
-    milestonesLabel: "Entwicklung",
-    topicCards: [
-      {
-        key: "colic",
-        title: "Koliken",
-        description: "Öffnen Sie schnelle Hilfe zu Gasen, Massage, Positionen und Warnzeichen.",
-        prompt: "Mein Baby hat Koliken. Stellen Sie kurze Fragen und sagen Sie mir, was ich jetzt versuchen kann und wann ich Hilfe suchen sollte.",
-      },
+    topics: [
       {
         key: "sleep",
         title: "Schlaf",
-        description: "Verstehen Sie Aufwachen, Wachfenster, Routine und den wahrscheinlichsten nächsten Schritt.",
-        prompt: "Mein Baby hat Schlafprobleme. Stellen Sie kurze Fragen und leiten Sie mich zum wahrscheinlichsten nächsten Schritt.",
-        routeKey: "milestones",
-        routeLabel: "Entwicklung ansehen",
+        subtitle: "Wachfenster und Routine",
+        prompt: "Mein Baby hat Schlafprobleme. Stellen Sie kurze Fragen und sagen Sie mir, was ich heute zuerst anpassen sollte.",
+      },
+      {
+        key: "colic",
+        title: "Koliken",
+        subtitle: "Beruhigungstechniken",
+        prompt: "Mein Baby hat Koliken. Stellen Sie kurze Fragen und sagen Sie mir, was ich jetzt versuchen kann und wann ich Hilfe suchen sollte.",
+      },
+      {
+        key: "milestones",
+        title: "Schübe",
+        subtitle: "Mentale Entwicklung",
+        prompt: "Ich möchte verstehen, ob mein Baby in einem Entwicklungsschub ist. Stellen Sie Fragen und erklären Sie mir die wahrscheinlichsten Anzeichen.",
       },
       {
         key: "feeding",
         title: "Ernährung",
-        description: "Starten Sie mit Stillen, Fläschchen, Beikost, Routinen und Verweigerung.",
+        subtitle: "Stillen und Anlegen",
         prompt: "Ich brauche Hilfe bei der Ernährung meines Babys. Stellen Sie kurze Fragen und leiten Sie mich klar an.",
-        routeKey: "recipes",
-        routeLabel: "Rezepte öffnen",
       },
       {
         key: "fever",
-        title: "Fieber",
-        description: "Ordnen Sie Temperatur, Alter, Warnzeichen und das, was Sie jetzt beobachten sollten.",
-        prompt: "Mein Baby hat Fieber. Stellen Sie kurze Fragen, um die Dringlichkeit einzuschätzen, und sagen Sie mir, worauf ich jetzt achten soll.",
-      },
-      {
-        key: "milestones",
-        title: "Entwicklung",
-        description: "Prüfen Sie, ob das Verhalten zu einem Entwicklungsschub oder einer neuen Phase passt.",
-        prompt: "Ich möchte verstehen, ob mein Baby in einem Entwicklungsschub ist. Stellen Sie Fragen und erklären Sie mir die wahrscheinlichsten Anzeichen.",
-        routeKey: "milestones",
-        routeLabel: "Tracker öffnen",
+        title: "Sicherheit",
+        subtitle: "Fieber und Warnzeichen",
+        prompt: "Mein Baby hat Fieber oder Anzeichen, die mir Sorgen machen. Stellen Sie kurze Fragen, um die Dringlichkeit einzuschätzen, und sagen Sie mir, worauf ich jetzt achten soll.",
       },
       {
         key: "mother",
-        title: "Unterstützung für die Mutter",
-        description: "Nutzen Sie Wilbor auch für Erholung, Selbstfürsorge und praktische Hilfe nach der Geburt.",
+        title: "Mama",
+        subtitle: "Übungen und Unterstützung",
         prompt: "Ich möchte praktische Orientierung für meinen Körper und meine Erholung nach der Geburt. Womit sollte ich heute beginnen?",
-        routeKey: "body",
-        routeLabel: "Mein Körper öffnen",
       },
     ],
+  },
+};
+
+const TOPIC_STYLES: Record<TopicKey, { card: string; icon: string; iconComponent: any }> = {
+  sleep: {
+    card: "from-emerald-200/95 to-teal-200/95 text-slate-900",
+    icon: "bg-white/80 text-slate-900",
+    iconComponent: Moon,
+  },
+  colic: {
+    card: "from-pink-200/95 to-fuchsia-200/95 text-slate-900",
+    icon: "bg-white/80 text-slate-900",
+    iconComponent: Waves,
+  },
+  milestones: {
+    card: "from-sky-100/95 to-cyan-100/95 text-slate-900",
+    icon: "bg-white/80 text-slate-900",
+    iconComponent: TrendingUp,
+  },
+  feeding: {
+    card: "from-orange-200/95 to-amber-200/95 text-slate-900",
+    icon: "bg-white/80 text-slate-900",
+    iconComponent: Utensils,
+  },
+  fever: {
+    card: "from-blue-100/95 to-slate-100/95 text-slate-900",
+    icon: "bg-white/80 text-slate-900",
+    iconComponent: Shield,
+  },
+  mother: {
+    card: "from-violet-200/95 to-purple-200/95 text-slate-900",
+    icon: "bg-white/80 text-slate-900",
+    iconComponent: UserRound,
   },
 };
 
@@ -462,60 +436,65 @@ function extractKnownError(errorMessage: string): string {
   return knownErrors.find((code) => errorMessage.includes(code)) || errorMessage;
 }
 
-function getTopicStyles(key: string) {
-  switch (key) {
-    case "colic":
-      return {
-        card: "border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50",
-        icon: "bg-amber-100 text-amber-700",
-      };
-    case "sleep":
-      return {
-        card: "border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50",
-        icon: "bg-blue-100 text-blue-700",
-      };
-    case "feeding":
-      return {
-        card: "border-emerald-200 bg-gradient-to-br from-emerald-50 to-lime-50",
-        icon: "bg-emerald-100 text-emerald-700",
-      };
-    case "fever":
-      return {
-        card: "border-rose-200 bg-gradient-to-br from-rose-50 to-pink-50",
-        icon: "bg-rose-100 text-rose-700",
-      };
-    case "milestones":
-      return {
-        card: "border-violet-200 bg-gradient-to-br from-violet-50 to-purple-50",
-        icon: "bg-violet-100 text-violet-700",
-      };
-    default:
-      return {
-        card: "border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50",
-        icon: "bg-fuchsia-100 text-fuchsia-700",
-      };
+function getGreeting(locale: DashboardLocale): string {
+  const hour = new Date().getHours();
+
+  if (locale === "en") {
+    if (hour < 12) return "Good morning,";
+    if (hour < 18) return "Good afternoon,";
+    return "Good evening,";
   }
+
+  if (locale === "es") {
+    if (hour < 12) return "Buenos días,";
+    if (hour < 18) return "Buenas tardes,";
+    return "Buenas noches,";
+  }
+
+  if (locale === "fr") {
+    if (hour < 12) return "Bonjour,";
+    if (hour < 18) return "Bon après-midi,";
+    return "Bonsoir,";
+  }
+
+  if (locale === "de") {
+    if (hour < 12) return "Guten Morgen,";
+    if (hour < 18) return "Guten Tag,";
+    return "Guten Abend,";
+  }
+
+  if (hour < 12) return "Bom dia,";
+  if (hour < 18) return "Boa tarde,";
+  return "Boa noite,";
+}
+
+function getDisplayName(rawName: string | null | undefined, fallback: string): string {
+  if (!rawName) return fallback;
+  return rawName.split(" ")[0] || fallback;
 }
 
 export default function Dashboard() {
-  const { t, locale, localePath } = useI18n();
+  const { locale, localePath } = useI18n();
   const [, setLocation] = useLocation();
   const { user, logout, loading: authLoading } = useAuth();
   const { showConsent, handleAccept, handleDecline } = useParentalConsent();
   const dashboardLocale = toDashboardLocale(locale);
-  const copy = DASHBOARD_COPY[dashboardLocale];
+  const copy = COPY[dashboardLocale];
 
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [lastAssistantMessage, setLastAssistantMessage] = useState<string | null>(null);
   const [lastUserQuestion, setLastUserQuestion] = useState<string | null>(null);
+  const [lastAssistantMessage, setLastAssistantMessage] = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [activeTopicKey, setActiveTopicKey] = useState<TopicKey | null>(null);
 
   useEffect(() => {
     const meta = document.createElement("meta");
     meta.name = "robots";
     meta.content = "noindex, nofollow";
     document.head.appendChild(meta);
+
     return () => {
       document.head.removeChild(meta);
     };
@@ -552,11 +531,6 @@ export default function Dashboard() {
     }
   );
 
-  const babiesQuery = trpc.wilbor.getBabies.useQuery(undefined, {
-    enabled: !!user,
-    refetchOnWindowFocus: false,
-  });
-
   const chatMutation = trpc.wilbor.chat.useMutation();
 
   const credits = user ? creditsQuery.data : anonCreditsQuery.data;
@@ -569,55 +543,52 @@ export default function Dashboard() {
         ? credits.monthlyLimit
         : 5
     : 5;
-  const activeBaby = babiesQuery.data?.[0];
 
-  const resourceRoutes = useMemo(
-    () => ({
-      recipes: localePath("/recipes"),
-      body: localePath("/meu-corpo"),
-      milestones: localePath("/desenvolvimento"),
-      blog: localePath("/blog"),
-      premium: localePath("/premium"),
-    }),
-    [localePath]
-  );
+  const greeting = getGreeting(dashboardLocale);
+  const displayName = getDisplayName(user?.name || user?.email, copy.guestName);
+  const activeTopic = copy.topics.find((topic) => topic.key === activeTopicKey) || null;
+  const currentCount = isPremium ? monthlyLimit : remaining ?? monthlyLimit;
+  const usedCount = isPremium ? monthlyLimit : Math.max(0, monthlyLimit - (remaining ?? monthlyLimit));
+  const progressWidth = isPremium ? 100 : Math.min(100, (usedCount / Math.max(monthlyLimit, 1)) * 100);
+  const isAnonymousReady = !!user || !!fingerprint;
+  const recipesRoute = localePath("/recipes");
+  const premiumRoute = localePath("/premium");
 
-  const topicIcons = useMemo(
-    () => ({
-      colic: Wind,
-      sleep: Moon,
-      feeding: Utensils,
-      fever: Thermometer,
-      milestones: TrendingUp,
-      mother: Heart,
-    }),
-    []
-  );
+  const refetchCredits = () => {
+    if (user) {
+      creditsQuery.refetch();
+    } else {
+      anonCreditsQuery.refetch();
+    }
+  };
 
-  const handleSendMessage = async (content: string) => {
+  const sendChatMessage = async (content: string, baseMessages: Message[] = messages) => {
+    if (!user && !fingerprint) {
+      setServerError("FINGERPRINT_REQUIRED");
+      return;
+    }
+
     if (credits?.isOverLimit) {
       setServerError(user ? "CREDIT_LIMIT_REACHED" : "ANONYMOUS_LIMIT_REACHED");
       return;
     }
 
-    const newMessages: Message[] = [...messages, { role: "user", content }];
+    const newMessages: Message[] = [...baseMessages, { role: "user", content }];
     setLastUserQuestion(content);
     setServerError(null);
     setMessages(newMessages);
 
     try {
-      const messagesForApi = newMessages.map((message) => ({
-        role: message.role as "system" | "user" | "assistant",
-        content: message.content,
-      }));
-
       const response = await chatMutation.mutateAsync({
         messages: [
           {
             role: "system" as const,
             content: buildBaseSystemPrompt(dashboardLocale),
           },
-          ...messagesForApi,
+          ...newMessages.map((message) => ({
+            role: message.role as "system" | "user" | "assistant",
+            content: message.content,
+          })),
         ],
         fingerprint: user ? undefined : fingerprint || undefined,
       });
@@ -625,8 +596,7 @@ export default function Dashboard() {
       const responseText =
         typeof response === "string"
           ? response
-          : (response as any).content || (response as any).message || t("chat.error");
-
+          : (response as any).content || (response as any).message || copy.emptyState;
       const responseImageUrl = (response as any)?.imageUrl ?? null;
       const messageId = (response as any)?.messageId ?? null;
 
@@ -635,259 +605,244 @@ export default function Dashboard() {
         { role: "assistant", content: responseText, imageUrl: responseImageUrl, ...(messageId ? { messageId } : {}) } as any,
       ]);
       setLastAssistantMessage(responseText);
-
-      if (user) {
-        creditsQuery.refetch();
-      } else {
-        anonCreditsQuery.refetch();
-      }
+      refetchCredits();
     } catch (error: any) {
       const errorMessage = error?.message || "";
       const foundError = extractKnownError(errorMessage);
       setServerError(foundError);
-      setMessages((prev) => prev.slice(0, -1));
+      setMessages(baseMessages);
     }
+  };
+
+  const openTopicChat = async (topic: TopicItem) => {
+    setActiveTopicKey(topic.key);
+    setIsChatOpen(true);
+    setMessages([]);
+    setLastUserQuestion(null);
+    setLastAssistantMessage(null);
+    await sendChatMessage(topic.prompt, []);
+  };
+
+  const openFreeChat = () => {
+    setActiveTopicKey(null);
+    setIsChatOpen(true);
+    setMessages([]);
+    setLastUserQuestion(null);
+    setLastAssistantMessage(null);
+    setServerError(null);
   };
 
   if (authLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-500">
-        {t("common.loading")}
+      <div className="flex min-h-screen items-center justify-center bg-[#16244d] text-white">
+        {copy.loading}
+      </div>
+    );
+  }
+
+  if (isChatOpen) {
+    return (
+      <div className="min-h-screen bg-[#16244d] px-3 pb-3 pt-3 text-white sm:px-4 sm:pt-4">
+        <div className="mx-auto flex min-h-[calc(100vh-24px)] max-w-3xl flex-col rounded-[30px] bg-[#1a2b59] p-3 shadow-2xl shadow-slate-950/25 sm:min-h-[calc(100vh-32px)] sm:p-4">
+          <div className="mb-3 flex items-center justify-between gap-3 rounded-2xl bg-white/6 px-3 py-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsChatOpen(false)}
+                className="h-10 w-10 rounded-full bg-white/10 text-white hover:bg-white/15 hover:text-white"
+              >
+                <ArrowLeft className="size-5" />
+              </Button>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-white">{activeTopic?.title || "Wilbor"}</p>
+                <p className="truncate text-xs text-slate-300">{activeTopic?.subtitle || copy.askAnythingSubtitle}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white">
+                {isPremium ? copy.premiumActive : `${currentCount} ${copy.remaining}`}
+              </div>
+              {user ? (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => logout()}
+                  className="h-10 w-10 rounded-full bg-white/10 text-white hover:bg-white/15 hover:text-white"
+                >
+                  <LogOut className="size-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    window.location.href = getLoginUrl();
+                  }}
+                  className="hidden rounded-full bg-[#a855f7] px-4 text-white hover:bg-[#9333ea] sm:inline-flex"
+                >
+                  <LogIn className="mr-2 size-4" />
+                  {copy.login}
+                </Button>
+              )}
+            </div>
+          </div>
+
+          <div className="flex-1 rounded-[26px] bg-white p-2 sm:p-3">
+            <AIChatBox
+              messages={messages}
+              onSendMessage={(content) => sendChatMessage(content)}
+              isLoading={chatMutation.isPending}
+              placeholder={copy.placeholder}
+              emptyStateMessage={copy.emptyState}
+              suggestedPrompts={messages.length === 0 ? copy.quickPrompts : undefined}
+              height="calc(100vh - 140px)"
+              className="rounded-[22px] border-0 shadow-none"
+              serverError={serverError}
+              onErrorCleared={() => setServerError(null)}
+            />
+          </div>
+        </div>
+
+        {user && showConsent ? (
+          <ParentalConsentModal open={showConsent} onAccept={handleAccept} onDecline={handleDecline} />
+        ) : null}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
-      <header className="sticky top-0 z-20 border-b border-white/70 bg-white/85 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <button className="flex items-center gap-3" onClick={() => setLocation(localePath("/"))}>
-            <div className="rounded-xl bg-purple-600 p-2 text-white shadow-sm">
-              <Heart className="size-5 fill-white text-white" />
-            </div>
-            <div className="text-left">
-              <p className="text-xl font-bold text-slate-900">Wilbor</p>
-              <p className="text-xs text-slate-500">{copy.badge}</p>
-            </div>
-          </button>
+    <div className="min-h-screen bg-[#16244d] px-3 pb-6 pt-4 text-white sm:px-4 sm:pt-5">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-4 flex items-start justify-between gap-3 px-1">
+          <div>
+            <p className="text-sm text-slate-300">{greeting}</p>
+            <h1 className="text-3xl font-extrabold tracking-tight text-white">{displayName}</h1>
+          </div>
 
-          <div className="flex items-center gap-3">
-            {credits ? (
-              <div
-                className={`hidden rounded-full px-3 py-2 text-sm font-semibold sm:flex sm:items-center sm:gap-2 ${
-                  isPremium ? "bg-purple-100 text-purple-700" : "bg-slate-100 text-slate-700"
-                }`}
-              >
-                <Sparkles className="size-4" />
-                {isPremium ? t("paywall.cta") : `${remaining ?? monthlyLimit} / ${monthlyLimit}`}
-              </div>
-            ) : null}
-
-            {user ? (
-              <>
-                <div className="hidden text-right md:block">
-                  <p className="text-sm font-semibold text-slate-900">{user.name || user.email}</p>
-                  <p className="text-xs text-slate-500">{copy.usageTitle}</p>
-                </div>
-                <Button variant="ghost" size="icon" onClick={() => logout()} aria-label={copy.logoutLabel}>
-                  <LogOut className="size-5 text-slate-500" />
-                </Button>
-              </>
-            ) : (
+          <div className="flex items-center gap-2">
+            {!user ? (
               <Button
                 onClick={() => {
                   window.location.href = getLoginUrl();
                 }}
-                className="rounded-full bg-purple-600 px-5 text-white hover:bg-purple-700"
+                className="rounded-full bg-white/10 px-4 text-white hover:bg-white/15"
               >
                 <LogIn className="mr-2 size-4" />
-                {copy.continueWithLogin}
+                {copy.login}
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => logout()}
+                aria-label={copy.logout}
+                className="h-10 w-10 rounded-full bg-white/10 text-white hover:bg-white/15 hover:text-white"
+              >
+                <LogOut className="size-4" />
               </Button>
             )}
           </div>
         </div>
-      </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
-          <div className="space-y-6">
-            <section className="overflow-hidden rounded-[32px] border border-purple-100 bg-white p-8 shadow-sm">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full bg-purple-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-purple-700">
-                  <ShieldCheck className="size-4" />
-                  {copy.noCard}
-                </div>
-                <h1 className="mt-5 text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">{copy.title}</h1>
-                <p className="mt-5 text-lg leading-8 text-slate-600">{copy.subtitle}</p>
+        <div className="rounded-[28px] border border-white/10 bg-white/5 p-4 shadow-xl shadow-slate-950/20 backdrop-blur-sm">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-300">
+                {isPremium ? copy.premiumPlan : copy.freePlan}
+              </p>
+              <div className="mt-2 flex items-end gap-2">
+                <span className="text-4xl font-extrabold leading-none text-white">{currentCount}</span>
+                <span className="pb-1 text-sm text-slate-300">{isPremium ? copy.premiumActive : copy.remaining}</span>
               </div>
+            </div>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-3">
-                <div className="rounded-2xl border border-purple-100 bg-purple-50 p-5">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-purple-600">{copy.usageTitle}</p>
-                  <p className="mt-3 text-3xl font-extrabold text-slate-900">
-                    {isPremium ? t("paywall.cta") : remaining ?? monthlyLimit}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    {isPremium ? copy.saveHistory : `${copy.freeTrialNote} ${monthlyLimit > 0 ? `(${monthlyLimit} no total)` : ""}`}
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Dashboard</p>
-                  <p className="mt-3 text-xl font-bold text-slate-900">{copy.chooseTitle}</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{copy.chooseSubtitle}</p>
-                </div>
-                <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-5">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">Mobile</p>
-                  <p className="mt-3 text-xl font-bold text-slate-900">{copy.continueWithLogin}</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{copy.saveHistory}</p>
-                </div>
-              </div>
-            </section>
-
-            <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
-              <div className="max-w-3xl">
-                <h2 className="text-2xl font-bold text-slate-900">{copy.chooseTitle}</h2>
-                <p className="mt-3 text-slate-600">{copy.chooseSubtitle}</p>
-              </div>
-
-              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {copy.topicCards.map((card) => {
-                  const Icon = topicIcons[card.key as keyof typeof topicIcons] || Sparkles;
-                  const styles = getTopicStyles(card.key);
-                  const route = card.routeKey ? resourceRoutes[card.routeKey] : null;
-
-                  return (
-                    <Card key={card.key} className={`rounded-3xl border p-6 shadow-sm ${styles.card}`}>
-                      <div className={`inline-flex rounded-2xl p-3 ${styles.icon}`}>
-                        <Icon className="size-5" />
-                      </div>
-                      <h3 className="mt-4 text-xl font-bold text-slate-900">{card.title}</h3>
-                      <p className="mt-3 text-sm leading-6 text-slate-700">{card.description}</p>
-                      <div className="mt-6 flex flex-col gap-3">
-                        <Button
-                          onClick={() => handleSendMessage(card.prompt)}
-                          disabled={chatMutation.isPending}
-                          className="h-12 rounded-full bg-slate-900 px-5 text-white hover:bg-slate-800"
-                        >
-                          {copy.topicButton}
-                          <ArrowRight className="ml-2 size-4" />
-                        </Button>
-                        {route && card.routeLabel ? (
-                          <Button
-                            variant="outline"
-                            onClick={() => setLocation(route)}
-                            className="h-11 rounded-full border-white/70 bg-white/70 text-slate-700 hover:bg-white"
-                          >
-                            {card.routeLabel}
-                          </Button>
-                        ) : null}
-                      </div>
-                    </Card>
-                  );
-                })}
-              </div>
-            </section>
-
-            <section className="rounded-[32px] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-              <AIChatBox
-                messages={messages}
-                onSendMessage={handleSendMessage}
-                isLoading={chatMutation.isPending}
-                placeholder={t("chat.placeholder")}
-                emptyStateMessage={copy.emptyState}
-                suggestedPrompts={copy.quickPrompts}
-                height="680px"
-                serverError={serverError}
-                onErrorCleared={() => setServerError(null)}
-              />
-            </section>
-
-            {lastAssistantMessage && lastUserQuestion ? (
-              <FeedbackButton userQuestion={lastUserQuestion} aiResponse={lastAssistantMessage} />
-            ) : null}
+            <Button
+              onClick={() => setLocation(premiumRoute)}
+              className="rounded-full bg-amber-300 px-4 text-slate-900 hover:bg-amber-200"
+            >
+              {isPremium ? copy.plans : copy.activatePremium}
+            </Button>
           </div>
 
-          <aside className="space-y-4">
-            <SOSButton onEmergency={handleSendMessage} disabled={chatMutation.isPending} />
+          <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300 transition-all"
+              style={{ width: `${progressWidth}%` }}
+            />
+          </div>
+        </div>
 
-            <Card className="rounded-3xl border border-purple-100 p-6 shadow-sm">
-              <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900">
-                <BarChart3 className="size-5 text-purple-600" /> {copy.usageTitle}
-              </h3>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          {copy.topics.map((topic) => {
+            const styles = TOPIC_STYLES[topic.key];
+            const Icon = styles.iconComponent;
 
-              <div className="mt-5 space-y-4">
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                  <div
-                    className="h-full bg-gradient-to-r from-purple-600 to-pink-500 transition-all"
-                    style={{
-                      width: `${isPremium ? 100 : Math.min(100, (((monthlyLimit - (remaining ?? monthlyLimit)) || 0) / Math.max(monthlyLimit, 1)) * 100)}%`,
-                    }}
-                  />
+            return (
+              <button
+                key={topic.key}
+                type="button"
+                onClick={() => openTopicChat(topic)}
+                disabled={!isAnonymousReady || chatMutation.isPending}
+                className={`flex min-h-[112px] flex-col justify-between rounded-[26px] bg-gradient-to-br p-4 text-left shadow-lg shadow-slate-950/10 transition-all hover:scale-[1.01] disabled:cursor-wait disabled:opacity-70 sm:min-h-[118px] ${styles.card}`}
+              >
+                <div className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl ${styles.icon}`}>
+                  <Icon className="size-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    {isPremium
-                      ? t("paywall.cta")
-                      : credits
-                        ? `${remaining ?? monthlyLimit} ${t("chat.messages_left")}`
-                        : copy.freeTrialNote}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    {user ? copy.freeTrialNote : copy.saveHistory}
-                  </p>
+                  <p className="text-lg font-bold leading-tight">{topic.title}</p>
+                  <p className="mt-1 text-sm text-slate-700/80">{topic.subtitle}</p>
                 </div>
-                <div className="flex flex-col gap-3">
-                  {!user ? (
-                    <Button
-                      onClick={() => {
-                        window.location.href = getLoginUrl();
-                      }}
-                      className="h-12 rounded-full bg-purple-600 text-white hover:bg-purple-700"
-                    >
-                      <LogIn className="mr-2 size-4" />
-                      {copy.continueWithLogin}
-                    </Button>
-                  ) : null}
-                  <Button
-                    variant="outline"
-                    onClick={() => setLocation(resourceRoutes.premium)}
-                    className="h-12 rounded-full border-slate-300"
-                  >
-                    {copy.seePlans}
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="rounded-3xl border border-slate-200 p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-900">{copy.resourcesTitle}</h3>
-              <div className="mt-5 flex flex-col gap-3">
-                <Button variant="outline" className="justify-start gap-3 rounded-2xl h-12" onClick={() => setLocation(resourceRoutes.recipes)}>
-                  <Utensils className="size-5 text-emerald-600" /> {copy.recipesLabel}
-                </Button>
-                <Button variant="outline" className="justify-start gap-3 rounded-2xl h-12" onClick={() => setLocation(resourceRoutes.body)}>
-                  <User className="size-5 text-pink-600" /> {copy.bodyLabel}
-                </Button>
-                <Button variant="outline" className="justify-start gap-3 rounded-2xl h-12" onClick={() => setLocation(resourceRoutes.milestones)}>
-                  <TrendingUp className="size-5 text-violet-600" /> {copy.milestonesLabel}
-                </Button>
-                <Button variant="outline" className="justify-start gap-3 rounded-2xl h-12" onClick={() => setLocation(resourceRoutes.blog)}>
-                  <BookOpen className="size-5 text-blue-600" /> {copy.blogLabel}
-                </Button>
-              </div>
-            </Card>
-
-            {user && activeBaby?.birthDate ? (
-              <SleepTracker
-                babyId={activeBaby.id}
-                babyAgeDays={Math.floor((Date.now() - new Date(activeBaby.birthDate).getTime()) / (1000 * 60 * 60 * 24))}
-                babyName={activeBaby.name || "Bebê"}
-                compact
-              />
-            ) : null}
-          </aside>
+              </button>
+            );
+          })}
         </div>
-      </main>
+
+        <button
+          type="button"
+          onClick={() => openTopicChat(copy.topics.find((topic) => topic.key === "fever") || copy.topics[0])}
+          disabled={!isAnonymousReady || chatMutation.isPending}
+          className="mt-3 flex h-14 w-full items-center justify-center gap-3 rounded-[22px] bg-gradient-to-r from-amber-400 to-orange-400 px-4 text-base font-bold text-slate-900 shadow-lg shadow-slate-950/10 transition hover:brightness-105 disabled:cursor-wait disabled:opacity-70"
+        >
+          <Sparkles className="size-4" />
+          {copy.sos}
+        </button>
+
+        <div className="mt-3 space-y-3">
+          <button
+            type="button"
+            onClick={() => setLocation(recipesRoute)}
+            className="flex h-14 w-full items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 text-left shadow-lg shadow-slate-950/10 transition hover:bg-white/10"
+          >
+            <div className="flex items-center gap-3">
+              <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-amber-300/15 text-amber-300">
+                <BookOpen className="size-4" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">{copy.recipes}</p>
+                <p className="text-xs text-slate-300">{copy.recipesSubtitle}</p>
+              </div>
+            </div>
+            <span className="text-sm text-slate-300">›</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={openFreeChat}
+            className="flex h-14 w-full items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 text-left shadow-lg shadow-slate-950/10 transition hover:bg-white/10"
+          >
+            <div className="flex items-center gap-3">
+              <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-slate-200">
+                <Heart className="size-4" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">{copy.askAnything}</p>
+                <p className="text-xs text-slate-300">{copy.askAnythingSubtitle}</p>
+              </div>
+            </div>
+            <span className="text-sm text-slate-300">›</span>
+          </button>
+        </div>
+      </div>
 
       {user && showConsent ? (
         <ParentalConsentModal open={showConsent} onAccept={handleAccept} onDecline={handleDecline} />
