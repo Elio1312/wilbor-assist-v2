@@ -210,7 +210,7 @@ export default function Checkout() {
 
   const handleSubscribe = () => {
     if (!user) {
-      setLocation(localePath("/chat"));
+      setLocation(localePath("/dashboard"));
       return;
     }
 

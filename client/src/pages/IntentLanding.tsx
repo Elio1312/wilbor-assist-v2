@@ -810,7 +810,7 @@ function IntentLanding({ topic }: { topic: TopicKey }) {
   const copy = getCopy(locale)[topic] || PT_COPY[topic];
   const Icon = TOPIC_ICON[topic];
 
-  const chatHref = localePath("/chat");
+  const dashboardHref = localePath("/dashboard");
   const premiumHref = localePath("/premium");
   const blogHref = localePath(`/blog/${copy.articleSlug}`);
   const canonicalUrl = `https://wilbor-assist.com${localePath(`/${topic}`)}`;
@@ -863,7 +863,7 @@ function IntentLanding({ topic }: { topic: TopicKey }) {
 
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <Button asChild size="lg" className="rounded-full px-8 h-14 bg-purple-600 hover:bg-purple-700">
-                  <a href={chatHref}>
+                  <a href={dashboardHref}>
                     {copy.ctaPrimary} <ArrowRight className="ml-2 w-4 h-4" />
                   </a>
                 </Button>
@@ -946,7 +946,7 @@ function IntentLanding({ topic }: { topic: TopicKey }) {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="rounded-full px-8 h-14 bg-white text-purple-700 hover:bg-purple-50">
-                  <a href={chatHref}>{copy.ctaPrimary}</a>
+                  <a href={dashboardHref}>{copy.ctaPrimary}</a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="rounded-full px-8 h-14 border-white text-white hover:bg-white/10">
                   <a href={blogHref}>{copy.relatedArticleLabel}</a>

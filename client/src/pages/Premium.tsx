@@ -377,7 +377,7 @@ export default function Premium() {
   const [, setLocation] = useLocation();
   const copy = PAGE_COPY[(locale as SupportedLocale)] || PAGE_COPY.pt;
 
-  const chatHref = localePath("/chat");
+  const dashboardHref = localePath("/dashboard");
   const checkoutHref = localePath("/checkout");
   const shopHref = localePath("/shop");
   const premiumUrl = `https://wilbor-assist.com${localePath("/premium")}`;
@@ -410,7 +410,7 @@ export default function Premium() {
             <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto mb-8">{copy.subtitle}</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button asChild size="lg" className="rounded-full px-8 h-14 bg-purple-600 hover:bg-purple-700">
-                <a href={chatHref}>
+                <a href={dashboardHref}>
                   {copy.primaryCta} <ArrowRight className="ml-2 w-4 h-4" />
                 </a>
               </Button>
@@ -428,7 +428,7 @@ export default function Premium() {
 
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { key: "free" as const, href: chatHref, highlight: false },
+                { key: "free" as const, href: dashboardHref, highlight: false },
                 { key: "premium" as const, href: checkoutHref, highlight: true },
                 { key: "manual" as const, href: shopHref, highlight: false },
               ].map((item) => {
@@ -519,7 +519,7 @@ export default function Premium() {
             <p className="text-slate-300 max-w-3xl mx-auto mb-8">{copy.finalSubtitle}</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button asChild size="lg" className="rounded-full px-8 h-14 bg-purple-600 hover:bg-purple-700">
-                <a href={chatHref}>{copy.primaryCta}</a>
+                <a href={dashboardHref}>{copy.primaryCta}</a>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full px-8 h-14 border-slate-600 text-white hover:bg-slate-800">
                 <a href={shopHref}>{copy.cards.manual.cta}</a>

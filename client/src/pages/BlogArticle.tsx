@@ -549,7 +549,7 @@ export default function BlogArticle() {
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                   <Button
                     size="lg"
-                    onClick={() => setLocation(localePath("/chat"))}
+                    onClick={() => setLocation(localePath("/dashboard"))}
                     className="h-14 rounded-full bg-purple-600 px-8 font-bold text-white hover:bg-purple-700"
                   >
                     <MessageCircle className="mr-2 size-5" />
@@ -625,7 +625,7 @@ export default function BlogArticle() {
                 </div>
                 <Button
                   size="lg"
-                  onClick={() => setLocation(localePath("/chat"))}
+                  onClick={() => setLocation(localePath("/dashboard"))}
                   className="h-14 rounded-full bg-purple-600 px-8 font-bold text-white hover:bg-purple-700"
                 >
                   {t("nav.try_free")}
@@ -662,7 +662,7 @@ export default function BlogArticle() {
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button
                   size="lg"
-                  onClick={() => setLocation(localePath("/chat"))}
+                  onClick={() => setLocation(localePath("/dashboard"))}
                   className="h-14 rounded-full bg-white px-8 font-bold text-purple-600 hover:bg-purple-50"
                 >
                   {t("nav.try_free")}
@@ -705,7 +705,7 @@ export default function BlogArticle() {
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button
                   size="lg"
-                  onClick={() => setLocation(localePath("/chat"))}
+                  onClick={() => setLocation(localePath("/dashboard"))}
                   className="h-14 rounded-full bg-white px-8 font-bold text-purple-600 hover:bg-purple-50"
                 >
                   {t("nav.try_free")}

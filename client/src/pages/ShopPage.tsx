@@ -188,7 +188,7 @@ export default function ShopPage() {
             <p className="font-bold text-lg mb-1">💬 Prefere respostas instantâneas?</p>
             <p className="text-purple-100 text-sm mb-3">O Wilbor Premium responde qualquer dúvida 24h, em segundos.</p>
             <Button
-              onClick={() => setLocation(localePath("/chat"))}
+              onClick={() => setLocation(localePath("/dashboard"))}
               className="bg-white text-purple-700 hover:bg-purple-50 rounded-full font-bold gap-2"
             >
               Experimentar Grátis <ArrowRight className="size-4" />
@@ -293,7 +293,7 @@ export default function ShopPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
-              onClick={() => setLocation(localePath("/chat"))}
+              onClick={() => setLocation(localePath("/dashboard"))}
               className="bg-white text-purple-700 hover:bg-purple-50 rounded-full font-bold px-8 h-12 text-base gap-2"
             >
               <Sparkles className="size-4" /> Experimentar Grátis

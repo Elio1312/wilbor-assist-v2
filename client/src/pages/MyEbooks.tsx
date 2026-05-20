@@ -122,7 +122,7 @@ export default function MyEbooks() {
             <p className="font-bold text-lg mb-1">💬 Tem mais dúvidas?</p>
             <p className="text-purple-200 text-sm mb-4">O Wilbor responde qualquer pergunta sobre seu bebê em segundos.</p>
             <Button
-              onClick={() => setLocation(localePath("/chat"))}
+              onClick={() => setLocation(localePath("/dashboard"))}
               className="bg-white text-purple-700 hover:bg-purple-50 rounded-full font-bold gap-2"
             >
               Perguntar ao Wilbor <ArrowRight className="size-4" />

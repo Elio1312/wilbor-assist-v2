@@ -78,7 +78,7 @@ function Router() {
     <Switch>
       <Route path="/:lang?/dashboard" component={Dashboard} />
       <Route path="/:lang?/buy-credits" component={BuyCredits} />
-      <Route path="/:lang?/chat" component={Chat} />
+      <Route path="/:lang?/chat" component={Dashboard} />
       <Route path="/:lang?/premium" component={Premium} />
       <Route path="/:lang?/bebe-nao-dorme" component={BabySleepLanding} />
       <Route path="/:lang?/colica-bebe" component={ColicLanding} />
