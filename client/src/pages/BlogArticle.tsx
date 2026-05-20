@@ -11,7 +11,6 @@ import {
   AlertTriangle,
   MessageCircle,
   ShieldAlert,
-  Sparkles,
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -529,11 +528,11 @@ export default function BlogArticle() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-12">
+      <main className="mx-auto max-w-4xl px-6 py-12">
         {colicCopy ? (
           <>
-            <section className="overflow-hidden rounded-[32px] border border-amber-100 bg-gradient-to-br from-amber-50 via-white to-rose-50 p-8 shadow-sm md:p-10">
-              <div className="max-w-3xl">
+            <section className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-10">
+              <div>
                 <span className="inline-flex rounded-full bg-amber-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-amber-800">
                   {colicCopy.badge}
                 </span>
@@ -567,32 +566,9 @@ export default function BlogArticle() {
                 </div>
               </div>
 
-              <div className="mt-8 grid gap-3 md:grid-cols-3">
-                {colicCopy.trustPoints.map((point) => (
-                  <div key={point} className="rounded-2xl border border-white/80 bg-white/80 p-4 text-sm leading-6 text-slate-600 shadow-sm">
-                    <Sparkles className="mb-3 size-4 text-amber-500" />
-                    {point}
-                  </div>
-                ))}
-              </div>
             </section>
 
-            <section className="mt-8 grid gap-4 md:grid-cols-3">
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-3xl font-extrabold text-slate-900">20-25%</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{colicCopy.statLabels[0]}</p>
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-3xl font-extrabold text-slate-900">Regra dos 3</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{colicCopy.statLabels[1]}</p>
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-3xl font-extrabold text-slate-900">3-4 m</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{colicCopy.statLabels[2]}</p>
-              </div>
-            </section>
-
-            <section className="mt-8 rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+            <section className="mx-auto mt-8 max-w-3xl rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm">
               <div className="max-w-3xl">
                 <h2 className="text-2xl font-bold text-slate-900">{colicCopy.quickSummaryTitle}</h2>
                 <p className="mt-3 text-slate-600">{article.description}</p>
@@ -607,15 +583,15 @@ export default function BlogArticle() {
               </div>
             </section>
 
-            <section className="mt-8 rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+            <section className="mx-auto mt-8 max-w-3xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
               <div className="max-w-3xl">
                 <h2 className="text-2xl font-bold text-slate-900">{colicCopy.techniquesTitle}</h2>
                 <p className="mt-3 text-slate-600">{colicCopy.techniquesSubtitle}</p>
               </div>
               <div className="mt-6 grid gap-4 md:grid-cols-3">
                 {colicCopy.techniques.map((technique) => (
-                  <div key={technique.title} className="rounded-3xl border border-amber-100 bg-amber-50/60 p-6">
-                    <div className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-amber-700 shadow-sm">
+                  <div key={technique.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                    <div className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-purple-700 shadow-sm">
                       {technique.label}
                     </div>
                     <h3 className="mt-4 text-xl font-bold text-slate-900">{technique.title}</h3>
@@ -625,7 +601,7 @@ export default function BlogArticle() {
               </div>
             </section>
 
-            <section className="mt-8 rounded-[28px] border border-red-200 bg-red-50 p-8 shadow-sm">
+            <section className="mx-auto mt-8 max-w-3xl rounded-3xl border border-red-200 bg-red-50 p-8 shadow-sm">
               <div className="flex items-start gap-4">
                 <AlertTriangle className="mt-1 size-6 shrink-0 text-red-600" />
                 <div>
@@ -641,16 +617,16 @@ export default function BlogArticle() {
               </div>
             </section>
 
-            <section className="mt-8 rounded-[28px] bg-gradient-to-r from-purple-600 to-fuchsia-600 p-8 text-white shadow-xl">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <h2 className="text-2xl font-bold">{colicCopy.midCtaTitle}</h2>
-                  <p className="mt-3 text-purple-100">{colicCopy.midCtaDescription}</p>
+            <section className="mx-auto mt-8 max-w-3xl rounded-3xl border border-purple-200 bg-purple-50 p-8 shadow-sm">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="max-w-xl">
+                  <h2 className="text-2xl font-bold text-slate-900">{colicCopy.midCtaTitle}</h2>
+                  <p className="mt-3 text-slate-600">{colicCopy.midCtaDescription}</p>
                 </div>
                 <Button
                   size="lg"
                   onClick={() => setLocation(localePath("/chat"))}
-                  className="h-14 rounded-full bg-white px-8 font-bold text-purple-700 hover:bg-purple-50"
+                  className="h-14 rounded-full bg-purple-600 px-8 font-bold text-white hover:bg-purple-700"
                 >
                   {t("nav.try_free")}
                   <ArrowRight className="ml-2 size-5" />
@@ -658,14 +634,14 @@ export default function BlogArticle() {
               </div>
             </section>
 
-            <section className="mt-12 rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+            <section className="mx-auto mt-12 max-w-3xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
               <h2 className="text-2xl font-bold text-slate-900">{colicCopy.detailsTitle}</h2>
               <article className="prose prose-purple mt-6 max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-strong:text-slate-800 prose-li:text-slate-600">
                 <ReactMarkdown>{article.content}</ReactMarkdown>
               </article>
             </section>
 
-            <section className="mt-8 rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+            <section className="mx-auto mt-8 max-w-3xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
               <div className="flex items-center gap-3">
                 <ShieldAlert className="size-6 text-purple-600" />
                 <h2 className="text-2xl font-bold text-slate-900">{colicCopy.faqTitle}</h2>
@@ -680,14 +656,14 @@ export default function BlogArticle() {
               </div>
             </section>
 
-            <section className="mt-8 rounded-[32px] bg-slate-950 p-8 text-center text-white shadow-2xl md:p-10">
+            <section className="mx-auto mt-8 max-w-3xl rounded-3xl bg-gradient-to-br from-purple-600 to-pink-600 p-8 text-center text-white shadow-xl md:p-10">
               <h2 className="text-3xl font-bold leading-tight">{colicCopy.finalTitle}</h2>
-              <p className="mx-auto mt-4 max-w-2xl text-slate-300">{colicCopy.finalDescription}</p>
+              <p className="mx-auto mt-4 max-w-2xl text-purple-100">{colicCopy.finalDescription}</p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button
                   size="lg"
                   onClick={() => setLocation(localePath("/chat"))}
-                  className="h-14 rounded-full bg-purple-600 px-8 font-bold text-white hover:bg-purple-700"
+                  className="h-14 rounded-full bg-white px-8 font-bold text-purple-600 hover:bg-purple-50"
                 >
                   {t("nav.try_free")}
                 </Button>
@@ -695,7 +671,7 @@ export default function BlogArticle() {
                   size="lg"
                   variant="outline"
                   onClick={() => setLocation(localePath("/premium"))}
-                  className="h-14 rounded-full border-slate-500 px-8 font-bold text-white hover:bg-white/10"
+                  className="h-14 rounded-full border-white px-8 font-bold text-white hover:bg-white/10"
                 >
                   {colicCopy.plansLabel}
                 </Button>
