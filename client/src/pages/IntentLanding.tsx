@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/Seo";
 import { useI18n } from "@/contexts/i18n";
+import { generateFAQSchema } from "@/lib/seo";
 import {
   ArrowRight,
   CheckCircle2,
@@ -14,7 +16,6 @@ import {
   Clock3,
   MessageCircleHeart,
 } from "lucide-react";
-import { useLocation } from "wouter";
 
 type TopicKey = "bebe-nao-dorme" | "colica-bebe" | "febre-bebe";
 type SupportedLocale = "pt" | "en" | "es" | "fr" | "de";
@@ -806,7 +807,6 @@ function getCopy(locale: string): LocaleCopy {
 
 function IntentLanding({ topic }: { topic: TopicKey }) {
   const { locale, localePath } = useI18n();
-  const [, setLocation] = useLocation();
   const copy = getCopy(locale)[topic] || PT_COPY[topic];
   const Icon = TOPIC_ICON[topic];
 
@@ -815,6 +815,21 @@ function IntentLanding({ topic }: { topic: TopicKey }) {
   const blogHref = localePath(`/blog/${copy.articleSlug}`);
   const canonicalUrl = `https://wilbor-assist.com${localePath(`/${topic}`)}`;
 
+  // ── FAQPage schema (rich results no Google) ──────────────────────────────
+  useEffect(() => {
+    const schema = generateFAQSchema(
+      copy.faqs.map((faq) => ({ question: faq.q, answer: faq.a }))
+    );
+    const script = document.createElement("script");
+    script.id = "wilbor-faq-schema";
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(schema, null, 2);
+    document.head.appendChild(script);
+    return () => {
+      document.getElementById("wilbor-faq-schema")?.remove();
+    };
+  }, [copy.faqs]);
+
   return (
     <>
       <Seo title={copy.seoTitle} description={copy.seoDescription} url={canonicalUrl} type="website" />
@@ -822,10 +837,10 @@ function IntentLanding({ topic }: { topic: TopicKey }) {
       <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-purple-50">
         <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur-sm px-6 py-4">
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <button onClick={() => setLocation(localePath("/"))} className="flex items-center gap-2 text-left">
+            <a href={localePath("/")} className="flex items-center gap-2 text-left">
               <Heart className="w-7 h-7 text-purple-600 fill-purple-600" />
               <span className="text-xl font-bold text-slate-900">Wilbor</span>
-            </button>
+            </a>
 
             <div className="hidden md:flex items-center gap-2 text-sm text-slate-500">
               <Sparkles className="w-4 h-4" />

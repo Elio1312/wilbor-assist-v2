@@ -34,18 +34,27 @@ function saveAnonBaby(ctx: AnonBabyContext) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ctx)); } catch {}
 }
 
-function buildAnonSystemPrompt(locale: string, baby: AnonBabyContext): string {
-  const bases: Record<string, string> = {
-    pt: `Você é o Wilbor, assistente neonatal IA. Base: SBP, OMS, AAP. Seja empático e prático.`,
-    en: `You are Wilbor, an AI neonatal assistant. Base: AAP, WHO. Be empathetic and practical.`,
-    es: `Eres Wilbor, asistente neonatal IA. Base: OMS, AAP. Sé empático y práctico.`,
+function buildBaseSystemPrompt(locale: string): string {
+  const prompts: Record<string, string> = {
+    pt: "Você é o Wilbor, um assistente neonatal IA especializado em cuidados com recém-nascidos. Responda em português, com base em protocolos SBP, OMS e AAP. Seja empático, prático e sempre priorize a segurança do bebê.",
+    en: "You are Wilbor, an AI neonatal assistant specialized in newborn care. Respond in English, based on AAP, WHO and SBP protocols. Be empathetic, practical and always prioritize the baby's safety.",
+    es: "Eres Wilbor, un asistente neonatal con IA especializado en el cuidado de recién nacidos. Responde en español, con base en protocolos de la AAP, la OMS y la SBP. Sé empático, práctico y prioriza siempre la seguridad del bebé.",
+    fr: "Vous êtes Wilbor, un assistant néonatal IA spécialisé dans les soins aux nouveau-nés. Répondez en français, sur la base des protocoles de l'AAP, de l'OMS et de la SBP. Soyez empathique, pratique et donnez toujours la priorité à la sécurité du bébé.",
+    de: "Sie sind Wilbor, ein KI-Neonatalassistent, spezialisiert auf die Betreuung von Neugeborenen. Antworten Sie auf Deutsch, auf Grundlage der Protokolle von AAP, WHO und SBP. Seien Sie empathisch, praktisch und priorisieren Sie stets die Sicherheit des Babys.",
   };
-  const base = bases[locale] ?? bases.pt;
+
+  return prompts[locale] ?? prompts.pt;
+}
+
+function buildAnonSystemPrompt(locale: string, baby: AnonBabyContext): string {
+  const base = buildBaseSystemPrompt(locale);
 
   const ctx: Record<string, string> = {
     pt: `\n\nCONTEXTO DO BEBÊ: ${baby.babyName ? `Nome: ${baby.babyName}.` : ""} Idade: ${baby.ageLabel}. Personalize TODAS as respostas para essa faixa etária específica. Não dê respostas genéricas — leve em conta o desenvolvimento, sono, alimentação e necessidades típicas de um bebê de ${baby.ageLabel}.`,
     en: `\n\nBABY CONTEXT: ${baby.babyName ? `Name: ${baby.babyName}.` : ""} Age: ${baby.ageLabel}. Personalize ALL responses for this specific age. Do not give generic answers — consider the development, sleep, feeding and typical needs of a ${baby.ageLabel} old baby.`,
     es: `\n\nCONTEXTO DEL BEBÉ: ${baby.babyName ? `Nombre: ${baby.babyName}.` : ""} Edad: ${baby.ageLabel}. Personaliza TODAS las respuestas para esta edad específica. No des respuestas genéricas — considera el desarrollo, sueño, alimentación y necesidades típicas de un bebé de ${baby.ageLabel}.`,
+    fr: `\n\nCONTEXTE DU BÉBÉ : ${baby.babyName ? `Nom : ${baby.babyName}.` : ""} Âge : ${baby.ageLabel}. Personnalisez TOUTES les réponses pour cette tranche d'âge précise. Ne donnez pas de réponses génériques — tenez compte du développement, du sommeil, de l'alimentation et des besoins typiques d'un bébé de ${baby.ageLabel}.`,
+    de: `\n\nKONTEXT DES BABYS: ${baby.babyName ? `Name: ${baby.babyName}.` : ""} Alter: ${baby.ageLabel}. Personalisieren Sie ALLE Antworten für diese konkrete Altersphase. Geben Sie keine allgemeinen Antworten — berücksichtigen Sie Entwicklung, Schlaf, Ernährung und typische Bedürfnisse eines Babys im Alter von ${baby.ageLabel}.`,
   };
 
   return base + (ctx[locale] ?? ctx.pt);
@@ -98,6 +107,36 @@ const AGE_OPTIONS: Record<string, Array<{ label: string; months: number; weeks?:
     { label: "11 meses", months: 11 },
     { label: "12 meses", months: 12 },
   ],
+  fr: [
+    { label: "Nouveau-né (0-4 sem)", months: 0, weeks: 2 },
+    { label: "1 mois", months: 1 },
+    { label: "2 mois", months: 2 },
+    { label: "3 mois", months: 3 },
+    { label: "4 mois", months: 4 },
+    { label: "5 mois", months: 5 },
+    { label: "6 mois", months: 6 },
+    { label: "7 mois", months: 7 },
+    { label: "8 mois", months: 8 },
+    { label: "9 mois", months: 9 },
+    { label: "10 mois", months: 10 },
+    { label: "11 mois", months: 11 },
+    { label: "12 mois", months: 12 },
+  ],
+  de: [
+    { label: "Neugeborenes (0-4 Wo.)", months: 0, weeks: 2 },
+    { label: "1 Monat", months: 1 },
+    { label: "2 Monate", months: 2 },
+    { label: "3 Monate", months: 3 },
+    { label: "4 Monate", months: 4 },
+    { label: "5 Monate", months: 5 },
+    { label: "6 Monate", months: 6 },
+    { label: "7 Monate", months: 7 },
+    { label: "8 Monate", months: 8 },
+    { label: "9 Monate", months: 9 },
+    { label: "10 Monate", months: 10 },
+    { label: "11 Monate", months: 11 },
+    { label: "12 Monate", months: 12 },
+  ],
 };
 
 const ONBOARDING_TEXTS: Record<string, {
@@ -131,6 +170,24 @@ const ONBOARDING_TEXTS: Record<string, {
     age_label: "¿Cuántos meses tiene el bebé?",
     skip: "Omitir",
     start: "Empezar",
+  },
+  fr: {
+    title: "Avant de commencer 💜",
+    subtitle: "Pour vous donner des réponses personnalisées pour votre bébé",
+    name_label: "Prénom du bébé (facultatif)",
+    name_placeholder: "Ex : Léa, Noah...",
+    age_label: "Quel âge a votre bébé ?",
+    skip: "Passer",
+    start: "Commencer",
+  },
+  de: {
+    title: "Bevor wir beginnen 💜",
+    subtitle: "Um personalisierte Antworten für Ihr Baby zu geben",
+    name_label: "Name des Babys (optional)",
+    name_placeholder: "z. B.: Mia, Leon...",
+    age_label: "Wie alt ist Ihr Baby?",
+    skip: "Überspringen",
+    start: "Starten",
   },
 };
 
@@ -268,6 +325,20 @@ const CREDIT_TEXTS: Record<string, {
     login_cta: "Iniciar sesión",
     anon_limit_reached: "Límite de consultas anónimas alcanzado. ¡Inicia sesión para continuar!",
   },
+  fr: {
+    remaining: (n, t) => `${n} sur ${t} consultations gratuites`,
+    unlimited: "Consultations illimitées",
+    login_prompt: "Connectez-vous pour utiliser le chat",
+    login_cta: "Se connecter",
+    anon_limit_reached: "Limite de consultations anonymes atteinte. Connectez-vous pour continuer !",
+  },
+  de: {
+    remaining: (n, t) => `${n} von ${t} kostenlosen Beratungen`,
+    unlimited: "Unbegrenzte Beratungen",
+    login_prompt: "Anmelden, um den Chat zu nutzen",
+    login_cta: "Anmelden",
+    anon_limit_reached: "Limit für anonyme Beratungen erreicht. Melden Sie sich an, um fortzufahren!",
+  },
 };
 
 export function Chat() {
@@ -378,7 +449,7 @@ export function Chat() {
       // Se usuária anônima com contexto de bebê → personaliza o system prompt
       const systemPromptContent = (!user && anonBaby)
         ? buildAnonSystemPrompt(locale, anonBaby)
-        : "Você é o Wilbor, um assistente neonatal IA especializado em cuidados com recém-nascidos. Responda em português, com base em protocolos SBP, OMS e AAP. Seja empático, prático e sempre priorize a segurança do bebê.";
+        : buildBaseSystemPrompt(locale);
 
       const systemPrompt = {
         role: "system" as const,
@@ -539,6 +610,8 @@ export function Chat() {
               {locale === "pt" && `Você tem apenas ${remaining} consulta${remaining === 1 ? "" : "s"} gratuita${remaining === 1 ? "" : "s"} restante${remaining === 1 ? "" : "s"}.`}
               {locale === "en" && `You have only ${remaining} free consultation${remaining === 1 ? "" : "s"} remaining.`}
               {locale === "es" && `Te quedan solo ${remaining} consulta${remaining === 1 ? "" : "s"} gratuita${remaining === 1 ? "" : "s"}.`}
+              {locale === "fr" && `Il vous reste seulement ${remaining} consultation${remaining === 1 ? "" : "s"} gratuite${remaining === 1 ? "" : "s"}.`}
+              {locale === "de" && `Sie haben noch ${remaining} kostenlose Beratung${remaining === 1 ? "" : "en"}.`}
             </p>
             <button
               onClick={() => setPaywallOpen(true)}
@@ -547,6 +620,8 @@ export function Chat() {
               {locale === "pt" && "Ver planos"}
               {locale === "en" && "See plans"}
               {locale === "es" && "Ver planes"}
+              {locale === "fr" && "Voir les forfaits"}
+              {locale === "de" && "Pläne ansehen"}
             </button>
           </div>
         )}

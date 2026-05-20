@@ -23,6 +23,8 @@ export interface LocalizedBlogArticle {
   readTimeLabel: string;
   content: string;
   alternates: Partial<Record<BlogLocale, string>>;
+  publishedAt?: string;
+  updatedAt?: string;
 }
 
 export interface BlogSeoPayload {
@@ -36,6 +38,9 @@ export interface BlogSeoPayload {
   ogImage: string;
   alternates: Array<{ hreflang: string; href: string }>;
   staticContentHtml: string;
+  articleTitle?: string;
+  publishedAt?: string;
+  updatedAt?: string;
 }
 
 const SITE_NAME = "Wilbor-Assist";
@@ -43,21 +48,22 @@ const BASE_URL = "https://wilbor-assist.com";
 const OG_IMAGE_DEFAULT =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png";
 
-// Dynamic OG images per category for better social sharing
 const OG_IMAGES_BY_CATEGORY: Record<string, string> = {
-  sono: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  colica: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  alimentacao: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  febre: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  vacinas: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  seguranca: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  saltos: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  higiene: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  saude: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
-  geral: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-01-hero-principal_a9900c59.png",
+  sono: OG_IMAGE_DEFAULT,
+  colica: OG_IMAGE_DEFAULT,
+  alimentacao: OG_IMAGE_DEFAULT,
+  amamentacao: OG_IMAGE_DEFAULT,
+  febre: OG_IMAGE_DEFAULT,
+  vacinas: OG_IMAGE_DEFAULT,
+  seguranca: OG_IMAGE_DEFAULT,
+  saltos: OG_IMAGE_DEFAULT,
+  higiene: OG_IMAGE_DEFAULT,
+  saude: OG_IMAGE_DEFAULT,
+  geral: OG_IMAGE_DEFAULT,
 };
 
-function getOgImageForCategory(category: string): string {
+function getOgImageForCategory(category?: string): string {
+  if (!category) return OG_IMAGE_DEFAULT;
   return OG_IMAGES_BY_CATEGORY[category.toLowerCase()] || OG_IMAGE_DEFAULT;
 }
 
@@ -149,7 +155,7 @@ function stripMarkdown(markdown: string): string {
     .replace(/^#{1,6}\s+/gm, "")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/\*([^*]+)\*/g, "$1")
-    .replace(/^[\-\*]\s+/gm, "")
+    .replace(/^[\-*]\s+/gm, "")
     .replace(/^\|.*\|$/gm, " ")
     .replace(/\n{2,}/g, "\n")
     .trim();
@@ -191,16 +197,88 @@ function getOgLocale(locale: BlogLocale): string {
 
 function inferCategoryFromText(value: string): string {
   const normalized = value.toLowerCase();
-  if (normalized.includes("sleep") || normalized.includes("dorme") || normalized.includes("duerme") || normalized.includes("schlaf") || normalized.includes("dort")) return "sono";
-  if (normalized.includes("colic") || normalized.includes("cólica") || normalized.includes("colico") || normalized.includes("coliques") || normalized.includes("kolik")) return "colica";
-  if (normalized.includes("fever") || normalized.includes("febre") || normalized.includes("fiebre") || normalized.includes("fièvre") || normalized.includes("fieber")) return "febre";
-  if (normalized.includes("food") || normalized.includes("aliment") || normalized.includes("beikost") || normalized.includes("diversification") || normalized.includes("feeding")) return "alimentacao";
-  if (normalized.includes("vacci") || normalized.includes("vacina") || normalized.includes("impf")) return "vacinas";
-  if (normalized.includes("breast") || normalized.includes("amament") || normalized.includes("lactancia") || normalized.includes("allait") || normalized.includes("stillen")) return "amamentacao";
-  if (normalized.includes("safety") || normalized.includes("seguran") || normalized.includes("sécur") || normalized.includes("sicher")) return "seguranca";
-  if (normalized.includes("development") || normalized.includes("desenvol") || normalized.includes("desarrollo") || normalized.includes("développement") || normalized.includes("entwicklung")) return "saltos";
-  if (normalized.includes("bath") || normalized.includes("baño") || normalized.includes("banho") || normalized.includes("bain") || normalized.includes("baden")) return "higiene";
-  if (normalized.includes("postpartum") || normalized.includes("posparto") || normalized.includes("post-partum") || normalized.includes("wochenbett")) return "saude";
+  if (
+    normalized.includes("sleep") ||
+    normalized.includes("dorme") ||
+    normalized.includes("duerme") ||
+    normalized.includes("schlaf") ||
+    normalized.includes("dort")
+  ) {
+    return "sono";
+  }
+  if (
+    normalized.includes("colic") ||
+    normalized.includes("cólica") ||
+    normalized.includes("colico") ||
+    normalized.includes("coliques") ||
+    normalized.includes("kolik")
+  ) {
+    return "colica";
+  }
+  if (
+    normalized.includes("fever") ||
+    normalized.includes("febre") ||
+    normalized.includes("fiebre") ||
+    normalized.includes("fièvre") ||
+    normalized.includes("fieber")
+  ) {
+    return "febre";
+  }
+  if (
+    normalized.includes("food") ||
+    normalized.includes("aliment") ||
+    normalized.includes("beikost") ||
+    normalized.includes("diversification") ||
+    normalized.includes("feeding")
+  ) {
+    return "alimentacao";
+  }
+  if (normalized.includes("vacci") || normalized.includes("vacina") || normalized.includes("impf")) {
+    return "vacinas";
+  }
+  if (
+    normalized.includes("breast") ||
+    normalized.includes("amament") ||
+    normalized.includes("lactancia") ||
+    normalized.includes("allait") ||
+    normalized.includes("stillen")
+  ) {
+    return "amamentacao";
+  }
+  if (
+    normalized.includes("safety") ||
+    normalized.includes("seguran") ||
+    normalized.includes("sécur") ||
+    normalized.includes("sicher")
+  ) {
+    return "seguranca";
+  }
+  if (
+    normalized.includes("development") ||
+    normalized.includes("desenvol") ||
+    normalized.includes("desarrollo") ||
+    normalized.includes("développement") ||
+    normalized.includes("entwicklung")
+  ) {
+    return "saltos";
+  }
+  if (
+    normalized.includes("bath") ||
+    normalized.includes("baño") ||
+    normalized.includes("banho") ||
+    normalized.includes("bain") ||
+    normalized.includes("baden")
+  ) {
+    return "higiene";
+  }
+  if (
+    normalized.includes("postpartum") ||
+    normalized.includes("posparto") ||
+    normalized.includes("post-partum") ||
+    normalized.includes("wochenbett")
+  ) {
+    return "saude";
+  }
   return "geral";
 }
 
@@ -240,7 +318,7 @@ function normalizePtArticles(): LocalizedBlogArticle[] {
       category: article.category,
       seoTitle: `${article.title} | ${SITE_NAME}`,
       seoDescription: article.seoMetaDescription || article.description,
-      seoKeywords: article.seoKeywords
+      seoKeywords: (article.seoKeywords || "")
         .split(",")
         .map((keyword) => keyword.trim())
         .filter(Boolean),
@@ -252,7 +330,11 @@ function normalizePtArticles(): LocalizedBlogArticle[] {
   });
 }
 
-function normalizeTranslatedArticles(locale: BlogLocale, articles: BlogArticleTranslation[], fallbackCategories: string[]): LocalizedBlogArticle[] {
+function normalizeTranslatedArticles(
+  locale: BlogLocale,
+  articles: BlogArticleTranslation[],
+  fallbackCategories: string[],
+): LocalizedBlogArticle[] {
   return articles.map((article, index) => {
     const minutes = parseReadTime(article.readTime);
     return {
@@ -262,9 +344,9 @@ function normalizeTranslatedArticles(locale: BlogLocale, articles: BlogArticleTr
       title: article.title,
       description: article.excerpt || article.metaDescription,
       category: fallbackCategories[index] || inferCategoryFromText(`${article.slug} ${article.title}`),
-      seoTitle: article.metaTitle,
-      seoDescription: article.metaDescription,
-      seoKeywords: article.keywords,
+      seoTitle: article.metaTitle || `${article.title} | ${SITE_NAME}`,
+      seoDescription: article.metaDescription || article.excerpt || article.title,
+      seoKeywords: Array.isArray(article.keywords) ? article.keywords : [],
       readTimeMinutes: minutes,
       readTimeLabel: buildReadTimeLabel(locale, minutes),
       content: article.content,
@@ -302,7 +384,10 @@ export function getBlogArticles(locale: BlogLocale): LocalizedBlogArticle[] {
   return articlesByLocale[locale] || articlesByLocale.pt;
 }
 
-export function findBlogArticle(locale: BlogLocale, slug?: string | null): { article: LocalizedBlogArticle | null; redirectSlug?: string } {
+export function findBlogArticle(
+  locale: BlogLocale,
+  slug?: string | null,
+): { article: LocalizedBlogArticle | null; redirectSlug?: string } {
   if (!slug) return { article: null };
 
   const exact = getBlogArticles(locale).find((article) => article.slug === slug);
@@ -325,10 +410,11 @@ export function findBlogArticle(locale: BlogLocale, slug?: string | null): { art
   return { article: null };
 }
 
-function buildAlternateLinksFromSlugMap(slugMap: Partial<Record<BlogLocale, string>>): Array<{ hreflang: string; href: string }> {
+function buildAlternateLinksFromSlugMap(
+  slugMap: Partial<Record<BlogLocale, string>>,
+): Array<{ hreflang: string; href: string }> {
   const alternates: Array<{ hreflang: string; href: string }> = [];
 
-  // Only include locales that have valid slugs
   BLOG_LOCALES.forEach((locale) => {
     const slug = slugMap[locale];
     if (slug) {
@@ -339,8 +425,7 @@ function buildAlternateLinksFromSlugMap(slugMap: Partial<Record<BlogLocale, stri
     }
   });
 
-  // Add x-default pointing to EN if available, otherwise PT
-  const xDefaultLocale = slugMap.en ? "en" : "pt";
+  const xDefaultLocale: BlogLocale = slugMap.en ? "en" : "pt";
   const xDefaultSlug = slugMap[xDefaultLocale];
   if (xDefaultSlug) {
     alternates.push({
@@ -365,7 +450,10 @@ export function getBlogListingSeo(locale: BlogLocale): BlogSeoPayload {
   const listing = LISTING_SEO[locale] || LISTING_SEO.pt;
   const articles = getBlogArticles(locale).slice(0, 8);
   const items = articles
-    .map((article) => `<li><a href="${escapeHtml(`${BASE_URL}${buildBlogPath(locale, article.slug)}`)}">${escapeHtml(article.title)}</a></li>`)
+    .map(
+      (article) =>
+        `<li><a href="${escapeHtml(`${BASE_URL}${buildBlogPath(locale, article.slug)}`)}">${escapeHtml(article.title)}</a></li>`,
+    )
     .join("");
 
   return {
@@ -399,6 +487,9 @@ export function getBlogArticleSeo(locale: BlogLocale, article: LocalizedBlogArti
     ogImage,
     alternates: alternateLinks,
     staticContentHtml: `<article><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.description)}</p><p>${escapeHtml(summary)}</p><p><a href="${escapeHtml(canonicalUrl)}">${escapeHtml(canonicalUrl)}</a></p></article>`,
+    articleTitle: article.title,
+    publishedAt: article.publishedAt,
+    updatedAt: article.updatedAt,
   };
 }
 
@@ -436,6 +527,65 @@ function setAlternateLinks(alternates: Array<{ hreflang: string; href: string }>
   });
 }
 
+function injectSchema(seo: BlogSeoPayload) {
+  if (typeof document === "undefined") return;
+
+  const existingSchema = document.getElementById("wilbor-schema-jsonld");
+  if (existingSchema) existingSchema.remove();
+
+  let schema: Record<string, unknown> | null = null;
+
+  if (seo.ogType === "article") {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: seo.articleTitle || seo.title,
+      description: seo.description,
+      image: seo.ogImage,
+      url: seo.canonicalUrl,
+      inLanguage: seo.htmlLang,
+      ...(seo.publishedAt ? { datePublished: seo.publishedAt } : {}),
+      ...(seo.updatedAt ? { dateModified: seo.updatedAt } : {}),
+      author: {
+        "@type": "Organization",
+        name: "Wilbor",
+        url: BASE_URL,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Wilbor",
+        url: BASE_URL,
+      },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": seo.canonicalUrl,
+      },
+    };
+  } else if (seo.ogType === "website") {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      name: "Wilbor Blog",
+      description: seo.description,
+      url: seo.canonicalUrl,
+      inLanguage: seo.htmlLang,
+      publisher: {
+        "@type": "Organization",
+        name: "Wilbor",
+        url: BASE_URL,
+      },
+    };
+  }
+
+  if (!schema) return;
+
+  const script = document.createElement("script");
+  script.id = "wilbor-schema-jsonld";
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
 export function applyBlogDocumentSeo(seo: BlogSeoPayload) {
   if (typeof document === "undefined") return;
 
@@ -460,81 +610,14 @@ export function applyBlogDocumentSeo(seo: BlogSeoPayload) {
   setMetaTag("name", "twitter:image", seo.ogImage);
   setCanonical(seo.canonicalUrl);
   setAlternateLinks(seo.alternates);
-
-  // ── Schema.org JSON-LD ──────────────────────────────────────────────────────
-  // Injeta marcação estruturada para rich snippets no Google
-  // Remove schema anterior antes de injetar o novo
-  const existingSchema = document.getElementById("wilbor-schema-jsonld");
-  if (existingSchema) existingSchema.remove();
-
-  if (seo.ogType === "article" && seo.staticContentHtml) {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": seo.title,
-      "description": seo.description,
-      "image": seo.ogImage,
-      "url": seo.canonicalUrl,
-      "inLanguage": seo.htmlLang,
-      "datePublished": new Date().toISOString().split("T")[0],
-      "dateModified": new Date().toISOString().split("T")[0],
-      "author": {
-        "@type": "Organization",
-        "name": "Wilbor",
-        "url": "https://wilbor-assist.com",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://wilbor-assist.com/logo.png"
-        }
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Wilbor",
-        "url": "https://wilbor-assist.com",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://wilbor-assist.com/logo.png",
-          "width": 200,
-          "height": 200
-        }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": seo.canonicalUrl
-      }
-    };
-
-    const script = document.createElement("script");
-    script.id = "wilbor-schema-jsonld";
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(schema, null, 2);
-    document.head.appendChild(script);
-  } else if (seo.ogType === "website") {
-    // Schema para página de listagem do blog
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "Wilbor Blog",
-      "description": seo.description,
-      "url": seo.canonicalUrl,
-      "inLanguage": seo.htmlLang,
-      "publisher": {
-        "@type": "Organization",
-        "name": "Wilbor",
-        "url": "https://wilbor-assist.com"
-      }
-    };
-
-    const script = document.createElement("script");
-    script.id = "wilbor-schema-jsonld";
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(schema, null, 2);
-    document.head.appendChild(script);
-  }
+  injectSchema(seo);
 }
 
 export function getBlogSeoFromPath(pathname: string): BlogSeoPayload | null {
-  const match = pathname.match(/^\/(en|es|fr|de)?\/?blog(?:\/([^/?#]+))?\/?$/i) || pathname.match(/^\/blog(?:\/([^/?#]+))?\/?$/i);
+  const match =
+    pathname.match(/^\/(en|es|fr|de)?\/?blog(?:\/([^/?#]+))?\/?$/i) ||
+    pathname.match(/^\/blog(?:\/([^/?#]+))?\/?$/i);
+
   if (!match) return null;
 
   const locale = (match[1]?.toLowerCase() as BlogLocale | undefined) || "pt";
@@ -544,5 +627,6 @@ export function getBlogSeoFromPath(pathname: string): BlogSeoPayload | null {
 
   const { article } = findBlogArticle(locale, slug);
   if (!article) return null;
+
   return getBlogArticleSeo(locale, article);
 }

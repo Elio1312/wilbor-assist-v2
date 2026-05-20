@@ -52,11 +52,111 @@ const CURRENCIES: Record<string, { code: Currency; symbol: string; label: Record
   eur: { code: "eur", symbol: "€",  label: { pt: "Europa (€)", en: "Europe (€)", es: "Europa (€)", fr: "Europe (€)", de: "Europa (€)" } },
 };
 
+// ==========================================
+// CHECKOUT COPY — 5 IDIOMAS
+// ==========================================
+const CHECKOUT_COPY: Record<string, {
+  title: string;
+  subtitle: string;
+  socialProof: string;
+  features: string[];
+  annualExclusive: string;
+  subscribeCta: string;
+  backLabel: string;
+  securePayment: string;
+  easyCancellation: string;
+}> = {
+  pt: {
+    title: "Escolha seu plano",
+    subtitle: "Apoio neonatal baseado em SBP, OMS e AAP — disponível 24h, direto no celular.",
+    socialProof: "Mães de mais de 40 países já usam o Wilbor.",
+    features: [
+      "Chat IA disponível 24h",
+      "Diário do bebê",
+      "Trilha de desenvolvimento",
+      "Alertas de vacinas",
+      "55 receitas com fotos por idade",
+    ],
+    annualExclusive: "Mensagens ilimitadas — sem teto mensal",
+    subscribeCta: "Assinar agora",
+    backLabel: "Voltar",
+    securePayment: "Pagamento seguro via Stripe",
+    easyCancellation: "Cancelamento fácil a qualquer momento",
+  },
+  en: {
+    title: "Choose your plan",
+    subtitle: "Evidence-based neonatal support (AAP, WHO, SBP) — available 24/7, right on your phone.",
+    socialProof: "Mothers in 40+ countries already use Wilbor.",
+    features: [
+      "AI chat available 24/7",
+      "Baby diary",
+      "Development milestone tracker",
+      "Vaccine reminders",
+      "55 age-based recipes with photos",
+    ],
+    annualExclusive: "Unlimited messages — no monthly cap",
+    subscribeCta: "Subscribe now",
+    backLabel: "Back",
+    securePayment: "Secure payment via Stripe",
+    easyCancellation: "Easy cancellation anytime",
+  },
+  es: {
+    title: "Elige tu plan",
+    subtitle: "Apoyo neonatal basado en AAP, OMS y SBP — disponible 24/7, directo en tu celular.",
+    socialProof: "Mamás de más de 40 países ya usan Wilbor.",
+    features: [
+      "Chat IA disponible 24/7",
+      "Diario del bebé",
+      "Seguimiento de hitos de desarrollo",
+      "Alertas de vacunas",
+      "55 recetas con fotos por edad",
+    ],
+    annualExclusive: "Mensajes ilimitados — sin límite mensual",
+    subscribeCta: "Suscribirse ahora",
+    backLabel: "Volver",
+    securePayment: "Pago seguro con Stripe",
+    easyCancellation: "Cancelación fácil en cualquier momento",
+  },
+  fr: {
+    title: "Choisissez votre forfait",
+    subtitle: "Soutien néonatal basé sur AAP, OMS et SBP — disponible 24h/7, directement sur votre téléphone.",
+    socialProof: "Des mères de plus de 40 pays utilisent déjà Wilbor.",
+    features: [
+      "Chat IA disponible 24h/7",
+      "Journal de bébé",
+      "Suivi des étapes de développement",
+      "Rappels de vaccins",
+      "55 recettes avec photos par âge",
+    ],
+    annualExclusive: "Messages illimités — sans plafond mensuel",
+    subscribeCta: "S'abonner maintenant",
+    backLabel: "Retour",
+    securePayment: "Paiement sécurisé via Stripe",
+    easyCancellation: "Annulation facile à tout moment",
+  },
+  de: {
+    title: "Wählen Sie Ihren Plan",
+    subtitle: "Neonatale Unterstützung basierend auf AAP, WHO und SBP — 24/7 verfügbar, direkt auf Ihrem Handy.",
+    socialProof: "Mütter aus über 40 Ländern nutzen bereits Wilbor.",
+    features: [
+      "KI-Chat 24/7 verfügbar",
+      "Baby-Tagebuch",
+      "Entwicklungsmeilenstein-Tracker",
+      "Impferinnerungen",
+      "55 altersgerechte Rezepte mit Fotos",
+    ],
+    annualExclusive: "Unbegrenzte Nachrichten — kein monatliches Limit",
+    subscribeCta: "Jetzt abonnieren",
+    backLabel: "Zurück",
+    securePayment: "Sichere Zahlung über Stripe",
+    easyCancellation: "Jederzeit einfach kündbar",
+  },
+};
+
 function detectCurrencyFromLocale(locale: string): Currency {
   if (locale === "pt") return "brl";
-  if (locale === "fr") return "eur";
-  if (locale === "de") return "eur";
   if (locale === "en") return "usd";
+  if (locale === "fr" || locale === "de" || locale === "es") return "eur";
   return "usd";
 }
 
@@ -84,6 +184,10 @@ export default function Checkout() {
 
   const [selectedPlan, setSelectedPlan] = useState<PlanType>("annual"); // anual selecionado por padrão
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(() => detectCurrencyFromLocale(locale));
+
+  useEffect(() => {
+    setSelectedCurrency(detectCurrencyFromLocale(locale));
+  }, [locale]);
 
   const { data: user } = trpc.auth.me.useQuery(undefined, { retry: false, refetchOnWindowFocus: false });
 
@@ -123,13 +227,8 @@ export default function Checkout() {
   };
 
   const lang = locale || "pt";
-  const features = t("paywall.features")?.split(",") || [
-    "Chat IA 24/7",
-    "Diário do bebê",
-    "Trilha de desenvolvimento",
-    "Alertas de vacinas",
-    "Suporte prioritário",
-  ];
+  const copy = CHECKOUT_COPY[lang] || CHECKOUT_COPY.pt;
+  const features = copy.features;
 
   return (
     <>
@@ -141,16 +240,16 @@ export default function Checkout() {
             onClick={() => setLocation(user ? localePath("/dashboard") : localePath("/"))}
             className="mb-8 gap-2 text-gray-500"
           >
-            <ArrowLeft className="size-4" /> {t("common.back") || "Voltar"}
+            <ArrowLeft className="size-4" /> {copy.backLabel}
           </Button>
 
           <div className="text-center mb-12">
             <Heart className="size-12 text-purple-600 mx-auto mb-4" />
             <h1 className="text-3xl font-extrabold text-gray-900">
-              {t("checkout.title") || "Escolha seu plano"}
+              {copy.title}
             </h1>
             <p className="text-gray-600 mt-2">
-              {t("checkout.subtitle") || "Acesso completo ao Wilbor para cuidar do seu bebê com segurança"}
+              {copy.subtitle}
             </p>
           </div>
 
@@ -264,11 +363,7 @@ export default function Checkout() {
                 {/* Benefício exclusivo do anual */}
                 <li className="flex items-center gap-2 text-sm font-semibold text-purple-700">
                   <Check className="size-4 text-purple-500 shrink-0" />
-                  {lang === "pt" ? "Msgs ilimitadas (sem teto mensal)" :
-                   lang === "es" ? "Msgs ilimitadas (sin tope mensual)" :
-                   lang === "fr" ? "Messages illimités (sans plafond)" :
-                   lang === "de" ? "Unbegrenzte Nachrichten" :
-                   "Unlimited messages (no monthly cap)"}
+                  {copy.annualExclusive}
                 </li>
               </ul>
             </Card>
@@ -284,28 +379,21 @@ export default function Checkout() {
               {checkout.isPending ? (
                 <Loader2 className="size-5 animate-spin mr-2" />
               ) : (
-                t("checkout.cta") || "Assinar agora"
+                copy.subscribeCta
               )}
             </Button>
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-400 text-xs">
               <div className="flex items-center gap-1">
                 <ShieldCheck className="size-4 text-green-500" />
-                {lang === "pt" ? "Pagamento Seguro via Stripe" :
-                 lang === "es" ? "Pago Seguro vía Stripe" :
-                 lang === "fr" ? "Paiement Sécurisé via Stripe" :
-                 lang === "de" ? "Sichere Zahlung über Stripe" :
-                 "Secure Payment via Stripe"}
+                {copy.securePayment}
               </div>
               <span className="hidden sm:inline">•</span>
               <div>
-                {lang === "pt" ? "Cancelamento fácil a qualquer momento" :
-                 lang === "es" ? "Cancelación fácil en cualquier momento" :
-                 lang === "fr" ? "Annulation facile à tout moment" :
-                 lang === "de" ? "Einfache Stornierung jederzeit" :
-                 "Easy cancellation anytime"}
+                {copy.easyCancellation}
               </div>
             </div>
+            <p className="mt-4 text-gray-400 text-xs">{copy.socialProof}</p>
           </div>
 
         </div>

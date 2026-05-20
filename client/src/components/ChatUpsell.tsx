@@ -12,9 +12,23 @@ interface Ebook {
   imageUrl: string;
 }
 
+// Copy nos 5 idiomas — pronta para quando a API de ebook for ativada
+const UPSELL_TEXTS: Record<string, {
+  recommended: string;
+  cta: string;
+}> = {
+  pt: { recommended: "Recomendado para você", cta: "Ver mais" },
+  en: { recommended: "Recommended for you",   cta: "See more" },
+  es: { recommended: "Recomendado para ti",    cta: "Ver más" },
+  fr: { recommended: "Recommandé pour vous",   cta: "Voir plus" },
+  de: { recommended: "Empfohlen für Sie",      cta: "Mehr sehen" },
+};
+
 export function ChatUpsell({ assistantMessage }: { assistantMessage: string }) {
+  void assistantMessage;
   const { localePath, locale } = useI18n();
   const [, setLocation] = useLocation();
+  const texts = UPSELL_TEXTS[locale] ?? UPSELL_TEXTS.pt;
 
   // TODO: Implementar getRecommendedEbook no servidor quando necessário
   // const { data: ebook, isLoading } = trpc.wilbor.getRecommendedEbook.useQuery(...)
@@ -33,6 +47,7 @@ export function ChatUpsell({ assistantMessage }: { assistantMessage: string }) {
     : locale === 'es'
     ? (ebookData.titleEs || ebookData.titlePt)
     : ebookData.titlePt;
+  const upsellHref = localePath("/buy-credits");
 
   return (
     <div className="px-4 py-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -51,7 +66,7 @@ export function ChatUpsell({ assistantMessage }: { assistantMessage: string }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1 mb-1">
               <Star className="size-3 text-yellow-500 fill-yellow-500" />
-              <span className="text-xs text-purple-600 font-medium">Recomendado para você</span>
+              <span className="text-xs text-purple-600 font-medium">{texts.recommended}</span>
             </div>
             <h4 className="font-semibold text-sm text-gray-900 truncate">{title}</h4>
             <p className="text-xs text-gray-500 line-clamp-2">{ebookData.description}</p>
@@ -60,9 +75,9 @@ export function ChatUpsell({ assistantMessage }: { assistantMessage: string }) {
             size="sm"
             variant="ghost"
             className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 shrink-0"
-            onClick={() => setLocation("/buy-credits")}
+            onClick={() => setLocation(upsellHref)}
           >
-            Ver mais
+            {texts.cta}
             <ArrowRight className="size-3 ml-1" />
           </Button>
         </div>

@@ -12,65 +12,83 @@ interface PaywallModalProps {
   onClose: () => void;
 }
 
-// 1. Expansão para os 5 idiomas (Padrão 95% de assertividade)
-const PAYWALL_TEXTS: Record<string, any> = {
+type PaywallText = {
+  title: string;
+  subtitle: string;
+  urgency: string;
+  features: string[];
+  cta: string;
+  price: string;
+  period: string;
+  login_title: string;
+  login_subtitle: string;
+  login_cta: string;
+  later: string;
+};
+
+const PAYWALL_TEXTS: Record<string, PaywallText> = {
   pt: {
-    title: "Você usou suas 5 consultas gratuitas 🎉",
-    subtitle: "Você já recebeu orientação confiável do Wilbor. Para continuar com apoio ilimitado:",
+    title: "Suas 5 consultas gratuitas acabaram 💜",
+    subtitle: "A dúvida que você trouxe hoje merecia uma resposta de verdade — e o Wilbor deu. Para continuar com apoio sem limite:",
+    urgency: "Sua próxima dúvida não precisa esperar até amanhã.",
     features: ["Chat IA ilimitado 24h", "Perfil personalizado do bebê", "Trilha de desenvolvimento", "55 receitas por idade"],
-    cta: "Assinar por R$ 29,00/mês",
-    price: "R$ 29,00",
+    cta: "Assinar por R$ 19,90/mês",
+    price: "R$ 19,90",
     period: "/mês",
     login_title: "Ganhe mais 5 consultas grátis! 🎁",
-    login_subtitle: "Faça login com sua conta Google para ganhar mais 5 consultas gratuitas e salvar seu histórico.",
+    login_subtitle: "Faça login com sua conta Google para ganhar mais 5 consultas gratuitas e salvar o histórico do seu bebê.",
     login_cta: "Entrar com Google",
     later: "Agora não"
   },
   en: {
-    title: "You've used your 5 free consultations 🎉",
-    subtitle: "You've already received reliable guidance from Wilbor. To continue with unlimited support:",
-    features: ["Unlimited 24h AI chat", "Personalized baby profile", "Development milestones", "55 age-based recipes"],
-    cta: "Subscribe for $9.90/month",
-    price: "$9.90",
+    title: "Your 5 free consultations are up 💜",
+    subtitle: "The question you brought today deserved a real answer — and Wilbor gave you one. To keep going with unlimited support:",
+    urgency: "Your next question doesn't have to wait until tomorrow.",
+    features: ["Unlimited 24h AI chat", "Personalized baby profile", "Development milestone tracker", "55 age-based recipes with photos"],
+    cta: "Subscribe for $5.99/month",
+    price: "$5.99",
     period: "/month",
     login_title: "Get 5 more free consultations! 🎁",
-    login_subtitle: "Sign in with your Google account to get 5 more free consultations and save your history.",
-    login_cta: "Sign In with Google",
+    login_subtitle: "Sign in with your Google account to get 5 more free consultations and save your baby's history.",
+    login_cta: "Sign in with Google",
     later: "Not now"
   },
   es: {
-    title: "Has usado tus 5 consultas gratuitas 🎉",
-    subtitle: "Ya recibiste orientación confiable de Wilbor. Para continuar con apoyo ilimitado:",
-    features: ["Chat IA ilimitado 24h", "Perfil personalizado del bebé", "Hitos de desarrollo", "55 recetas por edad"],
-    cta: "Suscribirse por €9,90/mes",
-    price: "€9,90",
+    title: "Tus 5 consultas gratuitas se acabaron 💜",
+    subtitle: "La duda que trajiste hoy merecía una respuesta real — y Wilbor te la dio. Para seguir con apoyo sin límite:",
+    urgency: "Tu próxima duda no tiene que esperar hasta mañana.",
+    features: ["Chat IA ilimitado 24h", "Perfil personalizado del bebé", "Seguimiento de hitos de desarrollo", "55 recetas por edad con fotos"],
+    cta: "Suscribirse por € 5,49/mes",
+    price: "€ 5,49",
     period: "/mes",
-    login_title: "¡Obtén 5 consultas gratis más! 🎁",
-    login_subtitle: "Inicia sesión con tu cuenta de Google para obtener 5 consultas gratuitas más y guardar tu historial.",
+    login_title: "¡Obtén 5 consultas gratuitas más! 🎁",
+    login_subtitle: "Inicia sesión con tu cuenta de Google para obtener 5 consultas gratuitas más y guardar el historial de tu bebé.",
     login_cta: "Entrar con Google",
     later: "Ahora no"
   },
   fr: {
-    title: "Vous avez utilisé vos 5 consultations gratuites 🎉",
-    subtitle: "Wilbor vous a aidé. Pour continuer avec un soutien illimité:",
-    features: ["Chat IA illimité 24h/7", "Profil bébé personnalisé", "Suivi du développement", "Recettes par âge"],
-    cta: "S'abonner pour 9,90€/mois",
-    price: "9,90€",
+    title: "Vos 5 consultations gratuites sont épuisées 💜",
+    subtitle: "La question que vous avez posée aujourd'hui méritait une vraie réponse — et Wilbor vous l'a donnée. Pour continuer sans limite :",
+    urgency: "Votre prochaine question n'a pas à attendre demain.",
+    features: ["Chat IA illimité 24h/7", "Profil bébé personnalisé", "Suivi des étapes de développement", "55 recettes par âge avec photos"],
+    cta: "S'abonner pour € 5,49/mois",
+    price: "€ 5,49",
     period: "/mois",
     login_title: "Obtenez 5 consultations gratuites de plus ! 🎁",
-    login_subtitle: "Connectez-vous avec Google pour obtenir 5 consultations gratuites supplémentaires.",
+    login_subtitle: "Connectez-vous avec Google pour obtenir 5 consultations gratuites supplémentaires et sauvegarder l'historique de votre bébé.",
     login_cta: "Se connecter avec Google",
     later: "Pas maintenant"
   },
   de: {
-    title: "Sie haben Ihre 5 kostenlosen Beratungen genutzt 🎉",
-    subtitle: "Wilbor hat Ihnen geholfen. Für unbegrenzte Unterstützung:",
-    features: ["Unbegrenzter KI-Chat 24/7", "Personalisiertes Babyprofil", "Entwicklungsmeilensteine", "Rezepte nach Alter"],
-    cta: "Abonnieren für 9,90€/Monat",
-    price: "9,90€",
+    title: "Ihre 5 kostenlosen Beratungen sind aufgebraucht 💜",
+    subtitle: "Die Frage, die Sie heute mitgebracht haben, verdiente eine echte Antwort — und Wilbor hat sie Ihnen gegeben. Für unbegrenzte Unterstützung:",
+    urgency: "Ihre nächste Frage muss nicht bis morgen warten.",
+    features: ["Unbegrenzter KI-Chat 24/7", "Personalisiertes Babyprofil", "Meilenstein-Tracker für die Entwicklung", "55 altersgerechte Rezepte mit Fotos"],
+    cta: "Abonnieren für € 5,49/Monat",
+    price: "€ 5,49",
     period: "/Monat",
     login_title: "Holen Sie sich 5 weitere kostenlose Beratungen! 🎁",
-    login_subtitle: "Melden Sie sich mit Google an, um 5 weitere kostenlose Beratungen zu erhalten.",
+    login_subtitle: "Melden Sie sich mit Google an, um 5 weitere kostenlose Beratungen zu erhalten und den Verlauf Ihres Babys zu speichern.",
     login_cta: "Mit Google anmelden",
     later: "Jetzt nicht"
   }
@@ -112,6 +130,9 @@ export function PaywallModal({ open, onClose }: PaywallModalProps) {
             </DialogTitle>
           </DialogHeader>
           <p className="text-purple-100 text-sm mt-2">{isAnonymous ? texts.login_subtitle : texts.subtitle}</p>
+          {!isAnonymous && texts.urgency && (
+            <p className="text-white/80 text-xs mt-2 font-medium">{texts.urgency}</p>
+          )}
         </div>
 
         {/* Lista de Benefícios e CTA */}
