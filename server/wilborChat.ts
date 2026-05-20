@@ -348,13 +348,32 @@ export async function simpleChatWithWilbor(
   messages: Array<{ role: "system" | "user" | "assistant"; content: string }>
 ): Promise<{ content: string; imageUrl: string | null }> {
   try {
-    // Try to extract imageUrl from RAG knowledge base
+    const topicHintRaw = messages.find((message) => message.role === "system" && message.content.startsWith("[DASHBOARD_TOPIC]:"))?.content;
+    const topicHint = topicHintRaw?.replace("[DASHBOARD_TOPIC]:", "").trim().toLowerCase();
+    const topicMap: Record<string, "geral" | "sono" | "colica" | "salto" | "alimentacao" | "febre" | "seguranca"> = {
+      sleep: "sono",
+      colic: "colica",
+      milestones: "salto",
+      feeding: "alimentacao",
+      fever: "febre",
+      mother: "geral",
+      geral: "geral",
+    };
+    const ragCategory = topicMap[topicHint || "geral"] ?? "geral";
+
+    const sanitizedMessages = sanitizeChatMessages(
+      messages.filter((message) => !message.content.startsWith("[DASHBOARD_TOPIC]:"))
+    );
+    const userMessages = sanitizedMessages.filter((message) => message.role === "user");
+
+    // Try to extract imageUrl from RAG knowledge base only on the first real user question
     let imageUrl: string | null = null;
     try {
       const { searchKnowledgeBase } = await import("./wilborRAG");
-      const lastUserMsg = [...messages].reverse().find(m => m.role === "user");
-      if (lastUserMsg) {
-        const entries = await searchKnowledgeBase(lastUserMsg.content, "geral", undefined);
+      const lastUserMsg = [...userMessages].reverse()[0];
+      const shouldAttachImage = userMessages.length === 1;
+      if (lastUserMsg && shouldAttachImage) {
+        const entries = await searchKnowledgeBase(lastUserMsg.content, ragCategory, undefined);
         if (entries.length > 0 && entries[0].imageUrl) {
           imageUrl = entries[0].imageUrl;
         }
@@ -362,8 +381,7 @@ export async function simpleChatWithWilbor(
     } catch (_) {
       // RAG search failed, continue without imageUrl
     }
-    const sanitizedMessages = sanitizeChatMessages(messages);
-    const hasUserMessage = sanitizedMessages.some((message) => message.role === "user");
+    const hasUserMessage = userMessages.length > 0;
     if (!hasUserMessage) {
       throw new Error("EMPTY_CHAT_MESSAGES");
     }

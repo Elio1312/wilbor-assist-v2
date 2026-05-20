@@ -35,6 +35,13 @@ type TopicItem = {
   prompt: string;
 };
 
+type ToolShortcut = {
+  title: string;
+  subtitle: string;
+  route: string;
+  icon: "recipes" | "milestones" | "mother";
+};
+
 type DashboardCopy = {
   guestName: string;
   loading: string;
@@ -53,6 +60,8 @@ type DashboardCopy = {
   askAnythingSubtitle: string;
   sos: string;
   sosSubtitle: string;
+  toolsTitle: string;
+  toolsSubtitle: string;
   emptyState: string;
   placeholder: string;
   quickPrompts: string[];
@@ -78,6 +87,8 @@ const COPY: Record<DashboardLocale, DashboardCopy> = {
     askAnythingSubtitle: "Abrir conversa livre",
     sos: "SOS Bebê chorando",
     sosSubtitle: "Ajuda rápida agora",
+    toolsTitle: "Ferramentas do Wilbor",
+    toolsSubtitle: "Abra funções reais do produto",
     emptyState: "Escreva sua dúvida ou volte para escolher um tema.",
     placeholder: "Digite sua mensagem...",
     quickPrompts: [
@@ -142,6 +153,8 @@ const COPY: Record<DashboardLocale, DashboardCopy> = {
     askAnythingSubtitle: "Open free conversation",
     sos: "SOS Crying baby",
     sosSubtitle: "Fast help now",
+    toolsTitle: "Wilbor tools",
+    toolsSubtitle: "Open real product features",
     emptyState: "Type your question or go back and choose a topic.",
     placeholder: "Type your message...",
     quickPrompts: [
@@ -206,6 +219,8 @@ const COPY: Record<DashboardLocale, DashboardCopy> = {
     askAnythingSubtitle: "Abrir conversación libre",
     sos: "SOS Bebé llorando",
     sosSubtitle: "Ayuda rápida ahora",
+    toolsTitle: "Herramientas de Wilbor",
+    toolsSubtitle: "Abre funciones reales del producto",
     emptyState: "Escribe tu duda o vuelve para elegir un tema.",
     placeholder: "Escribe tu mensaje...",
     quickPrompts: [
@@ -270,6 +285,8 @@ const COPY: Record<DashboardLocale, DashboardCopy> = {
     askAnythingSubtitle: "Ouvrir une conversation libre",
     sos: "SOS Bébé qui pleure",
     sosSubtitle: "Aide rapide maintenant",
+    toolsTitle: "Outils Wilbor",
+    toolsSubtitle: "Ouvrir les vraies fonctions du produit",
     emptyState: "Écrivez votre question ou revenez pour choisir un thème.",
     placeholder: "Écrivez votre message...",
     quickPrompts: [
@@ -334,6 +351,8 @@ const COPY: Record<DashboardLocale, DashboardCopy> = {
     askAnythingSubtitle: "Freies Gespräch öffnen",
     sos: "SOS Weinendes Baby",
     sosSubtitle: "Schnelle Hilfe jetzt",
+    toolsTitle: "Wilbor-Werkzeuge",
+    toolsSubtitle: "Echte Produktfunktionen öffnen",
     emptyState: "Schreiben Sie Ihre Frage oder gehen Sie zurück und wählen Sie ein Thema.",
     placeholder: "Schreiben Sie Ihre Nachricht...",
     quickPrompts: [
@@ -413,13 +432,6 @@ const TOPIC_STYLES: Record<TopicKey, { card: string; icon: string; iconComponent
     icon: "bg-white/80 text-slate-900",
     iconComponent: UserRound,
   },
-};
-
-const TOPIC_ILLUSTRATIONS: Partial<Record<TopicKey, string>> = {
-  sleep: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-03-sleep-tracker_26c55d8b.png",
-  milestones: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-02-growth-crises_133ac9d8.png",
-  feeding: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-04-feeding-tracker_0aced0af.png",
-  mother: "https://d2xsxph8kpxj0f.cloudfront.net/310519663445560822/LJucsyXHjSVaXkbocW4u2f/wilbor-05-postpartum-exercises_3d66de4d.png",
 };
 
 function buildTopicWelcome(locale: DashboardLocale, topic: TopicItem): string {
@@ -584,6 +596,23 @@ export default function Dashboard() {
   const isAnonymousReady = !!user || !!fingerprint;
   const recipesRoute = localePath("/recipes");
   const premiumRoute = localePath("/premium");
+  const milestonesRoute = localePath("/desenvolvimento");
+  const motherRoute = localePath("/meu-corpo");
+  const toolShortcuts: ToolShortcut[] = [
+    { title: copy.recipes, subtitle: copy.recipesSubtitle, route: recipesRoute, icon: "recipes" },
+    {
+      title: dashboardLocale === "pt" ? "Desenvolvimento" : dashboardLocale === "es" ? "Desarrollo" : dashboardLocale === "fr" ? "Développement" : dashboardLocale === "de" ? "Entwicklung" : "Development",
+      subtitle: dashboardLocale === "pt" ? "Trilha semanal do bebê" : dashboardLocale === "es" ? "Ruta semanal del bebé" : dashboardLocale === "fr" ? "Parcours hebdomadaire du bébé" : dashboardLocale === "de" ? "Wöchentliche Baby-Entwicklung" : "Weekly baby milestones",
+      route: milestonesRoute,
+      icon: "milestones",
+    },
+    {
+      title: dashboardLocale === "pt" ? "Meu corpo" : dashboardLocale === "es" ? "Mi cuerpo" : dashboardLocale === "fr" ? "Mon corps" : dashboardLocale === "de" ? "Mein Körper" : "My body",
+      subtitle: dashboardLocale === "pt" ? "Recuperação e exercícios" : dashboardLocale === "es" ? "Recuperación y ejercicios" : dashboardLocale === "fr" ? "Récupération et exercices" : dashboardLocale === "de" ? "Erholung und Übungen" : "Recovery and exercises",
+      route: motherRoute,
+      icon: "mother",
+    },
+  ];
 
   const refetchCredits = () => {
     if (user) {
@@ -606,6 +635,7 @@ export default function Dashboard() {
 
     const visibleMessages: Message[] = [...baseMessages, { role: "user", content }];
     const apiMessages = [
+      { role: "system" as const, content: `[DASHBOARD_TOPIC]: ${activeTopicKey ?? "geral"}` },
       ...baseMessages.filter((message) => !message.localOnly),
       { role: "user" as const, content },
     ];
@@ -657,7 +687,6 @@ export default function Dashboard() {
       {
         role: "assistant",
         content: buildTopicWelcome(dashboardLocale, topic),
-        imageUrl: TOPIC_ILLUSTRATIONS[topic.key] ?? null,
         localOnly: true,
       },
     ]);
@@ -856,40 +885,55 @@ export default function Dashboard() {
           {copy.sos}
         </button>
 
-        <div className="mt-3 space-y-3">
-          <button
-            type="button"
-            onClick={() => setLocation(recipesRoute)}
-            className="flex h-14 w-full items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 text-left shadow-lg shadow-slate-950/10 transition hover:bg-white/10"
-          >
-            <div className="flex items-center gap-3">
-              <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-amber-300/15 text-amber-300">
-                <BookOpen className="size-4" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">{copy.recipes}</p>
-                <p className="text-xs text-slate-300">{copy.recipesSubtitle}</p>
-              </div>
-            </div>
-            <span className="text-sm text-slate-300">›</span>
-          </button>
+        <div className="mt-4 rounded-[24px] border border-white/10 bg-white/5 p-3 shadow-lg shadow-slate-950/10">
+          <div className="mb-3 px-1">
+            <p className="text-sm font-semibold text-white">{copy.toolsTitle}</p>
+            <p className="text-xs text-slate-300">{copy.toolsSubtitle}</p>
+          </div>
 
-          <button
-            type="button"
-            onClick={openFreeChat}
-            className="flex h-14 w-full items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 text-left shadow-lg shadow-slate-950/10 transition hover:bg-white/10"
-          >
-            <div className="flex items-center gap-3">
-              <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-slate-200">
-                <Heart className="size-4" />
+          <div className="space-y-3">
+            {toolShortcuts.map((tool) => {
+              const ToolIcon = tool.icon === "recipes" ? BookOpen : tool.icon === "milestones" ? TrendingUp : Heart;
+              const iconColor = tool.icon === "recipes" ? "bg-amber-300/15 text-amber-300" : tool.icon === "milestones" ? "bg-sky-300/15 text-sky-200" : "bg-pink-300/15 text-pink-200";
+
+              return (
+                <button
+                  key={tool.route}
+                  type="button"
+                  onClick={() => setLocation(tool.route)}
+                  className="flex h-14 w-full items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 text-left transition hover:bg-white/10"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${iconColor}`}>
+                      <ToolIcon className="size-4" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white">{tool.title}</p>
+                      <p className="text-xs text-slate-300">{tool.subtitle}</p>
+                    </div>
+                  </div>
+                  <span className="text-sm text-slate-300">›</span>
+                </button>
+              );
+            })}
+
+            <button
+              type="button"
+              onClick={openFreeChat}
+              className="flex h-14 w-full items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 text-left transition hover:bg-white/10"
+            >
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-slate-200">
+                  <Heart className="size-4" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white">{copy.askAnything}</p>
+                  <p className="text-xs text-slate-300">{copy.askAnythingSubtitle}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-semibold text-white">{copy.askAnything}</p>
-                <p className="text-xs text-slate-300">{copy.askAnythingSubtitle}</p>
-              </div>
-            </div>
-            <span className="text-sm text-slate-300">›</span>
-          </button>
+              <span className="text-sm text-slate-300">›</span>
+            </button>
+          </div>
         </div>
       </div>
 

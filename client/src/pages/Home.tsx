@@ -182,41 +182,55 @@ export default function Home() {
       />
 
       {/* Header Blindado */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <a href={localePath("/")} className="flex items-center gap-2 cursor-pointer">
-            <Heart className="w-8 h-8 text-purple-600 fill-purple-600" />
-            <span className="text-xl font-bold text-gray-900">Wilbor</span>
-          </a>
-          
-          <div className="flex items-center gap-4">
-            <LanguageSwitcher />
-            <Button 
-              asChild
-              variant="ghost" 
-              className="hidden md:flex"
-            >
-              <a href={localePath("/blog")}>{t("nav.blog")}</a>
-            </Button>
-            <Button asChild variant="ghost" className="hidden md:flex text-purple-700 hover:text-purple-800 hover:bg-purple-50">
-              <a href={premiumHref}>
-                {locale === 'pt' ? 'Planos' : locale === 'es' ? 'Planes' : locale === 'fr' ? 'Forfaits' : locale === 'de' ? 'Tarife' : 'Plans'}
-              </a>
-            </Button>
+      <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 px-4 py-3 backdrop-blur-sm sm:px-6 sm:py-4">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center justify-between gap-3">
+            <a href={localePath("/")} className="flex items-center gap-2 cursor-pointer min-w-0">
+              <Heart className="h-8 w-8 shrink-0 fill-purple-600 text-purple-600" />
+              <span className="truncate text-xl font-bold text-gray-900">Wilbor</span>
+            </a>
+
             {user ? (
-              <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
+              <Button asChild className="rounded-full bg-purple-600 px-5 hover:bg-purple-700 sm:hidden">
                 <a href={localePath("/dashboard")}>{t("nav.dashboard")}</a>
               </Button>
             ) : (
-              <>
-                <Button asChild variant="ghost" className="hidden sm:inline-flex">
-                  <a href={dashboardHref} onClick={() => { warmAnonymousSession(); handleCTAClick('header_enter'); }}>{t("nav.enter")}</a>
-                </Button>
-                <Button asChild className="bg-purple-600 hover:bg-purple-700 rounded-full px-6">
-                  <a href={dashboardHref} onClick={() => { warmAnonymousSession(); handleCTAClick('header_try_free'); }}>{t("nav.try_free")}</a>
-                </Button>
-              </>
+              <Button asChild className="rounded-full bg-purple-600 px-5 hover:bg-purple-700 sm:hidden">
+                <a href={dashboardHref} onClick={() => { warmAnonymousSession(); handleCTAClick('header_try_free'); }}>{t("nav.try_free")}</a>
+              </Button>
             )}
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <LanguageSwitcher className="sm:max-w-none" />
+            <div className="hidden sm:flex sm:items-center sm:gap-4">
+              <Button 
+                asChild
+                variant="ghost" 
+                className="hidden md:flex"
+              >
+                <a href={localePath("/blog")}>{t("nav.blog")}</a>
+              </Button>
+              <Button asChild variant="ghost" className="hidden md:flex text-purple-700 hover:bg-purple-50 hover:text-purple-800">
+                <a href={premiumHref}>
+                  {locale === 'pt' ? 'Planos' : locale === 'es' ? 'Planes' : locale === 'fr' ? 'Forfaits' : locale === 'de' ? 'Tarife' : 'Plans'}
+                </a>
+              </Button>
+              {user ? (
+                <Button asChild className="rounded-full bg-purple-600 px-6 hover:bg-purple-700">
+                  <a href={localePath("/dashboard")}>{t("nav.dashboard")}</a>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild variant="ghost" className="hidden sm:inline-flex">
+                    <a href={dashboardHref} onClick={() => { warmAnonymousSession(); handleCTAClick('header_enter'); }}>{t("nav.enter")}</a>
+                  </Button>
+                  <Button asChild className="rounded-full bg-purple-600 px-6 hover:bg-purple-700">
+                    <a href={dashboardHref} onClick={() => { warmAnonymousSession(); handleCTAClick('header_try_free'); }}>{t("nav.try_free")}</a>
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </header>

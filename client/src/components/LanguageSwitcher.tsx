@@ -12,15 +12,15 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
   const { locale, setLocale } = useI18n();
 
   return (
-    <div className={`flex items-center gap-1 ${className}`}>
+    <div className={`flex max-w-full items-center gap-1 overflow-x-auto whitespace-nowrap pb-1 sm:flex-wrap sm:overflow-visible ${className}`}>
       {(Object.keys(flags) as Locale[]).map((loc) => (
         <button
           key={loc}
           onClick={() => setLocale(loc)}
-          className={`px-2 py-1 text-xs font-semibold rounded-md transition-all ${
+          className={`shrink-0 rounded-md px-2 py-1 text-xs font-semibold transition-all ${
             locale === loc
               ? "bg-fuchsia-100 text-fuchsia-700"
-              : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
           }`}
         >
           {flags[loc]}
