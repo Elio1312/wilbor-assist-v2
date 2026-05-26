@@ -366,12 +366,16 @@ export async function simpleChatWithWilbor(
     );
     const userMessages = sanitizedMessages.filter((message) => message.role === "user");
 
-    // Try to extract imageUrl from RAG knowledge base only on the first real user question
+    // Try to extract imageUrl from RAG knowledge base
+    // Busca imagem nas primeiras perguntas reais sobre o tema para enriquecer a conversa
     let imageUrl: string | null = null;
     try {
       const { searchKnowledgeBase } = await import("./wilborRAG");
-      const lastUserMsg = [...userMessages].reverse()[0];
-      const shouldAttachImage = userMessages.length === 1;
+      const realUserMessages = userMessages.filter(
+        (message) => !message.content.startsWith("[DASHBOARD_TOPIC]")
+      );
+      const lastUserMsg = [...realUserMessages].reverse()[0];
+      const shouldAttachImage = ragCategory !== "geral" && realUserMessages.length <= 3;
       if (lastUserMsg && shouldAttachImage) {
         const entries = await searchKnowledgeBase(lastUserMsg.content, ragCategory, undefined);
         if (entries.length > 0 && entries[0].imageUrl) {
